@@ -80,6 +80,12 @@
 	var internalCollisionType = typeof(ad3);
 	var internalCollision_getInstance = GetMethodWhere(internalWorldType, m => m.ReturnType.IsEquivalentTo(internalCollisionType));
 
+	/* Items */
+	var internalItem = typeof(lf);
+	var internalGetOtherValue = typeof(aro);
+	var internalGetClassWithFuncItems = typeof(a4w);
+
+
 	/* Internal Entities */
 	var internalEntityType = GetProperty(typeof(SimulationObjectView), "SimulationObject").PropertyType;
 

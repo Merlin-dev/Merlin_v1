@@ -1,0 +1,65 @@
+﻿<Window x:Class="Merlin.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Merlin.GUI"
+        xmlns:controls="clr-namespace:Merlin.GUI.Controls"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="800"
+        MinHeight="600"
+        Title="Merlin bot GUI" Height="914" Width="1328">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Menu -->
+            <ColumnDefinition Width="265px"/>
+            <!-- Main -->
+            <ColumnDefinition Width="*"/>
+            <!-- Stats -->
+            <ColumnDefinition Width="265px"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <!-- Header -->
+                <RowDefinition Height="90px"/>
+                <!-- Menu -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle Grid.Row="0" Fill="#ff5e3a"/>
+            <Rectangle Grid.Row="1" Fill="#f2f2f0"/>
+        </Grid>
+        
+        <Grid Grid.Column="2" Background="{StaticResource RightPanel}">
+            <Grid.RowDefinitions>
+                <!-- Switch (Invenotry, Durability) -->
+                <RowDefinition Height="90px"/>
+                <!-- Inventory list -->
+                <RowDefinition Height="*"/>
+                <!-- Spacer -->
+                <RowDefinition Height="2px"/>
+                <!-- Graph -->
+                <RowDefinition Height="60px"/>
+                <!-- Invenory % -->
+                <RowDefinition Height="90px"/>
+            </Grid.RowDefinitions>
+
+
+            <Button x:Name="PART_InvTypeSelector" Grid.Row="0"  Style="{StaticResource RightPanelButton}" Content="INVENTORY">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="_Inventory" Click="SwitchToInventory"/>
+                        <MenuItem Header="_Tools" Click="SwitchToTools"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+            <controls:ItemList x:Name="PART_InventoryView" Grid.Row="1"/>
+            <controls:Spacer Grid.Row="2"/>
+            <controls:Graph x:Name="PART_CapacityGraph" Grid.Row="3" Background="{StaticResource RightPanel}" Foreground="#515872"/>
+            <controls:InventoryCapacity x:Name="PART_CarryCapacity" Grid.Row="4" Progress="45"/>
+        </Grid>
+    </Grid>
+</Window>

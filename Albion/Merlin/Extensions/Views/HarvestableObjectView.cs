@@ -30,6 +30,11 @@ namespace Merlin
 			return instance.HarvestableObject.sj();
 		}
 
+		public static string GetResourceType(this HarvestableObjectView instance)
+		{
+			return instance.HarvestableObject.ss().u;
+		}
+
 		public static int GetRareState(this HarvestableObjectView instance)
 		{
 			return instance.HarvestableObject.sm();

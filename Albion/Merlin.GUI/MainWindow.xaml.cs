@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Merlin.Networking;
+using Merlin.Networking.Messages;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +23,22 @@ namespace Merlin.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static ObservableCollection<string> Log { get; set; } = new ObservableCollection<string> { };
+
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            Closing += MainWindow_Closing;
+
+            Logger.ItemsSource = Log;
+
+            MessageParser.RegisterReceiver(typeof(LogMessage), (data) => {
+                LogMessage lm = data.Deserialize<LogMessage>();
+                DispatchIfNecessary(() => {
+                    Log.Add($"[{lm.Level.ToString()}] {lm.Message}");
+                });
+            });
 
             for (int i = 0; i < 44; i++)
             {
@@ -34,9 +49,22 @@ namespace Merlin.GUI
            
         }
 
+        public void DispatchIfNecessary(Action action)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.Invoke(action);
+            else
+                action.Invoke();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            NetworkServer.Instance.Stop();
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            MerlinServer.Instance.Start();
+            NetworkServer.Instance.Start();
 
             PART_InvTypeSelector.ContextMenu.Width = PART_InvTypeSelector.ActualWidth;
             PART_InvTypeSelector.ContextMenuOpening += PART_InvTypeSelector_ContextMenuOpening;

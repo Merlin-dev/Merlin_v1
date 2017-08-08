@@ -1,21 +1,22 @@
 ﻿using Merlin.Networking;
+using Merlin.Networking.Messages;
 using System.Net;
 
 namespace Merlin.GUI
 {
-    public class MerlinServer
+    public class NetworkServer
     {
         #region Singleton
 
-        private static MerlinServer _instance;
+        private static NetworkServer _instance;
 
-        public static MerlinServer Instance
+        public static NetworkServer Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new MerlinServer();
+                    _instance = new NetworkServer();
                 }
                 return _instance;
             }
@@ -24,6 +25,11 @@ namespace Merlin.GUI
         #endregion Singleton
 
         private TcpServer _server;
+
+        public static void Send(IMessage message)
+        {
+            Instance._server.Send(message);
+        }
 
         public void Start()
         {

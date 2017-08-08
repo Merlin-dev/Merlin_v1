@@ -32,6 +32,8 @@
             <Rectangle Grid.Row="0" Fill="#ff5e3a"/>
             <Rectangle Grid.Row="1" Fill="#f2f2f0"/>
         </Grid>
+
+        <ListView Grid.Column="1" x:Name="Logger"></ListView>
         
         <Grid Grid.Column="2" Background="{StaticResource RightPanel}">
             <Grid.RowDefinitions>

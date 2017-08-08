@@ -133,6 +133,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimulationObjectView.tt</DependentUpon>
     </Compile>
+    <Compile Include="NetworkClient.cs" />
     <Compile Include="Pathing\AStar\AStarMap.cs" />
     <Compile Include="Pathing\AStar\AStarNode.cs" />
     <Compile Include="Pathing\AStar\AStarPathfinder.cs" />

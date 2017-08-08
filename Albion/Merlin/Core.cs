@@ -18,9 +18,12 @@ namespace Merlin
 
         public static void Load()
         {
+            NetworkClient.Instance.Start();
             _coreObject = new GameObject();
             var gatherer = _coreObject.AddComponent<Gatherer>();
             UnityEngine.Object.DontDestroyOnLoad(_coreObject);
+
+            NetworkClient.LogInfo("Merlin started");
         }
 
         public static void Unload()
@@ -33,6 +36,8 @@ namespace Merlin
             UnityEngine.Object.Destroy(_coreObject);
 
             _coreObject = null;
+            NetworkClient.LogInfo("Merlin stopped");
+            NetworkClient.Instance.Stop();
         }
 
         public static void Log(string message)

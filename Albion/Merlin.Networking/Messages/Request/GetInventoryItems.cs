@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Merlin.Networking.Messages.Request
 {
+    [Serializable]
     public struct GetInventoryItems : IMessage
     {
         public ItemType Type;
@@ -15,6 +16,7 @@ namespace Merlin.Networking.Messages.Request
         }
     }
 
+    [Serializable, Flags]
     public enum ItemType
     {
         Tool,

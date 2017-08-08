@@ -99,10 +99,6 @@ namespace Merlin
             {
                 refresh = true;
             }
-            else
-            {
-                refresh = true;
-            }
         }
 
         /// <summary>
@@ -138,27 +134,3 @@ namespace Merlin
         public override bool keepWaiting => false;
     }
 }
-        private void Start()
-        {
-            if (_client.State == GameState.Playing)
-            {
-                Client.Zoom = 130f;
-                Client.GlobalFog = false;
-            if (_client.State == GameState.Playing)
-            {
-                if (refresh)
-                {
-                    _client = Client.Instance;
-                    _world = World.Instance;
-                    _landscape = Landscape.Instance;
-                    _localPlayerCharacterView = _client.LocalPlayerCharacter;
-                    refresh = false;
-                    Client.Zoom = 130f;
-                    Client.GlobalFog = false;
-                }
-                if (DateTime.Now < _nextUpdate)
-                    return;
-
-                OnUpdate();
-
-                _nextUpdate = DateTime.Now + UpdateDelay;

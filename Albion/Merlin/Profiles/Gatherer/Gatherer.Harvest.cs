@@ -20,10 +20,10 @@ namespace Merlin.Profiles.Gatherer
         public bool ValidateHarvestable(HarvestableObjectView resource)
         {
             // Pré-fix. Need to be reworked.
-            var toolNeeded = resource.GetTool(_localPlayerCharacterView) as aro;
-            var toolDurability = a4w.b(toolNeeded.b3(), toolNeeded.b5());
+            //var toolNeeded = resource.GetTool(_localPlayerCharacterView) as aro;
+            //var toolDurability = a4w.b(toolNeeded.b3(), toolNeeded.b5());
             
-            if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier || toolDurability <= 10)
+            if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier/* || toolDurability <= 10*/)
                 return false;
 
             var position = resource.transform.position;

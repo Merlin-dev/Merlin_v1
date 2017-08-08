@@ -51,8 +51,8 @@ namespace Merlin
         {
             if (_client.State == GameState.Playing)
             {
-                Client.Zoom = 130f;
-                Client.GlobalFog = false;
+                //Client.Zoom = 130f;
+                //Client.GlobalFog = false;
             }
             OnStart();
         }
@@ -85,8 +85,8 @@ namespace Merlin
                     _landscape = Landscape.Instance;
                     _localPlayerCharacterView = _client.LocalPlayerCharacter;
                     refresh = false;
-                    Client.Zoom = 130f;
-                    Client.GlobalFog = false;
+                    //Client.Zoom = 130f;
+                    //Client.GlobalFog = false;
                 }
                 if (DateTime.Now < _nextUpdate)
                     return;

@@ -7,12 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin", "Merlin\Merlin.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin.Networking", "Merlin.Networking\Merlin.Networking.csproj", "{D5077D0C-C671-40DE-88F2-14609449F8B4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{02F8D70B-32EA-4DA2-8D33-C055A927E145}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Test\Server\Server.csproj", "{2974F868-6902-4016-AE03-3B5C25881596}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Test\Client\Client.csproj", "{CFFB0C95-C910-45D9-80C7-FD4ECAED1DCA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,20 +21,8 @@ Global
 		{D5077D0C-C671-40DE-88F2-14609449F8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5077D0C-C671-40DE-88F2-14609449F8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5077D0C-C671-40DE-88F2-14609449F8B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2974F868-6902-4016-AE03-3B5C25881596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2974F868-6902-4016-AE03-3B5C25881596}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2974F868-6902-4016-AE03-3B5C25881596}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2974F868-6902-4016-AE03-3B5C25881596}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFFB0C95-C910-45D9-80C7-FD4ECAED1DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFFB0C95-C910-45D9-80C7-FD4ECAED1DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFFB0C95-C910-45D9-80C7-FD4ECAED1DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFFB0C95-C910-45D9-80C7-FD4ECAED1DCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{2974F868-6902-4016-AE03-3B5C25881596} = {02F8D70B-32EA-4DA2-8D33-C055A927E145}
-		{CFFB0C95-C910-45D9-80C7-FD4ECAED1DCA} = {02F8D70B-32EA-4DA2-8D33-C055A927E145}
 	EndGlobalSection
 EndGlobal

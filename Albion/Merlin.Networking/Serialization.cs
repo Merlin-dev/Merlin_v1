@@ -2,37 +2,30 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace Merlin.Networking
 {
     public static class Serialization
     {
+        private static BinaryFormatter formatter = new BinaryFormatter();
+
         public static byte[] Serialize<T>(this T str) where T : IMessage
         {
-            int size = Marshal.SizeOf(str);
-            byte[] arr = new byte[size];
-
-            IntPtr ptr = Marshal.AllocHGlobal(size);
-            Marshal.StructureToPtr(str, ptr, true);
-            Marshal.Copy(ptr, arr, 0, size);
-            Marshal.FreeHGlobal(ptr);
-            return arr;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                formatter.Serialize(ms, str);
+                return ms.ToArray();
+            }
         }
 
         public static T Deserialize<T>(this byte[] arr) where T : IMessage
         {
-            T str = default(T);
-
-            int size = Marshal.SizeOf(str);
-            IntPtr ptr = Marshal.AllocHGlobal(size);
-
-            Marshal.Copy(arr, 0, ptr, size);
-
-            str = (T)Marshal.PtrToStructure(ptr, str.GetType());
-            Marshal.FreeHGlobal(ptr);
-
-            return str;
+            using (MemoryStream ms = new MemoryStream(arr))
+            {
+                return (T)formatter.Deserialize(ms);
+            }
         }
 
         public static void Write(this Stream stream, string data)

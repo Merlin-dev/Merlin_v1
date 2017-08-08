@@ -24,6 +24,7 @@ namespace Merlin.GUI
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+
             for (int i = 0; i < 44; i++)
             {
                 PART_CapacityGraph.Add((int)((i/44f) * 200));
@@ -35,6 +36,8 @@ namespace Merlin.GUI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            MerlinServer.Instance.Start();
+
             PART_InvTypeSelector.ContextMenu.Width = PART_InvTypeSelector.ActualWidth;
             PART_InvTypeSelector.ContextMenuOpening += PART_InvTypeSelector_ContextMenuOpening;
             PART_InvTypeSelector.PreviewMouseLeftButtonUp += PART_InvTypeSelector_PreviewMouseLeftButtonUp;

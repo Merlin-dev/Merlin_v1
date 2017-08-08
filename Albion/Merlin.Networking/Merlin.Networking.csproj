@@ -40,7 +40,9 @@
   <ItemGroup>
     <Compile Include="IPEndPointParser.cs" />
     <Compile Include="MessageParser.cs" />
+    <Compile Include="Messages\Request\GetInventoryItems.cs" />
     <Compile Include="Messages\IMessage.cs" />
+    <Compile Include="Messages\Response\GetInventoryItems.cs" />
     <Compile Include="Messages\TestingMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization.cs" />
@@ -48,5 +50,6 @@
     <Compile Include="TcpServer.cs" />
     <Compile Include="ValueWrapper.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

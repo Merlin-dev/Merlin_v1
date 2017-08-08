@@ -4,6 +4,7 @@
     {
         Restart,
         DiscoveredResource,
+        BankDone,
         DepletedResource,
         Overweight,
         EncounteredAttacker,

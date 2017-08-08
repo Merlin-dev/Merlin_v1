@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
@@ -18,8 +19,12 @@ namespace Merlin.Profiles.Gatherer
         #region Methods
 
         public bool ValidateHarvestable(HarvestableObjectView resource)
-        {                       
-            if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier)
+        {
+            //Seems not to work anymore (I know it worked^^)
+            //var toolNeeded = resource.GetTool(_localPlayerCharacterView) as aro;
+            //var toolDurability = a4w.b(toolNeeded.b3(), toolNeeded.b5());
+
+            if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier)// || toolDurability <= 10)
                 return false;
 
             var position = resource.transform.position;
@@ -128,9 +133,7 @@ namespace Merlin.Profiles.Gatherer
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlocked, out List<Vector3> pathing))
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
                 else
-                {
                     _state.Fire(Trigger.DepletedResource);
-                }
 
                 return;
             }

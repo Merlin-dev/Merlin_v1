@@ -1,6 +1,7 @@
 ﻿using Stateless;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -8,14 +9,26 @@ namespace Merlin.Profiles.Gatherer
     {
         #region Fields
 
-        private StateMachine<State, Trigger> _state;
-        private Dictionary<SimulationObjectView, Blacklisted> _blacklist;
+        bool _isRunning;
+        int _selectedTownClusterIndex;
+        int _selectedMininumTierIndex;
+        StateMachine<State, Trigger> _state;
+        Dictionary<SimulationObjectView, Blacklisted> _blacklist;
+        Dictionary<GatherInformation, bool> _gatherInformations;
 
         #endregion Fields
 
         #region Properties and Events
 
         public override string Name => "Gatherer";
+
+        public string[] TownClusterNames { get { return Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray(); } }
+
+        public string[] TierNames { get { return Enum.GetNames(typeof(Tier)).ToArray(); } }
+
+        public string SelectedTownCluster { get { return TownClusterNames[_selectedTownClusterIndex]; } }
+
+        public Tier SelectedMinimumTier { get { return (Tier)Enum.Parse(typeof(Tier), TierNames[_selectedMininumTierIndex]); } }
 
         #endregion Properties and Events
 
@@ -24,6 +37,17 @@ namespace Merlin.Profiles.Gatherer
         protected override void OnStart()
         {
             _blacklist = new Dictionary<SimulationObjectView, Blacklisted>();
+
+            _gatherInformations = new Dictionary<GatherInformation, bool>();
+            foreach (var resourceType in Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>())
+                foreach (var tier in Enum.GetValues(typeof(Tier)).Cast<Tier>())
+                    foreach (var enchantment in Enum.GetValues(typeof(EnchantmentLevel)).Cast<EnchantmentLevel>())
+                    {
+                        if (tier < Tier.IV && enchantment != EnchantmentLevel.White)
+                            continue;
+
+                        _gatherInformations.Add(new GatherInformation(resourceType, tier, enchantment), tier >= Tier.II);
+                    }
 
             _state = new StateMachine<State, Trigger>(State.Search);
             _state.Configure(State.Search)
@@ -39,7 +63,8 @@ namespace Merlin.Profiles.Gatherer
                 .Permit(Trigger.EncounteredAttacker, State.Combat);
 
             _state.Configure(State.Bank)
-                .Permit(Trigger.Restart, State.Search);
+                .Permit(Trigger.Restart, State.Search)
+                .Permit(Trigger.BankDone, State.Search);
         }
 
         protected override void OnStop()
@@ -52,6 +77,9 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUpdate()
         {
+            if (!_isRunning)
+                return;
+
             if (_blacklist.Count > 0)
             {
                 var whitelist = new List<SimulationObjectView>();
@@ -89,6 +117,9 @@ namespace Merlin.Profiles.Gatherer
             }
             catch (Exception e)
             {
+                if (_showErrors)
+                    _localPlayerCharacterView.CreateTextEffect($"[Error: {e.Message}]");
+
                 Core.Log(e);
             }
         }

@@ -71,7 +71,23 @@ namespace Merlin.Profiles.Gatherer
             }
             //foreach (var h in hostiles) views.Add(h);
 
-            target = views.OrderBy((view) =>
+            var filteredViews = views.Where(view =>
+            {
+                if (view is HarvestableObjectView harvestable)
+                {
+                    var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), harvestable.GetResourceType(), true);
+                    var tier = (Tier)harvestable.GetTier();
+                    var enchantmentLevel = (EnchantmentLevel)harvestable.GetRareState();
+
+                    var info = new GatherInformation(resourceType, tier, enchantmentLevel);
+
+                    return _gatherInformations[info];
+                }
+                else
+                    return false;
+            });
+
+            target = filteredViews.OrderBy((view) =>
             {
                 var playerPosition = _localPlayerCharacterView.transform.position;
                 var resourcePosition = view.transform.position;

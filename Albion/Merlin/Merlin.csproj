@@ -158,6 +158,8 @@
     <Compile Include="Pathing\Worldmap\WorldmapNode.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
     <Compile Include="Profile.cs" />
+    <Compile Include="Profiles\Combat.cs" />
+    <Compile Include="Profiles\Expedition\Expedition.cs" />
     <Compile Include="Profiles\Gatherer\Blacklisted.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Bank.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Combat.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Profiles\ClusterPathingRequest.cs" />
     <Compile Include="Profiles\Gatherer\State.cs" />
     <Compile Include="Profiles\Gatherer\Trigger.cs" />
+    <Compile Include="Profiles\ProfileSelector.cs" />
     <Compile Include="Profiles\WorldPathingRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

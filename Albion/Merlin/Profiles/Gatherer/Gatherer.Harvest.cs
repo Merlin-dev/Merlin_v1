@@ -20,11 +20,7 @@ namespace Merlin.Profiles.Gatherer
 
         public bool ValidateHarvestable(HarvestableObjectView resource)
         {
-            //Seems not to work anymore (I know it worked^^)
-            //var toolNeeded = resource.GetTool(_localPlayerCharacterView) as aro;
-            //var toolDurability = a4w.b(toolNeeded.b3(), toolNeeded.b5());
-
-            if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier)// || toolDurability <= 10)
+            if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier)
                 return false;
 
             var position = resource.transform.position;

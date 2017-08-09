@@ -60,12 +60,18 @@ namespace Merlin
 			if (instance.IsLootProtected())
 				return false;
 
+			var requiresTool = instance.RequiresTool();
 			var tool = instance.GetTool(player);
 
-			if (tool == null && instance.RequiresTool())
+			if (requiresTool && tool == null)
 				return false;
 
-			return true;
+			var toolProxy = a4w.a(tool) as a38;
+			var durability = a4w.b(tool.b3(), toolProxy.ba());
+			if (requiresTool && durability <= 10)
+				return false;
+
+            return true;
 		}
 
 		public static arp GetTool(this HarvestableObjectView instance, LocalPlayerCharacterView player)

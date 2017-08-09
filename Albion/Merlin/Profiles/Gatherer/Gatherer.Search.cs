@@ -75,7 +75,12 @@ namespace Merlin.Profiles.Gatherer
             {
                 if (view is HarvestableObjectView harvestable)
                 {
-                    var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), harvestable.GetResourceType(), true);
+                    //resourceType contains EnchantmentLevel, so we cut it off
+                    var resourceTypeString = harvestable.GetResourceType();
+                    if (resourceTypeString.Contains("_"))
+                        resourceTypeString = resourceTypeString.Substring(0, resourceTypeString.IndexOf("_"));
+
+                    var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), resourceTypeString, true);
                     var tier = (Tier)harvestable.GetTier();
                     var enchantmentLevel = (EnchantmentLevel)harvestable.GetRareState();
 
@@ -98,7 +103,7 @@ namespace Merlin.Profiles.Gatherer
                 {
                     var rareState = harvestable.GetRareState();
 
-                    if (harvestable.GetTier() >= 3) score /= 2;
+                    if (harvestable.GetTier() >= 3) score /= (harvestable.GetTier() - 1);
                     if (harvestable.GetCurrentCharges() == harvestable.GetMaxCharges()) score /= 2;
                     if (rareState > 0) score /= rareState;
                 }

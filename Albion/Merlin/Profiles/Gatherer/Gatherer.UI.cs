@@ -59,6 +59,11 @@ namespace Merlin.Profiles.Gatherer
             if (GUILayout.Button(_isRunning ? "Stop Gathering" : "Start Gathering"))
             {
                 _isRunning = !_isRunning;
+                if (_isRunning)
+                {
+                    _localPlayerCharacterView.CreateTextEffect("[Restart]");
+                    _state.Fire(Trigger.Restart);
+                }
 
                 if (!_zoom.HasValue)
                     _zoom = Client.Zoom;

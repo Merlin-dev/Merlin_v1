@@ -54,7 +54,7 @@ namespace Merlin
 				return false;
 
 			var toolProxy = a4x.a(tool) as a39;
-			var durability = a4x.b(tool.b3(), toolProxy.ba());
+			var durability = toolProxy != null ? a4x.b(tool.b3(), toolProxy.ba()) : -1;
 			if (requiresTool && durability <= 10)
 				return false;
 

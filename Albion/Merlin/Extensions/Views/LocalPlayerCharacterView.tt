@@ -172,10 +172,12 @@ namespace Merlin
 
 		public static bool IsMounting(this LocalPlayerCharacterView instance)
 		{
-			if (instance.LocalPlayerCharacter.v6().f() != 21)
-				return false;
+			return instance.LocalPlayerCharacter.ve(); 
+		}
 
-			return true;
+		public static bool IsMounted(this LocalPlayerCharacterView instance)
+		{
+			return instance.LocalPlayerCharacter.u3(); 
 		}
 
 		public static bool IsCastingSpell(this LocalPlayerCharacterView instance)

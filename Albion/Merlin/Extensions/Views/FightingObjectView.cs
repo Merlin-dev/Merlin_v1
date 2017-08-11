@@ -15,7 +15,7 @@ namespace Merlin
 
 		static FightingObjectViewExtensions()
 		{
-			_getEventHandler = typeof(asf).GetMethod("xk");
+			_getEventHandler = typeof(asf).GetMethod("xm");
 		}
 
 		public static FightingObjectView GetAttackTarget(this FightingObjectView instance)

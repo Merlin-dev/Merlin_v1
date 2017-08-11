@@ -4,8 +4,8 @@ using System.Linq;
 using Merlin.API;
 using Stateless;
 using UnityEngine;
-using SpellCategory = gy.SpellCategory;
-using SpellTarget = gy.SpellTarget;
+using SpellCategory = gz.SpellCategory;
+using SpellTarget = gz.SpellTarget;
 
 namespace Merlin.Profiles {
 	class Combat {

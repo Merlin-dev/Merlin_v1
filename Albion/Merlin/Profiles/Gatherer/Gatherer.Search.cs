@@ -71,7 +71,28 @@ namespace Merlin.Profiles.Gatherer
             }
             //foreach (var h in hostiles) views.Add(h);
 
-            target = views.OrderBy((view) =>
+            var filteredViews = views.Where(view =>
+            {
+                if (view is HarvestableObjectView harvestable)
+                {
+                    //resourceType contains EnchantmentLevel, so we cut it off
+                    var resourceTypeString = harvestable.GetResourceType();
+                    if (resourceTypeString.Contains("_"))
+                        resourceTypeString = resourceTypeString.Substring(0, resourceTypeString.IndexOf("_"));
+
+                    var resourceType = (ResourceType)Enum.Parse(typeof(ResourceType), resourceTypeString, true);
+                    var tier = (Tier)harvestable.GetTier();
+                    var enchantmentLevel = (EnchantmentLevel)harvestable.GetRareState();
+
+                    var info = new GatherInformation(resourceType, tier, enchantmentLevel);
+
+                    return _gatherInformations[info];
+                }
+                else
+                    return false;
+            });
+
+            target = filteredViews.OrderBy((view) =>
             {
                 var playerPosition = _localPlayerCharacterView.transform.position;
                 var resourcePosition = view.transform.position;
@@ -82,7 +103,7 @@ namespace Merlin.Profiles.Gatherer
                 {
                     var rareState = harvestable.GetRareState();
 
-                    if (harvestable.GetTier() >= 3) score /= 2;
+                    if (harvestable.GetTier() >= 3) score /= (harvestable.GetTier() - 1);
                     if (harvestable.GetCurrentCharges() == harvestable.GetMaxCharges()) score /= 2;
                     if (rareState > 0) score /= rareState;
                 }

@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -27,27 +14,32 @@ namespace Merlin
 
 		public static int GetTier(this HarvestableObjectView instance)
 		{
-			return instance.HarvestableObject.sj();
+			return instance.HarvestableObject.sk();
+		}
+
+		public static string GetResourceType(this HarvestableObjectView instance)
+		{
+			return instance.HarvestableObject.st().u;
 		}
 
 		public static int GetRareState(this HarvestableObjectView instance)
 		{
-			return instance.HarvestableObject.sm();
+			return instance.HarvestableObject.sn();
 		}
 
 		public static int GetCurrentCharges(this HarvestableObjectView instance)
 		{
-			return (int)instance.HarvestableObject.si();
+			return (int)instance.HarvestableObject.sj();
 		}
 
 		public static long GetMaxCharges(this HarvestableObjectView instance)
 		{
-			return instance.HarvestableObject.so();
+			return instance.HarvestableObject.sp();
 		}
 
 		public static bool IsLootProtected(this HarvestableObjectView instance)
 		{
-			return !instance.HarvestableObject.sq();
+			return !instance.HarvestableObject.sr();
 		}
 
 		public static bool CanLoot(this HarvestableObjectView instance, LocalPlayerCharacterView player)
@@ -55,22 +47,28 @@ namespace Merlin
 			if (instance.IsLootProtected())
 				return false;
 
+			var requiresTool = instance.RequiresTool();
 			var tool = instance.GetTool(player);
 
-			if (tool == null && instance.RequiresTool())
+			if (requiresTool && tool == null)
+				return false;
+
+			var toolProxy = a4x.a(tool) as a39;
+			var durability = toolProxy != null ? a4x.b(tool.b3(), toolProxy.ba()) : -1;
+			if (requiresTool && durability <= 10)
 				return false;
 
 			return true;
 		}
 
-		public static arp GetTool(this HarvestableObjectView instance, LocalPlayerCharacterView player)
+		public static arq GetTool(this HarvestableObjectView instance, LocalPlayerCharacterView player)
 		{
 			return instance.HarvestableObject.az(player.LocalPlayerCharacter, true);
 		}
 
 		public static bool RequiresTool(this HarvestableObjectView instance)
 		{
-			return instance.HarvestableObject.sd().ak();
+			return instance.HarvestableObject.se().ak();
 		}
 	}
 }

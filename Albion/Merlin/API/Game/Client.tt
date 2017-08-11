@@ -111,7 +111,7 @@ namespace Merlin.API
 
 		#region Methods
 
-		public SimulationObjectView GetEntity(arj entity) => _client.<#= internalClient_getSimulationObjectViewByEntity.Name #>(entity);
+		public SimulationObjectView GetEntity(ark entity) => _client.<#= internalClient_getSimulationObjectViewByEntity.Name #>(entity);
 
 		public SimulationObjectView GetEntity(long id)
 		{

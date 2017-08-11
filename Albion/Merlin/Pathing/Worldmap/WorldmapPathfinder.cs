@@ -38,7 +38,7 @@ namespace Merlin.Pathing.Worldmap
 
             foreach (var exit in currentClusterExits)
             {
-                if (exit.Kind != ake.Kind.Cluster)
+                if (exit.Kind != akf.Kind.Cluster)
                     continue;
 
                 var exitCluster = _world.GetCluster(exit.Destination.Internal);
@@ -57,8 +57,8 @@ namespace Merlin.Pathing.Worldmap
 
             switch (pvpRules)
             {
-                case iy.PvpRules.PvpForced: return Int32.MaxValue;
-                case iy.PvpRules.PvpAllowed: return 1;
+                case iz.PvpRules.PvpForced: return Int32.MaxValue;
+                case iz.PvpRules.PvpAllowed: return 1;
             }
 
             return 1;

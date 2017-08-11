@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
@@ -18,7 +19,7 @@ namespace Merlin.Profiles.Gatherer
         #region Methods
 
         public bool ValidateHarvestable(HarvestableObjectView resource)
-        {                       
+        {
             if (!resource.CanLoot(_localPlayerCharacterView) || resource.GetCurrentCharges() <= 0 || resource.GetTier() < _minimumHarvestableTier)
                 return false;
 
@@ -128,9 +129,7 @@ namespace Merlin.Profiles.Gatherer
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlocked, out List<Vector3> pathing))
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
                 else
-                {
                     _state.Fire(Trigger.DepletedResource);
-                }
 
                 return;
             }

@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -25,7 +12,7 @@ namespace Merlin
 			var mountPosition = mount.transform.position;
 			var distance = (position - mountPosition).magnitude;
 
-			var desiredRange = mount.MountObject.sa().eg();
+			var desiredRange = mount.MountObject.sb().eg();
 
 			if (distance > desiredRange)
 				return false;

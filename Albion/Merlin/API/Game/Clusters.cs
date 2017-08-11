@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +16,7 @@ namespace Merlin.API
 
 		#region Fields
 
-		private akd _cluster;
+		private ake _cluster;
 
 		#endregion
 
@@ -45,15 +32,15 @@ namespace Merlin.API
 		public string Name => _cluster.an();
 		public string InternalName => _cluster.ak();
 
-		public iy.PvpRules PvPRules => _cluster.aq().ap();
+		public iz.PvpRules PvPRules => _cluster.aq().ap();
 
-		public akd Internal => _cluster;
+		public ake Internal => _cluster;
 
 		#endregion
 
 		#region Constructors and Cleanup
 		
-		public Cluster(akd cluster)
+		public Cluster(ake cluster)
 		{
 			_cluster = cluster;
 		}
@@ -83,7 +70,7 @@ namespace Merlin.API
 
 		#region Fields
 
-		private ake _clusterExit;
+		private akf _clusterExit;
 
 		#endregion
 
@@ -94,15 +81,15 @@ namespace Merlin.API
 
 		public bool IsRestricted => _clusterExit.u();
 
-		public ake.Kind Kind => _clusterExit.r();
+		public akf.Kind Kind => _clusterExit.r();
 
-		public ake Internal => _clusterExit;
+		public akf Internal => _clusterExit;
 
 		#endregion
 
 		#region Constructors and Cleanup
 		
-		public ClusterExit(ake clusterExit)
+		public ClusterExit(akf clusterExit)
 		{
 			_clusterExit = clusterExit;
 		}

@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +15,7 @@ namespace Merlin.API
 		#region Fields
 
 		private LocalPlayerCharacterView _owner;
-		private adt _internalSpell;
+		private adu _internalSpell;
 		private SpellSlotIndex _slot;
 
 		#endregion
@@ -63,7 +50,7 @@ namespace Merlin.API
 			}
 		}
 
-		public gy.SpellCategory Category
+		public gz.SpellCategory Category
 		{
 			get
 			{
@@ -72,11 +59,11 @@ namespace Merlin.API
 				if (configuration != null)
 					return configuration.Category;
 
-				return gy.SpellCategory.None;
+				return gz.SpellCategory.None;
 			}
 		}
 
-		public gy.SpellTarget Target
+		public gz.SpellTarget Target
 		{
 			get
 			{
@@ -85,7 +72,7 @@ namespace Merlin.API
 				if (configuration != null)
 					return configuration.Target;
 
-				return gy.SpellTarget.None;
+				return gz.SpellTarget.None;
 			}
 		}
 
@@ -108,7 +95,7 @@ namespace Merlin.API
 
 		#region Constructors and Cleanup
 		
-		public Spell(LocalPlayerCharacterView owner, adt internalSpell, SpellSlotIndex slot)
+		public Spell(LocalPlayerCharacterView owner, adu internalSpell, SpellSlotIndex slot)
 		{
 			_owner = owner;
 			_internalSpell = internalSpell;
@@ -130,7 +117,7 @@ namespace Merlin.API
 
 		#region Fields
 
-		private gz _internalConfiguration;
+		private g0 _internalConfiguration;
 
 		#endregion
 
@@ -147,25 +134,25 @@ namespace Merlin.API
 			}
 		}
 
-		public gy.SpellCategory Category
+		public gz.SpellCategory Category
 		{
 			get
 			{
 				if (_internalConfiguration != null)
 					return _internalConfiguration.d4;
 
-				return gy.SpellCategory.None;
+				return gz.SpellCategory.None;
 			}
 		}
 
-		public gy.SpellTarget Target
+		public gz.SpellTarget Target
 		{
 			get
 			{
 				if (_internalConfiguration != null)
 					return _internalConfiguration.d1;
 
-				return gy.SpellTarget.None;
+				return gz.SpellTarget.None;
 			}
 		}
 
@@ -184,7 +171,7 @@ namespace Merlin.API
 
 		#region Constructors and Cleanup
 		
-		public SpellConfiguration(gz internalConfiguration)
+		public SpellConfiguration(g0 internalConfiguration)
 		{
 			_internalConfiguration = internalConfiguration;
 		}
@@ -203,12 +190,12 @@ namespace Merlin.API
 			return spells.Where<Spell>(spell => spell.SpellSlot == spellSlot);
 		}
 
-		public static IEnumerable<Spell> Category(this IEnumerable<Spell> spells, gy.SpellCategory category)
+		public static IEnumerable<Spell> Category(this IEnumerable<Spell> spells, gz.SpellCategory category)
 		{
 			return spells.Where<Spell>(spell => spell.Category == category);
 		}
 
-		public static IEnumerable<Spell> Target(this IEnumerable<Spell> spells, gy.SpellTarget target)
+		public static IEnumerable<Spell> Target(this IEnumerable<Spell> spells, gz.SpellTarget target)
 		{
 			return spells.Where<Spell>(spell => spell.Target == target);
 		}

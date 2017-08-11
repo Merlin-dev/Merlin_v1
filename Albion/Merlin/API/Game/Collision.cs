@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -28,7 +15,7 @@ namespace Merlin.API
 		{
 			get
 			{
-				var internalCollision = ala.a().w();
+				var internalCollision = alb.a().w();
 
 				if (internalCollision != null)
 					return new Collision(internalCollision);
@@ -45,13 +32,13 @@ namespace Merlin.API
 
 		#region Properties and Events
 
-		private ad3 _collision;
+		private ad4 _collision;
 
 		#endregion
 
 		#region Constructors and Cleanup
 
-		protected Collision(ad3 collision)
+		protected Collision(ad4 collision)
 		{
 			_collision = collision;
 		}

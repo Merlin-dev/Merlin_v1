@@ -51,7 +51,7 @@
 	}
 
 	/* Client */
-	var internalClientType = typeof(a6n);
+	var internalClientType = typeof(a6o);
 	var internalClient_getInstance = GetStaticMethod(internalClientType, m => m.ReturnType.IsEquivalentTo(internalClientType));
 	var internalClient_getState = GetMethod(internalClientType, "w");
 	var internalClient_getLocalPlayerCharacterView = GetMethod(internalClientType, "v");
@@ -64,33 +64,33 @@
 	}).FirstOrDefault();
 
 	/* World */
-	var internalWorldType = typeof(ala);
+	var internalWorldType = typeof(alb);
 	var internalWorld_getInstance = GetStaticMethod(internalWorldType, m => m.ReturnType.IsEquivalentTo(internalWorldType));
 
 	var internalClusterType = GetMethod(typeof(WorldMap.Worldmap), "IsWorldmapCluster").GetParameters()[0].ParameterType;
-	var internalClusterExitType = typeof(ake);
+	var internalClusterExitType = typeof(akf);
 	var internalWorld_getCurrentCluster = GetMethodWhere(internalWorldType, m => m.ReturnType.IsEquivalentTo(internalClusterType));
 
 	
 
 	/* Landscape */
-	var internalLandscapeType = typeof(a6k);
+	var internalLandscapeType = typeof(a6l);
 	var internalLandscape_getInstance = GetMethodWhere(internalClientType, m => m.ReturnType.IsEquivalentTo(internalLandscapeType));
 
-	var internalCollisionType = typeof(ad3);
+	var internalCollisionType = typeof(ad4);
 	var internalCollision_getInstance = GetMethodWhere(internalWorldType, m => m.ReturnType.IsEquivalentTo(internalCollisionType));
 
 	/* Items */
-	var internalItem = typeof(lf);
-	var internalGetOtherValue = typeof(aro);
-	var internalGetClassWithFuncItems = typeof(a4w);
+	var internalItem = typeof(lg);
+	var internalGetOtherValue = typeof(arp);
+	var internalGetClassWithFuncItems = typeof(a4x);
 
 
 	/* Internal Entities */
 	var internalEntityType = GetProperty(typeof(SimulationObjectView), "SimulationObject").PropertyType;
 
 	var internalFightingType = GetProperty(typeof(FightingObjectView), "FightingObject").PropertyType;
-	var internalFightingType_GetAttackerId = GetMethod(internalFightingType, "v8"); 
+	var internalFightingType_GetAttackerId = GetMethod(internalFightingType, "wa"); 
 
 	var internalMobType = GetProperty(typeof(MobView), "Mob").PropertyType;
 
@@ -98,7 +98,7 @@
 
 	var internalHarvestType = typeof(HarvestableObjectView).GetProperty("HarvestableObject").PropertyType;
 
-	var internalitemType = typeof(arp);
+	var internalitemType = typeof(arq);
 
 	/* Events */
 	var internalEventHandlerType = GetField(internalFightingType, "ba").FieldType.GetGenericArguments()[1];
@@ -107,6 +107,6 @@
 	var internalLocalPlayerCharacterViewType = typeof(LocalPlayerCharacterView).GetProperty("LocalPlayerCharacter").PropertyType;
 
 	/* */
-	var internalSpellType = typeof(adt);
-	var internalSpellConfigurationType = typeof(gz);
+	var internalSpellType = typeof(adu);
+	var internalSpellConfigurationType = typeof(g0);
 #>

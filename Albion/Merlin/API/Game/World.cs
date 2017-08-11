@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -21,7 +8,7 @@ using WorldMap;
 
 namespace Merlin.API
 {
-	/* Internal Type: ala */
+	/* Internal Type: alb */
 	public class World
 	{
 		#region Static
@@ -30,7 +17,7 @@ namespace Merlin.API
 		{
 			get 
 			{ 
-				var internalWorld = ala.a();
+				var internalWorld = alb.a();
 
 				if (internalWorld != null)
 					return new World(internalWorld);
@@ -44,7 +31,7 @@ namespace Merlin.API
 
 		static World()
 		{
-			_getEntitiesCollection = typeof(ala).GetMethod("ai", BindingFlags.NonPublic | BindingFlags.Instance);
+			_getEntitiesCollection = typeof(alb).GetMethod("ai", BindingFlags.NonPublic | BindingFlags.Instance);
 			_getWorldmapClusters = typeof(Worldmap).GetField("c", BindingFlags.NonPublic | BindingFlags.Instance);
 		}
 
@@ -52,7 +39,7 @@ namespace Merlin.API
 
 		#region Fields
 
-		private ala _internal;
+		private alb _internal;
 
 		#endregion
 
@@ -64,7 +51,7 @@ namespace Merlin.API
 
 		#region Constructors and Cleanup
 
-		protected World(ala world)
+		protected World(alb world)
 		{
 			_internal = world;
 		}
@@ -73,9 +60,9 @@ namespace Merlin.API
 
 		#region Methods
 
-		public Dictionary<long, arj> GetEntities() 
+		public Dictionary<long, ark> GetEntities() 
 		{
-			return _getEntitiesCollection.Invoke(_internal, new object[] { }) as Dictionary<long, arj>;
+			return _getEntitiesCollection.Invoke(_internal, new object[] { }) as Dictionary<long, ark>;
 		}
 
 		public Dictionary<string, WorldmapCluster> GetClusters()
@@ -83,7 +70,7 @@ namespace Merlin.API
 			return _getWorldmapClusters.GetValue(GameGui.Instance.WorldMap) as Dictionary<string, WorldmapCluster>;
 		}
 
-		public WorldmapCluster GetCluster(akd info)
+		public WorldmapCluster GetCluster(ake info)
 		{
 			var clusters = GetClusters();
 

@@ -16,7 +16,13 @@ namespace Merlin.API.Reflection
                 Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
                 for (int i = 0; i < assemblies.Length; i++)
                 {
-                    Type type = FindTypeByName(assemblies[i], name);
+                    /*Type type = FindTypeByName(assemblies[i], name);
+                    if (type != null)
+                    {
+                        return type;
+                    }*/
+                    Type type = Type.ReflectionOnlyGetType(name + ", " + assemblies[i].GetName().Name, false, true);
+
                     if (type != null)
                     {
                         return type;
@@ -29,7 +35,7 @@ namespace Merlin.API.Reflection
             return null;
         }
 
-        public static Type FindTypeByName(Assembly assembly, string name)
+        /*public static Type FindTypeByName(Assembly assembly, string name)
         {
             try
             {
@@ -68,7 +74,7 @@ namespace Merlin.API.Reflection
             }
             return null;
         }
-
+        
         public static Type FindTypeByName(Type type, string name)
         {
             if (type.FullName.Equals(name))
@@ -93,7 +99,7 @@ namespace Merlin.API.Reflection
             }
             return null;
         }
-
+        */
         public static string SignatureOf(MethodInfo md)
         {
             StringBuilder signature = new StringBuilder();

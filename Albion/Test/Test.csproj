@@ -43,6 +43,9 @@
     <Reference Include="Assembly-UnityScript">
       <HintPath>..\Dependencies\Assembly-UnityScript.dll</HintPath>
     </Reference>
+    <Reference Include="JsonFx.Json">
+      <HintPath>..\Dependencies\JsonFx.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Photon3Unity3D">
       <HintPath>..\Dependencies\Photon3Unity3D.dll</HintPath>
     </Reference>

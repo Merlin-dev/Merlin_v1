@@ -8,14 +8,7 @@ namespace Merlin.API.Reflection
     [Serializable]
     public sealed class PropertyMapping
     {
-        /// <summary>
-        /// Obfuscated property name
-        /// </summary>
-        public string Obfuscated;
-
-        /// <summary>
-        /// Refactored property name
-        /// </summary>
         public string Refactored;
+        public string Obfuscated;
     }
 }

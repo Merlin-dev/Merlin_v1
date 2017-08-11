@@ -1,8 +1,7 @@
-﻿using System;
+﻿using JsonFx.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Merlin.API.Reflection
 {
@@ -13,14 +12,14 @@ namespace Merlin.API.Reflection
         private Dictionary<string, string> obfTypeDictionary = new Dictionary<string, string>();
 
         private Dictionary<string, List<FieldMapping>> fields = new Dictionary<string, List<FieldMapping>>();
-        private Dictionary<string, List<MethodMapping>> methods = new Dictionary<string, List<MethodMapping>>();
+        public Dictionary<string, List<MethodMapping>> methods = new Dictionary<string, List<MethodMapping>>();
         private Dictionary<string, List<PropertyMapping>> properties = new Dictionary<string, List<PropertyMapping>>();
 
-        private Dictionary<string, Dictionary<string, object>> methodEmitCache = new Dictionary<string, Dictionary<string, object>>();
-        private Dictionary<string, Dictionary<string, object>> getterEmitCache = new Dictionary<string, Dictionary<string, object>>();
         private Dictionary<string, Dictionary<string, MethodInfo>> methodInfoCache = new Dictionary<string, Dictionary<string, MethodInfo>>();
         private Dictionary<string, Dictionary<string, FieldInfo>> fieldInfoCache = new Dictionary<string, Dictionary<string, FieldInfo>>();
         private Dictionary<string, Dictionary<string, PropertyInfo>> propInfoCache = new Dictionary<string, Dictionary<string, PropertyInfo>>();
+
+        public string Version = null;
 
         public Type FindType(string name)
         {
@@ -115,8 +114,6 @@ namespace Merlin.API.Reflection
 
         public FieldInfo FindGenericField(string parent, string name, Type[] types) => FindGenericField(FindType(parent), name, types);
 
-        //Emmiters
-
         public MethodInfo FindMethod(Type type, string name)
         {
             if (!obfTypeDictionary.TryGetValue(type.FullName, out string refType))
@@ -143,7 +140,7 @@ namespace Merlin.API.Reflection
             {
                 if (c.Refactored == name)
                 {
-                    if (c.Signature == null)
+                    if (String.IsNullOrEmpty(c.Signature))
                     {
                         MethodInfo info = type.GetMethod(c.Obfuscated, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                         cache.Add(name, info);
@@ -154,7 +151,7 @@ namespace Merlin.API.Reflection
                     for (int i = 0; i < methods.Length; i++)
                     {
                         MethodInfo cm = methods[i];
-                        if (cm.Name == c.Obfuscated && Utils.SignatureOf(cm) == c.Signature)
+                        if (cm.Name == c.Obfuscated && Utils.SignatureOf(cm).Equals(c.Signature))
                         {
                             cache.Add(name, cm);
                             return cm;
@@ -195,7 +192,7 @@ namespace Merlin.API.Reflection
             {
                 if(c.Refactored == name)
                 {
-                    if (c.Signature == null)
+                    if (String.IsNullOrEmpty(c.Signature))
                     {
                         MethodInfo info = type.GetMethod(c.Obfuscated, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                         cache.Add(name, info);
@@ -206,7 +203,7 @@ namespace Merlin.API.Reflection
                     for (int i = 0; i < methods.Length; i++)
                     {
                         MethodInfo cm = methods[i];
-                        if(cm.Name == c.Obfuscated && Utils.SignatureOf(cm) == c.Signature)
+                        if(cm.Name == c.Obfuscated &&   Utils.SignatureOf(cm).Equals(c.Signature))
                         {
                             cache.Add(name, cm);
                             return cm;
@@ -261,22 +258,35 @@ namespace Merlin.API.Reflection
 
         public bool IsSubclass(string type, object obj) => IsSubclass(FindType(type), obj);
 
-
-        public void Temporary_AddType(TypeMapping hook)
+        public static ReflectionPool FromJson(string json)
         {
-            typeDictionary.Add(hook.Refactored, hook.Obfuscated);
-            fields.Add(hook.Refactored, hook.Fields);
-            methods.Add(hook.Refactored, hook.Methods);
-            properties.Add(hook.Refactored, hook.Properties);
+            ReflectionPool pool = new ReflectionPool();
+            ClientMap map = JsonReader.Deserialize<ClientMap>(json);
 
-            foreach (var c in typeDictionary)
+            pool.Version = map.Version;
+
+            System.IO.File.WriteAllText("cluster_map.json", JsonWriter.Serialize(map));
+
+            foreach (TypeMapping type in map.Types)
             {
-                if (!obfTypeDictionary.ContainsKey(c.Value))
+                if (!pool.typeDictionary.ContainsKey(type.Refactored))
                 {
-                    obfTypeDictionary.Add(c.Value, c.Key);
+                    pool.typeDictionary.Add(type.Refactored, type.Obfuscated);
+                    pool.fields.Add(type.Refactored, type.Fields);
+                    pool.methods.Add(type.Refactored, type.Methods);
+                    pool.properties.Add(type.Refactored, type.Properties);
                 }
             }
-        }
 
+            foreach (var c in pool.typeDictionary)
+            {
+                if (!pool.obfTypeDictionary.ContainsKey(c.Value))
+                {
+                    pool.obfTypeDictionary.Add(c.Value, c.Key);
+                }
+            }
+
+            return pool;
+        }
     }
 }

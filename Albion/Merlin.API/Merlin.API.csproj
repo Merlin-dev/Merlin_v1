@@ -62,7 +62,59 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveSpellDescriptor.cs" />
+    <Compile Include="AgentDescriptor.cs" />
+    <Compile Include="AgentsDataFile.cs" />
+    <Compile Include="AgentTypeDescriptor.cs" />
+    <Compile Include="CastSpellDescriptor.cs" />
+    <Compile Include="ChannelSpellDescriptor.cs" />
+    <Compile Include="Circle.cs" />
+    <Compile Include="ClusterDescriptor.cs" />
+    <Compile Include="ClusterExitDescriptor.cs" />
+    <Compile Include="ClusterTypeDescriptor.cs" />
+    <Compile Include="CollisionManager.cs" />
+    <Compile Include="DataFile.cs" />
+    <Compile Include="DurableItemDescriptor.cs" />
+    <Compile Include="Duration.cs" />
+    <Compile Include="EquipmentItemDescriptor.cs" />
+    <Compile Include="FightingObject.cs" />
+    <Compile Include="GameData.cs" />
+    <Compile Include="GameDataFile.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="HarvestableChargeDescriptor.cs" />
+    <Compile Include="HarvestableDescriptor.cs" />
+    <Compile Include="HarvestableObject.cs" />
+    <Compile Include="HarvestableRareStateDescriptor.cs" />
+    <Compile Include="HarvestableTierDescriptor.cs" />
+    <Compile Include="InventoryItemObject.cs" />
+    <Compile Include="ItemDescriptor.cs" />
+    <Compile Include="ItemsDataFile.cs" />
+    <Compile Include="LandscapeManager.cs" />
+    <Compile Include="LocalPlayerCharacter.cs" />
+    <Compile Include="LootObject.cs" />
+    <Compile Include="MountItemDescriptor.cs" />
+    <Compile Include="MountObject.cs" />
+    <Compile Include="MovingObject.cs" />
+    <Compile Include="NpcCharacter.cs" />
+    <Compile Include="ObjectManager.cs" />
+    <Compile Include="PassiveSpellDescriptor.cs" />
+    <Compile Include="PhotonClient.cs" />
+    <Compile Include="PlayerCharacter.cs" />
+    <Compile Include="Point2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="RemotePlayerCharacter.cs" />
+    <Compile Include="SilverObject.cs" />
+    <Compile Include="SimulationObject.cs" />
+    <Compile Include="SpellDescriptor.cs" />
+    <Compile Include="SpellEffectAreaObject.cs" />
+    <Compile Include="SpellSlot.cs" />
+    <Compile Include="StaticObject.cs" />
+    <Compile Include="TerritoryDescriptor.cs" />
+    <Compile Include="TerritoryObject.cs" />
+    <Compile Include="TimeRegionDescriptor.cs" />
+    <Compile Include="WorldDataFile.cs" />
+    <Compile Include="WorldObject.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

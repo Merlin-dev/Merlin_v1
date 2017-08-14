@@ -63,13 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\ClientMap.cs" />
-    <Compile Include="Reflection\TypeMapping.cs" />
-    <Compile Include="Reflection\FieldMapping.cs" />
-    <Compile Include="Reflection\MethodMapping.cs" />
-    <Compile Include="Reflection\PropertyMapping.cs" />
-    <Compile Include="Reflection\ReflectionPool.cs" />
-    <Compile Include="Reflection\Utils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

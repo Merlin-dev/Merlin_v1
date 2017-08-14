@@ -184,7 +184,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Merlin.API\Merlin.API.csproj">
+      <Project>{e99327cf-c734-4836-9522-89cc9cb8b443}</Project>
+      <Name>Merlin.API</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="API\Events\CastSpellEventHandler.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin", "Merlin\Merlin.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin.API", "Merlin.API\Merlin.API.csproj", "{E99327CF-C734-4836-9522-89CC9CB8B443}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin.API.Tests", "Merlin.API.Tests\Merlin.API.Tests.csproj", "{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E99327CF-C734-4836-9522-89CC9CB8B443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E99327CF-C734-4836-9522-89CC9CB8B443}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E99327CF-C734-4836-9522-89CC9CB8B443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

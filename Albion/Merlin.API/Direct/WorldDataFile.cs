@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 using UnityEngine;
 
@@ -41,6 +42,10 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public ClusterDescriptor GetCluster(string A_0) => _internal.h3((string)A_0);
+        public IEnumerable<ClusterDescriptor> GetClusters() => (IEnumerable<ClusterDescriptor>)_internal.h4();
+        public ClusterExitDescriptor GetExit(string A_0) => _internal.h4((string)A_0);
+        public TerritoryDescriptor GetTerritory(string A_0) => _internal.h5((string)A_0);
         
         #endregion
         

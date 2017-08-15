@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 using UnityEngine;
 
@@ -45,6 +46,7 @@ namespace Merlin.API.Direct
         public bool GetIsMounted() => _internal.u3();
         public bool GetIsMounting() => _internal.ve();
         public MountItemDescriptor GetMount() => _internal.u4();
+        public Guid GetUid() => _internal.@as();
         
         #endregion
         

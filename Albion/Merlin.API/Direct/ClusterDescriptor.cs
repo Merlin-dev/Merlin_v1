@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 using UnityEngine;
 
@@ -42,14 +43,14 @@ namespace Merlin.API.Direct
         #region Methods
         
         public AgentDescriptor GetAgent(Guid A_0) => _internal.ak((Guid)A_0);
-        public List<aj5> GetAgents() => _internal.a6();
-        public Point2 GetCenter_GUESS() => _internal.bk();
+        public List<AgentDescriptor> GetAgents() => new List<AgentDescriptor>(_internal.a6().Cast<AgentDescriptor>());
+        public Point2 GetCenter() => _internal.bk();
         public ClusterTypeDescriptor GetClusterType() => _internal.aq();
-        public List<akf> GetExits() => _internal.a1();
+        public List<ClusterExitDescriptor> GetExits() => new List<ClusterExitDescriptor>(_internal.a1().Cast<ClusterExitDescriptor>());
         public string GetIdent() => _internal.ak();
         public Point2 GetOrigin() => _internal.aw();
         public Point2 GetSize() => _internal.ax();
-        public List<akj> GetTerritories() => _internal.a4();
+        public List<TerritoryDescriptor> GetTerritories() => new List<TerritoryDescriptor>(_internal.a4().Cast<TerritoryDescriptor>());
         public TerritoryDescriptor GetTerritory(Guid A_0) => _internal.al((Guid)A_0);
         
         #endregion

@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 using UnityEngine;
 
@@ -45,7 +46,11 @@ namespace Merlin.API.Direct
         public ClusterDescriptor GetCurrentCluster() => _internal.u();
         public static ObjectManager GetInstance() => alb.a();
         public LocalPlayerCharacter GetLocalPlayerCharacter() => _internal.aa();
+        public SimulationObject GetObject(long A_0) => _internal.a((long)A_0);
+        public Dictionary<long,ark> GetObjectMap() => (Dictionary<long,ark>)_methodReflectionPool[0].Invoke(_internal,new object[]{});
         public IEnumerable GetObjects() => _internal.z();
+        public ICollection<SimulationObject> GetObjects<a>() where a:ark => (ICollection<SimulationObject>)_internal.ak<a>();
+        public PlayerCharacter GetPlayerCharacter(Guid A_0) => _internal.a((Guid)A_0);
         
         #endregion
         
@@ -58,7 +63,7 @@ namespace Merlin.API.Direct
         
         static ObjectManager()
         {
-            
+            _methodReflectionPool.Add(typeof(alb).GetMethod("ai", new Type[]{}));
         }
         
         #endregion

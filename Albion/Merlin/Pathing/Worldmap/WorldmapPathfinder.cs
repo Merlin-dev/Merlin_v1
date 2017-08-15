@@ -38,7 +38,7 @@ namespace Merlin.Pathing.Worldmap
 
             foreach (var exit in currentClusterExits)
             {
-                if (exit.GetKind() != akf.Kind.Cluster)
+                if (exit.GetKind() != ClusterExitKind.Cluster)
                     continue;
 
                 WorldmapCluster cluster = GameGui.Instance.WorldMap.GetCluster(exit.GetDestination().Internal.ak());
@@ -55,8 +55,8 @@ namespace Merlin.Pathing.Worldmap
 
             switch (cluster.GetClusterType().GetPvpRules())
             {
-                case iz.PvpRules.PvpForced: return Int32.MaxValue;
-                case iz.PvpRules.PvpAllowed: return 1;
+                case PvpRules.PvpForced: return Int32.MaxValue;
+                case PvpRules.PvpAllowed: return 1;
             }
 
             return 1;

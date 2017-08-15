@@ -72,7 +72,7 @@ namespace Merlin
         /// </summary>
         private void Update()
         {
-            if (_client.GetState() == (ajz)API.GameState.Playing)
+            if (_client.GetState() == GameState.Playing)
             {
                 if (refresh)
                 {

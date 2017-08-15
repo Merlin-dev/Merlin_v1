@@ -46,6 +46,8 @@ namespace Merlin.API.Direct
         public bool GetIsMounted() => _internal.u3();
         public bool GetIsMounting() => _internal.ve();
         public MountItemDescriptor GetMount() => _internal.u4();
+        public ObservableRange<ac1> GetMountHealth() => _internal.u5();
+        public ObservableRange<acz> GetReputation() => _internal.u6();
         public Guid GetUid() => _internal.@as();
         
         #endregion

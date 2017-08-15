@@ -68,6 +68,7 @@
     <Compile Include="ClusterExitDescriptor.Test.cs" />
     <Compile Include="ItemDescriptor.Test.cs" />
     <Compile Include="ObjectManager.Test.cs" />
+    <Compile Include="ObservableRange.Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpellDescriptor.Test.cs" />
     <Compile Include="TileDataFile.Test.cs" />

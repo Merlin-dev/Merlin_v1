@@ -42,6 +42,8 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public ObservableRange<ac1> GetEnergy() => _internal.v5();
+        public ObservableRange<ac1> GetHealth() => _internal.v4();
         public bool GetIsAttacking() => _internal.x0();
         public bool GetIsCasting() => _internal.xw();
         public bool GetIsDead() => _internal.jd();

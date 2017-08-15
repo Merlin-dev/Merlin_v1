@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ac2<a> */
-    public class ObservableValue<a> where a:acy
+    public class ObservableRange<a> where a:acy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -42,33 +42,38 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public float GetMaximum() => _internal.l();
+        public float GetMinimum() => _internal.k();
+        public long GetObjectId() => _internal.q();
+        public float GetValue() => _internal.r();
+        public void SetMinimum(float A_0) => _methodReflectionPool[0].Invoke(_internal,new object[]{(float)A_0});
         
         #endregion
         
         #region Constructor
         
-        public ObservableValue(ac2<a> instance)
+        public ObservableRange(ac2<a> instance)
         {
             _internal = instance;
         }
         
-        static ObservableValue()
+        static ObservableRange()
         {
-            
+            _methodReflectionPool.Add(typeof(ac2<a>).GetMethod("k", new Type[]{typeof(float)}));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator ac2<a>(ObservableValue<a> instance)
+        public static implicit operator ac2<a>(ObservableRange<a> instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ObservableValue<a>(ac2<a> instance)
+        public static implicit operator ObservableRange<a>(ac2<a> instance)
         {
-            return new ObservableValue<a>(instance);
+            return new ObservableRange<a>(instance);
         }
         
         #endregion

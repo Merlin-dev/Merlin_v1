@@ -112,7 +112,7 @@
     <Compile Include="Direct\MovingObject.cs" />
     <Compile Include="Direct\NpcCharacter.cs" />
     <Compile Include="Direct\ObjectManager.cs" />
-    <Compile Include="Direct\ObservableValue.cs" />
+    <Compile Include="Direct\ObservableRange.cs" />
     <Compile Include="Direct\PassiveSpellDescriptor.cs" />
     <Compile Include="Direct\PhotonClient.cs" />
     <Compile Include="Direct\PlayerCharacter.cs" />

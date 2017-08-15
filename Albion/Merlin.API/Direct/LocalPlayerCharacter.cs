@@ -42,6 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public ObservableRange<acy> GetCraftingFocus() => _internal.sd();
         public Point2 GetDestination() => _internal.tl();
         public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.th();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hk((byte)A_0);

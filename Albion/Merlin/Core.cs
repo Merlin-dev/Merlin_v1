@@ -1,5 +1,4 @@
-﻿using Merlin.Profiles.Gatherer;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -14,12 +13,10 @@ namespace Merlin
 
         private static Profile _activeProfile;
 
-        public static LineRenderer LineRenderer { get; set; }
-
         public static void Load()
         {
             _coreObject = new GameObject();
-            var gatherer = _coreObject.AddComponent<Gatherer>();
+            //var gatherer = _coreObject.AddComponent<Gatherer>();
             UnityEngine.Object.DontDestroyOnLoad(_coreObject);
         }
 
@@ -66,6 +63,14 @@ namespace Merlin
             _activeProfile.enabled = true;
         }
 
+        public static void Deactivate()
+        {
+            if (_activeProfile != null)
+                _activeProfile.enabled = false;
+
+            _activeProfile = null;
+        }
+
         public static void DeactivateAll()
         {
             var profiles = _coreObject.GetComponents<Profile>();
@@ -74,23 +79,6 @@ namespace Merlin
                 profile.enabled = false;
 
             _activeProfile = null;
-        }
-
-        private class VersionView : MonoBehaviour
-        {
-            private Rect _displayRectangle;
-            private Version _version;
-
-            private void Start()
-            {
-                _displayRectangle = new Rect((Screen.width / 2) - 30, 10, 100, 20);
-                _version = Assembly.Load("Merlin").GetName().Version;
-            }
-
-            private void OnGUI()
-            {
-                GUI.Label(_displayRectangle, _version.ToString());
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Merlin.API;
+﻿using Merlin.API.Direct;
 using System;
 using System.Collections.Generic;
 using WorldMap;
@@ -11,7 +11,7 @@ namespace Merlin.Pathing.Worldmap
     {
         #region Fields
 
-        private World _world;
+        private ObjectManager _world;
 
         #endregion Fields
 
@@ -19,7 +19,7 @@ namespace Merlin.Pathing.Worldmap
 
         public WorldmapPathfinder()
         {
-            _world = World.Instance;
+            _world = ObjectManager.GetInstance();
         }
 
         #endregion Constructors and Cleanup
@@ -33,18 +33,17 @@ namespace Merlin.Pathing.Worldmap
         {
             List<WorldmapCluster> result = new List<WorldmapCluster>();
 
-            var currentCluster = new Cluster(currentNode.Value.Info);
+            var currentCluster = (ClusterDescriptor)currentNode.Value.Info;
             var currentClusterExits = currentCluster.GetExits();
 
             foreach (var exit in currentClusterExits)
             {
-                if (exit.Kind != akf.Kind.Cluster)
+                if (exit.GetKind() != akf.Kind.Cluster)
                     continue;
 
-                var exitCluster = _world.GetCluster(exit.Destination.Internal);
-
-                if (exitCluster != null)
-                    result.Add(exitCluster);
+                WorldmapCluster cluster = GameGui.Instance.WorldMap.GetCluster(exit.GetDestination().Internal.ak());
+                if (cluster != null)
+                    result.Add(cluster);
             }
 
             return result;
@@ -52,10 +51,9 @@ namespace Merlin.Pathing.Worldmap
 
         protected Int32 GetScore(WorldmapCluster start, WorldmapCluster end)
         {
-            var cluster = new Cluster(end.Info);
-            var pvpRules = cluster.PvPRules;
+            var cluster = (ClusterDescriptor)end.Info;
 
-            switch (pvpRules)
+            switch (cluster.GetClusterType().GetPvpRules())
             {
                 case iz.PvpRules.PvpForced: return Int32.MaxValue;
                 case iz.PvpRules.PvpAllowed: return 1;

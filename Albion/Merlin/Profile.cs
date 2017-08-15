@@ -1,4 +1,5 @@
-﻿using Merlin.API;
+﻿using Merlin.API.Direct;
+//using Merlin.API;
 using System;
 using UnityEngine;
 
@@ -14,9 +15,9 @@ namespace Merlin
 
         #region Fields
 
-        protected Client _client;
-        protected World _world;
-        protected Landscape _landscape;
+        protected GameManager _client;
+        protected ObjectManager _world;
+        protected LandscapeManager _landscape;
         protected LocalPlayerCharacterView _localPlayerCharacterView;
 
         private DateTime _nextUpdate;
@@ -36,10 +37,10 @@ namespace Merlin
         /// </summary>
         private void OnEnable()
         {
-            _client = Client.Instance;
-            _world = World.Instance;
-            _landscape = Landscape.Instance;
-            _localPlayerCharacterView = _client.LocalPlayerCharacter;
+            _client = GameManager.GetInstance();
+            _world = ObjectManager.GetInstance();
+            _landscape = _client.GetLandscapeManager();
+            _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
             _nextUpdate = DateTime.Now;
         }
 
@@ -71,14 +72,14 @@ namespace Merlin
         /// </summary>
         private void Update()
         {
-            if (_client.State == GameState.Playing)
+            if (_client.GetState() == (ajz)API.GameState.Playing)
             {
                 if (refresh)
                 {
-                    _client = Client.Instance;
-                    _world = World.Instance;
-                    _landscape = Landscape.Instance;
-                    _localPlayerCharacterView = _client.LocalPlayerCharacter;
+                    _client = GameManager.GetInstance();
+                    _world = ObjectManager.GetInstance();
+                    _landscape = _client.GetLandscapeManager();
+                    _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
                     refresh = false;
                 }
                 if (DateTime.Now < _nextUpdate)
@@ -125,10 +126,5 @@ namespace Merlin
         }
 
         #endregion Methods
-    }
-
-    public class RestartInstruction : CustomYieldInstruction
-    {
-        public override bool keepWaiting => false;
     }
 }

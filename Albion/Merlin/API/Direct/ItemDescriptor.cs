@@ -68,8 +68,8 @@ namespace Merlin.API.Direct
         
         static ItemDescriptor()
         {
-            _propertyReflectionPool.Add(typeof(bp).GetProperty("an"));
-            _propertyReflectionPool.Add(typeof(bp).GetProperty("am"));
+            _propertyReflectionPool.Add(typeof(bp).GetProperty("an", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
+            _propertyReflectionPool.Add(typeof(bp).GetProperty("am", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
         }
         
         #endregion

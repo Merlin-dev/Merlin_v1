@@ -63,7 +63,7 @@ namespace Merlin.API.Direct
         
         static ObjectManager()
         {
-            _methodReflectionPool.Add(typeof(alb).GetMethod("ai", new Type[]{}));
+            _methodReflectionPool.Add(typeof(alb).GetMethod("ai", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
         }
         
         #endregion

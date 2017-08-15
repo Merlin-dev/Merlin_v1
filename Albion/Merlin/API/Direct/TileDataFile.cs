@@ -58,8 +58,8 @@ namespace Merlin.API.Direct
         
         static TileDataFile()
         {
-            _methodReflectionPool.Add(typeof(mo).GetMethod("b", new Type[]{typeof(System.Xml.XmlReader)}));
-            _methodReflectionPool.Add(typeof(mo).GetMethod("d", new Type[]{typeof(System.Xml.XmlReader)}));
+            _methodReflectionPool.Add(typeof(mo).GetMethod("b", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
+            _methodReflectionPool.Add(typeof(mo).GetMethod("d", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
         }
         
         #endregion

@@ -57,7 +57,7 @@ namespace Merlin.API.Direct
         
         static SpellDescriptor()
         {
-            _methodReflectionPool.Add(typeof(gy).GetMethod("h8", new Type[]{}));
+            _methodReflectionPool.Add(typeof(gy).GetMethod("h8", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
         }
         
         #endregion

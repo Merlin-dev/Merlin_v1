@@ -47,7 +47,8 @@ namespace Merlin.API.Direct
         public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.th();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hk((byte)A_0);
         public adu[] GetSpellSlots() => _internal.tg();
-        public float GetWeightPercentage() => _internal.ua();
+        public float GetLoad() => _internal.ua();
+        public float GetMaxLoad() => _internal.we();
         
         #endregion
         

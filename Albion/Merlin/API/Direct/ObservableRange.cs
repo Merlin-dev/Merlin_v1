@@ -59,7 +59,7 @@ namespace Merlin.API.Direct
         
         static ObservableRange()
         {
-            _methodReflectionPool.Add(typeof(ac2<a>).GetMethod("k", new Type[]{typeof(float)}));
+            _methodReflectionPool.Add(typeof(ac2<a>).GetMethod("k", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(float)}, null));
         }
         
         #endregion

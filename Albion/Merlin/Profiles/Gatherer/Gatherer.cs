@@ -27,7 +27,7 @@ namespace Merlin.Profiles.Gatherer
 
     public sealed partial class Gatherer : Profile
     {
-        private bool _isRunning;
+        private bool _isRunning = true;
 
         StateMachine<State, Trigger> _state;
         Dictionary<SimulationObjectView, Blacklisted> _blacklist;
@@ -86,13 +86,14 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-                switch (_state.State)
-                {
-                    case State.Search   : Search(); break;
-                    //case State.Harvest  : Harvest();break;
-                    //case State.Combat   : Fight();  break;
-                    //case State.Bank     : Bank();   break;
-                }
+                /* switch (_state.State)
+                 {
+                     case State.Search   : Search(); break;
+                     //case State.Harvest  : Harvest();break;
+                     //case State.Combat   : Fight();  break;
+                     //case State.Bank     : Bank();   break;
+                 }*/
+                Search();
             }
             catch (Exception e)
             {

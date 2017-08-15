@@ -9,7 +9,7 @@ namespace Merlin
     {
         #region Static
 
-        public static TimeSpan UpdateDelay = TimeSpan.FromSeconds(0.1d);
+        public static TimeSpan UpdateDelay = TimeSpan.FromSeconds(1d);
 
         #endregion Static
 

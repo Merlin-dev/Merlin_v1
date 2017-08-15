@@ -138,10 +138,14 @@
     <Compile Include="Direct\TimeRegionDescriptor.cs" />
     <Compile Include="Direct\WorldDataFile.cs" />
     <Compile Include="Direct\WorldObject.cs" />
+    <Compile Include="Extensions\FightingObjectExtensions.cs" />
+    <Compile Include="Extensions\FightingObjectViewExtensions.cs" />
+    <Compile Include="Extensions\GameManagerExtensions.cs" />
+    <Compile Include="Extensions\LocalPlayerCharacterExtensions.cs" />
+    <Compile Include="Extensions\LocalPlayerCharacterViewExtensions.cs" />
+    <Compile Include="Extensions\SimulationObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

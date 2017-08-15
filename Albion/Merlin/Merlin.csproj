@@ -73,6 +73,88 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core.cs" />
+    <Compile Include="API\Direct\ActiveSpellDescriptor.cs" />
+    <Compile Include="API\Direct\AgentDescriptor.cs" />
+    <Compile Include="API\Direct\AgentsDataFile.cs" />
+    <Compile Include="API\Direct\AgentTypeDescriptor.cs" />
+    <Compile Include="API\Direct\CastSpellDescriptor.cs" />
+    <Compile Include="API\Direct\ChannelSpellDescriptor.cs" />
+    <Compile Include="API\Direct\ClusterDescriptor.cs" />
+    <Compile Include="API\Direct\ClusterExitDescriptor.cs" />
+    <Compile Include="API\Direct\ClusterExitKind.cs" />
+    <Compile Include="API\Direct\ClusterTypeDescriptor.cs" />
+    <Compile Include="API\Direct\ClusterXmlOperator.cs" />
+    <Compile Include="API\Direct\CollisionManager.cs" />
+    <Compile Include="API\Direct\CompoundTileDescriptor.cs" />
+    <Compile Include="API\Direct\ConsumableItemDescriptor.cs" />
+    <Compile Include="API\Direct\ConsumableItemObject.cs" />
+    <Compile Include="API\Direct\DataFile.cs" />
+    <Compile Include="API\Direct\DurableItemDescriptor.cs" />
+    <Compile Include="API\Direct\DurableItemObject.cs" />
+    <Compile Include="API\Direct\Duration.cs" />
+    <Compile Include="API\Direct\EquipmentItemDescriptor.cs" />
+    <Compile Include="API\Direct\EquipmentItemObject.cs" />
+    <Compile Include="API\Direct\FarmableItemDescriptor.cs" />
+    <Compile Include="API\Direct\FarmableItemObject.cs" />
+    <Compile Include="API\Direct\FightingObject.cs" />
+    <Compile Include="API\Direct\FurnitureItemDescriptor.cs" />
+    <Compile Include="API\Direct\FurnitureItemObject.cs" />
+    <Compile Include="API\Direct\GameData.cs" />
+    <Compile Include="API\Direct\GameDataFile.cs" />
+    <Compile Include="API\Direct\GameManager.cs" />
+    <Compile Include="API\Direct\GameState.cs" />
+    <Compile Include="API\Direct\HarvestableChargeDescriptor.cs" />
+    <Compile Include="API\Direct\HarvestableDescriptor.cs" />
+    <Compile Include="API\Direct\HarvestableObject.cs" />
+    <Compile Include="API\Direct\HarvestableRareStateDescriptor.cs" />
+    <Compile Include="API\Direct\HarvestableTierDescriptor.cs" />
+    <Compile Include="API\Direct\InventoryItemObject.cs" />
+    <Compile Include="API\Direct\InventoryItemObjectCollection.cs" />
+    <Compile Include="API\Direct\ItemDescriptor.cs" />
+    <Compile Include="API\Direct\ItemsDataFile.cs" />
+    <Compile Include="API\Direct\JournalItemDescriptor.cs" />
+    <Compile Include="API\Direct\JournalItemObject.cs" />
+    <Compile Include="API\Direct\LandscapeManager.cs" />
+    <Compile Include="API\Direct\LocalPlayerCharacter.cs" />
+    <Compile Include="API\Direct\LootObject.cs" />
+    <Compile Include="API\Direct\MountItemDescriptor.cs" />
+    <Compile Include="API\Direct\MountItemObject.cs" />
+    <Compile Include="API\Direct\MountObject.cs" />
+    <Compile Include="API\Direct\MovingObject.cs" />
+    <Compile Include="API\Direct\NpcCharacter.cs" />
+    <Compile Include="API\Direct\ObjectManager.cs" />
+    <Compile Include="API\Direct\ObservableRange.cs" />
+    <Compile Include="API\Direct\PassiveSpellDescriptor.cs" />
+    <Compile Include="API\Direct\PhotonClient.cs" />
+    <Compile Include="API\Direct\PlayerCharacter.cs" />
+    <Compile Include="API\Direct\Point2.cs" />
+    <Compile Include="API\Direct\Point3.cs" />
+    <Compile Include="API\Direct\PvpRules.cs" />
+    <Compile Include="API\Direct\Rectangle.cs" />
+    <Compile Include="API\Direct\RemotePlayerCharacter.cs" />
+    <Compile Include="API\Direct\SilverObject.cs" />
+    <Compile Include="API\Direct\SimpleItemDescriptor.cs" />
+    <Compile Include="API\Direct\SimpleItemObject.cs" />
+    <Compile Include="API\Direct\SimulationObject.cs" />
+    <Compile Include="API\Direct\SpellDescriptor.cs" />
+    <Compile Include="API\Direct\SpellEffectAreaObject.cs" />
+    <Compile Include="API\Direct\SpellSlot.cs" />
+    <Compile Include="API\Direct\StaticObject.cs" />
+    <Compile Include="API\Direct\TemplateXmlOperator.cs" />
+    <Compile Include="API\Direct\TerritoryDescriptor.cs" />
+    <Compile Include="API\Direct\TerritoryObject.cs" />
+    <Compile Include="API\Direct\TerritoryType.cs" />
+    <Compile Include="API\Direct\TileDataFile.cs" />
+    <Compile Include="API\Direct\TileDescriptor.cs" />
+    <Compile Include="API\Direct\TimeRegionDescriptor.cs" />
+    <Compile Include="API\Direct\WorldDataFile.cs" />
+    <Compile Include="API\Direct\WorldObject.cs" />
+    <Compile Include="API\Extensions\FightingObjectExtensions.cs" />
+    <Compile Include="API\Extensions\FightingObjectViewExtensions.cs" />
+    <Compile Include="API\Extensions\GameManagerExtensions.cs" />
+    <Compile Include="API\Extensions\LocalPlayerCharacterExtensions.cs" />
+    <Compile Include="API\Extensions\LocalPlayerCharacterViewExtensions.cs" />
+    <Compile Include="API\Extensions\SimulationObjectExtensions.cs" />
     <Compile Include="Pathing\AStar\AStarMap.cs" />
     <Compile Include="Pathing\AStar\AStarNode.cs" />
     <Compile Include="Pathing\AStar\AStarPathfinder.cs" />
@@ -107,12 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Merlin.API\Merlin.API.csproj">
-      <Project>{e99327cf-c734-4836-9522-89cc9cb8b443}</Project>
-      <Name>Merlin.API</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

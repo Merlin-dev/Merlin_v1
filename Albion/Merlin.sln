@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin", "Merlin\Merlin.csproj", "{DF9941B0-4554-4038-8D80-9FA1E55FBD6C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin.API", "Merlin.API\Merlin.API.csproj", "{E99327CF-C734-4836-9522-89CC9CB8B443}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin.API.Tests", "Merlin.API.Tests\Merlin.API.Tests.csproj", "{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{DF9941B0-4554-4038-8D80-9FA1E55FBD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9941B0-4554-4038-8D80-9FA1E55FBD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF9941B0-4554-4038-8D80-9FA1E55FBD6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E99327CF-C734-4836-9522-89CC9CB8B443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E99327CF-C734-4836-9522-89CC9CB8B443}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E99327CF-C734-4836-9522-89CC9CB8B443}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E99327CF-C734-4836-9522-89CC9CB8B443}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E0AB0F5-E9CC-4B65-9EF9-3A023F472EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9936C43A-8FB1-4BA9-A0F9-302CE38C7D33}
 	EndGlobalSection
 EndGlobal

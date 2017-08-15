@@ -98,6 +98,8 @@
     <Compile Include="Pathing\Worldmap\WorldmapNode.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
     <Compile Include="Profile.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +117,7 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Profiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

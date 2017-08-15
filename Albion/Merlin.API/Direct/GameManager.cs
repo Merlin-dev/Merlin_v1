@@ -45,7 +45,7 @@ namespace Merlin.API.Direct
         public static GameManager GetInstance() => a6o.s();
         public LandscapeManager GetLandscapeManager() => _internal.z();
         public LocalPlayerCharacterView GetLocalPlayerCharacterView() => _internal.v();
-        public ajz GetState() => _internal.w();
+        public GameState GetState() => _internal.w().ToWrapped();
         public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((ark)A_0);
         
         #endregion

@@ -42,7 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public iz.PvpRules GetPvpRules() => _internal.ap();
+        public PvpRules GetPvpRules() => _internal.ap().ToWrapped();
         
         #endregion
         

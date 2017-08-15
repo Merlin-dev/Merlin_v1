@@ -45,7 +45,7 @@ namespace Merlin.API.Direct
         public ClusterDescriptor GetCluster() => _internal.p();
         public string GetName() => _internal.o();
         public Point2 GetSize() => _internal.t();
-        public akj.TerritoryType GetTerritoryType() => _internal.v();
+        public TerritoryType GetTerritoryType() => _internal.v().ToWrapped();
         
         #endregion
         

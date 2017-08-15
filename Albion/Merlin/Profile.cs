@@ -106,20 +106,14 @@ namespace Merlin
         /// <summary>
         /// Called when this instance is started.
         /// </summary>
-        protected virtual void OnStart()
-        {
-        }
+        protected abstract void OnStart();
 
         /// <summary>
         /// Called when this instance is stopped.
         /// </summary>
-        protected virtual void OnStop()
-        {
-        }
+        protected abstract void OnStop();
 
-        protected virtual void OnUpdate()
-        {
-        }
+        protected abstract void OnUpdate();
 
         protected virtual void OnUI()
         {

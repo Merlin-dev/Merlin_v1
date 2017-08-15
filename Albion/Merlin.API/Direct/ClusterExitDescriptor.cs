@@ -43,7 +43,7 @@ namespace Merlin.API.Direct
         #region Methods
         
         public ClusterDescriptor GetDestination() => _internal.o();
-        public akf.Kind GetKind() => _internal.r();
+        public ClusterExitKind GetKind() => _internal.r().ToWrapped();
         public Point2 GetPosition() => _internal.v();
         public ClusterDescriptor GetSource() => _internal.l();
         public void SetDestination(ClusterDescriptor A_0) => _methodReflectionPool[0].Invoke(_internal,new object[]{(ake)A_0});

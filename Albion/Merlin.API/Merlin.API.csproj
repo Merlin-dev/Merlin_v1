@@ -70,6 +70,7 @@
     <Compile Include="Direct\ChannelSpellDescriptor.cs" />
     <Compile Include="Direct\ClusterDescriptor.cs" />
     <Compile Include="Direct\ClusterExitDescriptor.cs" />
+    <Compile Include="Direct\ClusterExitKind.cs" />
     <Compile Include="Direct\ClusterTypeDescriptor.cs" />
     <Compile Include="Direct\ClusterXmlOperator.cs" />
     <Compile Include="Direct\CollisionManager.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Direct\GameData.cs" />
     <Compile Include="Direct\GameDataFile.cs" />
     <Compile Include="Direct\GameManager.cs" />
+    <Compile Include="Direct\GameState.cs" />
     <Compile Include="Direct\HarvestableChargeDescriptor.cs" />
     <Compile Include="Direct\HarvestableDescriptor.cs" />
     <Compile Include="Direct\HarvestableObject.cs" />
@@ -116,27 +118,30 @@
     <Compile Include="Direct\PlayerCharacter.cs" />
     <Compile Include="Direct\Point2.cs" />
     <Compile Include="Direct\Point3.cs" />
-    <Compile Include="Direct\SimpleItemDescriptor.cs" />
-    <Compile Include="Direct\SimpleItemObject.cs" />
-    <Compile Include="Direct\TemplateXmlOperator.cs" />
-    <Compile Include="Direct\TileDataFile.cs" />
-    <Compile Include="Direct\TileDescriptor.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Direct\PvpRules.cs" />
     <Compile Include="Direct\Rectangle.cs" />
     <Compile Include="Direct\RemotePlayerCharacter.cs" />
     <Compile Include="Direct\SilverObject.cs" />
+    <Compile Include="Direct\SimpleItemDescriptor.cs" />
+    <Compile Include="Direct\SimpleItemObject.cs" />
     <Compile Include="Direct\SimulationObject.cs" />
     <Compile Include="Direct\SpellDescriptor.cs" />
     <Compile Include="Direct\SpellEffectAreaObject.cs" />
     <Compile Include="Direct\SpellSlot.cs" />
     <Compile Include="Direct\StaticObject.cs" />
+    <Compile Include="Direct\TemplateXmlOperator.cs" />
     <Compile Include="Direct\TerritoryDescriptor.cs" />
     <Compile Include="Direct\TerritoryObject.cs" />
+    <Compile Include="Direct\TerritoryType.cs" />
+    <Compile Include="Direct\TileDataFile.cs" />
+    <Compile Include="Direct\TileDescriptor.cs" />
     <Compile Include="Direct\TimeRegionDescriptor.cs" />
     <Compile Include="Direct\WorldDataFile.cs" />
     <Compile Include="Direct\WorldObject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

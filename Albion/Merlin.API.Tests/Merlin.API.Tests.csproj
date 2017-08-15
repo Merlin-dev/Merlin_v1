@@ -75,5 +75,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Merlin.API\Merlin.API.csproj">
+      <Project>{E99327CF-C734-4836-9522-89CC9CB8B443}</Project>
+      <Name>Merlin.API</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

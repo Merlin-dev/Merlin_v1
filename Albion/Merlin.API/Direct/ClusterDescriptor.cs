@@ -43,14 +43,14 @@ namespace Merlin.API.Direct
         #region Methods
         
         public AgentDescriptor GetAgent(Guid A_0) => _internal.ak((Guid)A_0);
-        public List<AgentDescriptor> GetAgents() => new List<AgentDescriptor>(_internal.a6().Cast<AgentDescriptor>());
+        public List<AgentDescriptor> GetAgents() => _internal.a6().Select(x =>(AgentDescriptor)x).ToList();
         public Point2 GetCenter() => _internal.bk();
         public ClusterTypeDescriptor GetClusterType() => _internal.aq();
-        public List<ClusterExitDescriptor> GetExits() => new List<ClusterExitDescriptor>(_internal.a1().Cast<ClusterExitDescriptor>());
+        public List<ClusterExitDescriptor> GetExits() => _internal.a1().Select(x =>(ClusterExitDescriptor)x).ToList();
         public string GetIdent() => _internal.ak();
         public Point2 GetOrigin() => _internal.aw();
         public Point2 GetSize() => _internal.ax();
-        public List<TerritoryDescriptor> GetTerritories() => new List<TerritoryDescriptor>(_internal.a4().Cast<TerritoryDescriptor>());
+        public List<TerritoryDescriptor> GetTerritories() => _internal.a4().Select(x =>(TerritoryDescriptor)x).ToList();
         public TerritoryDescriptor GetTerritory(Guid A_0) => _internal.al((Guid)A_0);
         
         #endregion

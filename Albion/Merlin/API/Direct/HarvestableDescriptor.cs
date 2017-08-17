@@ -42,7 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public hn.b[] GetTiers() => _internal.i();
+        public HarvestableTierDescriptor[] GetTiers() => _internal.i().Select(x =>(HarvestableTierDescriptor)x).ToArray();
         
         #endregion
         

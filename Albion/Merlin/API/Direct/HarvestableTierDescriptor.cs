@@ -42,8 +42,8 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public hn.a[] GetCharges() => _internal.a2();
-        public hn.b.a[] GetRareStates() => _internal.ax();
+        public HarvestableChargeDescriptor[] GetCharges() => _internal.a2().Select(x =>(HarvestableChargeDescriptor)x).ToArray();
+        public HarvestableRareStateDescriptor[] GetRareStates() => _internal.ax().Select(x =>(HarvestableRareStateDescriptor)x).ToArray();
         
         #endregion
         

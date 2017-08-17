@@ -1,4 +1,5 @@
 ﻿using Merlin.API.Direct;
+using Merlin.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,6 @@ namespace Merlin.Profiles.Gatherer
 
         public void Fight()
         {
-            _currentTarget = null;
-            _harvestPathingRequest = null;
-
-            _state.Fire(Trigger.EliminatedAttacker);
-
-            /*
             LocalPlayerCharacter player = _localPlayerCharacterView.GetLocalPlayerCharacter();
 
             if (_localPlayerCharacterView.IsMounted)
@@ -35,9 +30,9 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            SpellSlot[] spells = null;
-            //TODO: Get spells
+            var spells = player.GetSpellSlots().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
+            /*
             FightingObjectView attackTarget = _localPlayerCharacterView.GetAttackTarget();
 
             if(attackTarget != null)

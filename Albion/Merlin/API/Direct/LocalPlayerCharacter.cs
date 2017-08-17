@@ -46,7 +46,7 @@ namespace Merlin.API.Direct
         public Point2 GetDestination() => _internal.tl();
         public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.th();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hk((byte)A_0);
-        public adu[] GetSpellSlots() => _internal.tg();
+        public SpellSlot[] GetSpellSlots() => _internal.tg().Select(x =>(SpellSlot)x).ToArray();
         public float GetWeight() => _internal.ua();
         
         #endregion

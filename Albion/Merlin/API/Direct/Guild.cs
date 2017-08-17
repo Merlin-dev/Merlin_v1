@@ -42,7 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public arj[] GetMembers() => _internal.ag();
+        public GuildMember[] GetMembers() => _internal.ag().Select(x =>(GuildMember)x).ToArray();
         
         #endregion
         

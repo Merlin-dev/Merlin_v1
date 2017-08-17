@@ -1,6 +1,8 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
+using System.Collections.Generic;
 using UnityEngine;
+using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -78,7 +80,68 @@ namespace Merlin.Profiles.Gatherer
 
         public void Harvest()
         {
+            if(_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
+            {
+                Core.Log("[Attacked]");
+                _state.Fire(Trigger.EncounteredAttacker);
+                return;
+            }
 
+            if (!ValidateTarget(_currentTarget))
+            {
+                _state.Fire(Trigger.DepletedResource);
+                return;
+            }
+
+            if (_harvestPathingRequest != null)
+            {
+                if (_harvestPathingRequest.IsRunning)
+                {
+                    if (!HandleMounting(Vector3.zero))
+                        return;
+
+                    _harvestPathingRequest.Continue();
+                }
+                else
+                {
+                    _harvestPathingRequest = null;
+                }
+
+                return;
+            }
+
+            Vector3 targetCenter = _currentTarget.transform.position;
+            Vector3 playerCenter = _localPlayerCharacterView.transform.position;
+
+            float centerDistance = (targetCenter - playerCenter).magnitude;
+
+            float minDistance = _currentTarget.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents() + 1.5f;
+
+            if(centerDistance >= minDistance)
+            {
+                if (!HandleMounting(targetCenter))
+                    return;
+
+                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlocked, out List<Vector3> pathing))
+                    _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                else
+                    _state.Fire(Trigger.DepletedResource);
+                return;
+            }
+
+            if(_currentTarget is HarvestableObjectView resource)
+            {
+                if (_localPlayerCharacterView.IsHarvesting())
+                    return;
+                if(resource.GetHarvestableObject().GetCharges() <= 0)
+                {
+                    _state.Fire(Trigger.DepletedResource);
+                    return;
+                }
+
+                Core.Log("[Harvesting]");
+                _localPlayerCharacterView.Interact(resource);
+            }
         }
     }
 }

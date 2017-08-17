@@ -1,4 +1,5 @@
-﻿using Merlin.Pathing;
+﻿using Merlin.API.Direct;
+using Merlin.Pathing;
 using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
@@ -41,6 +42,43 @@ namespace Merlin.Profiles.Gatherer
                 return ValidateMob(mob);
 
             return false;
+        }
+
+        public bool HandleMounting(Vector3 target)
+        {
+            LocalPlayerCharacter localPlayer = _localPlayerCharacterView.LocalPlayerCharacter;
+
+            if (!_localPlayerCharacterView.IsMounted)
+            {
+                if (localPlayer.GetIsMounting())
+                    return false;
+
+                MountObjectView mount = _localPlayerCharacterView.GetComponent<MountObjectView>();
+
+                if (mount != null)
+                {
+                    if (target != Vector3.zero && mount.IsInUseRange(localPlayer))
+                        return true;
+
+                    if (mount.IsInUseRange(localPlayer))
+                        _localPlayerCharacterView.Interact(mount);
+                    else
+                        _localPlayerCharacterView.MountOrDismount();
+                }
+                else
+                {
+                    _localPlayerCharacterView.MountOrDismount();
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public void Harvest()
+        {
+
         }
     }
 }

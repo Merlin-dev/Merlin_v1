@@ -91,6 +91,7 @@
     <Compile Include="API\Extensions\HarvestableObjectExtensions.cs" />
     <Compile Include="API\Extensions\HarvestableObjectViewExtensions.cs" />
     <Compile Include="API\Extensions\SimulationObjectViewExtensions.cs" />
+    <Compile Include="API\Extensions\LocalInputHandlerExtensions.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Direct\ActiveSpellDescriptor.cs" />
     <Compile Include="API\Direct\AgentDescriptor.cs" />

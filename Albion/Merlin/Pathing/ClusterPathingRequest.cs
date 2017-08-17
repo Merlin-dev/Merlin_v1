@@ -86,6 +86,7 @@ namespace Merlin.Pathing
                         }
                         else
                         {
+                            _player.RequestMove(currentNode);
                             // _player.RequestMove(currentNode);
                         }
 

@@ -83,14 +83,13 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-                /* switch (_state.State)
+                switch (_state.State)
                  {
                      case State.Search   : Search(); break;
-                     //case State.Harvest  : Harvest();break;
+                     case State.Harvest  : Harvest();break;
                      //case State.Combat   : Fight();  break;
                      //case State.Bank     : Bank();   break;
-                 }*/
-                Search();
+                 }
             }
             catch (Exception e)
             {

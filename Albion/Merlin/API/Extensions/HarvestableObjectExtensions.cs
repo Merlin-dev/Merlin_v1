@@ -1,14 +1,9 @@
 ﻿using Merlin.API.Direct;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Merlin
 {
     public static class HarvestableObjectExtensions
     {
-
         public static bool CanLoot(this HarvestableObject instance, LocalPlayerCharacterView localPlayer)
         {
             if (instance.IsHarvestable()) //Returns true, when monster loot is locked

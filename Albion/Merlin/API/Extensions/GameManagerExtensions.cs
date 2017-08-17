@@ -6,8 +6,7 @@ namespace Merlin
 {
     public static class GameManagerExtensions
     {
-
-        public static List<T> GetEntities<T>(this GameManager manager, Func<T, bool> selector)  where T: SimulationObjectView
+        public static List<T> GetEntities<T>(this GameManager manager, Func<T, bool> selector) where T : SimulationObjectView
         {
             var list = new List<T>();
 

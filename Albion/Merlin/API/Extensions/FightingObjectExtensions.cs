@@ -1,8 +1,4 @@
 ﻿using Merlin.API.Direct;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Merlin
 {
@@ -12,7 +8,7 @@ namespace Merlin
         {
             var attackTargetId = instance.GetFightingObject().GetTargetId();
 
-            if(attackTargetId > 0)
+            if (attackTargetId > 0)
             {
                 ObjectManager manager = ObjectManager.GetInstance();
                 if (manager.GetObject(attackTargetId).GetView() is FightingObjectView target)

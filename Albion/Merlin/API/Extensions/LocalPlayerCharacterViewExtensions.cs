@@ -1,8 +1,6 @@
 ﻿using Merlin.API.Direct;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using UnityEngine;
 
 namespace Merlin
 {
@@ -18,7 +16,8 @@ namespace Merlin
 
         public static bool IsUnderAttack(this LocalPlayerCharacterView view, out FightingObjectView attacker)
         {
-            var entities = GameManager.GetInstance().GetEntities<MobView>((entity) => {
+            var entities = GameManager.GetInstance().GetEntities<MobView>((entity) =>
+            {
                 var target = ((FightingObjectView)entity).GetAttackTarget();
 
                 if (target != null && target == view)
@@ -31,5 +30,9 @@ namespace Merlin
 
             return attacker != default(FightingObjectView);
         }
+
+        public static bool RequestMove(this LocalPlayerCharacterView view, Vector3 position) => view.RequestMove(position.c());
+
+        public static void Interact(this LocalPlayerCharacterView instance, WorldObjectView target) => instance.InputHandler.Interact(target);
     }
 }

@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public bp Internal => _internal;
+        public bp ItemDescriptor_Internal => _internal;
         public string Description => _internal.ag;
         public string DescriptionTag
         {

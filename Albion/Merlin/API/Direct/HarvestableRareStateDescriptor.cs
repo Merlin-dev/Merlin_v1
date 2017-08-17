@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public hn.b.a Internal => _internal;
+        public hn.b.a HarvestableRareStateDescriptor_Internal => _internal;
         
         #endregion
         

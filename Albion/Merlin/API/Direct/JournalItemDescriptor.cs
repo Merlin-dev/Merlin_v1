@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: cn */
-    public class JournalItemDescriptor
+    public class JournalItemDescriptor : DurableItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public cn Internal => _internal;
+        public cn JournalItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public JournalItemDescriptor(cn instance)
+        public JournalItemDescriptor(cn instance) : base(instance)
         {
             _internal = instance;
         }

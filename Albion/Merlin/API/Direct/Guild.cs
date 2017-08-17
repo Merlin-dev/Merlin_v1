@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ar8 */
-    public class InventoryItemObjectCollection
+    /* Internal type: ari */
+    public class Guild
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private ar8 _internal;
+        private ari _internal;
         
         #region Properties
         
-        public ar8 Internal => _internal;
+        public ari Guild_Internal => _internal;
         
         #endregion
         
@@ -42,17 +42,18 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public arj[] GetMembers() => _internal.ag();
         
         #endregion
         
         #region Constructor
         
-        public InventoryItemObjectCollection(ar8 instance)
+        public Guild(ari instance)
         {
             _internal = instance;
         }
         
-        static InventoryItemObjectCollection()
+        static Guild()
         {
             
         }
@@ -61,14 +62,14 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ar8(InventoryItemObjectCollection instance)
+        public static implicit operator ari(Guild instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator InventoryItemObjectCollection(ar8 instance)
+        public static implicit operator Guild(ari instance)
         {
-            return new InventoryItemObjectCollection(instance);
+            return new Guild(instance);
         }
         
         #endregion

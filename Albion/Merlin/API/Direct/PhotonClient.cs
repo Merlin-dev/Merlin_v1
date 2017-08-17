@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public aq9 Internal => _internal;
+        public aq9 PhotonClient_Internal => _internal;
         
         #endregion
         

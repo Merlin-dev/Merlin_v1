@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public l5 Internal => _internal;
+        public l5 ClusterTypeDescriptor_Internal => _internal;
         
         #endregion
         

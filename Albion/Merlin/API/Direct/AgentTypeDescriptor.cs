@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public b3 Internal => _internal;
+        public b3 AgentTypeDescriptor_Internal => _internal;
         
         #endregion
         

@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ac6 */
-    public class PassiveSpellDescriptor
+    public class PassiveSpellDescriptor : SpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ac6 Internal => _internal;
+        public ac6 PassiveSpellDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public PassiveSpellDescriptor(ac6 instance)
+        public PassiveSpellDescriptor(ac6 instance) : base(instance)
         {
             _internal = instance;
         }

@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ar3 */
-    public class MountItemObject
+    public class MountItemObject : EquipmentItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ar3 Internal => _internal;
+        public ar3 MountItemObject_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public MountItemObject(ar3 instance)
+        public MountItemObject(ar3 instance) : base(instance)
         {
             _internal = instance;
         }

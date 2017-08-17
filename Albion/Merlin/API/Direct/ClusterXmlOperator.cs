@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public jg Internal => _internal;
+        public jg ClusterXmlOperator_Internal => _internal;
         
         #endregion
         

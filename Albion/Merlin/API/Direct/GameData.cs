@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public hf Internal => _internal;
+        public hf GameData_Internal => _internal;
         
         #endregion
         

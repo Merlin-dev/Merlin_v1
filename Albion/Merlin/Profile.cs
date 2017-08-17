@@ -9,7 +9,7 @@ namespace Merlin
     {
         #region Static
 
-        public static TimeSpan UpdateDelay = TimeSpan.FromSeconds(1d);
+        public static TimeSpan UpdateDelay = TimeSpan.FromSeconds(.1);
 
         #endregion Static
 
@@ -42,6 +42,8 @@ namespace Merlin
             _landscape = _client.GetLandscapeManager();
             _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
             _nextUpdate = DateTime.Now;
+
+            Camera.onPostRender += OnCameraPostRender;
         }
 
         private void Awake()
@@ -62,6 +64,9 @@ namespace Merlin
         /// </summary>
         private void OnDisable()
         {
+            Camera.onPostRender -= OnCameraPostRender;
+
+
             OnStop();
 
             _client = null;
@@ -115,9 +120,9 @@ namespace Merlin
 
         protected abstract void OnUpdate();
 
-        protected virtual void OnUI()
-        {
-        }
+        protected virtual void OnUI(){}
+
+        protected virtual void OnCameraPostRender(Camera cam) { }
 
         #endregion Methods
     }

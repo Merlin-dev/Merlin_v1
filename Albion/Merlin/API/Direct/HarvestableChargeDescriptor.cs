@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public hn.a Internal => _internal;
+        public hn.a HarvestableChargeDescriptor_Internal => _internal;
         
         #endregion
         

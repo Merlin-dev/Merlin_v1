@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: g1 */
-    public class ChannelSpellDescriptor
+    public class ChannelSpellDescriptor : ActiveSpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public g1 Internal => _internal;
+        public g1 ChannelSpellDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ChannelSpellDescriptor(g1 instance)
+        public ChannelSpellDescriptor(g1 instance) : base(instance)
         {
             _internal = instance;
         }

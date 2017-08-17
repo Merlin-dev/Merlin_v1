@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ajg Internal => _internal;
+        public ajg Point2_Internal => _internal;
         
         #endregion
         

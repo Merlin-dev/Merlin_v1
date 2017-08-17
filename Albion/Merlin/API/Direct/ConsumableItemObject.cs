@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: arn */
-    public class ConsumableItemObject
+    public class ConsumableItemObject : SimpleItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public arn Internal => _internal;
+        public arn ConsumableItemObject_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ConsumableItemObject(arn instance)
+        public ConsumableItemObject(arn instance) : base(instance)
         {
             _internal = instance;
         }

@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: b2 */
-    public class AgentsDataFile
+    public class AgentsDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public b2 Internal => _internal;
+        public b2 AgentsDataFile_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public AgentsDataFile(b2 instance)
+        public AgentsDataFile(b2 instance) : base(instance)
         {
             _internal = instance;
         }

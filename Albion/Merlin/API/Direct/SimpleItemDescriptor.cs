@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: bs */
-    public class SimpleItemDescriptor
+    public class SimpleItemDescriptor : ItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public bs Internal => _internal;
+        public bs SimpleItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public SimpleItemDescriptor(bs instance)
+        public SimpleItemDescriptor(bs instance) : base(instance)
         {
             _internal = instance;
         }

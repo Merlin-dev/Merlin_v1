@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public aea Internal => _internal;
+        public aea Point3_Internal => _internal;
         
         #endregion
         

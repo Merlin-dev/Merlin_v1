@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public adu Internal => _internal;
+        public adu SpellSlot_Internal => _internal;
         
         #endregion
         

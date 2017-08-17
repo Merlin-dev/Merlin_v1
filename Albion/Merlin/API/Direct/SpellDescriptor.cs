@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public gy Internal => _internal;
+        public gy SpellDescriptor_Internal => _internal;
         
         #endregion
         

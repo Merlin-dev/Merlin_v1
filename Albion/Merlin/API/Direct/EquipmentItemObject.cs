@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ar2 */
-    public class EquipmentItemObject
+    public class EquipmentItemObject : DurableItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ar2 Internal => _internal;
+        public ar2 EquipmentItemObject_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public EquipmentItemObject(ar2 instance)
+        public EquipmentItemObject(ar2 instance) : base(instance)
         {
             _internal = instance;
         }

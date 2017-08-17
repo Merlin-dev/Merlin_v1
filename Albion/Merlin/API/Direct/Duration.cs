@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ajv Internal => _internal;
+        public ajv Duration_Internal => _internal;
         
         #endregion
         

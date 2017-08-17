@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public n Internal => _internal;
+        public n DataFile_Internal => _internal;
         
         #endregion
         

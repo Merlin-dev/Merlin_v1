@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: arl */
-    public class InventoryItemObject
+    /* Internal type: aro */
+    public class ItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private arl _internal;
+        private aro _internal;
         
         #region Properties
         
-        public arl Internal => _internal;
+        public aro ItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,17 +42,19 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public static ItemProxy Create(ItemObject A_0) => aro.o((arl)A_0);
+        public ItemDescriptor GetItemDescriptor() => _internal.p();
         
         #endregion
         
         #region Constructor
         
-        public InventoryItemObject(arl instance)
+        public ItemProxy(aro instance)
         {
             _internal = instance;
         }
         
-        static InventoryItemObject()
+        static ItemProxy()
         {
             
         }
@@ -61,14 +63,14 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator arl(InventoryItemObject instance)
+        public static implicit operator aro(ItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator InventoryItemObject(arl instance)
+        public static implicit operator ItemProxy(aro instance)
         {
-            return new InventoryItemObject(instance);
+            return new ItemProxy(instance);
         }
         
         #endregion

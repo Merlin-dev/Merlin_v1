@@ -72,6 +72,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Direct\ConsumableItemProxy.cs" />
+    <Compile Include="API\Direct\DurableItemProxy.cs" />
+    <Compile Include="API\Direct\EquipmentItemProxy.cs" />
+    <Compile Include="API\Direct\FarmableItemProxy.cs" />
+    <Compile Include="API\Direct\FightingAttributes.cs" />
+    <Compile Include="API\Direct\FurnitureItemProxy.cs" />
+    <Compile Include="API\Direct\Guild.cs" />
+    <Compile Include="API\Direct\GuildMember.cs" />
+    <Compile Include="API\Direct\ItemObject.cs" />
+    <Compile Include="API\Direct\ItemObjectCollection.cs" />
+    <Compile Include="API\Direct\ItemProxy.cs" />
+    <Compile Include="API\Direct\JournalItemProxy.cs" />
+    <Compile Include="API\Direct\LocalPlayerAttributes.cs" />
+    <Compile Include="API\Direct\MountItemProxy.cs" />
+    <Compile Include="API\Direct\NpcCharacterAttributes.cs" />
+    <Compile Include="API\Direct\SimpleItemProxy.cs" />
+    <Compile Include="API\Extensions\HarvestableObjectExtensions.cs" />
+    <Compile Include="API\Extensions\HarvestableObjectViewExtensions.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Direct\ActiveSpellDescriptor.cs" />
     <Compile Include="API\Direct\AgentDescriptor.cs" />
@@ -108,8 +126,6 @@
     <Compile Include="API\Direct\HarvestableObject.cs" />
     <Compile Include="API\Direct\HarvestableRareStateDescriptor.cs" />
     <Compile Include="API\Direct\HarvestableTierDescriptor.cs" />
-    <Compile Include="API\Direct\InventoryItemObject.cs" />
-    <Compile Include="API\Direct\InventoryItemObjectCollection.cs" />
     <Compile Include="API\Direct\ItemDescriptor.cs" />
     <Compile Include="API\Direct\ItemsDataFile.cs" />
     <Compile Include="API\Direct\JournalItemDescriptor.cs" />
@@ -181,6 +197,7 @@
     <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Harvest.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

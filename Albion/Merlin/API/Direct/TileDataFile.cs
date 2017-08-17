@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public mo Internal => _internal;
+        public mo TileDataFile_Internal => _internal;
         
         #endregion
         

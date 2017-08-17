@@ -16,10 +16,10 @@ namespace Merlin
         {
             _coreObject = new GameObject();
 
-            Log("Hey");
             var gatherer = _coreObject.AddComponent<Gatherer>();
-            Log("Ho");
+
             Activate(gatherer);
+
             UnityEngine.Object.DontDestroyOnLoad(_coreObject);
         }
 

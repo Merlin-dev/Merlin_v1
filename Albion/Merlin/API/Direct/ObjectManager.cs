@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public alb Internal => _internal;
+        public alb ObjectManager_Internal => _internal;
         
         #endregion
         
@@ -42,9 +42,11 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public ItemProxy CreateItemProxy(ItemObject A_0) => _internal.a((arl)A_0);
         public CollisionManager GetCollisionManager() => _internal.w();
         public ClusterDescriptor GetCurrentCluster() => _internal.u();
         public static ObjectManager GetInstance() => alb.a();
+        public ItemProxy GetItemProxy(long A_0) => _internal.t((long)A_0);
         public LocalPlayerCharacter GetLocalPlayerCharacter() => _internal.aa();
         public SimulationObject GetObject(long A_0) => _internal.a((long)A_0);
         public Dictionary<long,ark> GetObjectMap() => (Dictionary<long,ark>)_methodReflectionPool[0].Invoke(_internal,new object[]{});

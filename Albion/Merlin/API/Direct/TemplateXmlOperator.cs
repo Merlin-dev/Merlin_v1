@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public i9 Internal => _internal;
+        public i9 TemplateXmlOperator_Internal => _internal;
         
         #endregion
         

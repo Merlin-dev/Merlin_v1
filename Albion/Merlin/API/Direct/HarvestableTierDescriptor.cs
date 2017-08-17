@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public hn.b Internal => _internal;
+        public hn.b HarvestableTierDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,6 +42,8 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public hn.a[] GetCharges() => _internal.a2();
+        public hn.b.a[] GetRareStates() => _internal.ax();
         
         #endregion
         

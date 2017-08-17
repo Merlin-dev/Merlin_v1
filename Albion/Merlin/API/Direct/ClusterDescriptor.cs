@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ake Internal => _internal;
+        public ake ClusterDescriptor_Internal => _internal;
         
         #endregion
         

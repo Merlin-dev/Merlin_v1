@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ark Internal => _internal;
+        public ark SimulationObject_Internal => _internal;
         
         #endregion
         

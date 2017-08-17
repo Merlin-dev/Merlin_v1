@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: dj */
-    public class FarmableItemDescriptor
+    public class FarmableItemDescriptor : SimpleItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public dj Internal => _internal;
+        public dj FarmableItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FarmableItemDescriptor(dj instance)
+        public FarmableItemDescriptor(dj instance) : base(instance)
         {
             _internal = instance;
         }

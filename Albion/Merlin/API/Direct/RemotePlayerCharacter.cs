@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ayx */
-    public class RemotePlayerCharacter
+    public class RemotePlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ayx Internal => _internal;
+        public ayx RemotePlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public RemotePlayerCharacter(ayx instance)
+        public RemotePlayerCharacter(ayx instance) : base(instance)
         {
             _internal = instance;
         }

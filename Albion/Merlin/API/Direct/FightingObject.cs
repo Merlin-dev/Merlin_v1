@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: asf */
-    public class FightingObject
+    public class FightingObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public asf Internal => _internal;
+        public asf FightingObject_Internal => _internal;
         
         #endregion
         
@@ -42,6 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public FightingAttributes GetAttributes() => _internal.at();
         public ObservableRange<ac1> GetEnergy() => _internal.v5();
         public ObservableRange<ac1> GetHealth() => _internal.v4();
         public bool GetIsAttacking() => _internal.x0();
@@ -49,6 +50,10 @@ namespace Merlin.API.Direct
         public bool GetIsDead() => _internal.jd();
         public bool GetIsChanneling() => _internal.xx();
         public bool GetIsIdle() => _internal.xv();
+        public float GetLoad() => _internal.jf();
+        public float GetLoadPercentage() => _internal.wf();
+        public float GetLoadSpeedFactor() => _internal.wg();
+        public float GetMaxLoad() => _internal.we();
         public string GetName() => _internal.ir();
         public long GetTargetId() => _internal.wa();
         
@@ -56,7 +61,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FightingObject(asf instance)
+        public FightingObject(asf instance) : base(instance)
         {
             _internal = instance;
         }

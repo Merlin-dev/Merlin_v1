@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public hn Internal => _internal;
+        public hn HarvestableDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,6 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public hn.b[] GetTiers() => _internal.i();
         
         #endregion
         

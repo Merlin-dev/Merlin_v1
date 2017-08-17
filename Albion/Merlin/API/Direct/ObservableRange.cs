@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ac2<a> Internal => _internal;
+        public ac2<a> ObservableRange_Internal => _internal;
         
         #endregion
         

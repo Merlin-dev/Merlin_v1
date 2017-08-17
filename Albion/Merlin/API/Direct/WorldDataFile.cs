@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: akk */
-    public class WorldDataFile
+    public class WorldDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public akk Internal => _internal;
+        public akk WorldDataFile_Internal => _internal;
         
         #endregion
         
@@ -51,7 +51,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public WorldDataFile(akk instance)
+        public WorldDataFile(akk instance) : base(instance)
         {
             _internal = instance;
         }

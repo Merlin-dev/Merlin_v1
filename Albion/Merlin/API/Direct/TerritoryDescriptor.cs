@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public akj Internal => _internal;
+        public akj TerritoryDescriptor_Internal => _internal;
         
         #endregion
         

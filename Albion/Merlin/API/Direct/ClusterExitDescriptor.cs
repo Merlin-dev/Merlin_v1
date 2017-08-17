@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public akf Internal => _internal;
+        public akf ClusterExitDescriptor_Internal => _internal;
         
         #endregion
         

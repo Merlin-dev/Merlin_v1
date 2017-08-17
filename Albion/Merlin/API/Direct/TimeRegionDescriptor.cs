@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public l2 Internal => _internal;
+        public l2 TimeRegionDescriptor_Internal => _internal;
         
         #endregion
         

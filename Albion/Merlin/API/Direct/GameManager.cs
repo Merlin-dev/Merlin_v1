@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public a6o Internal => _internal;
+        public a6o GameManager_Internal => _internal;
         
         #endregion
         

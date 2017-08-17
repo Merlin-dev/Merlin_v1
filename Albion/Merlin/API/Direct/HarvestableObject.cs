@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: a1k */
-    public class HarvestableObject
+    public class HarvestableObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public a1k Internal => _internal;
+        public a1k HarvestableObject_Internal => _internal;
         
         #endregion
         
@@ -43,11 +43,13 @@ namespace Merlin.API.Direct
         #region Methods
         
         public HarvestableDescriptor GetDescriptor() => _internal.sd();
+        public HarvestableChargeDescriptor GetChargeDescriptor() => _internal.sf();
         public long GetCharges() => _internal.so();
         public long GetMaxCharges() => _internal.sp();
         public GameTimeStamp GetProtectedUntil() => _internal.ss();
         public int GetRareState() => _internal.sn();
         public ItemDescriptor GetResourceDescriptor() => _internal.st();
+        public HarvestableTierDescriptor GetTierDescriptor() => _internal.se();
         public long GetYield() => _internal.sq();
         public bool IsHarvestable() => _internal.sr();
         
@@ -55,7 +57,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public HarvestableObject(a1k instance)
+        public HarvestableObject(a1k instance) : base(instance)
         {
             _internal = instance;
         }

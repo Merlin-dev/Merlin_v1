@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ad4 Internal => _internal;
+        public ad4 CollisionManager_Internal => _internal;
         
         #endregion
         

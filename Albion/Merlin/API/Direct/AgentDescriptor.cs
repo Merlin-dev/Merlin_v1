@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public aj5 Internal => _internal;
+        public aj5 AgentDescriptor_Internal => _internal;
         
         #endregion
         

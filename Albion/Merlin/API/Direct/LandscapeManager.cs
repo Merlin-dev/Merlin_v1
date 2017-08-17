@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public a6l Internal => _internal;
+        public a6l LandscapeManager_Internal => _internal;
         
         #endregion
         

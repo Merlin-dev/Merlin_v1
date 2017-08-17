@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: asc */
-    public class WorldObject
+    public class WorldObject : SimulationObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public asc Internal => _internal;
+        public asc WorldObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public WorldObject(asc instance)
+        public WorldObject(asc instance) : base(instance)
         {
             _internal = instance;
         }

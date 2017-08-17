@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: a1m */
-    public class TerritoryObject
+    public class TerritoryObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public a1m Internal => _internal;
+        public a1m TerritoryObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public TerritoryObject(a1m instance)
+        public TerritoryObject(a1m instance) : base(instance)
         {
             _internal = instance;
         }

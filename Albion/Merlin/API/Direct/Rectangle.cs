@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ad8 Internal => _internal;
+        public ad8 Rectangle_Internal => _internal;
         
         #endregion
         

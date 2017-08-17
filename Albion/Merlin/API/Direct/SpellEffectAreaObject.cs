@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ase */
-    public class SpellEffectAreaObject
+    public class SpellEffectAreaObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ase Internal => _internal;
+        public ase SpellEffectAreaObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public SpellEffectAreaObject(ase instance)
+        public SpellEffectAreaObject(ase instance) : base(instance)
         {
             _internal = instance;
         }

@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ma Internal => _internal;
+        public ma CompoundTileDescriptor_Internal => _internal;
         
         #endregion
         

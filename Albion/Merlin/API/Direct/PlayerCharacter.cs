@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: aws */
-    public class PlayerCharacter
+    public class PlayerCharacter : FightingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public aws Internal => _internal;
+        public aws PlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -42,6 +42,8 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public string GetAllianceName() => _internal.jo();
+        public string GetGuildName() => _internal.ji();
         public bool GetIsHarvesting() => _internal.vd();
         public bool GetIsMounted() => _internal.u3();
         public bool GetIsMounting() => _internal.ve();
@@ -54,7 +56,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public PlayerCharacter(aws instance)
+        public PlayerCharacter(aws instance) : base(instance)
         {
             _internal = instance;
         }

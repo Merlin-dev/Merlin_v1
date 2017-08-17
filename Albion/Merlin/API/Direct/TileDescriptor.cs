@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ad6 Internal => _internal;
+        public ad6 TileDescriptor_Internal => _internal;
         
         #endregion
         

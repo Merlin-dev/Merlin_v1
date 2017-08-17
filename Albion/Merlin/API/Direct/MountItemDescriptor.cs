@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ey */
-    public class MountItemDescriptor
+    public class MountItemDescriptor : EquipmentItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public ey Internal => _internal;
+        public ey MountItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public MountItemDescriptor(ey instance)
+        public MountItemDescriptor(ey instance) : base(instance)
         {
             _internal = instance;
         }

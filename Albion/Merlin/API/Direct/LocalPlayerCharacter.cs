@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: awt */
-    public class LocalPlayerCharacter
+    public class LocalPlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
@@ -31,7 +31,7 @@ namespace Merlin.API.Direct
         
         #region Properties
         
-        public awt Internal => _internal;
+        public awt LocalPlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -47,14 +47,13 @@ namespace Merlin.API.Direct
         public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.th();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hk((byte)A_0);
         public adu[] GetSpellSlots() => _internal.tg();
-        public float GetLoad() => _internal.ua();
-        public float GetMaxLoad() => _internal.we();
+        public float GetWeight() => _internal.ua();
         
         #endregion
         
         #region Constructor
         
-        public LocalPlayerCharacter(awt instance)
+        public LocalPlayerCharacter(awt instance) : base(instance)
         {
             _internal = instance;
         }

@@ -80,12 +80,8 @@ namespace Merlin.Profiles.Gatherer
 
         public void Harvest()
         {
-            if(_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
-            {
-                Core.Log("[Attacked]");
-                _state.Fire(Trigger.EncounteredAttacker);
+            if (HandleAttackers())
                 return;
-            }
 
             if (!ValidateTarget(_currentTarget))
             {

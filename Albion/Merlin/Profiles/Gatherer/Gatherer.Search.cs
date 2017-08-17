@@ -11,12 +11,8 @@ namespace Merlin.Profiles.Gatherer
 
         private void Search()
         {
-            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
-            {
-                Core.Log("[Attacked]");
-                _state.Fire(Trigger.EncounteredAttacker);
+            if (HandleAttackers())
                 return;
-            }
 
             if (_localPlayerCharacterView.GetLoadPercent() > BANKING_PECTENTAGE)
             {

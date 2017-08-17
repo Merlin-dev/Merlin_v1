@@ -87,7 +87,7 @@ namespace Merlin.Profiles.Gatherer
                  {
                      case State.Search   : Search(); break;
                      case State.Harvest  : Harvest();break;
-                     //case State.Combat   : Fight();  break;
+                     case State.Combat   : Fight();  break;
                      //case State.Bank     : Bank();   break;
                  }
             }

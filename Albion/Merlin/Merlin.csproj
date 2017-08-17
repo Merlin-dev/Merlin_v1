@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Direct\CastSpellEventHandler.cs" />
     <Compile Include="API\Direct\ConsumableItemProxy.cs" />
     <Compile Include="API\Direct\DurableItemProxy.cs" />
     <Compile Include="API\Direct\EquipmentItemProxy.cs" />
@@ -88,12 +89,15 @@
     <Compile Include="API\Direct\MountItemProxy.cs" />
     <Compile Include="API\Direct\NpcCharacterAttributes.cs" />
     <Compile Include="API\Direct\SimpleItemProxy.cs" />
+    <Compile Include="API\Direct\SpellCategory.cs" />
+    <Compile Include="API\Direct\SpellTarget.cs" />
     <Compile Include="API\Extensions\CastSpellDescriptorExtensions.cs" />
     <Compile Include="API\Extensions\HarvestableObjectExtensions.cs" />
     <Compile Include="API\Extensions\HarvestableObjectViewExtensions.cs" />
     <Compile Include="API\Extensions\SimulationObjectViewExtensions.cs" />
     <Compile Include="API\Extensions\LocalInputHandlerExtensions.cs" />
     <Compile Include="API\SpellFilter.cs" />
+    <Compile Include="API\SpellSlotIndex.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Direct\ActiveSpellDescriptor.cs" />
     <Compile Include="API\Direct\AgentDescriptor.cs" />

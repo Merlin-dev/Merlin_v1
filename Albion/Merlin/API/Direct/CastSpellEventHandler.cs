@@ -21,20 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: g0 */
-    public class CastSpellDescriptor : ActiveSpellDescriptor
+    /* Internal type: au4 */
+    public class CastSpellEventHandler
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private g0 _internal;
+        private au4 _internal;
         
         #region Properties
         
-        public g0 CastSpellDescriptor_Internal => _internal;
-        public SpellCategory Category => _internal.d4.ToWrapped();
-        public SpellTarget Target => _internal.d1.ToWrapped();
-        public int Cost => _internal.dv;
+        public au4 CastSpellEventHandler_Internal => _internal;
         
         #endregion
         
@@ -45,17 +42,18 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public bool IsReady(byte A_0) => _internal.f((byte)A_0);
         
         #endregion
         
         #region Constructor
         
-        public CastSpellDescriptor(g0 instance) : base(instance)
+        public CastSpellEventHandler(au4 instance)
         {
             _internal = instance;
         }
         
-        static CastSpellDescriptor()
+        static CastSpellEventHandler()
         {
             
         }
@@ -64,14 +62,14 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator g0(CastSpellDescriptor instance)
+        public static implicit operator au4(CastSpellEventHandler instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CastSpellDescriptor(g0 instance)
+        public static implicit operator CastSpellEventHandler(au4 instance)
         {
-            return new CastSpellDescriptor(instance);
+            return new CastSpellEventHandler(instance);
         }
         
         #endregion

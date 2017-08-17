@@ -56,6 +56,7 @@ namespace Merlin.API.Direct
         public float GetMaxLoad() => _internal.we();
         public string GetName() => _internal.ir();
         public long GetTargetId() => _internal.wa();
+        public a GetEventHandler<a>() where a:asg => (a)_internal.xm<a>();
         
         #endregion
         

@@ -25,10 +25,10 @@ We have a [Trello board](https://trello.com/b/eGLVeGbL/merlin) where you can see
 Join us! :+1:
 
 ```javascript
-https://discord.gg/zqYfUVx
+https://discord.gg/aPfbDgK
 ```
 
-We have a [Discord Channel](https://discord.gg/zqYfUVx) community to code tools for Albion Online.
+We have a [Discord Channel](https://discord.gg/aPfbDgK) community to code tools for Albion Online.
 
 
 

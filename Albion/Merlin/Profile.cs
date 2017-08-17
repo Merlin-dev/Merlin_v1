@@ -19,6 +19,8 @@ namespace Merlin
         protected ObjectManager _world;
         protected LandscapeManager _landscape;
         protected LocalPlayerCharacterView _localPlayerCharacterView;
+        protected CollisionManager _collision;
+
 
         private DateTime _nextUpdate;
         private bool refresh;
@@ -40,6 +42,7 @@ namespace Merlin
             _client = GameManager.GetInstance();
             _world = ObjectManager.GetInstance();
             _landscape = _client.GetLandscapeManager();
+            _collision = _world.GetCollisionManager();
             _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
             _nextUpdate = DateTime.Now;
 

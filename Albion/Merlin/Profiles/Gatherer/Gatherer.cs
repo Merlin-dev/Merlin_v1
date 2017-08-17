@@ -1,8 +1,6 @@
 ﻿using Stateless;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -29,8 +27,8 @@ namespace Merlin.Profiles.Gatherer
     {
         private bool _isRunning = true;
 
-        StateMachine<State, Trigger> _state;
-        Dictionary<SimulationObjectView, Blacklisted> _blacklist;
+        private StateMachine<State, Trigger> _state;
+        private Dictionary<SimulationObjectView, Blacklisted> _blacklist;
 
         public override string Name => "Gatherer";
 
@@ -62,7 +60,6 @@ namespace Merlin.Profiles.Gatherer
 
             _blacklist.Clear();
             _blacklist = null;
-
         }
 
         protected override void OnUpdate()
@@ -103,6 +100,7 @@ namespace Merlin.Profiles.Gatherer
                 Core.Log(e);
             }
         }
+
         private void Blacklist(SimulationObjectView target, TimeSpan duration)
         {
             _blacklist[target] = new Blacklisted()
@@ -118,6 +116,5 @@ namespace Merlin.Profiles.Gatherer
 
             public DateTime Timestamp { get; set; }
         }
-
     }
 }

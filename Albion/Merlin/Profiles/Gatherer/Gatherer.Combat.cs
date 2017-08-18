@@ -1,9 +1,6 @@
-﻿using Merlin.API.Direct;
-using Merlin.API;
-using System;
-using System.Collections.Generic;
+﻿using Merlin.API;
+using Merlin.API.Direct;
 using System.Linq;
-using System.Text;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -32,35 +29,51 @@ namespace Merlin.Profiles.Gatherer
 
             var spells = player.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
-            
             FightingObjectView attackTarget = _localPlayerCharacterView.GetAttackTarget();
 
-            if(attackTarget != null)
+            if (attackTarget != null)
             {
                 var selfBuffSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.Buff);
                 if (selfBuffSpells.Any() && !player.GetIsCasting())
                 {
                     Core.Log("[Casting Buff Spell]");
-                    //player.CastOnSelf(selfBuffSpells.FirstOrDefault().SpellSlot);
+                    _localPlayerCharacterView.CastOnSelf(selfBuffSpells.FirstOrDefault().Slot);
+                    return;
+                }
+
+                var selfDamageSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.Damage);
+                if (selfDamageSpells.Any() && !player.GetIsCasting())
+                {
+                    Core.Log("[Casting Damage Spell]");
+                    _localPlayerCharacterView.CastOnSelf(selfDamageSpells.FirstOrDefault().Slot);
+                    return;
+                }
+
+                var groundCCSpells = spells.Target(SpellTarget.Ground).Category(SpellCategory.CrowdControl);
+                if (groundCCSpells.Any() && !player.GetIsCasting())
+                {
+                    Core.Log("[Casting Ground Spell]");
+                    _localPlayerCharacterView.CastOnSelf(groundCCSpells.FirstOrDefault().Slot);
                     return;
                 }
             }
 
-
-            if(_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
+            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
-                //TODO: Attack
+                _localPlayerCharacterView.SetSelectedObject(attacker);
+                _localPlayerCharacterView.AttackSelectedObject();
                 return;
             }
 
             if (player.GetIsCasting())
                 return;
 
-
             if (player.GetHealth().GetValue() < (player.GetHealth().GetMaximum() * 0.8f))
             {
-                //TODO: Spells
+                var healSpell = spells.Target(SpellTarget.Self).Category(SpellCategory.Heal);
 
+                if (healSpell.Any())
+                    _localPlayerCharacterView.CastOnSelf(healSpell.FirstOrDefault().Slot);
                 return;
             }
 

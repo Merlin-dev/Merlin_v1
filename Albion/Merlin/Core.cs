@@ -1,7 +1,5 @@
 ﻿using Merlin.Profiles.Gatherer;
 using System;
-using System.IO;
-using System.Reflection;
 using UnityEngine;
 
 namespace Merlin
@@ -37,7 +35,7 @@ namespace Merlin
 
         public static void Log(string message)
         {
-                Debug.Log($"[{DateTime.Now}] {message}");
+            Debug.Log($"[{DateTime.Now}] {message}");
         }
 
         public static void Log(Exception e)

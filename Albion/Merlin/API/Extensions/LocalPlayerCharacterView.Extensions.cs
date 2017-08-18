@@ -1,9 +1,11 @@
-﻿using Merlin.API.Direct;
+﻿using Merlin.API;
+using Merlin.API.Direct;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
+
 namespace Merlin
 {
     public static class LocalPlayerCharacterViewExtensions
@@ -36,6 +38,16 @@ namespace Merlin
         public static bool RequestMove(this LocalPlayerCharacterView view, Vector3 position) => view.RequestMove(position.c());
 
         public static void Interact(this LocalPlayerCharacterView instance, WorldObjectView target) => instance.InputHandler.Interact(target);
+
+        public static void CastOnSelf(this LocalPlayerCharacterView instance, SpellSlotIndex slot) => instance.InputHandler.CastOn(slot, instance);
+
+        public static void CastOn(this LocalPlayerCharacterView instance, SpellSlotIndex slot, FightingObjectView target) => instance.InputHandler.CastOn(slot, target);
+
+        public static void CastAt(this LocalPlayerCharacterView instance, SpellSlotIndex slot, Vector3 target) => instance.InputHandler.CastAt(slot, target);
+
+        public static void SetSelectedObject(this LocalPlayerCharacterView instance, SimulationObjectView target) => instance.InputHandler.SetSelectedObject(target);
+
+        public static void AttackSelectedObject(this LocalPlayerCharacterView instance) => instance.InputHandler.AttackCurrentTarget();
 
         public static bool TryFindPath(this LocalPlayerCharacterView instance, AStarPathfinder pathfinder, SimulationObjectView target,
                             StopFunction<Vector2> stopFunction, out List<Vector3> results)

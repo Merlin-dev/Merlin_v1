@@ -113,7 +113,7 @@ namespace Merlin.Profiles.Gatherer
 
             float minDistance = _currentTarget.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents() + 1.5f;
 
-            if(centerDistance >= minDistance)
+            if (centerDistance >= minDistance)
             {
                 if (!HandleMounting(targetCenter))
                     return;
@@ -125,11 +125,11 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if(_currentTarget is HarvestableObjectView resource)
+            if (_currentTarget is HarvestableObjectView resource)
             {
                 if (_localPlayerCharacterView.IsHarvesting())
                     return;
-                if(resource.GetHarvestableObject().GetCharges() <= 0)
+                if (resource.GetHarvestableObject().GetCharges() <= 0)
                 {
                     _state.Fire(Trigger.DepletedResource);
                     return;

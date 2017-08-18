@@ -1,4 +1,5 @@
 ﻿using Merlin.API.Direct;
+
 //using Merlin.API;
 using System;
 using UnityEngine;
@@ -21,9 +22,9 @@ namespace Merlin
         protected LocalPlayerCharacterView _localPlayerCharacterView;
         protected CollisionManager _collision;
 
-
         private DateTime _nextUpdate;
         private bool refresh;
+
         #endregion Fields
 
         #region Properties and Events
@@ -68,7 +69,6 @@ namespace Merlin
         private void OnDisable()
         {
             Camera.onPostRender -= OnCameraPostRender;
-
 
             OnStop();
 
@@ -123,9 +123,13 @@ namespace Merlin
 
         protected abstract void OnUpdate();
 
-        protected virtual void OnUI(){}
+        protected virtual void OnUI()
+        {
+        }
 
-        protected virtual void OnCameraPostRender(Camera cam) { }
+        protected virtual void OnCameraPostRender(Camera cam)
+        {
+        }
 
         #endregion Methods
     }

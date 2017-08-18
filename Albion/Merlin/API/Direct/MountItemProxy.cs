@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: arr */
-    public class MountItemProxy : EquipmentItemProxy
+    public partial class MountItemProxy : EquipmentItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

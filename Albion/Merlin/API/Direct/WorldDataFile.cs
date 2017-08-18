@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: akk */
-    public class WorldDataFile : DataFile
+    public partial class WorldDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

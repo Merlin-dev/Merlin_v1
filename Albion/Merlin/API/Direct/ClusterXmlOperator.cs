@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: jg */
-    public class ClusterXmlOperator
+    public partial class ClusterXmlOperator
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

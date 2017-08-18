@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: ary */
-    public class JournalItemProxy : DurableItemProxy
+    public partial class JournalItemProxy : DurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

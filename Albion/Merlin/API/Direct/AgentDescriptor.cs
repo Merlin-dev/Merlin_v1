@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: aj5 */
-    public class AgentDescriptor
+    public partial class AgentDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

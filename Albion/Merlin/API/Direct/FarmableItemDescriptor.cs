@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: dj */
-    public class FarmableItemDescriptor : SimpleItemDescriptor
+    public partial class FarmableItemDescriptor : SimpleItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

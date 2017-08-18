@@ -22,7 +22,7 @@ using Albion.Common.Time;
 namespace Merlin.API.Direct
 {
     /* Internal type: g1 */
-    public class ChannelSpellDescriptor : ActiveSpellDescriptor
+    public partial class ChannelSpellDescriptor : ActiveSpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();

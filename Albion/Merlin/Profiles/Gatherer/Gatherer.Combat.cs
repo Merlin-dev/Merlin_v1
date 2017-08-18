@@ -30,15 +30,22 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            var spells = player.GetSpellSlots().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+            var spells = player.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
-            /*
+            
             FightingObjectView attackTarget = _localPlayerCharacterView.GetAttackTarget();
 
             if(attackTarget != null)
             {
-                //TODO: Spell casting
+                var selfBuffSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.Buff);
+                if (selfBuffSpells.Any() && !player.GetIsCasting())
+                {
+                    Core.Log("[Casting Buff Spell]");
+                    //player.CastOnSelf(selfBuffSpells.FirstOrDefault().SpellSlot);
+                    return;
+                }
             }
+
 
             if(_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
@@ -60,7 +67,7 @@ namespace Merlin.Profiles.Gatherer
             _currentTarget = null;
             _harvestPathingRequest = null;
 
-            _state.Fire(Trigger.EliminatedAttacker);*/
+            _state.Fire(Trigger.EliminatedAttacker);
         }
     }
 }

@@ -1,13 +1,15 @@
-﻿using Merlin.API;
-using Merlin.API.Direct;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Merlin
+namespace Merlin.API.Direct
 {
-    public static class FightingObjectExtensions
+    public partial class FightingObject
     {
-        public static FightingObjectView GetAttackTarget(this FightingObjectView instance)
+        public FightingObjectView GetAttackTarget()
         {
-            var attackTargetId = instance.GetFightingObject().GetTargetId();
+            var attackTargetId = GetTargetId();
 
             if (attackTargetId > 0)
             {
@@ -19,10 +21,10 @@ namespace Merlin
             return default(FightingObjectView);
         }
 
-        public static bool IsReadyToCast(this FightingObject instance, SpellSlotIndex slot)
+        public bool IsReadyToCast(SpellSlotIndex slot)
         {
             //NOTE: GetEventHandler Generic param. 0 is internal type of CastSpellEventHandler
-            CastSpellEventHandler eventHandler = instance.GetEventHandler<au4>();
+            CastSpellEventHandler eventHandler = GetEventHandler<au4>();
 
             if (eventHandler.CastSpellEventHandler_Internal != null && eventHandler.IsReady((byte)slot))
                 return true;

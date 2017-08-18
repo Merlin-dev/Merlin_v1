@@ -20,7 +20,7 @@ namespace Merlin
         {
             var entities = GameManager.GetInstance().GetEntities<MobView>((entity) =>
             {
-                var target = ((FightingObjectView)entity).GetAttackTarget();
+                var target = entity.GetAttackTarget();
 
                 if (target != null && target == view)
                     return true;

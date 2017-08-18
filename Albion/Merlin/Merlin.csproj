@@ -205,6 +205,7 @@
     <Compile Include="Pathing\Worldmap\WorldmapMap.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapNode.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
+    <Compile Include="Pathing\WorldPathingRequest.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Combat.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.cs" />

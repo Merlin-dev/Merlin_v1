@@ -1,4 +1,5 @@
 ﻿using Merlin.API;
+using Merlin.API.Direct;
 using System;
 using System.Reflection;
 using UnityEngine;
@@ -35,8 +36,8 @@ namespace Merlin
 
         public static void AttackSelectedObject(this LocalInputHandler instance) => instance.AttackCurrentTarget();
 
-        public static void CastOn(this LocalInputHandler instance, SpellSlotIndex slot, FightingObjectView target) => _startCastInternalTarget.Invoke(instance, new object[] { (byte)slot, target });
+        public static void CastOn(this LocalInputHandler instance, CharacterSpellSlot slot, FightingObjectView target) => _startCastInternalTarget.Invoke(instance, new object[] { (byte)slot, target });
 
-        public static void CastAt(this LocalInputHandler instance, SpellSlotIndex slot, Vector3 target) => _startCastInternalPosition.Invoke(instance, new object[] { (byte)slot, target.c() });
+        public static void CastAt(this LocalInputHandler instance, CharacterSpellSlot slot, Vector3 target) => _startCastInternalPosition.Invoke(instance, new object[] { (byte)slot, target.c() });
     }
 }

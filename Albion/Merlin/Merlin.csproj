@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Direct\CastSpellEventHandler.cs" />
+    <Compile Include="API\Direct\CharacterSpellSlot.cs" />
     <Compile Include="API\Direct\ConsumableItemProxy.cs" />
     <Compile Include="API\Direct\DurableItemProxy.cs" />
     <Compile Include="API\Direct\EquipmentItemProxy.cs" />
@@ -100,7 +101,6 @@
     <Compile Include="API\Extensions\LocalInputHandler.Extensions.cs" />
     <Compile Include="API\SpellFilter.cs" />
     <Compile Include="API\Extensions\SpellSlot.cs" />
-    <Compile Include="API\SpellSlotIndex.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Direct\ActiveSpellDescriptor.cs" />
     <Compile Include="API\Direct\AgentDescriptor.cs" />

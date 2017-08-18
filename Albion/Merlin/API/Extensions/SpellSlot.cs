@@ -2,6 +2,6 @@
 {
     public partial class SpellSlot
     {
-        public SpellSlotIndex Slot { get; set; } = SpellSlotIndex.Invalid;
+        public CharacterSpellSlot Slot { get; set; } = CharacterSpellSlot.Invalid;
     }
 }

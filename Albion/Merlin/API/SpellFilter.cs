@@ -6,7 +6,7 @@ namespace Merlin.API
 {
     public static class SpellFilter
     {
-        public static IEnumerable<SpellSlot> Slot(this IEnumerable<SpellSlot> spells, SpellSlotIndex spellSlot) => spells.Where(spell => spell.Slot == spellSlot);
+        public static IEnumerable<SpellSlot> Slot(this IEnumerable<SpellSlot> spells, CharacterSpellSlot spellSlot) => spells.Where(spell => spell.Slot == spellSlot);
 
         public static IEnumerable<SpellSlot> Category(this IEnumerable<SpellSlot> spells, SpellCategory category) => spells.Where(spell => spell.GetSpellDescriptor().TryGetCategory() == category);
 

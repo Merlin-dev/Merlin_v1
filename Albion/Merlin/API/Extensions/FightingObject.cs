@@ -16,7 +16,7 @@
             return default(FightingObjectView);
         }
 
-        public bool IsReadyToCast(SpellSlotIndex slot)
+        public bool IsReadyToCast(CharacterSpellSlot slot)
         {
             //NOTE: GetEventHandler Generic param. 0 is internal type of CastSpellEventHandler
             CastSpellEventHandler eventHandler = GetEventHandler<au4>();

@@ -39,11 +39,11 @@ namespace Merlin
 
         public static void Interact(this LocalPlayerCharacterView instance, WorldObjectView target) => instance.InputHandler.Interact(target);
 
-        public static void CastOnSelf(this LocalPlayerCharacterView instance, SpellSlotIndex slot) => instance.InputHandler.CastOn(slot, instance);
+        public static void CastOnSelf(this LocalPlayerCharacterView instance, CharacterSpellSlot slot) => instance.InputHandler.CastOn(slot, instance);
 
-        public static void CastOn(this LocalPlayerCharacterView instance, SpellSlotIndex slot, FightingObjectView target) => instance.InputHandler.CastOn(slot, target);
+        public static void CastOn(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, FightingObjectView target) => instance.InputHandler.CastOn(slot, target);
 
-        public static void CastAt(this LocalPlayerCharacterView instance, SpellSlotIndex slot, Vector3 target) => instance.InputHandler.CastAt(slot, target);
+        public static void CastAt(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, Vector3 target) => instance.InputHandler.CastAt(slot, target);
 
         public static void SetSelectedObject(this LocalPlayerCharacterView instance, SimulationObjectView target) => instance.InputHandler.SetSelectedObject(target);
 

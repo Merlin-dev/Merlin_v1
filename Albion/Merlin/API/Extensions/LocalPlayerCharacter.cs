@@ -7,7 +7,7 @@
             SpellSlot[] slots = GetSpellSlots();
             for (int i = 0; i < slots.Length; i++)
             {
-                slots[i].Slot = (SpellSlotIndex)i;
+                slots[i].Slot = (CharacterSpellSlot)i;
             }
             return slots;
         }

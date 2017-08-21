@@ -43,7 +43,7 @@ namespace Merlin.API.Direct
         #region Methods
         
         public static ItemStackProxy GetStackProxy(ItemProxy A_0) => a4x.a((aro)A_0);
-        public int SomeCalculationWithUnfloatyFloats(UnfloatyFloat A_0, UnfloatyFloat A_1) => a4x.b((mv)A_0, (mv)A_1);
+        public static int SomeCalculationWithUnfloatyFloats(UnfloatyFloat A_0, UnfloatyFloat A_1) => a4x.b((mv)A_0, (mv)A_1);
         
         #endregion
         

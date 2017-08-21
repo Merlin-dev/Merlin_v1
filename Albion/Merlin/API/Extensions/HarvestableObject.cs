@@ -4,7 +4,7 @@
     {
         public bool CanLoot(LocalPlayerCharacterView localPlayer)
         {
-            if (IsHarvestable()) //Returns true, when monster loot is locked
+            if (IsHarvestable()) //Returns true, when monster loot is not Harvestable by local player
             {
                 return false;
             }
@@ -17,7 +17,10 @@
 
             DurableItemStackProxy toolProxy = Utilities.GetStackProxy(tool) as DurableItemStackProxy;
 
-            //TODO: Implement tool check
+            int durability = toolProxy ? Utilities.SomeCalculationWithUnfloatyFloats(tool.GetUnfloatyFloat(), toolProxy.GetUnfloatyFloat()) : -1;
+
+            if (requiresTool && durability <= 10)
+                return false;
 
             return true;
         }

@@ -18,6 +18,7 @@ using System.Linq;
 using UnityEngine;
 
 using Albion.Common.Time;
+using WorldMap;
 
 namespace Merlin.API.Direct
 {
@@ -66,12 +67,14 @@ namespace Merlin.API.Direct
         static ObjectManager()
         {
             _methodReflectionPool.Add(typeof(alb).GetMethod("ai", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
+            _getWorldmapClusters = typeof(Worldmap).GetField("c", BindingFlags.NonPublic | BindingFlags.Instance);
+
         }
-        
+
         #endregion
-        
+
         #region Conversion
-        
+
         public static implicit operator alb(ObjectManager instance)
         {
             return instance._internal;

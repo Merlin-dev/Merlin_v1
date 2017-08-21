@@ -101,6 +101,7 @@
     <Compile Include="API\Extensions\LocalInputHandler.Extensions.cs" />
     <Compile Include="API\SpellFilter.cs" />
     <Compile Include="API\Extensions\SpellSlot.cs" />
+    <Compile Include="API\Temporary\ObjectManager.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Direct\ActiveSpellDescriptor.cs" />
     <Compile Include="API\Direct\AgentDescriptor.cs" />

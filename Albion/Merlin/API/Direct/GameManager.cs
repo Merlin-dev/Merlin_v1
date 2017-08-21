@@ -76,6 +76,10 @@ namespace Merlin.API.Direct
             return new GameManager(instance);
         }
         
+        public static implicit operator bool(GameManager instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

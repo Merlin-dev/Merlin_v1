@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new ClusterXmlOperator(instance);
         }
         
+        public static implicit operator bool(ClusterXmlOperator instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

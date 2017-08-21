@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new LandscapeManager(instance);
         }
         
+        public static implicit operator bool(LandscapeManager instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

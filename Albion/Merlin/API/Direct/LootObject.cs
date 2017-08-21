@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new LootObject(instance);
         }
         
+        public static implicit operator bool(LootObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

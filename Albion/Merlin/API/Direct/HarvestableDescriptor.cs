@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new HarvestableDescriptor(instance);
         }
         
+        public static implicit operator bool(HarvestableDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

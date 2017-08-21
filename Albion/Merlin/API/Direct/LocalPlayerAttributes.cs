@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new LocalPlayerAttributes(instance);
         }
         
+        public static implicit operator bool(LocalPlayerAttributes instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

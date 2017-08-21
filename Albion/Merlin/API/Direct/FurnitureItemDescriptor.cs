@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new FurnitureItemDescriptor(instance);
         }
         
+        public static implicit operator bool(FurnitureItemDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

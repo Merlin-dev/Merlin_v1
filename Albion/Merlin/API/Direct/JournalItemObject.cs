@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new JournalItemObject(instance);
         }
         
+        public static implicit operator bool(JournalItemObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

@@ -76,6 +76,10 @@ namespace Merlin.API.Direct
             return new TileDataFile(instance);
         }
         
+        public static implicit operator bool(TileDataFile instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

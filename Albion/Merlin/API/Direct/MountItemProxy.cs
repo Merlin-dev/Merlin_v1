@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new MountItemProxy(instance);
         }
         
+        public static implicit operator bool(MountItemProxy instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

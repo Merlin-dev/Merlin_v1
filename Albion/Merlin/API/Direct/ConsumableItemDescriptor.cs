@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new ConsumableItemDescriptor(instance);
         }
         
+        public static implicit operator bool(ConsumableItemDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

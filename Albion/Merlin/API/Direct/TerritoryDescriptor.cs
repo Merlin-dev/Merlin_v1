@@ -75,6 +75,10 @@ namespace Merlin.API.Direct
             return new TerritoryDescriptor(instance);
         }
         
+        public static implicit operator bool(TerritoryDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

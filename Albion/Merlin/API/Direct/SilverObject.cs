@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new SilverObject(instance);
         }
         
+        public static implicit operator bool(SilverObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

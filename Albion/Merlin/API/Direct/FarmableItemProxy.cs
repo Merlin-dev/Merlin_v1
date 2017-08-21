@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new FarmableItemProxy(instance);
         }
         
+        public static implicit operator bool(FarmableItemProxy instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

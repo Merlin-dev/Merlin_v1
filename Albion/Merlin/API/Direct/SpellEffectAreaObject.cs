@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new SpellEffectAreaObject(instance);
         }
         
+        public static implicit operator bool(SpellEffectAreaObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

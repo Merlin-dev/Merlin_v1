@@ -86,6 +86,10 @@ namespace Merlin.API.Direct
             return new FightingObject(instance);
         }
         
+        public static implicit operator bool(FightingObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

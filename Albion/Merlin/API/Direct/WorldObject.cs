@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new WorldObject(instance);
         }
         
+        public static implicit operator bool(WorldObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

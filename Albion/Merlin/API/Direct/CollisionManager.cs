@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new CollisionManager(instance);
         }
         
+        public static implicit operator bool(CollisionManager instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

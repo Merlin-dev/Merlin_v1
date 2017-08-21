@@ -73,6 +73,10 @@ namespace Merlin.API.Direct
             return new ItemProxy(instance);
         }
         
+        public static implicit operator bool(ItemProxy instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

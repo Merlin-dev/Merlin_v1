@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new TileDescriptor(instance);
         }
         
+        public static implicit operator bool(TileDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

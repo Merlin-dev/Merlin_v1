@@ -82,6 +82,10 @@ namespace Merlin.API.Direct
             return new ObjectManager(instance);
         }
         
+        public static implicit operator bool(ObjectManager instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

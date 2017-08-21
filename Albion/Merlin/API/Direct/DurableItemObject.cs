@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new DurableItemObject(instance);
         }
         
+        public static implicit operator bool(DurableItemObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

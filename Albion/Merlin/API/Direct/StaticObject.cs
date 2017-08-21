@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new StaticObject(instance);
         }
         
+        public static implicit operator bool(StaticObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

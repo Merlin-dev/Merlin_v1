@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new ClusterTypeDescriptor(instance);
         }
         
+        public static implicit operator bool(ClusterTypeDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

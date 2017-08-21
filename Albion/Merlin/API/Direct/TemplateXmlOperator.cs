@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new TemplateXmlOperator(instance);
         }
         
+        public static implicit operator bool(TemplateXmlOperator instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

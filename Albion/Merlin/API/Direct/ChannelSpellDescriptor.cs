@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new ChannelSpellDescriptor(instance);
         }
         
+        public static implicit operator bool(ChannelSpellDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

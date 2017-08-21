@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new GuildMember(instance);
         }
         
+        public static implicit operator bool(GuildMember instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

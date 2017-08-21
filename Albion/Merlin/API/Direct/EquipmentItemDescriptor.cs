@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new EquipmentItemDescriptor(instance);
         }
         
+        public static implicit operator bool(EquipmentItemDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

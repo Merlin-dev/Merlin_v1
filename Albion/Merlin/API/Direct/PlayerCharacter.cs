@@ -80,6 +80,10 @@ namespace Merlin.API.Direct
             return new PlayerCharacter(instance);
         }
         
+        public static implicit operator bool(PlayerCharacter instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

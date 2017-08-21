@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new Utilities(instance);
         }
         
+        public static implicit operator bool(Utilities instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

@@ -72,6 +72,10 @@ namespace Merlin.API.Direct
             return new CastSpellEventHandler(instance);
         }
         
+        public static implicit operator bool(CastSpellEventHandler instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

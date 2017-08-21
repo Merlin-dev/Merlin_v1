@@ -70,7 +70,6 @@ namespace Merlin.API.Direct
         {
             return new Point3(instance);
         }
-        
         #endregion
     }
 }

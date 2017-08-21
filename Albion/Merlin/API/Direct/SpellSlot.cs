@@ -74,6 +74,10 @@ namespace Merlin.API.Direct
             return new SpellSlot(instance);
         }
         
+        public static implicit operator bool(SpellSlot instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

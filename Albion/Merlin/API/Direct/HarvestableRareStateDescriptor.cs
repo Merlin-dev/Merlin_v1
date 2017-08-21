@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new HarvestableRareStateDescriptor(instance);
         }
         
+        public static implicit operator bool(HarvestableRareStateDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

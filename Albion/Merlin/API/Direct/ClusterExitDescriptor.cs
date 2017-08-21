@@ -78,6 +78,10 @@ namespace Merlin.API.Direct
             return new ClusterExitDescriptor(instance);
         }
         
+        public static implicit operator bool(ClusterExitDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

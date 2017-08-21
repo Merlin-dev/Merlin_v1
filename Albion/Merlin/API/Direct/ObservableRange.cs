@@ -76,6 +76,10 @@ namespace Merlin.API.Direct
             return new ObservableRange<a>(instance);
         }
         
+        public static implicit operator bool(ObservableRange<a> instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

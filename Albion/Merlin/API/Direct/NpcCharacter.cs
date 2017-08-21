@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new NpcCharacter(instance);
         }
         
+        public static implicit operator bool(NpcCharacter instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

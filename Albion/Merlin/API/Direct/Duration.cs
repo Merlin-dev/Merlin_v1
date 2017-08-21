@@ -70,7 +70,6 @@ namespace Merlin.API.Direct
         {
             return new Duration(instance);
         }
-        
         #endregion
     }
 }

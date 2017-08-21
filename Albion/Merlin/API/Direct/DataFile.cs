@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new DataFile(instance);
         }
         
+        public static implicit operator bool(DataFile instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

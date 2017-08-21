@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new CompoundTileDescriptor(instance);
         }
         
+        public static implicit operator bool(CompoundTileDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

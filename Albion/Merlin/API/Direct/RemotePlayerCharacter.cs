@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new RemotePlayerCharacter(instance);
         }
         
+        public static implicit operator bool(RemotePlayerCharacter instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

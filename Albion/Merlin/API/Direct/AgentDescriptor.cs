@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new AgentDescriptor(instance);
         }
         
+        public static implicit operator bool(AgentDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

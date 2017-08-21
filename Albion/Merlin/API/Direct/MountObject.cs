@@ -73,6 +73,10 @@ namespace Merlin.API.Direct
             return new MountObject(instance);
         }
         
+        public static implicit operator bool(MountObject instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

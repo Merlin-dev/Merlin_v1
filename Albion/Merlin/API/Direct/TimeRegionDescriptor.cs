@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new TimeRegionDescriptor(instance);
         }
         
+        public static implicit operator bool(TimeRegionDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

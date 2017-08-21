@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new ItemObjectCollection(instance);
         }
         
+        public static implicit operator bool(ItemObjectCollection instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

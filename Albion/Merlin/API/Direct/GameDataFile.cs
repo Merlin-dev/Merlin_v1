@@ -71,6 +71,10 @@ namespace Merlin.API.Direct
             return new GameDataFile(instance);
         }
         
+        public static implicit operator bool(GameDataFile instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

@@ -23,14 +23,14 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if(_localPlayerCharacterView.GetLoadPercent() <= BANKING_PECTENTAGE)
+            if (_localPlayerCharacterView.GetLoadPercent() <= BANKING_PECTENTAGE)
             {
                 Core.Log("[Restart]");
                 _state.Fire(Trigger.Restart);
                 return;
             }
 
-            if(_worldPathingRequest != null)
+            if (_worldPathingRequest != null)
             {
                 if (_worldPathingRequest.IsRunning)
                 {
@@ -46,7 +46,7 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if(_bankPathingRequest != null)
+            if (_bankPathingRequest != null)
             {
                 if (_bankPathingRequest.IsRunning)
                 {
@@ -65,7 +65,6 @@ namespace Merlin.Profiles.Gatherer
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
 
             var currentWorldCluster = _world.GetCurrentCluster();
-            
         }
     }
 }

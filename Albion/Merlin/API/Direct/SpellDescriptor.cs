@@ -74,6 +74,10 @@ namespace Merlin.API.Direct
             return new SpellDescriptor(instance);
         }
         
+        public static implicit operator bool(SpellDescriptor instance)
+        {
+            return instance._internal != null;
+        }
         #endregion
     }
 }

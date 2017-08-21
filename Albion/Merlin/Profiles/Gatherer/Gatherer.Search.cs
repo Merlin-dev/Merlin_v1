@@ -118,10 +118,7 @@ namespace Merlin.Profiles.Gatherer
             //NOTE: Boosted range, to hopefully prevent some stucking, if it doesn't work, revert back to 1.0f
             WorldCollisionFlags flags = (WorldCollisionFlags)_collision.GetCollision(location.b(), 2.0f);
 
-            //TODO: Implement extension method
-            bool PathBlocked = (flags & WorldCollisionFlags.Barrier) != 0 || (flags & WorldCollisionFlags.Wall) != 0 || (flags & WorldCollisionFlags.MeshCollider) != 0;
-
-            return !PathBlocked;
+            return !(flags.HasFlag(WorldCollisionFlags.Barrier) || flags.HasFlag(WorldCollisionFlags.Wall) || flags.HasFlag(WorldCollisionFlags.MeshCollider));
         }
     }
 }

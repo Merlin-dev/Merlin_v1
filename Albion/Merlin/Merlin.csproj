@@ -94,6 +94,7 @@
     <Compile Include="API\Direct\SpellTarget.cs" />
     <Compile Include="API\Direct\WorldCollisionFlags.cs" />
     <Compile Include="API\Extensions\CastSpellDescriptor.cs" />
+    <Compile Include="API\Extensions\Enum.Extensions.cs" />
     <Compile Include="API\Extensions\FightingObject.cs" />
     <Compile Include="API\Extensions\HarvestableObject.cs" />
     <Compile Include="API\Extensions\HarvestableObjectView.Extensions.cs" />

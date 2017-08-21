@@ -43,6 +43,7 @@ namespace Merlin.API.Direct
         #region Methods
         
         public HarvestableChargeDescriptor[] GetCharges() => _internal.a2().Select(x =>(HarvestableChargeDescriptor)x).ToArray();
+        public bool RequiresTool() => _internal.ak();
         public HarvestableRareStateDescriptor[] GetRareStates() => _internal.ax().Select(x =>(HarvestableRareStateDescriptor)x).ToArray();
         
         #endregion

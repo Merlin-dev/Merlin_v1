@@ -1,5 +1,4 @@
-﻿using Merlin.API;
-using Merlin.API.Direct;
+﻿using Merlin.API.Direct;
 using System;
 using System.Reflection;
 using UnityEngine;

@@ -9,14 +9,24 @@
                 return false;
             }
 
+            bool requiresTool = RequiresTool();
+            EquipmentItemProxy tool = GetTool(localPlayer);
+
+            if(requiresTool && !tool)
+
             //TODO: Implement tool check
 
             return true;
         }
 
+        public EquipmentItemProxy GetTool(LocalPlayerCharacterView player)
+        {
+            return GetTool(player.GetLocalPlayerCharacter(), true);
+        }
+
         public bool RequiresTool()
         {
-            return GetTierDescriptor().HarvestableTierDescriptor_Internal.ak(); //TODO: Implement in API
+            return GetTierDescriptor().RequiresTool();
         }
     }
 }

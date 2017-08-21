@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a1k */
-    public partial class HarvestableObject : StaticObject
+    /* Internal type: a39 */
+    public partial class DurableItemStackProxy : ItemStackProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private a1k _internal;
+        private a39 _internal;
         
         #region Properties
         
-        public a1k HarvestableObject_Internal => _internal;
+        public a39 DurableItemStackProxy_Internal => _internal;
         
         #endregion
         
@@ -42,28 +42,17 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public HarvestableDescriptor GetDescriptor() => _internal.sd();
-        public HarvestableChargeDescriptor GetChargeDescriptor() => _internal.sf();
-        public long GetCharges() => _internal.so();
-        public long GetMaxCharges() => _internal.sp();
-        public GameTimeStamp GetProtectedUntil() => _internal.ss();
-        public int GetRareState() => _internal.sn();
-        public ItemDescriptor GetResourceDescriptor() => _internal.st();
-        public HarvestableTierDescriptor GetTierDescriptor() => _internal.se();
-        public long GetYield() => _internal.sq();
-        public bool IsHarvestable() => _internal.sr();
-        public EquipmentItemProxy GetTool(LocalPlayerCharacter A_0, bool A_1) => _internal.az((awt)A_0, (bool)A_1);
         
         #endregion
         
         #region Constructor
         
-        public HarvestableObject(a1k instance) : base(instance)
+        public DurableItemStackProxy(a39 instance) : base(instance)
         {
             _internal = instance;
         }
         
-        static HarvestableObject()
+        static DurableItemStackProxy()
         {
             
         }
@@ -72,14 +61,14 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a1k(HarvestableObject instance)
+        public static implicit operator a39(DurableItemStackProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator HarvestableObject(a1k instance)
+        public static implicit operator DurableItemStackProxy(a39 instance)
         {
-            return new HarvestableObject(instance);
+            return new DurableItemStackProxy(instance);
         }
         
         #endregion

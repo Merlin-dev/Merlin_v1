@@ -9,11 +9,11 @@ namespace Merlin.API.Direct
 {
     public partial class ObjectManager
     {
-        private static FieldInfo _getWorldmapClusters;
+        //private static FieldInfo _getWorldmapClusters;
 
         public Dictionary<string, WorldmapCluster> GetClusters()
         {
-            return _getWorldmapClusters.GetValue(GameGui.Instance.WorldMap) as Dictionary<string, WorldmapCluster>;
+            return null;//_getWorldmapClusters.GetValue(GameGui.Instance.WorldMap) as Dictionary<string, WorldmapCluster>;
         }
 
         public WorldmapCluster GetCluster(ake info)

@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="API\Direct\CastSpellEventHandler.cs" />
     <Compile Include="API\Direct\CharacterSpellSlot.cs" />
+    <Compile Include="API\Direct\CollisionFlags.cs" />
     <Compile Include="API\Direct\ConsumableItemProxy.cs" />
     <Compile Include="API\Direct\DurableItemProxy.cs" />
     <Compile Include="API\Direct\EquipmentItemProxy.cs" />

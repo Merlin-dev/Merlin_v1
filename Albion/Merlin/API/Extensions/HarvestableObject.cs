@@ -12,7 +12,10 @@
             bool requiresTool = RequiresTool();
             EquipmentItemProxy tool = GetTool(localPlayer);
 
-            if(requiresTool && !tool)
+            if (requiresTool && !tool)
+                return false;
+
+            DurableItemStackProxy toolProxy = Utilities.GetStackProxy(tool) as DurableItemStackProxy;
 
             //TODO: Implement tool check
 

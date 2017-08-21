@@ -21,7 +21,7 @@
             //NOTE: GetEventHandler Generic param. 0 is internal type of CastSpellEventHandler
             CastSpellEventHandler eventHandler = GetEventHandler<au4>();
 
-            if (eventHandler.CastSpellEventHandler_Internal != null && eventHandler.IsReady((byte)slot))
+            if (eventHandler && eventHandler.IsReady((byte)slot))
                 return true;
 
             return false;

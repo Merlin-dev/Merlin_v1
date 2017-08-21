@@ -2,12 +2,12 @@
 {
     public partial class CastSpellDescriptor
     {
-        public string TryGetName() => CastSpellDescriptor_Internal == null ? "" : GetIdent();
+        public string TryGetName() => !this ? "" : GetIdent();
 
-        public SpellCategory TryGetCategory() => CastSpellDescriptor_Internal == null ? SpellCategory.None : Category;
+        public SpellCategory TryGetCategory() => !this ? SpellCategory.None : Category;
 
-        public SpellTarget TryGetTarget() => CastSpellDescriptor_Internal == null ? SpellTarget.None : Target;
+        public SpellTarget TryGetTarget() => !this ? SpellTarget.None : Target;
 
-        public int TryGetCost() => CastSpellDescriptor_Internal == null ? 0 : Cost;
+        public int TryGetCost() => !this ? 0 : Cost;
     }
 }

@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a39 */
-    public partial class DurableItemStackProxy : ItemStackProxy
+    /* Internal type: mv */
+    public partial struct UnfloatyFloat
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private a39 _internal;
+        private mv _internal;
         
         #region Properties
         
-        public a39 DurableItemStackProxy_Internal => _internal;
+        public mv UnfloatyFloat_Internal => _internal;
         
         #endregion
         
@@ -42,18 +42,17 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public UnfloatyFloat GetUnfloatyFloat() => _internal.ba();
         
         #endregion
         
         #region Constructor
         
-        public DurableItemStackProxy(a39 instance) : base(instance)
+        public UnfloatyFloat(mv instance)
         {
             _internal = instance;
         }
         
-        static DurableItemStackProxy()
+        static UnfloatyFloat()
         {
             
         }
@@ -62,19 +61,14 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a39(DurableItemStackProxy instance)
+        public static implicit operator mv(UnfloatyFloat instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator DurableItemStackProxy(a39 instance)
+        public static implicit operator UnfloatyFloat(mv instance)
         {
-            return new DurableItemStackProxy(instance);
-        }
-        
-        public static implicit operator bool(DurableItemStackProxy instance)
-        {
-            return instance._internal != null;
+            return new UnfloatyFloat(instance);
         }
         #endregion
     }

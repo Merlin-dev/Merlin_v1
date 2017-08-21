@@ -170,6 +170,7 @@
     <Compile Include="API\Direct\TileDataFile.cs" />
     <Compile Include="API\Direct\TileDescriptor.cs" />
     <Compile Include="API\Direct\TimeRegionDescriptor.cs" />
+    <Compile Include="API\Direct\UnfloatyFloat.cs" />
     <Compile Include="API\Direct\Utilities.cs" />
     <Compile Include="API\Direct\WorldCollisionFlags.cs" />
     <Compile Include="API\Direct\WorldDataFile.cs" />

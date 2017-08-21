@@ -42,6 +42,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public UnfloatyFloat GetUnfloatyFloat() => _internal.b3();
         
         #endregion
         

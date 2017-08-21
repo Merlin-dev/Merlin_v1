@@ -74,7 +74,6 @@
   <ItemGroup>
     <Compile Include="API\Direct\CastSpellEventHandler.cs" />
     <Compile Include="API\Direct\CharacterSpellSlot.cs" />
-    <Compile Include="API\Direct\CollisionFlags.cs" />
     <Compile Include="API\Direct\ConsumableItemProxy.cs" />
     <Compile Include="API\Direct\DurableItemProxy.cs" />
     <Compile Include="API\Direct\EquipmentItemProxy.cs" />
@@ -93,6 +92,7 @@
     <Compile Include="API\Direct\SimpleItemProxy.cs" />
     <Compile Include="API\Direct\SpellCategory.cs" />
     <Compile Include="API\Direct\SpellTarget.cs" />
+    <Compile Include="API\Direct\WorldCollisionFlags.cs" />
     <Compile Include="API\Extensions\CastSpellDescriptor.cs" />
     <Compile Include="API\Extensions\FightingObject.cs" />
     <Compile Include="API\Extensions\HarvestableObject.cs" />

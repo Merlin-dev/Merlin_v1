@@ -13,13 +13,7 @@
 namespace Merlin.API.Direct
 {
     /* Internal type: ad6.a */
-    /// <summary>
-    /// WARNING: This class is still WIP, and can be changed or removed
-    /// </summary>
-    /// <remarks>
-    /// Only 1,2 and 255 are Unwalkable, rest is walkable, at least from my testing
-    /// </remarks>
-    public enum CollisionFlags
+    public enum WorldCollisionFlags
     {
         Terrain = 0,
         Barrier = 1,
@@ -32,16 +26,16 @@ namespace Merlin.API.Direct
         MeshCollider = 255
     }
     
-    public static class CollisionFlagsExtensions
+    public static class WorldCollisionFlagsExtensions
     {
-        public static ad6.a ToInternal(this CollisionFlags instance)
+        public static ad6.a ToInternal(this WorldCollisionFlags instance)
         {
             return (ad6.a)instance;
         }
         
-        public static CollisionFlags ToWrapped(this ad6.a instance)
+        public static WorldCollisionFlags ToWrapped(this ad6.a instance)
         {
-            return (CollisionFlags)instance;
+            return (WorldCollisionFlags)instance;
         }
     }
 }

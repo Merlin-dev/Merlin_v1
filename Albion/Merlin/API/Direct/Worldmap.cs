@@ -38,7 +38,11 @@ namespace Merlin.API.Direct
         
         #region Fields
         
-        public Dictionary<string, WorldMap.WorldmapCluster> WorldmapClusters => (Dictionary<string, WorldMap.WorldmapCluster>)_fieldReflectionPool[0].GetValue(_internal);
+        public Dictionary<string, WorldMap.WorldmapCluster> WorldmapClusters
+        {
+            get => (Dictionary<string, WorldMap.WorldmapCluster>)_fieldReflectionPool[0].GetValue(_internal);
+            set => _fieldReflectionPool[0].SetValue(_internal, (Dictionary<string, WorldMap.WorldmapCluster>)value);
+        }
         
         #endregion
         

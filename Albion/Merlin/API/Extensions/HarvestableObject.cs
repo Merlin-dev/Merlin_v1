@@ -4,10 +4,10 @@
     {
         public bool CanLoot(LocalPlayerCharacterView localPlayer)
         {
-            /*if (IsHarvestable()) //Returns true, when monster loot is not Harvestable by local player
+            if (!IsHarvestable())
             {
                 return false;
-            }*/
+            }
 
             bool requiresTool = RequiresTool();
             EquipmentItemProxy tool = GetTool(localPlayer);

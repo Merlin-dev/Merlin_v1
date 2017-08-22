@@ -1,4 +1,5 @@
-﻿using Merlin.Pathing;
+﻿using Merlin.API.Direct;
+using Merlin.Pathing;
 using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
@@ -63,8 +64,14 @@ namespace Merlin.Profiles.Gatherer
             }
 
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
+            ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
+            ClusterDescriptor townCluster = _world.GetCluster("MARTLOCK").Info;
 
-            var currentWorldCluster = _world.GetCurrentCluster();
+            if(currentWorldCluster.GetIdent() == townCluster.GetIdent())
+            {
+
+            }
+            _localPlayerCharacterView.CreateTextEffect("TODO: Implement banking, with new city location");
         }
     }
 }

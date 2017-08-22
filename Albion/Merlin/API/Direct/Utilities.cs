@@ -26,6 +26,7 @@ namespace Merlin.API.Direct
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
+        private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
         private a4x _internal;
         

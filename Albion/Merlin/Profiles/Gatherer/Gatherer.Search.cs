@@ -14,7 +14,6 @@ namespace Merlin.Profiles.Gatherer
         {
             if (HandleAttackers())
                 return;
-
             if (_localPlayerCharacterView.GetLoadPercent() > BANKING_PECTENTAGE)
             {
                 Core.Log("Overweight");

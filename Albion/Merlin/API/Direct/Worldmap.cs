@@ -26,6 +26,7 @@ namespace Merlin.API.Direct
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
+        private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
         private WorldMap.Worldmap _internal;
         
@@ -37,6 +38,7 @@ namespace Merlin.API.Direct
         
         #region Fields
         
+        public Dictionary<string, WorldMap.WorldmapCluster> WorldmapClusters => (Dictionary<string, WorldMap.WorldmapCluster>)_fieldReflectionPool[0].GetValue(_internal);
         
         #endregion
         
@@ -54,7 +56,7 @@ namespace Merlin.API.Direct
         
         static Worldmap()
         {
-            
+            _fieldReflectionPool.Add(typeof(WorldMap.Worldmap).GetField("c", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
         }
         
         #endregion

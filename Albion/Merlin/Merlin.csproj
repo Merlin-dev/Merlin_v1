@@ -185,8 +185,9 @@
     <Compile Include="API\Extensions\SimulationObjectView.Extensions.cs" />
     <Compile Include="API\Extensions\LocalInputHandler.Extensions.cs" />
     <Compile Include="API\Extensions\SpellSlot.cs" />
+    <Compile Include="API\Extensions\Worldmap.Extensions.cs" />
     <Compile Include="API\SpellFilter.cs" />
-    <Compile Include="API\Temporary\ObjectManager.cs" />
+    <Compile Include="API\Extensions\Worldmap.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Extensions\FightingObjectView.Extensions.cs" />
@@ -236,6 +237,7 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

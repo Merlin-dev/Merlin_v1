@@ -17,5 +17,13 @@ namespace Merlin.API.Direct
 
             return list;
         }
+
+        public SimulationObjectView GetView_Safe(long id)
+        {
+            if (id > 0L)
+                return GetView(id);
+
+            return default(SimulationObjectView);
+        }
     }
 }

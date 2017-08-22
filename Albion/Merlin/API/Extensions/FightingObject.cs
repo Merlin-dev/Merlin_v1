@@ -8,8 +8,7 @@
 
             if (attackTargetId > 0)
             {
-                ObjectManager manager = ObjectManager.GetInstance();
-                if (manager.GetObject(attackTargetId).GetView() is FightingObjectView target)
+                if (GameManager.GetInstance().GetView_Safe(attackTargetId) is FightingObjectView target)
                     return target;
             }
 

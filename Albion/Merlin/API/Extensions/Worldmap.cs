@@ -3,11 +3,11 @@ using WorldMap;
 
 namespace Merlin.API.Direct
 {
-    public partial class ObjectManager
+    public partial class Worldmap
     {
         public Dictionary<string, WorldmapCluster> GetClusters()
         {
-            return ((Worldmap)(GameGui.Instance.WorldMap)).WorldmapClusters;
+            return WorldmapClusters;
         }
 
         public WorldmapCluster GetCluster(ClusterDescriptor info)

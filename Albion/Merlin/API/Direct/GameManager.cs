@@ -48,6 +48,7 @@ namespace Merlin.API.Direct
         public LocalPlayerCharacterView GetLocalPlayerCharacterView() => _internal.v();
         public GameState GetState() => _internal.w().ToWrapped();
         public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((ark)A_0);
+        public SimulationObjectView GetView(long A_0) => _internal.a((long)A_0);
         
         #endregion
         

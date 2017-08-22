@@ -10,16 +10,11 @@ SET UnloadAssembly=%AssemblyPath%\%AssemblyName%-unload.dll
 
 echo Unloading
 if exist %UnloadAssembly% injector -dll %UnloadAssembly% -target %Target% -namespace %AssemblyName% -class Core -method Unload
-timeout 1
 
 echo Loading
 if exist %UnloadAssembly% del %UnloadAssembly%
 
-timeout 1
-
 copy /y %LoadingAssembly% %UnloadAssembly%
-
-timeout 1
 
 injector -dll %LoadingAssembly% -target %Target% -namespace %AssemblyName% -class Core -method Load
 

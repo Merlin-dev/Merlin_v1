@@ -9,7 +9,7 @@ SET LoadingAssembly=%AssemblyPath%\%AssemblyName%.dll
 SET UnloadAssembly=%AssemblyPath%\%AssemblyName%-unload.dll
 
 echo Unloading
-if exist %UnloadAssembly% mono-assembly-injector -dll %UnloadAssembly% -target %Target% -namespace %AssemblyName% -class Core -method Unload
+if exist %UnloadAssembly% injector -dll %UnloadAssembly% -target %Target% -namespace %AssemblyName% -class Core -method Unload
 timeout 1
 
 echo Loading
@@ -21,5 +21,5 @@ copy /y %LoadingAssembly% %UnloadAssembly%
 
 timeout 1
 
-mono-assembly-injector -dll %LoadingAssembly% -target %Target% -namespace %AssemblyName% -class Core -method Load
+injector -dll %LoadingAssembly% -target %Target% -namespace %AssemblyName% -class Core -method Load
 

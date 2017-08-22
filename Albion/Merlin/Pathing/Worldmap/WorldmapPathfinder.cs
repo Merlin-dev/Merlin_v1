@@ -41,7 +41,7 @@ namespace Merlin.Pathing.Worldmap
                 if (exit.GetKind() != ClusterExitKind.Cluster)
                     continue;
 
-                WorldmapCluster cluster = GameGui.Instance.WorldMap.GetCluster(exit.GetDestination().GetIdent());
+                WorldmapCluster cluster = ObjectManager.GetInstance().GetCluster(exit.GetDestination().GetIdent());
                 if (cluster != null)
                     result.Add(cluster);
             }

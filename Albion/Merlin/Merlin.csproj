@@ -187,6 +187,7 @@
     <Compile Include="API\Extensions\SpellSlot.cs" />
     <Compile Include="API\SpellFilter.cs" />
     <Compile Include="API\Temporary\ObjectManager.cs" />
+    <Compile Include="Console.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="API\Extensions\FightingObjectView.Extensions.cs" />
     <Compile Include="API\Extensions\GameManager.cs" />

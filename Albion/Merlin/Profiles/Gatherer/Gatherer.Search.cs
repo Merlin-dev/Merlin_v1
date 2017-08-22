@@ -60,8 +60,6 @@ namespace Merlin.Profiles.Gatherer
                 views.Add(r);
             }
 
-            //TODO: Filter by config
-
             target = views.OrderBy((view) =>
             {
                 var playerPosition = _localPlayerCharacterView.transform.position;
@@ -114,10 +112,8 @@ namespace Merlin.Profiles.Gatherer
                     return false;
             }
 
-            //NOTE: Boosted range, to hopefully prevent some stucking, if it doesn't work, revert back to 1.0f
             WorldCollisionFlags flags = (WorldCollisionFlags)_collision.GetCollision(location.b(), 2.0f);
-
-            return !(flags.HasFlag(WorldCollisionFlags.Barrier) || flags.HasFlag(WorldCollisionFlags.Wall) || flags.HasFlag(WorldCollisionFlags.MeshCollider));
+            return (flags.HasFlag(WorldCollisionFlags.Barrier) || flags.HasFlag(WorldCollisionFlags.Wall) || flags.HasFlag(WorldCollisionFlags.MeshCollider));
         }
     }
 }

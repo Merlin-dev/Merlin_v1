@@ -119,9 +119,16 @@ namespace Merlin.Profiles.Gatherer
                     return;
 
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlocked, out List<Vector3> pathing))
+                {
+                    Core.lineRenderer.positionCount = pathing.Count;
+                    Core.lineRenderer.SetPositions(pathing.ToArray());
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                }
                 else
+                {
+                    Core.Log("Path not found");
                     _state.Fire(Trigger.DepletedResource);
+                }
                 return;
             }
 

@@ -10,12 +10,31 @@ namespace Merlin
 
         private static Profile _activeProfile;
 
+        public static LineRenderer lineRenderer;
+
         public static void Load()
         {
             _coreObject = new GameObject();
+            lineRenderer = _coreObject.AddComponent<LineRenderer>();
 
+            {
+                // Unity has a built-in shader that is useful for drawing
+                // simple colored things.
+                Shader shader = Shader.Find("Hidden/Internal-Colored");
+                Material lineMaterial = new Material(shader);
+                lineMaterial.hideFlags = HideFlags.HideAndDontSave;
+                // Turn backface culling off
+                lineMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+                lineMaterial.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+                // Turn off depth writes
+                lineMaterial.SetInt("_ZWrite", 0);
+                lineMaterial.color = Color.yellow;
+                lineRenderer.material = lineMaterial;
+            }
+
+            _coreObject.AddComponent<Console>().enabled = true;
+            _coreObject.AddComponent<UnloadButton>().enabled = true;
             var gatherer = _coreObject.AddComponent<Gatherer>();
-
             Activate(gatherer);
 
             UnityEngine.Object.DontDestroyOnLoad(_coreObject);
@@ -68,6 +87,17 @@ namespace Merlin
                 profile.enabled = false;
 
             _activeProfile = null;
+        }
+    }
+
+    public class UnloadButton : MonoBehaviour
+    {
+        void OnGUI()
+        {
+            if(GUI.Button(new Rect(Screen.width / 2f - 50,10,100,30), "Unload"))
+            {
+                Core.Unload();
+            }
         }
     }
 }

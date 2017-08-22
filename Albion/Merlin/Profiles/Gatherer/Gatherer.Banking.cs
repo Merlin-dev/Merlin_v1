@@ -66,12 +66,12 @@ namespace Merlin.Profiles.Gatherer
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
             ClusterDescriptor townCluster = _world.GetCluster("MARTLOCK").Info;
+            ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetIdent().Contains("Marketplace")).GetDestination();
 
-            if(currentWorldCluster.GetIdent() == townCluster.GetIdent())
+            if (currentWorldCluster.GetIdent() == bankCluster.GetIdent())
             {
 
             }
-            _localPlayerCharacterView.CreateTextEffect("TODO: Implement banking, with new city location");
         }
     }
 }

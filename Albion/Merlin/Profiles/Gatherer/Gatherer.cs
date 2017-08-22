@@ -93,9 +93,6 @@ namespace Merlin.Profiles.Gatherer
             }
             catch (Exception e)
             {
-#if DEBUG
-                _localPlayerCharacterView.CreateTextEffect($"[Error: {e.Message}]");
-#endif
                 Core.Log(e);
             }
         }

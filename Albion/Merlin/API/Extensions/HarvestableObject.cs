@@ -4,10 +4,10 @@
     {
         public bool CanLoot(LocalPlayerCharacterView localPlayer)
         {
-            if (IsHarvestable()) //Returns true, when monster loot is not Harvestable by local player
+            /*if (IsHarvestable()) //Returns true, when monster loot is not Harvestable by local player
             {
                 return false;
-            }
+            }*/
 
             bool requiresTool = RequiresTool();
             EquipmentItemProxy tool = GetTool(localPlayer);
@@ -15,7 +15,8 @@
             if (requiresTool && !tool)
                 return false;
 
-            DurableItemStackProxy toolProxy = Utilities.GetStackProxy(tool) as DurableItemStackProxy;
+            //TODO: Implement converters
+            DurableItemStackProxy toolProxy = Utilities.GetStackProxy(tool).ItemStackProxy_Internal as a39;
 
             int durability = toolProxy ? Utilities.SomeCalculationWithUnfloatyFloats(tool.GetUnfloatyFloat(), toolProxy.GetUnfloatyFloat()) : -1;
 

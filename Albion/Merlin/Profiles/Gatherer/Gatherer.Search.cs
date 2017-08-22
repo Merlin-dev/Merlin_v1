@@ -112,8 +112,13 @@ namespace Merlin.Profiles.Gatherer
                     return false;
             }
 
-            WorldCollisionFlags flags = (WorldCollisionFlags)_collision.GetCollision(location.b(), 2.0f);
-            return (flags.HasFlag(WorldCollisionFlags.Barrier) || flags.HasFlag(WorldCollisionFlags.Wall) || flags.HasFlag(WorldCollisionFlags.MeshCollider));
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+
+            /*
+             * Direct flag testing is faster, for meaning behind values check WorldCollisionFlags enum
+             */
+
+            return  ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
         }
     }
 }

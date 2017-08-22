@@ -97,6 +97,8 @@ public class Console : MonoBehaviour
 
             GUI.contentColor = logTypeColors[log.type];
             GUILayout.Label(log.message);
+            if(!string.IsNullOrEmpty(log.stackTrace))
+                GUILayout.Label(log.stackTrace);
         }
 
         GUILayout.EndScrollView();

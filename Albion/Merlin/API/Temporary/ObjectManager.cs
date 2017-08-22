@@ -5,18 +5,16 @@ namespace Merlin.API.Direct
 {
     public partial class ObjectManager
     {
-        //private static FieldInfo _getWorldmapClusters;
-
         public Dictionary<string, WorldmapCluster> GetClusters()
         {
-            return null;//_getWorldmapClusters.GetValue(GameGui.Instance.WorldMap) as Dictionary<string, WorldmapCluster>;
+            return ((Worldmap)(GameGui.Instance.WorldMap)).WorldmapClusters;
         }
 
-        public WorldmapCluster GetCluster(ake info)
+        public WorldmapCluster GetCluster(ClusterDescriptor info)
         {
             var clusters = GetClusters();
 
-            if (clusters.TryGetValue(info.ak(), out WorldmapCluster cluster))
+            if (clusters.TryGetValue(info.GetIdent(), out WorldmapCluster cluster))
                 return cluster;
 
             return default(WorldmapCluster);

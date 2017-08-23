@@ -61,8 +61,9 @@ namespace Merlin.Pathing.World
 
                 if (branches.Count > 0)
                 {
-                    //This should in theory work
-                    branches = branches.OrderBy(i => i.Item1 + i.Item2).ToList();
+                    if(branches.Count > 1)
+                        branches = branches.OrderBy(i => i.Item1 + i.Item2).ToList();
+
                     path.AddRange(branches[0].Item3);
                     newDepth = branches[0].Item1;
                     return true;
@@ -75,7 +76,7 @@ namespace Merlin.Pathing.World
         {
             switch (descriptor.GetClusterType().GetPvpRules())
             {
-                case PvpRules.PvpForced: return Int32.MaxValue;
+                case PvpRules.PvpForced: return 255;
                 case PvpRules.PvpAllowed: return 1;
             }
             return 0;

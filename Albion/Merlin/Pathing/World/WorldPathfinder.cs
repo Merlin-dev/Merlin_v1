@@ -81,18 +81,4 @@ namespace Merlin.Pathing.World
             return 0;
         }
     }
-
-    public class Tuple<T1, T2, T3>
-    {
-        public T1 Item1 { get; private set; }
-        public T2 Item2 { get; private set; }
-        public T3 Item3 { get; private set; }
-
-        internal Tuple(T1 first, T2 second, T3 third)
-        {
-            Item1 = first;
-            Item2 = second;
-            Item3 = third;
-        }
-    }
 }

@@ -224,6 +224,9 @@
     <Compile Include="Profiles\Gatherer\Gatherer.Harvest.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tuple\IStructuralComparable.cs" />
+    <Compile Include="Tuple\IStructuralEquatable.cs" />
+    <Compile Include="Tuple\Tuple.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,6 +1,11 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
+using Merlin.Pathing.World;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using WorldMap;
+using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -23,7 +28,6 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
-
             if (_localPlayerCharacterView.GetLoadPercent() <= BANKING_PECTENTAGE)
             {
                 Core.Log("[Restart]");
@@ -63,14 +67,25 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
+            API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
-            ClusterDescriptor townCluster = GameGui.Instance.WorldMap.GetCluster("MARTLOCK").Info;
-            ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetIdent().Contains("Marketplace")).GetDestination();
+            ClusterDescriptor townCluster = worldmapInstance.GetCluster("Martlock").Info;
+            ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
 
-            if (currentWorldCluster.GetIdent() == bankCluster.GetIdent())
+            if (currentWorldCluster.GetName() == bankCluster.GetName())
             {
+               
+            }
+            else
+            {
+                var path = new List<ClusterDescriptor>();
 
+                var pathfinder = new WorldPathfinder();
+
+                if(pathfinder.TryFindPath(currentWorldCluster, bankCluster, out path))
+                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path);
             }
         }
     }

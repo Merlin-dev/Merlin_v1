@@ -49,6 +49,7 @@ namespace Merlin.API.Direct
         public ClusterTypeDescriptor GetClusterType() => _internal.aq();
         public List<ClusterExitDescriptor> GetExits() => _internal.a1().Select(x =>(ClusterExitDescriptor)x).ToList();
         public string GetIdent() => _internal.ak();
+        public string GetName() => _internal.an();
         public Point2 GetOrigin() => _internal.aw();
         public Point2 GetSize() => _internal.ax();
         public List<TerritoryDescriptor> GetTerritories() => _internal.a4().Select(x =>(TerritoryDescriptor)x).ToList();

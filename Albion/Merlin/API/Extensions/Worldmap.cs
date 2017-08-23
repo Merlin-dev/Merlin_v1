@@ -26,7 +26,7 @@ namespace Merlin.API.Direct
 
             foreach (var cluster in clusters.Values)
             {
-                if (cluster.Info.an().ToLower() == name.ToLower())
+                if (((ClusterDescriptor)cluster.Info).GetName().ToLower() == name.ToLower())
                     return cluster;
             }
 

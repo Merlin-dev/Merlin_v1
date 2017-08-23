@@ -1,5 +1,6 @@
 ﻿using Merlin.API.Direct;
 using Stateless;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,14 +17,16 @@ namespace Merlin.Pathing
         private ObjectManager _world;
         private CollisionManager _collision;
 
-        private WorldmapCluster _origin;
-        private WorldmapCluster _destination;
+        private ClusterDescriptor _origin;
+        private ClusterDescriptor _destination;
 
-        private List<WorldmapCluster> _path;
+        private List<ClusterDescriptor> _path;
 
         private StateMachine<State, Trigger> _state;
 
         private ClusterPathingRequest _exitPathingRequest;
+
+        private DateTime _timeout;
 
         #endregion Fields
 
@@ -35,7 +38,7 @@ namespace Merlin.Pathing
 
         #region Constructors and Cleanup
 
-        public WorldPathingRequest(WorldmapCluster start, WorldmapCluster end, List<WorldmapCluster> path)
+        public WorldPathingRequest(ClusterDescriptor start, ClusterDescriptor end, List<ClusterDescriptor> path)
         {
             _client = GameManager.GetInstance();
             _world = ObjectManager.GetInstance();
@@ -45,6 +48,8 @@ namespace Merlin.Pathing
             _destination = end;
 
             _path = path;
+
+            _timeout = DateTime.Now;
 
             _state = new StateMachine<State, Trigger>(State.Start);
 
@@ -61,6 +66,9 @@ namespace Merlin.Pathing
 
         public void Continue()
         {
+            if (_timeout > DateTime.Now)
+                return;
+
             switch (_state.State)
             {
                 case State.Start:
@@ -76,27 +84,29 @@ namespace Merlin.Pathing
                 case State.Running:
                     {
                         var nextCluster = _path[0];
+                        var currentCluster = _world.GetCurrentCluster();
 
-                        if (_world.GetCurrentCluster().ClusterDescriptor_Internal != nextCluster.Info)
+                        if (currentCluster.GetIdent() != nextCluster.GetIdent())
                         {
-                            if (_exitPathingRequest != null)
-                            {
-                                if (_exitPathingRequest.IsRunning)
+                                if (_exitPathingRequest != null)
                                 {
-                                    _exitPathingRequest.Continue();
-                                }
-                                else
-                                {
-                                    _exitPathingRequest = null;
-                                }
+                                    if (_exitPathingRequest.IsRunning)
+                                    {
+                                        _exitPathingRequest.Continue();
+                                    }
+                                    else
+                                    {
+                                    _timeout = DateTime.Now + TimeSpan.FromSeconds(5);
+                                        _exitPathingRequest = null;
+                                    }
 
-                                break;
-                            }
+                                    break;
+                                }
 
                             var player = _client.GetLocalPlayerCharacterView();
-                            var exits = _world.GetCurrentCluster().GetExits();
+                            var exits = currentCluster.GetExits();
 
-                            var exit = exits.FirstOrDefault(e => e.GetDestination().ClusterDescriptor_Internal == nextCluster.Info);
+                            var exit = exits.FirstOrDefault(e => e.GetDestination().GetIdent() == nextCluster.GetIdent());
                             var exitLocation = exit.GetPosition();
 
                             var destination = new Vector3(exitLocation.GetX(), 0, exitLocation.GetY());
@@ -121,7 +131,13 @@ namespace Merlin.Pathing
 
         public bool IsBlocked(Vector2 location)
         {
-            return (_collision.GetCollision(location.b(), 1.2f) > 0);
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+
+            /*
+             * Direct flag testing is faster, for meaning behind values check WorldCollisionFlags enum
+             */
+
+            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
         }
 
         #endregion Methods

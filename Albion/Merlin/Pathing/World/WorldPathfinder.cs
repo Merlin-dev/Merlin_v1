@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Merlin.Pathing.World
 {
@@ -26,12 +25,11 @@ namespace Merlin.Pathing.World
 
         private bool EnumerateNode(ClusterExitDescriptor exit, ClusterDescriptor end, out List<ClusterDescriptor> path, int depth, out int newDepth)
         {
-
             newDepth = depth;
             newDepth++;
 
             path = new List<ClusterDescriptor> { exit.GetDestination() };
-            if(exit.GetDestination().GetIdent() == end.GetIdent())
+            if (exit.GetDestination().GetIdent() == end.GetIdent())
             {
                 return true;
             }
@@ -43,13 +41,12 @@ namespace Merlin.Pathing.World
                 if (exit.GetKind() != ClusterExitKind.Cluster)
                     return false;
 
-
                 List<Tuple<int, int, List<ClusterDescriptor>>> branches = new List<Tuple<int, int, List<ClusterDescriptor>>>(4);
 
                 foreach (ClusterExitDescriptor newExit in exit.GetDestination().GetExits())
                 {
                     //Early out if neighbouring, so we don't need to sort and eval distances
-                    if(newExit.GetDestination().GetIdent() == end.GetIdent())
+                    if (newExit.GetDestination().GetIdent() == end.GetIdent())
                     {
                         newDepth++;
                         path.Add(newExit.GetDestination());
@@ -58,7 +55,7 @@ namespace Merlin.Pathing.World
 
                     if (EnumerateNode(newExit, end, out List<ClusterDescriptor> newPath, newDepth, out int branchDepth))
                     {
-                        branches.Add(new Tuple<int, int, List<ClusterDescriptor>>(branchDepth, GetScore(newExit.GetDestination()),newPath));
+                        branches.Add(new Tuple<int, int, List<ClusterDescriptor>>(branchDepth, GetScore(newExit.GetDestination()), newPath));
                     }
                 }
 
@@ -90,6 +87,7 @@ namespace Merlin.Pathing.World
         public T1 Item1 { get; private set; }
         public T2 Item2 { get; private set; }
         public T3 Item3 { get; private set; }
+
         internal Tuple(T1 first, T2 second, T3 third)
         {
             Item1 = first;

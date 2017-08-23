@@ -1,5 +1,4 @@
-﻿using Merlin.API.Direct;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -118,7 +117,7 @@ namespace Merlin.Profiles.Gatherer
              * Direct flag testing is faster, for meaning behind values check WorldCollisionFlags enum
              */
 
-            return  ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
+            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
         }
     }
 }

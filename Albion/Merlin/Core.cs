@@ -92,9 +92,9 @@ namespace Merlin
 
     public class UnloadButton : MonoBehaviour
     {
-        void OnGUI()
+        private void OnGUI()
         {
-            if(GUI.Button(new Rect(Screen.width / 2f - 50,10,100,30), "Unload"))
+            if (GUI.Button(new Rect(Screen.width / 2f - 50, 10, 100, 30), "Unload"))
             {
                 Core.Unload();
             }

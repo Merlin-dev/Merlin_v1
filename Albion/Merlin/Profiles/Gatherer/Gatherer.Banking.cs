@@ -2,10 +2,7 @@
 using Merlin.Pathing;
 using Merlin.Pathing.World;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using WorldMap;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -76,7 +73,6 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == bankCluster.GetName())
             {
-               
             }
             else
             {
@@ -84,7 +80,7 @@ namespace Merlin.Profiles.Gatherer
 
                 var pathfinder = new WorldPathfinder();
 
-                if(pathfinder.TryFindPath(currentWorldCluster, bankCluster, out path))
+                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, out path))
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path);
             }
         }

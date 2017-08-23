@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Console : MonoBehaviour
 {
-    struct Log
+    private struct Log
     {
         public string message;
         public string stackTrace;
@@ -18,15 +18,15 @@ public class Console : MonoBehaviour
     /// </summary>
     public KeyCode toggleKey = KeyCode.BackQuote;
 
-    List<Log> logs = new List<Log>();
-    Vector2 scrollPosition;
-    bool show;
-    bool collapse;
-    bool scroll;
+    private List<Log> logs = new List<Log>();
+    private Vector2 scrollPosition;
+    private bool show;
+    private bool collapse;
+    private bool scroll;
 
     // Visual elements:
 
-    static readonly Dictionary<LogType, Color> logTypeColors = new Dictionary<LogType, Color>()
+    private static readonly Dictionary<LogType, Color> logTypeColors = new Dictionary<LogType, Color>()
     {
         { LogType.Assert, Color.white },
         { LogType.Error, Color.red },
@@ -35,25 +35,25 @@ public class Console : MonoBehaviour
         { LogType.Warning, Color.yellow },
     };
 
-    const int margin = 20;
+    private const int margin = 20;
 
-    Rect windowRect = new Rect(margin, margin, Screen.width - (margin * 2), Screen.height - (margin * 2));
-    Rect titleBarRect = new Rect(0, 0, 10000, 20);
-    GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
-    GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
-    GUIContent scrollLabel = new GUIContent("Auto scroll", "Scroll automatically.");
+    private Rect windowRect = new Rect(margin, margin, Screen.width - (margin * 2), Screen.height - (margin * 2));
+    private Rect titleBarRect = new Rect(0, 0, 10000, 20);
+    private GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
+    private GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
+    private GUIContent scrollLabel = new GUIContent("Auto scroll", "Scroll automatically.");
 
-    void OnEnable()
+    private void OnEnable()
     {
         Application.logMessageReceived += HandleLog;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         Application.logMessageReceived -= HandleLog;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(toggleKey))
         {
@@ -61,7 +61,7 @@ public class Console : MonoBehaviour
         }
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (!show)
         {
@@ -75,9 +75,9 @@ public class Console : MonoBehaviour
     /// A window that displayss the recorded logs.
     /// </summary>
     /// <param name="windowID">Window ID.</param>
-    void ConsoleWindow(int windowID)
+    private void ConsoleWindow(int windowID)
     {
-        scrollPosition = GUILayout.BeginScrollView(scroll? new Vector2(0,float.MaxValue) : scrollPosition);
+        scrollPosition = GUILayout.BeginScrollView(scroll ? new Vector2(0, float.MaxValue) : scrollPosition);
 
         // Iterate through the recorded logs.
         for (int i = 0; i < logs.Count; i++)
@@ -97,7 +97,7 @@ public class Console : MonoBehaviour
 
             GUI.contentColor = logTypeColors[log.type];
             GUILayout.Label(log.message);
-            if(!string.IsNullOrEmpty(log.stackTrace))
+            if (!string.IsNullOrEmpty(log.stackTrace))
                 GUILayout.Label(log.stackTrace);
         }
 
@@ -127,7 +127,7 @@ public class Console : MonoBehaviour
     /// <param name="message">Message.</param>
     /// <param name="stackTrace">Trace of where the message came from.</param>
     /// <param name="type">Type of message (error, exception, warning, assert).</param>
-    void HandleLog(string message, string stackTrace, LogType type)
+    private void HandleLog(string message, string stackTrace, LogType type)
     {
         if (logs.Count > 100_000)
             logs.RemoveAt(0);

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using WorldMap;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Pathing
@@ -88,20 +87,20 @@ namespace Merlin.Pathing
 
                         if (currentCluster.GetIdent() != nextCluster.GetIdent())
                         {
-                                if (_exitPathingRequest != null)
+                            if (_exitPathingRequest != null)
+                            {
+                                if (_exitPathingRequest.IsRunning)
                                 {
-                                    if (_exitPathingRequest.IsRunning)
-                                    {
-                                        _exitPathingRequest.Continue();
-                                    }
-                                    else
-                                    {
-                                    _timeout = DateTime.Now + TimeSpan.FromSeconds(5);
-                                        _exitPathingRequest = null;
-                                    }
-
-                                    break;
+                                    _exitPathingRequest.Continue();
                                 }
+                                else
+                                {
+                                    _timeout = DateTime.Now + TimeSpan.FromSeconds(5);
+                                    _exitPathingRequest = null;
+                                }
+
+                                break;
+                            }
 
                             var player = _client.GetLocalPlayerCharacterView();
                             var exits = currentCluster.GetExits();

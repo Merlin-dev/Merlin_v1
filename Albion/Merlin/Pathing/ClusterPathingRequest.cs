@@ -65,6 +65,13 @@ namespace Merlin.Pathing
 
                 case State.Running:
                     {
+                        //If we leave the current map, both will become null.
+                        if (_player == null)
+                        {
+                            _state.Fire(Trigger.ReachedTarget);
+                            break;
+                        }
+
                         var currentNode = _path[0];
                         var minimumDistance = 3f;
 

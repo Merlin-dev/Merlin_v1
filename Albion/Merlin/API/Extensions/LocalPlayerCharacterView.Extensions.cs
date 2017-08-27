@@ -21,6 +21,9 @@ namespace Merlin
         {
             var entities = GameManager.GetInstance().GetEntities<MobView>((entity) =>
             {
+                if (entity.IsDead())
+                    return false;
+
                 var target = entity.GetAttackTarget();
 
                 if (target != null && target == view)
@@ -34,9 +37,17 @@ namespace Merlin
             return attacker != default(FightingObjectView);
         }
 
+        public static bool IsInLineOfSight(this LocalPlayerCharacterView instance, FightingObjectView target)
+        {
+            var targetPos = target.FightingObject.hy();
+            var sightChecker = instance.PlayerCharacter.xm<au4>();
+
+            return !alb.a().w().f(sightChecker.n().hy(), targetPos, out var outPoint, 2);
+        }
+
         public static bool RequestMove(this LocalPlayerCharacterView view, Vector3 position) => view.RequestMove(position.c());
 
-        public static void Interact(this LocalPlayerCharacterView instance, WorldObjectView target) => instance.InputHandler.Interact(target);
+        public static void Interact(this LocalPlayerCharacterView instance, WorldObjectView target, string collider = null) => instance.InputHandler.Interact(target, collider);
 
         public static void CastOnSelf(this LocalPlayerCharacterView instance, CharacterSpellSlot slot) => instance.InputHandler.CastOn(slot, instance);
 

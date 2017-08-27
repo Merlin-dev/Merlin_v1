@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Pathing
@@ -110,7 +111,8 @@ namespace Merlin.Pathing
 
                             var destination = new Vector3(exitLocation.GetX(), 0, exitLocation.GetY());
 
-                            if (player.TryFindPath(new ClusterPathfinder(), destination, IsBlocked, out List<Vector3> pathing))
+                            var isInsideCity = Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray().Any(c => currentCluster.GetName().Contains(c));
+                            if (player.TryFindPath(new ClusterPathfinder(), destination, isInsideCity ? (StopFunction<Vector2>)IsBlockedCity : IsBlocked, out List<Vector3> pathing))
                                 _exitPathingRequest = new ClusterPathingRequest(_client.GetLocalPlayerCharacterView(), null, pathing, false);
                         }
                         else
@@ -126,6 +128,13 @@ namespace Merlin.Pathing
                         break;
                     }
             }
+        }
+
+        public bool IsBlockedCity(Vector2 location)
+        {
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+
+            return (((cf & 0x01) != 0) || ((cf & 0x02) != 0)) && ((cf & 0xFF) == 0);
         }
 
         public bool IsBlocked(Vector2 location)

@@ -1,6 +1,7 @@
 ﻿using Stateless;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -10,6 +11,8 @@ namespace Merlin.Profiles.Gatherer
         Harvest,
         Combat,
         Bank,
+        Travel,
+        SiegeCampTreasure,
     }
 
     public enum Trigger
@@ -21,23 +24,37 @@ namespace Merlin.Profiles.Gatherer
         Overweight,
         EncounteredAttacker,
         EliminatedAttacker,
+        StartTravelling,
+        TravellingDone,
+        StartSiegeCampTreasure,
+        OnSiegeCampTreasureDone,
+        Failure,
     }
 
     public sealed partial class Gatherer : Profile
     {
-        private bool _isRunning = true;
+        private bool _isRunning = false;
 
         private StateMachine<State, Trigger> _state;
         private Dictionary<SimulationObjectView, Blacklisted> _blacklist;
+        private Dictionary<Vector3, GatherInformation> _gatheredSpots;
+        private List<MobView> _keepers;
+        private bool _knockedDown;
 
         public override string Name => "Gatherer";
 
         protected override void OnStart()
         {
             _blacklist = new Dictionary<SimulationObjectView, Blacklisted>();
+            _gatheredSpots = new Dictionary<Vector3, GatherInformation>();
+            _keepers = new List<MobView>();
+
+            LoadSettings();
 
             _state = new StateMachine<State, Trigger>(State.Search);
             _state.Configure(State.Search)
+                .Permit(Trigger.StartSiegeCampTreasure, State.SiegeCampTreasure)
+                .Permit(Trigger.StartTravelling, State.Travel)
                 .Permit(Trigger.EncounteredAttacker, State.Combat)
                 .Permit(Trigger.DiscoveredResource, State.Harvest)
                 .Permit(Trigger.Overweight, State.Bank);
@@ -52,10 +69,22 @@ namespace Merlin.Profiles.Gatherer
             _state.Configure(State.Bank)
                 .Permit(Trigger.Restart, State.Search)
                 .Permit(Trigger.BankDone, State.Search);
+
+            _state.Configure(State.Travel)
+                .Permit(Trigger.TravellingDone, State.Search);
+
+            _state.Configure(State.SiegeCampTreasure)
+                .Permit(Trigger.OnSiegeCampTreasureDone, State.Search);
+
+            foreach (State state in Enum.GetValues(typeof(State)))
+                if (state != State.Search)
+                    _state.Configure(state).Permit(Trigger.Failure, State.Search);
         }
 
         protected override void OnStop()
         {
+            SaveSettings();
+
             _state = null;
 
             _blacklist.Clear();
@@ -64,6 +93,12 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUpdate()
         {
+            if (_autoUpdate)
+            {
+                _client.Zoom = _zoom;
+                _client.GlobalFog = _globalFog;
+            }
+
             if (!_isRunning)
                 return;
 
@@ -83,18 +118,47 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
+                _keepers = _client.GetEntities<MobView>(mob => !mob.IsDead() && mob.MobType().ToLowerInvariant().Contains("keeper"));
+
+                if (_knockedDown != _localPlayerCharacterView.IsKnockedDown())
+                {
+                    _knockedDown = _localPlayerCharacterView.IsKnockedDown();
+                    if (_knockedDown)
+                    {
+                        Core.Log("[DEAD - Currently knocked down!]");
+                    }
+                }
+
                 switch (_state.State)
                 {
                     case State.Search: Search(); break;
                     case State.Harvest: Harvest(); break;
                     case State.Combat: Fight(); break;
                     case State.Bank: Bank(); break;
+                    case State.Travel: Travel(); break;
+                    case State.SiegeCampTreasure: SiegeCampTreasure(); break;
                 }
             }
             catch (Exception e)
             {
                 Core.Log(e);
+
+                ResetCriticalVariables();
+                _state.Fire(Trigger.Failure);
             }
+        }
+
+        private void ResetCriticalVariables()
+        {
+            _worldPathingRequest = null;
+            _bankPathingRequest = null;
+            _harvestPathingRequest = null;
+            _currentTarget = null;
+            _failedFindAttempts = 0;
+            _changeGatheringPathRequest = null;
+            _siegeCampTreasureCoroutine = null;
+            _targetCluster = null;
+            _travelPathingRequest = null;
         }
 
         private void Blacklist(SimulationObjectView target, TimeSpan duration)
@@ -111,6 +175,31 @@ namespace Merlin.Profiles.Gatherer
             public SimulationObjectView Target { get; set; }
 
             public DateTime Timestamp { get; set; }
+        }
+
+        public struct GatherInformation
+        {
+            ResourceType _resourceType;
+            Tier _tier;
+            EnchantmentLevel _enchantmentLevel;
+
+            public ResourceType ResourceType { get { return _resourceType; } }
+            public Tier Tier { get { return _tier; } }
+            public EnchantmentLevel EnchantmentLevel { get { return _enchantmentLevel; } }
+            public DateTime? HarvestDate { get; set; }
+
+            public GatherInformation(ResourceType resourceType, Tier tier, EnchantmentLevel enchantmentLevel)
+            {
+                _resourceType = resourceType;
+                _tier = tier;
+                _enchantmentLevel = enchantmentLevel;
+                HarvestDate = null;
+            }
+
+            public override string ToString()
+            {
+                return $"{ResourceType} {Tier}.{(int)EnchantmentLevel}";
+            }
         }
     }
 }

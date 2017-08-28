@@ -1,4 +1,6 @@
-﻿namespace Merlin.API.Direct
+﻿using System;
+
+namespace Merlin.API.Direct
 {
     public partial class HarvestableObject
     {
@@ -28,7 +30,28 @@
 
         public EquipmentItemProxy GetTool(LocalPlayerCharacterView player)
         {
-            return GetTool(player.GetLocalPlayerCharacter(), true);
+            return GetTool(player.GetLocalPlayerCharacter(), false);
+        }
+
+        public int GetTier()
+        {
+            return GetResourceDescriptor().Tier;
+        }
+
+        public ResourceType? GetResourceType()
+        {
+            try
+            {
+                var resourceTypeString = GetResourceDescriptor().ResourceType;
+                if (resourceTypeString.Contains("_"))
+                    resourceTypeString = resourceTypeString.Substring(0, resourceTypeString.IndexOf("_"));
+
+                return (ResourceType)Enum.Parse(typeof(ResourceType), resourceTypeString, true);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public bool RequiresTool()

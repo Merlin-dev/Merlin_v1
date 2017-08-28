@@ -33,7 +33,6 @@ namespace Merlin
             }
 
             _coreObject.AddComponent<Console>().enabled = true;
-            _coreObject.AddComponent<UnloadButton>().enabled = true;
             var gatherer = _coreObject.AddComponent<Gatherer>();
             Activate(gatherer);
 

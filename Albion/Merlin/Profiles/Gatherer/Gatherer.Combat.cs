@@ -31,7 +31,7 @@ namespace Merlin.Profiles.Gatherer
 
             FightingObjectView attackTarget = _localPlayerCharacterView.GetAttackTarget();
 
-            if (attackTarget != null)
+            if (attackTarget != null && !attackTarget.IsDead())
             {
                 var selfBuffSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.Buff);
                 if (selfBuffSpells.Any() && !player.GetIsCasting())
@@ -54,6 +54,22 @@ namespace Merlin.Profiles.Gatherer
                 {
                     Core.Log("[Casting Ground Spell]");
                     _localPlayerCharacterView.CastOnSelf(groundCCSpells.FirstOrDefault().Slot);
+                    return;
+                }
+
+                var selfCCSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.CrowdControl);
+                if (selfCCSpells.Any())
+                {
+                    Core.Log("[Casting Self Spell]");
+                    _localPlayerCharacterView.CastOnSelf(selfCCSpells.FirstOrDefault().Slot);
+                    return;
+                }
+
+                var enemyDamageSpells = spells.Target(SpellTarget.Enemy).Category(SpellCategory.Damage);
+                if (enemyDamageSpells.Any() && !player.GetIsCasting())
+                {
+                    Core.Log("[Casting Damage Spell]");
+                    _localPlayerCharacterView.CastOn(enemyDamageSpells.FirstOrDefault().Slot, player.GetAttackTarget());
                     return;
                 }
             }
@@ -80,6 +96,7 @@ namespace Merlin.Profiles.Gatherer
             _currentTarget = null;
             _harvestPathingRequest = null;
 
+            Core.Log("[Eliminated]");
             _state.Fire(Trigger.EliminatedAttacker);
         }
     }

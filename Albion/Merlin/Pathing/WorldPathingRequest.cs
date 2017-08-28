@@ -111,8 +111,7 @@ namespace Merlin.Pathing
 
                             var destination = new Vector3(exitLocation.GetX(), 0, exitLocation.GetY());
 
-                            var isInsideCity = Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray().Any(c => currentCluster.GetName().Contains(c));
-                            if (player.TryFindPath(new ClusterPathfinder(), destination, isInsideCity ? (StopFunction<Vector2>)IsBlockedCity : IsBlocked, out List<Vector3> pathing))
+                            if (player.TryFindPath(new ClusterPathfinder(), destination, IsBlocked, out List<Vector3> pathing))
                                 _exitPathingRequest = new ClusterPathingRequest(_client.GetLocalPlayerCharacterView(), null, pathing, false);
                         }
                         else
@@ -130,22 +129,18 @@ namespace Merlin.Pathing
             }
         }
 
-        public bool IsBlockedCity(Vector2 location)
-        {
-            byte cf = _collision.GetCollision(location.b(), 2.0f);
-
-            return (((cf & 0x01) != 0) || ((cf & 0x02) != 0)) && ((cf & 0xFF) == 0);
-        }
-
         public bool IsBlocked(Vector2 location)
         {
             byte cf = _collision.GetCollision(location.b(), 2.0f);
+            if (cf == 255)
+            {
+                var location3d = new Vector3(location.x, 0, location.y);
+                var meshCollidersAtLocation = Physics.OverlapSphere(location3d, 2.0f).Where(c => c.GetType() == typeof(MeshCollider));
 
-            /*
-             * Direct flag testing is faster, for meaning behind values check WorldCollisionFlags enum
-             */
-
-            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
+                return meshCollidersAtLocation.Any(c => !c.isTrigger);
+            }
+            else
+                return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));
         }
 
         #endregion Methods

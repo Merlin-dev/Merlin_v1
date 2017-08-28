@@ -230,6 +230,9 @@
     <Compile Include="Pathing\Helpers\PriorityQueue.cs" />
     <Compile Include="Pathing\IPathfinder.cs" />
     <Compile Include="Pathing\PositionPathingRequest.cs" />
+    <Compile Include="Pathing\Worldmap\WorldmapMap.cs" />
+    <Compile Include="Pathing\Worldmap\WorldmapNode.cs" />
+    <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
     <Compile Include="Pathing\WorldPathingRequest.cs" />
     <Compile Include="Pathing\World\WorldPathfinder.cs" />
     <Compile Include="Profile.cs" />

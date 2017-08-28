@@ -1,6 +1,6 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
-using Merlin.Pathing.World;
+using Merlin.Pathing.Worldmap;
 using UnityEngine;
 using WorldMap;
 
@@ -49,8 +49,8 @@ namespace Merlin.Profiles.Gatherer
             }
             else
             {
-                var worldPathing = new WorldPathfinder();
-                if (worldPathing.TryFindPath(currentCluster, _targetCluster, out var path))
+                var worldPathing = new WorldmapPathfinder();
+                if (worldPathing.TryFindPath(currentCluster, _targetCluster, (v) => false, out var path, out var pivots))
                 {
                     Core.Log("[Traveling Path found]");
                     _travelPathingRequest = new WorldPathingRequest(currentCluster, _targetCluster, path);

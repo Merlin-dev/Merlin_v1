@@ -93,12 +93,6 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUpdate()
         {
-            if (_autoUpdate)
-            {
-                _client.Zoom = _zoom;
-                _client.GlobalFog = _globalFog;
-            }
-
             if (!_isRunning)
                 return;
 

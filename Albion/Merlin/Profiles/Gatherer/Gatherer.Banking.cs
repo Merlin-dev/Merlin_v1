@@ -110,6 +110,11 @@ namespace Merlin.Profiles.Gatherer
 
                 if (_isDepositing)
                     return;
+                else
+                {
+                    Core.Log("[Bank Done]");
+                    _state.Fire(Trigger.BankDone);
+                }
             }
             else
             {

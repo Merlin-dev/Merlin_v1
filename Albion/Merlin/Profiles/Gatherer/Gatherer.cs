@@ -11,6 +11,7 @@ namespace Merlin.Profiles.Gatherer
         Harvest,
         Combat,
         Bank,
+        Repair,
         Travel,
         SiegeCampTreasure,
     }
@@ -20,8 +21,10 @@ namespace Merlin.Profiles.Gatherer
         Restart,
         DiscoveredResource,
         BankDone,
+        RepairDone,
         DepletedResource,
         Overweight,
+        Damaged,
         EncounteredAttacker,
         EliminatedAttacker,
         StartTravelling,
@@ -57,7 +60,8 @@ namespace Merlin.Profiles.Gatherer
                 .Permit(Trigger.StartTravelling, State.Travel)
                 .Permit(Trigger.EncounteredAttacker, State.Combat)
                 .Permit(Trigger.DiscoveredResource, State.Harvest)
-                .Permit(Trigger.Overweight, State.Bank);
+                .Permit(Trigger.Overweight, State.Bank)
+                .Permit(Trigger.Damaged, State.Repair);
 
             _state.Configure(State.Combat)
                 .Permit(Trigger.EliminatedAttacker, State.Search);
@@ -69,6 +73,9 @@ namespace Merlin.Profiles.Gatherer
             _state.Configure(State.Bank)
                 .Permit(Trigger.Restart, State.Search)
                 .Permit(Trigger.BankDone, State.Search);
+
+            _state.Configure(State.Repair)
+                .Permit(Trigger.RepairDone, State.Search);
 
             _state.Configure(State.Travel)
                 .Permit(Trigger.TravellingDone, State.Search);
@@ -129,6 +136,7 @@ namespace Merlin.Profiles.Gatherer
                     case State.Harvest: Harvest(); break;
                     case State.Combat: Fight(); break;
                     case State.Bank: Bank(); break;
+                    case State.Repair: Repair(); break;
                     case State.Travel: Travel(); break;
                     case State.SiegeCampTreasure: SiegeCampTreasure(); break;
                 }
@@ -146,9 +154,12 @@ namespace Merlin.Profiles.Gatherer
         {
             _worldPathingRequest = null;
             _bankPathingRequest = null;
+            _repairPathingRequest = null;
+            _repairFindPathingRequest = null;
             _harvestPathingRequest = null;
             _currentTarget = null;
             _failedFindAttempts = 0;
+            _reachedPointInBetween = false;
             _changeGatheringPathRequest = null;
             _siegeCampTreasureCoroutine = null;
             _targetCluster = null;

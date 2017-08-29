@@ -1,4 +1,6 @@
-﻿namespace Merlin.API.Direct
+﻿using System.Linq;
+
+namespace Merlin.API.Direct
 {
     public partial class LocalPlayerCharacter
     {
@@ -10,6 +12,14 @@
                 slots[i].Slot = (CharacterSpellSlot)i;
             }
             return slots;
+        }
+
+        public bool HasAnyBrokenItem()
+        {
+            return _internal.sk().eg().dv().Union(_internal.sm().eg().dv()).Any(i =>
+            {
+                return i is arq equipableItem ? equipableItem.ai() : false;
+            });
         }
     }
 }

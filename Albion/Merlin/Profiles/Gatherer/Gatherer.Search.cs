@@ -45,6 +45,13 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
+            if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
+            {
+                Core.Log("Damaged");
+                _state.Fire(Trigger.Damaged);
+                return;
+            }
+
             if (Loot())
                 return;
 
@@ -284,9 +291,6 @@ namespace Merlin.Profiles.Gatherer
             var vector = new Vector3(location.x, 0, location.y);
 
             if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
-                return true;
-
-            if (_skipKeeperPacks && ContainKeepers(vector))
                 return true;
 
             if (_currentTarget != null)

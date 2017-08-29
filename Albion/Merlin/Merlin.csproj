@@ -237,6 +237,7 @@
     <Compile Include="Pathing\World\WorldPathfinder.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Profiles\ESP\ESP.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Reparing.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Combat.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Harvest.cs" />

@@ -91,7 +91,7 @@ namespace Merlin.Profiles.Gatherer
         {
             if (HandleAttackers())
                 return;
-
+            
             if (!ValidateTarget(_currentTarget))
             {
                 _state.Fire(Trigger.DepletedResource);
@@ -103,6 +103,14 @@ namespace Merlin.Profiles.Gatherer
 
             Vector3 targetCenter = _currentTarget.transform.position;
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
+
+            //Skip if target or we self are inside a kepper pack
+            if (_skipKeeperPacks && (ContainKeepers(_currentTarget.transform.position) || ContainKeepers(playerCenter)))
+            {
+                Core.Log("[Skipped - Inside Kepper Pack Range]");
+                _state.Fire(Trigger.DepletedResource);
+                return;
+            }
 
             float centerDistance = (targetCenter - playerCenter).magnitude;
             var isInLoS = mob != null ? _localPlayerCharacterView.IsInLineOfSight(mob) : true;

@@ -45,6 +45,13 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
+            if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
+            {
+                Core.Log("Damaged");
+                _state.Fire(Trigger.Damaged);
+                return;
+            }
+
             if (Loot())
                 return;
 
@@ -286,9 +293,6 @@ namespace Merlin.Profiles.Gatherer
             if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
                 return true;
 
-            if (_skipKeeperPacks && ContainKeepers(vector))
-                return true;
-
             if (_currentTarget != null)
             {
                 var resourcePosition = new Vector2(_currentTarget.transform.position.x,
@@ -310,12 +314,15 @@ namespace Merlin.Profiles.Gatherer
             }
 
             byte cf = _collision.GetCollision(location.b(), 2.0f);
+            if (cf == 255)
+            {
+                var location3d = new Vector3(location.x, 0, location.y);
+                var meshCollidersAtLocation = Physics.OverlapSphere(location3d, 2.0f).Where(c => c.GetType() == typeof(MeshCollider));
 
-            /*
-             * Direct flag testing is faster, for meaning behind values check WorldCollisionFlags enum
-             */
-
-            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
+                return meshCollidersAtLocation.Any(c => !c.isTrigger);
+            }
+            else
+                return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));
         }
     }
 }

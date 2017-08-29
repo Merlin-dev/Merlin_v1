@@ -78,7 +78,10 @@ namespace Merlin.Pathing
                             currentNode = _target + bufferDistance;
                         }
 
-                        var distanceToNode = (_player.transform.position - currentNode).sqrMagnitude;
+                        var playerPosV2 = new Vector2(_player.transform.position.x, _player.transform.position.z);
+                        var currentNodeV2 = new Vector2(currentNode.x, currentNode.z);
+
+                        var distanceToNode = (playerPosV2 - currentNodeV2).sqrMagnitude;
 
                         if (distanceToNode < minimumDistance)
                         {

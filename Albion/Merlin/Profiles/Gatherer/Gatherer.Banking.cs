@@ -1,6 +1,6 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
-using Merlin.Pathing.World;
+using Merlin.Pathing.Worldmap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +65,7 @@ namespace Merlin.Profiles.Gatherer
 
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
-            ClusterDescriptor townCluster = worldmapInstance.GetCluster(SelectedTownCluster).Info;
+            ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
             ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
 
             if (currentWorldCluster.GetName() == bankCluster.GetName())
@@ -110,14 +110,16 @@ namespace Merlin.Profiles.Gatherer
 
                 if (_isDepositing)
                     return;
+                else
+                {
+                    Core.Log("[Bank Done]");
+                    _state.Fire(Trigger.BankDone);
+                }
             }
             else
             {
-                var path = new List<ClusterDescriptor>();
-
-                var pathfinder = new WorldPathfinder();
-
-                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, out path))
+                var pathfinder = new WorldmapPathfinder();
+                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, (v) => false, out var path, out var pivots))
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path);
             }
         }

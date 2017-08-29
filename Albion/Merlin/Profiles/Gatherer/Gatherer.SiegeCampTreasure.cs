@@ -143,7 +143,16 @@ namespace Merlin.Profiles.Gatherer
 
         private bool SiegeCampTreasureStopFunction(Vector2 location)
         {
-            return (_collision.GetCollision(location.b(), 1.0f) > 0);
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+            if (cf == 255)
+            {
+                var location3d = new Vector3(location.x, 0, location.y);
+                var meshCollidersAtLocation = Physics.OverlapSphere(location3d, 2.0f).Where(c => c.GetType() == typeof(MeshCollider));
+
+                return meshCollidersAtLocation.Any(c => !c.isTrigger);
+            }
+            else
+                return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));
         }
 
         #endregion Methods

@@ -40,7 +40,7 @@ namespace Merlin.Profiles.Gatherer
                 foreach (var tier in Enum.GetValues(typeof(Tier)).Cast<Tier>())
                     foreach (var enchantment in Enum.GetValues(typeof(EnchantmentLevel)).Cast<EnchantmentLevel>())
                     {
-                        if (tier < Tier.IV && enchantment != EnchantmentLevel.White)
+                        if ((tier < Tier.IV || resourceType == ResourceType.Rock) && enchantment != EnchantmentLevel.White )
                             continue;
 
                         var info = new GatherInformation(resourceType, tier, enchantment);

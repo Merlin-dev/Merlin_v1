@@ -64,10 +64,11 @@ namespace Merlin.Profiles.Gatherer
                 if (localPlayer.GetIsMounting())
                     return false;
 
-                MountObjectView mount = _localPlayerCharacterView.GetComponent<MountObjectView>();
-
-                if (mount != null)
+                List<MountObjectView> mounts = _client.GetEntities<MountObjectView>(ValidateMount);
+                if (mounts.Count > 0)
                 {
+                    MountObjectView mount = mounts[0];
+
                     if (target != Vector3.zero && mount.IsInUseRange(localPlayer))
                         return true;
 
@@ -85,6 +86,16 @@ namespace Merlin.Profiles.Gatherer
             }
 
             return true;
+        }
+
+        public bool ValidateMount(MountObjectView mount)
+        {
+            if (mount.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void Harvest()

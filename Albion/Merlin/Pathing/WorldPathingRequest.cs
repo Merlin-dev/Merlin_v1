@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Pathing
@@ -111,7 +110,7 @@ namespace Merlin.Pathing
 
                             var destination = new Vector3(exitLocation.GetX(), 0, exitLocation.GetY());
 
-                            if (player.TryFindPath(new ClusterPathfinder(), destination, IsBlocked, out List<Vector3> pathing))
+                            if (player.TryFindPath(new ClusterPathfinder(), destination, IsBlockedWithExitCheck, out List<Vector3> pathing))
                                 _exitPathingRequest = new ClusterPathingRequest(_client.GetLocalPlayerCharacterView(), null, pathing, false);
                         }
                         else
@@ -129,15 +128,15 @@ namespace Merlin.Pathing
             }
         }
 
-        public bool IsBlocked(Vector2 location)
+        public bool IsBlockedWithExitCheck(Vector2 location)
         {
             byte cf = _collision.GetCollision(location.b(), 2.0f);
             if (cf == 255)
             {
+                //if the location contains an exit return false (passable), otherwise return true
                 var location3d = new Vector3(location.x, 0, location.y);
-                var meshCollidersAtLocation = Physics.OverlapSphere(location3d, 2.0f).Where(c => c.GetType() == typeof(MeshCollider));
-
-                return meshCollidersAtLocation.Any(c => !c.isTrigger);
+                var locationContainsExit = Physics.OverlapSphere(location3d, 2.0f).Any(c => c.name.ToLowerInvariant().Equals("exit"));
+                return !locationContainsExit;
             }
             else
                 return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));

@@ -1,6 +1,7 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
+using System.Linq;
 using UnityEngine;
 using WorldMap;
 
@@ -68,6 +69,20 @@ namespace Merlin.Profiles.Gatherer
                 return true;
 
             return false;
+        }
+
+        public bool IsBlockedWithExitCheck(Vector2 location)
+        {
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+            if (cf == 255)
+            {
+                //if the location contains an exit return false (passable), otherwise return true
+                var location3d = new Vector3(location.x, 0, location.y);
+                var locationContainsExit = Physics.OverlapSphere(location3d, 2.0f).Any(c => c.name.ToLowerInvariant().Equals("exit"));
+                return !locationContainsExit;
+            }
+            else
+                return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));
         }
 
         #endregion Methods

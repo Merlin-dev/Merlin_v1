@@ -145,7 +145,7 @@ namespace Merlin.Profiles.Gatherer
                 if (!HandleMounting(targetCenter))
                     return;
 
-                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlocked, out List<Vector3> pathing))
+                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlockedGathering, out List<Vector3> pathing))
                 {
                     Core.lineRenderer.positionCount = pathing.Count;
                     Core.lineRenderer.SetPositions(pathing.ToArray());

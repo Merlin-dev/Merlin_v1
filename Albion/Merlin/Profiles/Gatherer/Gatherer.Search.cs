@@ -128,7 +128,7 @@ namespace Merlin.Profiles.Gatherer
 
                     //Select a random fallback point
                     var spotToUse = validEntries[UnityEngine.Random.Range(0, validEntries.Length)];
-                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), spotToUse.Key, IsBlocked, out List<Vector3> pathing))
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), spotToUse.Key, IsBlockedGathering, out List<Vector3> pathing))
                     {
                         Core.Log($"Falling back to {spotToUse.Key} which should hold {spotToUse.Value.ToString()}");
                         _changeGatheringPathRequest = new PositionPathingRequest(_localPlayerCharacterView, spotToUse.Key, pathing);
@@ -286,7 +286,7 @@ namespace Merlin.Profiles.Gatherer
             return false;
         }
 
-        public bool IsBlocked(Vector2 location)
+        public bool IsBlockedGathering(Vector2 location)
         {
             var vector = new Vector3(location.x, 0, location.y);
 
@@ -314,15 +314,7 @@ namespace Merlin.Profiles.Gatherer
             }
 
             byte cf = _collision.GetCollision(location.b(), 2.0f);
-            if (cf == 255)
-            {
-                var location3d = new Vector3(location.x, 0, location.y);
-                var meshCollidersAtLocation = Physics.OverlapSphere(location3d, 2.0f).Where(c => c.GetType() == typeof(MeshCollider));
-
-                return meshCollidersAtLocation.Any(c => !c.isTrigger);
-            }
-            else
-                return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));
+            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
         }
     }
 }

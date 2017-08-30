@@ -76,7 +76,7 @@ namespace Merlin.Profiles.Gatherer
                     return;
 
                 _currentTarget = banks.First();
-                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlocked, out List<Vector3> pathing))
+                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
                 {
                     _bankPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
                     return;

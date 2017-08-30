@@ -99,7 +99,7 @@ namespace Merlin.Profiles.Gatherer
                     var exitPosition = new Vector2(exitPositionPoint.GetX(), exitPositionPoint.GetY());
                     var targetPosition = new Vector3(exitPosition.x, 0, exitPosition.y);
 
-                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlocked, out List<Vector3> pathing))
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
                     {
                         Core.Log("[No RepairStation found - moving to bank]");
                         _repairFindPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
@@ -123,7 +123,7 @@ namespace Merlin.Profiles.Gatherer
                             var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);
 
                             Core.Log("[Move closer to RepairStation]");
-                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlocked, out List<Vector3> pathing))
+                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
                             {
                                 _repairPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
                             }

@@ -13,6 +13,7 @@ namespace Merlin.Profiles.Gatherer
         bool _skipUnrestrictedPvPZones;
         bool _skipKeeperPacks;
         bool _allowSiegeCampTreasure;
+        bool _skipRedAndBlackZones;
         float _keeperSkipRange;
         float _minimumHealthForGathering;
         float _percentageForBanking;
@@ -28,6 +29,7 @@ namespace Merlin.Profiles.Gatherer
             _skipUnrestrictedPvPZones = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", bool.TrueString));
             _skipKeeperPacks = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipKeeperPacks)}", bool.TrueString));
             _allowSiegeCampTreasure = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowSiegeCampTreasure)}", bool.TrueString));
+            _skipRedAndBlackZones = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipRedAndBlackZones)}", bool.TrueString));
             _keeperSkipRange = PlayerPrefs.GetFloat($"{_prefsIdentifier}{nameof(_keeperSkipRange)}", 22);
             _minimumHealthForGathering = PlayerPrefs.GetFloat($"{_prefsIdentifier}{nameof(_minimumHealthForGathering)}", 0.8f);
             _percentageForBanking = PlayerPrefs.GetFloat($"{_prefsIdentifier}{nameof(_percentageForBanking)}", 99f);
@@ -55,6 +57,7 @@ namespace Merlin.Profiles.Gatherer
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", _skipUnrestrictedPvPZones.ToString());
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_skipKeeperPacks)}", _skipKeeperPacks.ToString());
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_allowSiegeCampTreasure)}", _allowSiegeCampTreasure.ToString());
+            PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_skipRedAndBlackZones)}", _skipRedAndBlackZones.ToString());
             PlayerPrefs.SetFloat($"{_prefsIdentifier}{nameof(_keeperSkipRange)}", _keeperSkipRange);
             PlayerPrefs.SetFloat($"{_prefsIdentifier}{nameof(_minimumHealthForGathering)}", _minimumHealthForGathering);
             PlayerPrefs.SetFloat($"{_prefsIdentifier}{nameof(_percentageForBanking)}", _percentageForBanking);

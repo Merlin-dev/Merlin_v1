@@ -23,21 +23,8 @@ namespace Merlin.Profiles.Gatherer
             if (!HandleMounting(Vector3.zero))
                 return;
 
-            if (_travelPathingRequest != null)
-            {
-                if (_travelPathingRequest.IsRunning)
-                {
-                    if (!HandleMounting(Vector3.zero))
-                        return;
-
-                    _travelPathingRequest.Continue();
-                }
-                else
-                {
-                    _travelPathingRequest = null;
-                }
+            if (HandlePathing(ref _travelPathingRequest))
                 return;
-            }
 
             API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
@@ -51,10 +38,10 @@ namespace Merlin.Profiles.Gatherer
             else
             {
                 var worldPathing = new WorldmapPathfinder();
-                if (worldPathing.TryFindPath(currentCluster, _targetCluster, (v) => false, out var path, out var pivots))
+                if (worldPathing.TryFindPath(currentCluster, _targetCluster, StopClusterFunction, out var path, out var pivots))
                 {
                     Core.Log("[Traveling Path found]");
-                    _travelPathingRequest = new WorldPathingRequest(currentCluster, _targetCluster, path);
+                    _travelPathingRequest = new WorldPathingRequest(currentCluster, _targetCluster, path, _skipUnrestrictedPvPZones);
                 }
                 else
                     Core.Log("[No Traveling Path found]");
@@ -62,17 +49,25 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        public bool StopClusterFunction(WorldmapCluster cluster)
+        public bool StopClusterFunction(ClusterDescriptor cluster)
         {
-            var clusterObj = new ClusterDescriptor(cluster.Info).GetClusterType();
-            if (clusterObj.GetUiPvpRules() == UiPvpTypes.Full || clusterObj.GetUiPvpRules() == UiPvpTypes.Black)
-                return true;
+            if (_skipRedAndBlackZones)
+            {
+                var clusterObj = cluster.GetClusterType();
+                if (clusterObj.GetUiPvpRules() == UiPvpTypes.Full || clusterObj.GetUiPvpRules() == UiPvpTypes.Black)
+                    return true;
+            }
 
             return false;
         }
 
         public bool IsBlockedWithExitCheck(Vector2 location)
         {
+            var vector = new Vector3(location.x, 0, location.y);
+
+            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
+                return true;
+
             byte cf = _collision.GetCollision(location.b(), 2.0f);
             if (cf == 255)
             {

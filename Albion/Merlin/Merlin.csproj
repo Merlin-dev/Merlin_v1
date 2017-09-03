@@ -186,6 +186,10 @@
     <Compile Include="API\Extensions\LandscapeManager.cs" />
     <Compile Include="API\Extensions\LocalPlayerCharacter.cs" />
     <Compile Include="API\Extensions\MobView.Extensions.cs" />
+    <Compile Include="API\Extensions\Point2.cs" />
+    <Compile Include="API\Extensions\Point2.Extensions.cs" />
+    <Compile Include="API\Extensions\Point3.cs" />
+    <Compile Include="API\Extensions\Point3.Extensions.cs" />
     <Compile Include="API\Extensions\SilverObject.cs" />
     <Compile Include="API\Extensions\LootObject.cs" />
     <Compile Include="API\Extensions\SilverObjectView.Extensions.cs" />
@@ -237,6 +241,7 @@
     <Compile Include="Pathing\World\WorldPathfinder.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Profiles\ESP\ESP.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Helper.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Reparing.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Combat.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.cs" />

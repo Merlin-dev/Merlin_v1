@@ -22,7 +22,7 @@ namespace Merlin.Profiles.Gatherer
                 return;
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
-            if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && _localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure)
+            if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
                 _state.Fire(Trigger.StartSiegeCampTreasure);
                 return;
@@ -30,7 +30,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (!isCurrentCluster)
             {
-                API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+                Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
                 Core.Log("[Travel to target cluster]");
                 _targetCluster = worldmapInstance.GetCluster(_selectedGatherCluster).Info;
@@ -86,22 +86,8 @@ namespace Merlin.Profiles.Gatherer
             }
             else
             {
-                if (_changeGatheringPathRequest != null)
-                {
-                    if (_changeGatheringPathRequest.IsRunning)
-                    {
-                        if (!HandleMounting(Vector3.zero))
-                            return;
-
-                        _changeGatheringPathRequest.Continue();
-                    }
-                    else
-                    {
-                        _changeGatheringPathRequest = null;
-                    }
-
+                if (HandlePathing(ref _changeGatheringPathRequest))
                     return;
-                }
 
                 _failedFindAttempts++;
                 if (_failedFindAttempts > MAXIMUM_FAIL_ATTEMPTS)
@@ -128,13 +114,15 @@ namespace Merlin.Profiles.Gatherer
 
                     //Select a random fallback point
                     var spotToUse = validEntries[UnityEngine.Random.Range(0, validEntries.Length)];
-                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), spotToUse.Key, IsBlockedGathering, out List<Vector3> pathing))
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), spotToUse.Key.ToVector3(), IsBlockedGathering, out List<Vector3> pathing))
                     {
-                        Core.Log($"Falling back to {spotToUse.Key} which should hold {spotToUse.Value.ToString()}");
-                        _changeGatheringPathRequest = new PositionPathingRequest(_localPlayerCharacterView, spotToUse.Key, pathing);
-                        _gatheredSpots.Remove(spotToUse.Key);
+                        Core.Log($"Falling back to {spotToUse.Key} which should hold {spotToUse.Value.ToString()}. Removing it from fallback objects.");
+                        _changeGatheringPathRequest = new PositionPathingRequest(_localPlayerCharacterView, spotToUse.Key.ToVector3(), pathing);
                     }
+                    else
+                        Core.Log($"No path to {spotToUse.Key} found. Removing it from fallback objects.");
 
+                    _gatheredSpots.Remove(spotToUse.Key);
                     _failedFindAttempts = 0;
                 }
             }
@@ -278,9 +266,10 @@ namespace Merlin.Profiles.Gatherer
             return target != default(SimulationObjectView);
         }
 
-        public bool ContainKeepers(Vector3 location)
+        public bool ContainKeepers(Vector3 location, float additionalOffset = 0)
         {
-            if (_keepers.Any(k => Vector3.Distance(location, k.transform.position) <= _keeperSkipRange))
+            var location2d = location.c();
+            if (_keeperSpots.Any(k => Point2.Distance(location2d, k) <= _keeperSkipRange + additionalOffset))
                 return true;
 
             return false;
@@ -289,7 +278,6 @@ namespace Merlin.Profiles.Gatherer
         public bool IsBlockedGathering(Vector2 location)
         {
             var vector = new Vector3(location.x, 0, location.y);
-
             if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
                 return true;
 
@@ -297,21 +285,18 @@ namespace Merlin.Profiles.Gatherer
             {
                 var resourcePosition = new Vector2(_currentTarget.transform.position.x,
                                                     _currentTarget.transform.position.z);
-                var distance = (resourcePosition - location).magnitude;
+                var resourceDistance = (resourcePosition - location).magnitude;
 
-                if (distance < (_currentTarget.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents()))
+                if (resourceDistance < (_currentTarget.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents()))
                     return false;
             }
 
-            if (_localPlayerCharacterView != null)
-            {
-                var playerLocation = new Vector2(_localPlayerCharacterView.transform.position.x,
-                                                    _localPlayerCharacterView.transform.position.z);
-                var distance = (playerLocation - location).magnitude;
+            var playerLocation = new Vector2(_localPlayerCharacterView.transform.position.x,
+                                                _localPlayerCharacterView.transform.position.z);
+            var playerDistance = (playerLocation - location).magnitude;
 
-                if (distance < 2f)
-                    return false;
-            }
+            if (playerDistance < 2f)
+                return false;
 
             byte cf = _collision.GetCollision(location.b(), 2.0f);
             return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);

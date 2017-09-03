@@ -6,17 +6,6 @@ namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
-        public bool HandleAttackers()
-        {
-            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
-            {
-                Core.Log("[Attacked]");
-                _state.Fire(Trigger.EncounteredAttacker);
-                return true;
-            }
-            return false;
-        }
-
         public void Fight()
         {
             LocalPlayerCharacter player = _localPlayerCharacterView.GetLocalPlayerCharacter();
@@ -53,7 +42,7 @@ namespace Merlin.Profiles.Gatherer
                 if (groundCCSpells.Any() && !player.GetIsCasting())
                 {
                     Core.Log("[Casting Ground Spell]");
-                    _localPlayerCharacterView.CastOnSelf(groundCCSpells.FirstOrDefault().Slot);
+                    _localPlayerCharacterView.CastAt(groundCCSpells.FirstOrDefault().Slot, attackTarget.transform.position);
                     return;
                 }
 

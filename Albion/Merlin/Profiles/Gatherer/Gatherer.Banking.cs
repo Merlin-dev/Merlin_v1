@@ -29,37 +29,11 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if (_worldPathingRequest != null)
-            {
-                if (_worldPathingRequest.IsRunning)
-                {
-                    if (!HandleMounting(Vector3.zero))
-                        return;
-
-                    _worldPathingRequest.Continue();
-                }
-                else
-                {
-                    _worldPathingRequest = null;
-                }
+            if (HandlePathing(ref _worldPathingRequest))
                 return;
-            }
 
-            if (_bankPathingRequest != null)
-            {
-                if (_bankPathingRequest.IsRunning)
-                {
-                    if (!HandleMounting(Vector3.zero))
-                        return;
-
-                    _bankPathingRequest.Continue();
-                }
-                else
-                {
-                    _bankPathingRequest = null;
-                }
+            if (HandlePathing(ref _bankPathingRequest))
                 return;
-            }
 
             API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
@@ -119,8 +93,8 @@ namespace Merlin.Profiles.Gatherer
             else
             {
                 var pathfinder = new WorldmapPathfinder();
-                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, (v) => false, out var path, out var pivots))
-                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path);
+                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, StopClusterFunction, out var path, out var pivots))
+                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path, _skipUnrestrictedPvPZones);
             }
         }
     }

@@ -18,70 +18,14 @@ namespace Merlin.Profiles.Gatherer
         {
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
 
-            if (_worldPathingRequest != null)
-            {
-                if (!HandleMounting(Vector3.zero))
-                    return;
-
-                if (_worldPathingRequest.IsRunning)
-                {
-                    if (!HandleMounting(Vector3.zero))
-                        return;
-
-                    _worldPathingRequest.Continue();
-                }
-                else
-                {
-                    _worldPathingRequest = null;
-                }
+            if (HandlePathing(ref _worldPathingRequest))
                 return;
-            }
 
-            if (_repairFindPathingRequest != null)
-            {
-                if (!HandleMounting(Vector3.zero))
-                    return;
-
-                if (_client.GetEntities<RepairBuildingView>((x) => { return true; }).Count > 0)
-                {
-                    Core.Log("[Found RepairStation]");
-                    _repairFindPathingRequest = null;
-                    return;
-                }
-
-                if (_repairFindPathingRequest.IsRunning)
-                {
-                    if (!HandleMounting(Vector3.zero))
-                        return;
-
-                    _repairFindPathingRequest.Continue();
-                }
-                else
-                {
-                    _repairFindPathingRequest = null;
-                }
+            if (HandlePathing(ref _repairFindPathingRequest, () => _client.GetEntities<RepairBuildingView>((x) => { return true; }).Count > 0))
                 return;
-            }
 
-            if (_repairPathingRequest != null)
-            {
-                if (!HandleMounting(Vector3.zero))
-                    return;
-
-                if (_repairPathingRequest.IsRunning)
-                {
-                    if (!HandleMounting(Vector3.zero))
-                        return;
-
-                    _repairPathingRequest.Continue();
-                }
-                else
-                {
-                    _repairPathingRequest = null;
-                    _reachedPointInBetween = true;
-                }
+            if (HandlePathing(ref _repairPathingRequest, null, () => _reachedPointInBetween = true))
                 return;
-            }
 
             Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
@@ -173,8 +117,8 @@ namespace Merlin.Profiles.Gatherer
             else
             {
                 var pathfinder = new WorldmapPathfinder();
-                if (pathfinder.TryFindPath(currentWorldCluster, townCluster, (v) => false, out var path, out var pivots))
-                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path);
+                if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
+                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
             }
         }
     }

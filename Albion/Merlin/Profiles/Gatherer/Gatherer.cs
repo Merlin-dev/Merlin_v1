@@ -1,4 +1,5 @@
-﻿using Stateless;
+﻿using Merlin.API.Direct;
+using Stateless;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,8 +41,9 @@ namespace Merlin.Profiles.Gatherer
 
         private StateMachine<State, Trigger> _state;
         private Dictionary<SimulationObjectView, Blacklisted> _blacklist;
-        private Dictionary<Vector3, GatherInformation> _gatheredSpots;
-        private List<MobView> _keepers;
+        private Dictionary<Point2, GatherInformation> _gatheredSpots;
+        private List<Point2> _keeperSpots;
+        private List<MountObjectView> _mounts;
         private bool _knockedDown;
 
         public override string Name => "Gatherer";
@@ -49,8 +51,8 @@ namespace Merlin.Profiles.Gatherer
         protected override void OnStart()
         {
             _blacklist = new Dictionary<SimulationObjectView, Blacklisted>();
-            _gatheredSpots = new Dictionary<Vector3, GatherInformation>();
-            _keepers = new List<MobView>();
+            _gatheredSpots = new Dictionary<Point2, GatherInformation>();
+            _keeperSpots = new List<Point2>();
 
             LoadSettings();
 
@@ -84,8 +86,10 @@ namespace Merlin.Profiles.Gatherer
                 .Permit(Trigger.OnSiegeCampTreasureDone, State.Search);
 
             foreach (State state in Enum.GetValues(typeof(State)))
+            {
                 if (state != State.Search)
                     _state.Configure(state).Permit(Trigger.Failure, State.Search);
+            }
         }
 
         protected override void OnStop()
@@ -100,6 +104,10 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUpdate()
         {
+            //If we don't have a view, do not do anything!
+            if (_localPlayerCharacterView == null)
+                return;
+
             if (!_isRunning)
                 return;
 
@@ -119,7 +127,14 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-                _keepers = _client.GetEntities<MobView>(mob => !mob.IsDead() && mob.MobType().ToLowerInvariant().Contains("keeper"));
+                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && mob.MobType().ToLowerInvariant().Contains("keeper")))
+                {
+                    var keeperPosition = keeper.GetInternalPosition();
+                    if (!_keeperSpots.Contains(keeperPosition))
+                        _keeperSpots.Add(keeperPosition);
+                }
+
+                _mounts = _client.GetEntities<MountObjectView>(mount => mount.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter));
 
                 if (_knockedDown != _localPlayerCharacterView.IsKnockedDown())
                 {

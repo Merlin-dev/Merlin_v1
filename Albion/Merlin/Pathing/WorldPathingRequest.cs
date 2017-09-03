@@ -15,6 +15,7 @@ namespace Merlin.Pathing
         private GameManager _client;
         private ObjectManager _world;
         private CollisionManager _collision;
+        private LandscapeManager _landscape;
 
         private ClusterDescriptor _origin;
         private ClusterDescriptor _destination;
@@ -26,6 +27,7 @@ namespace Merlin.Pathing
         private ClusterPathingRequest _exitPathingRequest;
 
         private DateTime _timeout;
+        private bool _skipUnrestrictedPvPZones;
 
         #endregion Fields
 
@@ -37,7 +39,7 @@ namespace Merlin.Pathing
 
         #region Constructors and Cleanup
 
-        public WorldPathingRequest(ClusterDescriptor start, ClusterDescriptor end, List<ClusterDescriptor> path)
+        public WorldPathingRequest(ClusterDescriptor start, ClusterDescriptor end, List<ClusterDescriptor> path, bool skipUnrestrictedPvPZones)
         {
             _client = GameManager.GetInstance();
             _world = ObjectManager.GetInstance();
@@ -45,6 +47,7 @@ namespace Merlin.Pathing
 
             _origin = start;
             _destination = end;
+            _skipUnrestrictedPvPZones = skipUnrestrictedPvPZones;
 
             _path = path;
 
@@ -110,6 +113,7 @@ namespace Merlin.Pathing
 
                             var destination = new Vector3(exitLocation.GetX(), 0, exitLocation.GetY());
 
+                            _landscape = _client.GetLandscapeManager();
                             if (player.TryFindPath(new ClusterPathfinder(), destination, IsBlockedWithExitCheck, out List<Vector3> pathing))
                                 _exitPathingRequest = new ClusterPathingRequest(_client.GetLocalPlayerCharacterView(), null, pathing, false);
                         }
@@ -130,6 +134,11 @@ namespace Merlin.Pathing
 
         public bool IsBlockedWithExitCheck(Vector2 location)
         {
+            var vector = new Vector3(location.x, 0, location.y);
+
+            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
+                return true;
+
             byte cf = _collision.GetCollision(location.b(), 2.0f);
             if (cf == 255)
             {

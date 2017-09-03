@@ -1,4 +1,5 @@
-﻿using Merlin.Pathing;
+﻿using Merlin.API.Direct;
+using Merlin.Pathing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ namespace Merlin.Profiles.Gatherer
     public partial class Gatherer
     {
         #region Fields
-
+        
         private IEnumerator _siegeCampTreasureCoroutine;
+        private Vector3 _siegeCampWorldPosition;
 
         #endregion Fields
 
@@ -60,9 +62,11 @@ namespace Merlin.Profiles.Gatherer
             }
 
             var siegeCamp = FindObjectsOfType<SiegeCamp>().First();
+            _siegeCampWorldPosition = siegeCamp.transform.position;
+
             var pathableSiegeCampPosition = siegeCamp.transform.position - new Vector3(0, 0, 10);
             PositionPathingRequest pathingRequest = null;
-            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), pathableSiegeCampPosition, SiegeCampTreasureStopFunction, out List<Vector3> pathing))
+            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), pathableSiegeCampPosition, IsBlockedSiegeCampTreasure, out List<Vector3> pathing))
                 pathingRequest = new PositionPathingRequest(_localPlayerCharacterView, pathableSiegeCampPosition, pathing);
 
             if (pathingRequest == null)
@@ -101,7 +105,9 @@ namespace Merlin.Profiles.Gatherer
                 itemsToDeposit = new List<UIItemSlot>();
 
                 var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
-                foreach (var slot in playerStorage.ItemsSlotsRegistered)
+                var slots = playerStorage.ItemsSlotsRegistered;
+
+                foreach (var slot in slots)
                     if (slot != null && slot.ObservedItemView != null)
                     {
                         var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
@@ -118,9 +124,9 @@ namespace Merlin.Profiles.Gatherer
 
                 yield return null;
             } while (itemsToDeposit.Count > 0);
-
+            
             Core.Log("[Siege Camp Treasure - Returning to Farm Spot]");
-            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), positionToReturnAfter, SiegeCampTreasureStopFunction, out pathing))
+            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), positionToReturnAfter, IsBlockedSiegeCampTreasure, out pathing))
                 pathingRequest = new PositionPathingRequest(_localPlayerCharacterView, positionToReturnAfter, pathing);
 
             while (pathingRequest.IsRunning)
@@ -141,18 +147,15 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        private bool SiegeCampTreasureStopFunction(Vector2 location)
+        private bool IsBlockedSiegeCampTreasure(Vector2 location)
         {
-            byte cf = _collision.GetCollision(location.b(), 2.0f);
-            if (cf == 255)
-            {
-                var location3d = new Vector3(location.x, 0, location.y);
-                var meshCollidersAtLocation = Physics.OverlapSphere(location3d, 2.0f).Where(c => c.GetType() == typeof(MeshCollider));
+            var vector = new Vector3(location.x, 0, location.y);
+            //Filter the siege camp treasure zone out from the unallowed areas list, cause we have to enter it.
+            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(pvpZone => Point2.Distance(pvpZone, vector.d()) > pvpZone.m(), vector))
+                return true;
 
-                return meshCollidersAtLocation.Any(c => !c.isTrigger);
-            }
-            else
-                return (((cf & 0x01) != 0) || ((cf & 0x02) != 0));
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
         }
 
         #endregion Methods

@@ -12,6 +12,8 @@ namespace Merlin.Pathing
     {
         #region Fields
 
+        private static readonly Vector3 HeightDifference = new Vector3 { y = 1000 };
+
         private GameManager _client;
         private ObjectManager _world;
         private CollisionManager _collision;
@@ -20,11 +22,14 @@ namespace Merlin.Pathing
         private ClusterDescriptor _origin;
         private ClusterDescriptor _destination;
 
+        private Vector3? _destinationPosition;
+        private float? _destinationExtends;
+
         private List<ClusterDescriptor> _path;
 
         private StateMachine<State, Trigger> _state;
 
-        private ClusterPathingRequest _exitPathingRequest;
+        private PositionPathingRequest _exitPathingRequest;
 
         private DateTime _timeout;
         private bool _skipUnrestrictedPvPZones;
@@ -50,7 +55,6 @@ namespace Merlin.Pathing
             _skipUnrestrictedPvPZones = skipUnrestrictedPvPZones;
 
             _path = path;
-
             _timeout = DateTime.Now;
 
             _state = new StateMachine<State, Trigger>(State.Start);
@@ -90,6 +94,8 @@ namespace Merlin.Pathing
 
                         if (currentCluster.GetIdent() != nextCluster.GetIdent())
                         {
+
+
                             if (_exitPathingRequest != null)
                             {
                                 if (_exitPathingRequest.IsRunning)
@@ -113,9 +119,19 @@ namespace Merlin.Pathing
 
                             var destination = new Vector3(exitLocation.GetX(), 0, exitLocation.GetY());
 
+                            var exitCollider = Physics.OverlapCapsule(destination - HeightDifference, destination + HeightDifference, 2f).FirstOrDefault(c => c.name.ToLowerInvariant().Equals("exit") || c.name.ToLowerInvariant().Contains("entrance"));
+                            _destinationPosition = exitCollider?.transform?.position;
+                            _destinationExtends = exitCollider?.GetColliderExtents();
+                            if (_destinationPosition.HasValue)
+                            {
+                                var temp = _destinationPosition.Value;
+                                temp.y = 0;
+                                _destinationPosition = temp;
+                            }
+
                             _landscape = _client.GetLandscapeManager();
                             if (player.TryFindPath(new ClusterPathfinder(), destination, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                                _exitPathingRequest = new ClusterPathingRequest(_client.GetLocalPlayerCharacterView(), null, pathing, false);
+                                _exitPathingRequest = new PositionPathingRequest(_client.GetLocalPlayerCharacterView(), destination, pathing, false);
                         }
                         else
                         {
@@ -139,12 +155,15 @@ namespace Merlin.Pathing
             if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
                 return true;
 
+            var location3d = new Vector3(location.x, 0, location.y);
+            if (_destinationPosition.HasValue && _destinationExtends.HasValue && Vector3.Distance(location3d, _destinationPosition.Value) <= _destinationExtends.Value)
+                return false;
+
             byte cf = _collision.GetCollision(location.b(), 2.0f);
             if (cf == 255)
             {
                 //if the location contains an exit return false (passable), otherwise return true
-                var location3d = new Vector3(location.x, 0, location.y);
-                var locationContainsExit = Physics.OverlapSphere(location3d, 2.0f).Any(c => c.name.ToLowerInvariant().Equals("exit"));
+                var locationContainsExit = Physics.OverlapSphere(location3d, 2.0f).Any(c => c.name.ToLowerInvariant().Equals("exit") || c.name.ToLowerInvariant().Contains("entrance"));
                 return !locationContainsExit;
             }
             else

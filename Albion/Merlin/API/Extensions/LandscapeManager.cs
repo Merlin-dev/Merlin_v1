@@ -11,7 +11,7 @@ namespace Merlin.API.Direct
 
         public bool IsInAnyUnrestrictedPvpZone(Vector3 location) => IsInAnyUnrestrictedPvpZone(GetUnrestrictedPvpZones, location);
 
-        public bool IsInAnyUnrestrictedPvpZone(IEnumerable<aea> pvpZones, Vector3 location) => pvpZones.Any(pvpZone => Point2.Distance(pvpZone, location.d()) < pvpZone.m());
+        public bool IsInAnyUnrestrictedPvpZone(IEnumerable<aea> pvpZones, Vector3 location) => pvpZones.Any(pvpZone => Mathf.Pow(location.x - pvpZone.k(), 2) + Mathf.Pow(location.z - pvpZone.l(), 2) < Mathf.Pow(pvpZone.m(), 2));
 
         public bool IsInAnyUnrestrictedPvpZone(Func<aea, bool> selector, Vector3 location) => IsInAnyUnrestrictedPvpZone(GetUnrestrictedPvpZones.Where(selector), location);
     }

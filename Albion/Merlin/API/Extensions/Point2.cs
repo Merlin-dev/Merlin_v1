@@ -6,10 +6,5 @@
         {
             return ajg.c(a, b).k();
         }
-
-        public static float Distance(Point3 a, Point3 b)
-        {
-            return Distance(a.ToPoint2(), b.ToPoint2());
-        }
     }
 }

@@ -196,7 +196,6 @@ namespace Merlin.Profiles.Gatherer
             else
                 DrawGatheringUIButton();
         }
-
         #endregion Methods
     }
 }

@@ -96,7 +96,7 @@ namespace Merlin.Profiles.Gatherer
                 if (localPlayer.GetIsMounting())
                     return false;
 
-                var mount = _mounts.FirstOrDefault();
+                var mount = _client.GetEntities<MountObjectView>(m => m.IsInUseRange(localPlayer)).FirstOrDefault();
                 if (mount != null)
                 {
                     if (target != Vector3.zero && mount.IsInUseRange(localPlayer))

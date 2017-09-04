@@ -151,7 +151,7 @@ namespace Merlin.Profiles.Gatherer
         {
             var vector = new Vector3(location.x, 0, location.y);
             //Filter the siege camp treasure zone out from the unallowed areas list, cause we have to enter it.
-            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(pvpZone => Point2.Distance(pvpZone, _siegeCampWorldPosition.d()) > pvpZone.m(), vector))
+            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(pvpZone => Mathf.Pow(_siegeCampWorldPosition.x - pvpZone.k(), 2) + Mathf.Pow(_siegeCampWorldPosition.z - pvpZone.l(), 2) >= Mathf.Pow(pvpZone.m(), 2), vector))
                 return true;
 
             byte cf = _collision.GetCollision(location.b(), 2.0f);

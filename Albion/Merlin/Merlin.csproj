@@ -179,6 +179,7 @@
     <Compile Include="API\Extensions\CastSpellDescriptor.cs" />
     <Compile Include="API\Extensions\ClusterDescriptor.cs" />
     <Compile Include="API\Extensions\ClusterTypeDescriptor.cs" />
+    <Compile Include="API\Extensions\Collider.Extensions.cs" />
     <Compile Include="API\Extensions\Enum.Extensions.cs" />
     <Compile Include="API\Extensions\FightingObject.cs" />
     <Compile Include="API\Extensions\HarvestableObject.cs" />
@@ -187,9 +188,6 @@
     <Compile Include="API\Extensions\LocalPlayerCharacter.cs" />
     <Compile Include="API\Extensions\MobView.Extensions.cs" />
     <Compile Include="API\Extensions\Point2.cs" />
-    <Compile Include="API\Extensions\Point2.Extensions.cs" />
-    <Compile Include="API\Extensions\Point3.cs" />
-    <Compile Include="API\Extensions\Point3.Extensions.cs" />
     <Compile Include="API\Extensions\SilverObject.cs" />
     <Compile Include="API\Extensions\LootObject.cs" />
     <Compile Include="API\Extensions\SilverObjectView.Extensions.cs" />

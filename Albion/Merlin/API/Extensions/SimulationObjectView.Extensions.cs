@@ -9,19 +9,11 @@ namespace Merlin
 
         public static float GetColliderExtents(this SimulationObjectView instance)
         {
-            if (instance is HarvestableObjectView resource)
+            if (instance is HarvestableObjectView)
                 return 2.0f;
 
             var collider = instance.GetComponent<Collider>();
-
-            if (collider is SphereCollider sphere)
-                return sphere.radius;
-            else if (collider is CapsuleCollider capsule)
-                return capsule.radius;
-            else if (collider is BoxCollider box)
-                return box.size.sqrMagnitude;
-
-            return 1.0f;
+            return collider.GetColliderExtents();
         }
 
         public static bool ColliderContains(this SimulationObjectView instance, Vector3 location)

@@ -114,13 +114,14 @@ namespace Merlin.Profiles.Gatherer
 
                     //Select a random fallback point
                     var spotToUse = validEntries[UnityEngine.Random.Range(0, validEntries.Length)];
-                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), spotToUse.Key.ToVector3(), IsBlockedGathering, out List<Vector3> pathing))
+                    var spot3d = new Vector3(spotToUse.Key.GetX(), _landscape.GetTerrainHeight(spotToUse.Key, out RaycastHit hit), spotToUse.Key.GetY());
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), spot3d, IsBlockedGathering, out List<Vector3> pathing))
                     {
-                        Core.Log($"Falling back to {spotToUse.Key} which should hold {spotToUse.Value.ToString()}. Removing it from fallback objects.");
-                        _changeGatheringPathRequest = new PositionPathingRequest(_localPlayerCharacterView, spotToUse.Key.ToVector3(), pathing);
+                        Core.Log($"Falling back to {spot3d} which should hold {spotToUse.Value.ToString()}. Removing it from fallback objects.");
+                        _changeGatheringPathRequest = new PositionPathingRequest(_localPlayerCharacterView, spot3d, pathing);
                     }
                     else
-                        Core.Log($"No path to {spotToUse.Key} found. Removing it from fallback objects.");
+                        Core.Log($"No path to {spot3d} found. Removing it from fallback objects.");
 
                     _gatheredSpots.Remove(spotToUse.Key);
                     _failedFindAttempts = 0;

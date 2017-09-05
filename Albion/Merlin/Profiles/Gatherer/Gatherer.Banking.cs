@@ -80,14 +80,14 @@ namespace Merlin.Profiles.Gatherer
                     {
                         GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
                     }
-                }
 
-                if (_isDepositing)
-                    return;
-                else
-                {
-                    Core.Log("[Bank Done]");
-                    _state.Fire(Trigger.BankDone);
+                    if (_isDepositing)
+                        return;
+                    else
+                    {
+                        Core.Log("[Bank Done]");
+                        _state.Fire(Trigger.BankDone);
+                    }
                 }
             }
             else

@@ -58,7 +58,12 @@ namespace Merlin.Profiles.Gatherer
 
                 if (_currentTarget is BankBuildingView resource)
                 {
-                    _localPlayerCharacterView.Interact(resource);
+                    if (!GameGui.Instance.BankBuildingVaultGui.gameObject.activeInHierarchy)
+                    {
+                        _localPlayerCharacterView.Interact(resource);
+                        return;
+                    }
+
                     //Get inventory
                     var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
                     var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;

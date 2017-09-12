@@ -8,6 +8,6 @@
 
         public SpellTarget TryGetTarget() => !this ? SpellTarget.None : Target;
 
-        public int TryGetCost() => !this ? 0 : Cost;
+        public int TryGetCost() => !this ? 0 : EnergyCost;
     }
 }

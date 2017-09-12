@@ -28,16 +28,6 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if (!isCurrentCluster)
-            {
-                Worldmap worldmapInstance = GameGui.Instance.WorldMap;
-
-                Core.Log("[Travel to target cluster]");
-                _targetCluster = worldmapInstance.GetCluster(_selectedGatherCluster).Info;
-                _state.Fire(Trigger.StartTravelling);
-                return;
-            }
-
             if (_localPlayerCharacterView.GetLoadPercent() > _percentageForBanking)
             {
                 Core.Log("Overweight");
@@ -49,6 +39,16 @@ namespace Merlin.Profiles.Gatherer
             {
                 Core.Log("Damaged");
                 _state.Fire(Trigger.Damaged);
+                return;
+            }
+
+            if (!isCurrentCluster)
+            {
+                Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+
+                Core.Log("[Travel to target cluster]");
+                _targetCluster = worldmapInstance.GetCluster(_selectedGatherCluster).Info;
+                _state.Fire(Trigger.StartTravelling);
                 return;
             }
 

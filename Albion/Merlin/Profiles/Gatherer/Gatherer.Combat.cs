@@ -61,6 +61,15 @@ namespace Merlin.Profiles.Gatherer
                     _localPlayerCharacterView.CastOn(enemyDamageSpells.FirstOrDefault().Slot, player.GetAttackTarget());
                     return;
                 }
+
+                //This is for skills like 'Speed Shot'
+                var enemyMovementSpells = spells.Target(SpellTarget.Enemy).Category(SpellCategory.MovementBuff);
+                if (enemyMovementSpells.Any() && !player.GetIsCasting())
+                {
+                    Core.Log("[Casting MovementBuff Spell]");
+                    _localPlayerCharacterView.CastOn(enemyMovementSpells.FirstOrDefault().Slot, player.GetAttackTarget());
+                    return;
+                }
             }
 
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))

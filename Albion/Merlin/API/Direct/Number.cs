@@ -50,8 +50,8 @@ namespace Merlin.API.Direct
         public long GetIntegerPart() => _internal.j();
         public long GetRawValue() => _internal.i();
         public System.Double ToDouble() => _internal.m();
-        public static bool TryParse(string A_0, out Number A_1) => mx.g((string)A_0, out A_1);
-        public static bool TryParseRaw(string A_0, out Number A_1) => mx.f((string)A_0, out A_1);
+        //public static bool TryParse(string A_0, out Number A_1) => mx.g((string)A_0, out A_1);
+        //public static bool TryParseRaw(string A_0, out Number A_1) => mx.f((string)A_0, out A_1);
         
         #endregion
         

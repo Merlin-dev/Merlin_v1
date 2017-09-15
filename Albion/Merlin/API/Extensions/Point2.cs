@@ -4,7 +4,7 @@
     {
         public static float Distance(Point2 a, Point2 b)
         {
-            return ajg.c(a, b).k();
+            return aji.c(a, b).k();
         }
     }
 }

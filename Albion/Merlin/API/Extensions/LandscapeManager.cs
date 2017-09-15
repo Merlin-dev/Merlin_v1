@@ -7,12 +7,12 @@ namespace Merlin.API.Direct
 {
     public partial class LandscapeManager
     {
-        public List<aea> GetUnrestrictedPvpZones => _internal.f().e;
+        public List<aec> GetUnrestrictedPvpZones => _internal.f().e;
 
         public bool IsInAnyUnrestrictedPvpZone(Vector3 location) => IsInAnyUnrestrictedPvpZone(GetUnrestrictedPvpZones, location);
 
-        public bool IsInAnyUnrestrictedPvpZone(IEnumerable<aea> pvpZones, Vector3 location) => pvpZones.Any(pvpZone => Mathf.Pow(location.x - pvpZone.k(), 2) + Mathf.Pow(location.z - pvpZone.l(), 2) < Mathf.Pow(pvpZone.m(), 2));
+        public bool IsInAnyUnrestrictedPvpZone(IEnumerable<aec> pvpZones, Vector3 location) => pvpZones.Any(pvpZone => Mathf.Pow(location.x - pvpZone.k(), 2) + Mathf.Pow(location.z - pvpZone.l(), 2) < Mathf.Pow(pvpZone.m(), 2));
 
-        public bool IsInAnyUnrestrictedPvpZone(Func<aea, bool> selector, Vector3 location) => IsInAnyUnrestrictedPvpZone(GetUnrestrictedPvpZones.Where(selector), location);
+        public bool IsInAnyUnrestrictedPvpZone(Func<aec, bool> selector, Vector3 location) => IsInAnyUnrestrictedPvpZone(GetUnrestrictedPvpZones.Where(selector), location);
     }
 }

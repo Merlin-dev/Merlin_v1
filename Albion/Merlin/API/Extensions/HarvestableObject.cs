@@ -18,7 +18,7 @@ namespace Merlin.API.Direct
                 return false;
 
             //TODO: Implement converters
-            GuiDurableItemProxy toolProxy = Utilities.GetStackProxy(tool).GuiItemProxy_Internal as a39;
+            GuiDurableItemProxy toolProxy = Utilities.GetStackProxy(tool).GuiItemProxy_Internal as a4d;
 
             int durability = toolProxy ? Utilities.SomeCalculationWithUnfloatyFloats(tool.GetUnfloatyFloat(), toolProxy.GetUnfloatyFloat()) : -1;
 

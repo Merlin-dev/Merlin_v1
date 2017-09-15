@@ -16,9 +16,10 @@ namespace Merlin.API.Direct
 
         public bool HasAnyBrokenItem()
         {
-            return _internal.sk().eg().dv().Union(_internal.sm().eg().dv()).Any(i =>
+            return _internal.sl().eg().dv().Union(_internal.sn().eg().dv()).Any(i =>
             {
-                return i is arq equipableItem ? equipableItem.ai() : false;
+                //EquipmentItemProxy
+                return i is art equipableItem ? equipableItem.ai() : false;
             });
         }
     }

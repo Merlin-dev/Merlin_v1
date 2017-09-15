@@ -42,7 +42,7 @@ namespace Merlin
             var targetPos = target.FightingObject.hy();
             var sightChecker = instance.PlayerCharacter.xo<au4>();
 
-            return !alb.a().w().f(sightChecker.n().hy(), targetPos, out var outPoint, 2);
+            return !ObjectManager.GetInstance().ObjectManager_Internal.x().f(sightChecker.n().hy(), targetPos, out var outPoint, 2);
         }
 
         public static bool RequestMove(this LocalPlayerCharacterView view, Vector3 position) => view.RequestMove(position.c());

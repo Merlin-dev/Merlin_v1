@@ -156,9 +156,9 @@ namespace Merlin.Profiles.Gatherer
 
             float centerDistance = (targetCenter - playerCenter).magnitude;
 
-            var weaponItem = _localPlayerCharacterView.LocalPlayerCharacter.sk().o();
+            var weaponItem = _localPlayerCharacterView.LocalPlayerCharacter.sl().o();
             var isMeleeWeapon = weaponItem == null || weaponItem.bu() == Albion.Common.GameData.AttackType.Melee;
-            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jw() + mob.Mob.wc().eu();
+            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jw() + mob.Mob.we().eu();
 
             var minimumAttackRange = isMeleeWeapon ? MELEE_ATTACK_RANGE : attackRange;
             var isInLoS = _localPlayerCharacterView.IsInLineOfSight(mob);

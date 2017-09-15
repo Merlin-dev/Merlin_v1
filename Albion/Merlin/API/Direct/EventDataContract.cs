@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: azv */
-    public partial class CastleGateObject : BuildingObject
+    /* Internal type: jn */
+    public partial class EventDataContract
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private azv _internal;
+        private jn _internal;
         
         #region Properties
         
-        public azv CastleGateObject_Internal => _internal;
+        public jn EventDataContract_Internal => _internal;
         
         #endregion
         
@@ -48,12 +48,12 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public CastleGateObject(azv instance) : base(instance)
+        public EventDataContract(jn instance)
         {
             _internal = instance;
         }
         
-        static CastleGateObject()
+        static EventDataContract()
         {
             
         }
@@ -62,17 +62,17 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator azv(CastleGateObject instance)
+        public static implicit operator jn(EventDataContract instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CastleGateObject(azv instance)
+        public static implicit operator EventDataContract(jn instance)
         {
-            return new CastleGateObject(instance);
+            return new EventDataContract(instance);
         }
         
-        public static implicit operator bool(CastleGateObject instance)
+        public static implicit operator bool(EventDataContract instance)
         {
             return instance._internal != null;
         }

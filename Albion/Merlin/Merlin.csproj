@@ -107,6 +107,7 @@
     <Compile Include="API\Direct\EquipmentItemDescriptor.cs" />
     <Compile Include="API\Direct\EquipmentItemObject.cs" />
     <Compile Include="API\Direct\EquipmentItemProxy.cs" />
+    <Compile Include="API\Direct\EventDataContract.cs" />
     <Compile Include="API\Direct\ExitObject.cs" />
     <Compile Include="API\Direct\FarmableItemDescriptor.cs" />
     <Compile Include="API\Direct\FarmableItemObject.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="API\Direct\Number.cs" />
     <Compile Include="API\Direct\ObjectManager.cs" />
     <Compile Include="API\Direct\ObservableRange.cs" />
+    <Compile Include="API\Direct\OperationRequestDataContract.cs" />
+    <Compile Include="API\Direct\OperationResponseDataContract.cs" />
     <Compile Include="API\Direct\PassiveSpellDescriptor.cs" />
     <Compile Include="API\Direct\PhotonClient.cs" />
     <Compile Include="API\Direct\PlayerCharacter.cs" />

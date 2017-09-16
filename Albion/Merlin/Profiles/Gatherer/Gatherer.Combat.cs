@@ -1,76 +1,49 @@
 ﻿using Merlin.API;
 using Merlin.API.Direct;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
+        private static List<Tuple<SpellTarget, SpellCategory, bool>> SpellPriorityList = new List<Tuple<SpellTarget, SpellCategory, bool>>
+        {
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Buff, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Damage, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.CrowdControl, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.CrowdControl, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.Damage, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.Damage, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.MovementBuff, true),
+        };
+
+        private LocalPlayerCharacter _combatPlayer;
+        private FightingObjectView _combatTarget;
+        private IEnumerable<SpellSlot> _combatSpells;
+        private float _combatCooldown;
+
         public void Fight()
         {
-            LocalPlayerCharacter player = _localPlayerCharacterView.GetLocalPlayerCharacter();
-
             if (_localPlayerCharacterView.IsMounted)
             {
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
 
-            var spells = player.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
-
-            FightingObjectView attackTarget = _localPlayerCharacterView.GetAttackTarget();
-
-            if (attackTarget != null && !attackTarget.IsDead())
+            if (_combatCooldown > 0)
             {
-                var selfBuffSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.Buff);
-                if (selfBuffSpells.Any() && !player.GetIsCasting())
-                {
-                    Core.Log("[Casting Buff Spell]");
-                    _localPlayerCharacterView.CastOnSelf(selfBuffSpells.FirstOrDefault().Slot);
-                    return;
-                }
-
-                var selfDamageSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.Damage);
-                if (selfDamageSpells.Any() && !player.GetIsCasting())
-                {
-                    Core.Log("[Casting Damage Spell]");
-                    _localPlayerCharacterView.CastOnSelf(selfDamageSpells.FirstOrDefault().Slot);
-                    return;
-                }
-
-                var groundCCSpells = spells.Target(SpellTarget.Ground).Category(SpellCategory.CrowdControl);
-                if (groundCCSpells.Any() && !player.GetIsCasting())
-                {
-                    Core.Log("[Casting Ground Spell]");
-                    _localPlayerCharacterView.CastAt(groundCCSpells.FirstOrDefault().Slot, attackTarget.transform.position);
-                    return;
-                }
-
-                var selfCCSpells = spells.Target(SpellTarget.Self).Category(SpellCategory.CrowdControl);
-                if (selfCCSpells.Any())
-                {
-                    Core.Log("[Casting Self Spell]");
-                    _localPlayerCharacterView.CastOnSelf(selfCCSpells.FirstOrDefault().Slot);
-                    return;
-                }
-
-                var enemyDamageSpells = spells.Target(SpellTarget.Enemy).Category(SpellCategory.Damage);
-                if (enemyDamageSpells.Any() && !player.GetIsCasting())
-                {
-                    Core.Log("[Casting Damage Spell]");
-                    _localPlayerCharacterView.CastOn(enemyDamageSpells.FirstOrDefault().Slot, player.GetAttackTarget());
-                    return;
-                }
-
-                //This is for skills like 'Speed Shot'
-                var enemyMovementSpells = spells.Target(SpellTarget.Enemy).Category(SpellCategory.MovementBuff);
-                if (enemyMovementSpells.Any() && !player.GetIsCasting())
-                {
-                    Core.Log("[Casting MovementBuff Spell]");
-                    _localPlayerCharacterView.CastOn(enemyMovementSpells.FirstOrDefault().Slot, player.GetAttackTarget());
-                    return;
-                }
+                _combatCooldown -= UnityEngine.Time.deltaTime;
+                return;
             }
+
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+
+            if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
+                return;
 
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
@@ -79,12 +52,12 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if (player.GetIsCasting())
+            if (_combatPlayer.GetIsCasting())
                 return;
 
-            if (player.GetHealth().GetValue() < (player.GetHealth().GetMaximum() * 0.8f))
+            if (_combatPlayer.GetHealth().GetValue() < (_combatPlayer.GetHealth().GetMaximum() * 0.8f))
             {
-                var healSpell = spells.Target(SpellTarget.Self).Category(SpellCategory.Heal);
+                var healSpell = _combatSpells.Target(SpellTarget.Self).Category(SpellCategory.Heal);
 
                 if (healSpell.Any())
                     _localPlayerCharacterView.CastOnSelf(healSpell.FirstOrDefault().Slot);
@@ -96,6 +69,59 @@ namespace Merlin.Profiles.Gatherer
 
             Core.Log("[Eliminated]");
             _state.Fire(Trigger.EliminatedAttacker);
+        }
+
+        bool TryToCastSpell(SpellTarget target, SpellCategory category, bool checkCastState)
+        {
+            try
+            {
+                if (checkCastState && _localPlayerCharacterView.IsCasting())
+                    return false;
+
+                var spells = _combatSpells.Target(target).Category(category);
+                var spellToCast = spells.Any() ? spells.First() : null;
+                if (spellToCast == null)
+                    return false;
+
+                var spellName = "Unknown";
+                try
+                {
+                    spellName = spellToCast.GetSpellDescriptor().TryGetName();
+                    Core.Log($"[Casting {spellName}]");
+
+                    var spellSlot = spellToCast.Slot;
+                    switch (target)
+                    {
+                        case (SpellTarget.Self):
+                            _localPlayerCharacterView.CastOnSelf(spellSlot);
+                            break;
+                        case (SpellTarget.Enemy):
+                            _localPlayerCharacterView.CastOn(spellSlot, _combatTarget);
+                            break;
+                        case (SpellTarget.Ground):
+                            _localPlayerCharacterView.CastAt(spellSlot, _combatTarget.GetPosition());
+                            break;
+                        default:
+                            Core.Log($"[SpellTarget {target} is not supported. Spell skipped]");
+                            return false;
+                    }
+
+                    _combatCooldown = 0.1f;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Core.Log($"[Error while casting {spellName} ({target}/{category}/{checkCastState})]");
+                    Core.Log(e);
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Core.Log($"[Generic casting error ({target}/{category}/{checkCastState})]");
+                Core.Log(e);
+                return false;
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Merlin.Pathing.Worldmap
             {
                 if (exit.GetKind() != ClusterExitKind.Cluster)
                     continue;
-                
+
                 ClusterDescriptor cluster = exit.GetDestination();
                 if (cluster != null)
                     result.Add(cluster);

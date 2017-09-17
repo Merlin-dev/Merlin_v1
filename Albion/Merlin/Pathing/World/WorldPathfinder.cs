@@ -61,7 +61,7 @@ namespace Merlin.Pathing.World
 
                 if (branches.Count > 0)
                 {
-                    if(branches.Count > 1)
+                    if (branches.Count > 1)
                         branches = branches.OrderBy(i => i.Item1 + i.Item2).ToList();
 
                     path.AddRange(branches[0].Item3);

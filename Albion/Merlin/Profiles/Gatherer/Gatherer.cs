@@ -2,7 +2,6 @@
 using Stateless;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -199,9 +198,9 @@ namespace Merlin.Profiles.Gatherer
 
         public struct GatherInformation
         {
-            ResourceType _resourceType;
-            Tier _tier;
-            EnchantmentLevel _enchantmentLevel;
+            private ResourceType _resourceType;
+            private Tier _tier;
+            private EnchantmentLevel _enchantmentLevel;
 
             public ResourceType ResourceType { get { return _resourceType; } }
             public Tier Tier { get { return _tier; } }

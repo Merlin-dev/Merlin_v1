@@ -9,7 +9,7 @@ namespace Merlin.Profiles.ESP
 {
     public class ESP : MonoBehaviour
     {
-        class Rendering
+        private class Rendering
         {
             private static Color color_0;
             private static GUIStyle guistyle_0 = new GUIStyle(GUI.skin.label);
@@ -148,10 +148,10 @@ namespace Merlin.Profiles.ESP
             public static Boolean DrawFriendly = true;
         }
 
-        Dictionary<GatherInformation, bool> gatherInformations;
-        SimulationObjectView[] resources;
-        LocalPlayerCharacterView localPlayer;
-        PlayerCharacterView[] players;
+        private Dictionary<GatherInformation, bool> gatherInformations;
+        private SimulationObjectView[] resources;
+        private LocalPlayerCharacterView localPlayer;
+        private PlayerCharacterView[] players;
 
         public void StartESP(Dictionary<GatherInformation, bool> gatherInformations)
         {
@@ -160,12 +160,12 @@ namespace Merlin.Profiles.ESP
             StartCoroutine(GetViews());
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             StopAllCoroutines();
         }
 
-        IEnumerator GetViews()
+        private IEnumerator GetViews()
         {
             while (true)
             {
@@ -231,7 +231,7 @@ namespace Merlin.Profiles.ESP
             }
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             DrawResourceESPs();
             DrawPlayerESPs();
@@ -260,7 +260,6 @@ namespace Merlin.Profiles.ESP
 
                         valid = harvestable.CanLoot(localPlayer) && harvestableObject.GetCharges() > 0;
                         enchantmentLevel = harvestableObject.GetRareState();
-
                     }
                     else if (view is MobView mob)
                     {

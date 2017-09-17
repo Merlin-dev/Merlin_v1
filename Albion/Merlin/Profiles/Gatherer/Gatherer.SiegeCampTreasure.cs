@@ -1,5 +1,4 @@
-﻿using Merlin.API.Direct;
-using Merlin.Pathing;
+﻿using Merlin.Pathing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace Merlin.Profiles.Gatherer
     public partial class Gatherer
     {
         #region Fields
-        
+
         private IEnumerator _siegeCampTreasureCoroutine;
         private Vector3 _siegeCampWorldPosition;
 
@@ -124,7 +123,7 @@ namespace Merlin.Profiles.Gatherer
 
                 yield return null;
             } while (itemsToDeposit.Count > 0);
-            
+
             Core.Log("[Siege Camp Treasure - Returning to Farm Spot]");
             if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), positionToReturnAfter, IsBlockedSiegeCampTreasure, out pathing))
                 pathingRequest = new PositionPathingRequest(_localPlayerCharacterView, positionToReturnAfter, pathing);

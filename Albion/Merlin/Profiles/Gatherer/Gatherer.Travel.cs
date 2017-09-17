@@ -3,7 +3,6 @@ using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
 using System.Linq;
 using UnityEngine;
-using WorldMap;
 
 namespace Merlin.Profiles.Gatherer
 {

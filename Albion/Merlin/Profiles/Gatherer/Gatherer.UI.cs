@@ -9,33 +9,36 @@ namespace Merlin.Profiles.Gatherer
     {
         #region Fields
 
-        static int SpaceBetweenSides = 40;
-        static int SpaceBetweenItems = 4;
+        private static int SpaceBetweenSides = 40;
+        private static int SpaceBetweenItems = 4;
 
-        bool _isUIshown;
-        bool _showESP;
+        private bool _isUIshown;
+        private bool _showESP;
 
         #endregion Fields
 
         #region Properties
 
-        static Rect GatheringUiButtonRect { get; } = new Rect((Screen.width / 2) - 50, 0, 100, 20);
+        private static Rect GatheringUiButtonRect { get; } = new Rect((Screen.width / 2) - 50, 0, 100, 20);
 
-        static Rect GatheringBotButtonRect { get; } = new Rect((Screen.width / 2) + 50, 0, 100, 20);
+        private static Rect GatheringBotButtonRect { get; } = new Rect((Screen.width / 2) + 50, 0, 100, 20);
 
-        Rect GatheringWindowRect { get; set; } = new Rect((Screen.width / 2) - 506, 0, 0, 0);
+        private Rect GatheringWindowRect { get; set; } = new Rect((Screen.width / 2) - 506, 0, 0, 0);
 
-        string[] TownClusterNames { get { return Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray(); } }
+        private string[] TownClusterNames
+        { get { return Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray(); } }
 
-        string[] TierNames { get { return Enum.GetNames(typeof(Tier)).ToArray(); } }
+        private string[] TierNames
+        { get { return Enum.GetNames(typeof(Tier)).ToArray(); } }
 
-        Tier SelectedMinimumTier { get { return (Tier)Enum.Parse(typeof(Tier), TierNames[_selectedMininumTierIndex]); } }
+        private Tier SelectedMinimumTier
+        { get { return (Tier)Enum.Parse(typeof(Tier), TierNames[_selectedMininumTierIndex]); } }
 
         #endregion Properties
 
         #region Methods
 
-        void DrawGatheringUIButton()
+        private void DrawGatheringUIButton()
         {
             if (GUI.Button(GatheringUiButtonRect, "Gathering UI"))
                 _isUIshown = true;
@@ -43,7 +46,7 @@ namespace Merlin.Profiles.Gatherer
             DrawRunButton(false);
         }
 
-        void DrawGatheringUIWindow(int windowID)
+        private void DrawGatheringUIWindow(int windowID)
         {
             GUILayout.BeginHorizontal();
             DrawGatheringUILeft();
@@ -54,7 +57,7 @@ namespace Merlin.Profiles.Gatherer
             GUI.DragWindow();
         }
 
-        void DrawGatheringUILeft()
+        private void DrawGatheringUILeft()
         {
             GUILayout.BeginVertical();
             DrawGatheringUI_Buttons();
@@ -65,8 +68,7 @@ namespace Merlin.Profiles.Gatherer
             GUILayout.EndVertical();
         }
 
-
-        void DrawGatheringUI_Toggles()
+        private void DrawGatheringUI_Toggles()
         {
             _allowMobHunting = GUILayout.Toggle(_allowMobHunting, "Allow hunting of living mobs (exerimental - can cause issues)");
             _skipUnrestrictedPvPZones = GUILayout.Toggle(_skipUnrestrictedPvPZones, "Skip unrestricted PvP zones while gathering");
@@ -76,7 +78,7 @@ namespace Merlin.Profiles.Gatherer
             UpdateESP(GUILayout.Toggle(_showESP, "Show ESP"));
         }
 
-        void UpdateESP(bool newValue)
+        private void UpdateESP(bool newValue)
         {
             var oldValue = _showESP;
             _showESP = newValue;
@@ -90,7 +92,7 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        void DragGatheringUI_Sliders()
+        private void DragGatheringUI_Sliders()
         {
             if (_skipKeeperPacks)
             {
@@ -111,7 +113,7 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        void DrawGatheringUI_SelectionGrids()
+        private void DrawGatheringUI_SelectionGrids()
         {
             GUILayout.Label("Selected city cluster for banking:");
             _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, TownClusterNames, TownClusterNames.Length);
@@ -120,7 +122,7 @@ namespace Merlin.Profiles.Gatherer
             _selectedMininumTierIndex = GUILayout.SelectionGrid(_selectedMininumTierIndex, TierNames, TierNames.Length);
         }
 
-        void DrawGatheringUI_TextFields()
+        private void DrawGatheringUI_TextFields()
         {
             GUILayout.Label("Selected cluster for gathering:");
             var currentClusterInfo = _world.GetCurrentCluster() != null ? _world.GetCurrentCluster().GetName() : "Unknown";
@@ -128,7 +130,7 @@ namespace Merlin.Profiles.Gatherer
             _selectedGatherCluster = GUILayout.TextField(selectedGatherCluster);
         }
 
-        void DrawGatheringUIRight()
+        private void DrawGatheringUIRight()
         {
             GUILayout.BeginVertical();
             GUILayout.Label("Resources to gather:");
@@ -136,7 +138,7 @@ namespace Merlin.Profiles.Gatherer
             GUILayout.EndVertical();
         }
 
-        void DrawGatheringUI_Buttons()
+        private void DrawGatheringUI_Buttons()
         {
             if (GUILayout.Button("Close Gathering UI"))
                 _isUIshown = !_isUIshown;
@@ -147,7 +149,7 @@ namespace Merlin.Profiles.Gatherer
                 Core.Unload();
         }
 
-        void DrawGatheringUI_GatheringToggles()
+        private void DrawGatheringUI_GatheringToggles()
         {
             GUILayout.BeginHorizontal();
             var selectedMinimumTier = SelectedMinimumTier;
@@ -171,7 +173,7 @@ namespace Merlin.Profiles.Gatherer
             GUILayout.EndHorizontal();
         }
 
-        void DrawRunButton(bool layouted)
+        private void DrawRunButton(bool layouted)
         {
             var text = _isRunning ? "Stop Gathering" : "Start Gathering";
             if (layouted ? GUILayout.Button(text) : GUI.Button(GatheringBotButtonRect, text))
@@ -196,6 +198,7 @@ namespace Merlin.Profiles.Gatherer
             else
                 DrawGatheringUIButton();
         }
+
         #endregion Methods
     }
 }

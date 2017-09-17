@@ -94,8 +94,6 @@ namespace Merlin.Pathing
 
                         if (currentCluster.GetIdent() != nextCluster.GetIdent())
                         {
-
-
                             if (_exitPathingRequest != null)
                             {
                                 if (_exitPathingRequest.IsRunning)

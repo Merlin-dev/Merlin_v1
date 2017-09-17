@@ -66,7 +66,7 @@ namespace Merlin.Pathing
                 case State.Running:
                     {
                         //Early exit if one of them is null.
-                        if(_player == null || _target == null)
+                        if (_player == null || _target == null)
                         {
                             _state.Fire(Trigger.ReachedTarget);
                             break;

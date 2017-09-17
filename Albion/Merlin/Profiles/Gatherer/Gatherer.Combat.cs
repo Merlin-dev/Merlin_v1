@@ -71,7 +71,7 @@ namespace Merlin.Profiles.Gatherer
             _state.Fire(Trigger.EliminatedAttacker);
         }
 
-        bool TryToCastSpell(SpellTarget target, SpellCategory category, bool checkCastState)
+        private bool TryToCastSpell(SpellTarget target, SpellCategory category, bool checkCastState)
         {
             try
             {
@@ -95,12 +95,15 @@ namespace Merlin.Profiles.Gatherer
                         case (SpellTarget.Self):
                             _localPlayerCharacterView.CastOnSelf(spellSlot);
                             break;
+
                         case (SpellTarget.Enemy):
                             _localPlayerCharacterView.CastOn(spellSlot, _combatTarget);
                             break;
+
                         case (SpellTarget.Ground):
                             _localPlayerCharacterView.CastAt(spellSlot, _combatTarget.GetPosition());
                             break;
+
                         default:
                             Core.Log($"[SpellTarget {target} is not supported. Spell skipped]");
                             return false;

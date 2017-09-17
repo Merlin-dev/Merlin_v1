@@ -7,23 +7,23 @@ namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
-        static string _prefsIdentifier = "gath_";
+        private static string _prefsIdentifier = "gath_";
 
-        bool _allowMobHunting;
-        bool _skipUnrestrictedPvPZones;
-        bool _skipKeeperPacks;
-        bool _allowSiegeCampTreasure;
-        bool _skipRedAndBlackZones;
-        float _keeperSkipRange;
-        float _minimumHealthForGathering;
-        float _percentageForBanking;
-        float _percentageForSiegeCampTreasure;
-        string _selectedGatherCluster;
-        int _selectedTownClusterIndex;
-        int _selectedMininumTierIndex;
-        Dictionary<GatherInformation, bool> _gatherInformations;
+        private bool _allowMobHunting;
+        private bool _skipUnrestrictedPvPZones;
+        private bool _skipKeeperPacks;
+        private bool _allowSiegeCampTreasure;
+        private bool _skipRedAndBlackZones;
+        private float _keeperSkipRange;
+        private float _minimumHealthForGathering;
+        private float _percentageForBanking;
+        private float _percentageForSiegeCampTreasure;
+        private string _selectedGatherCluster;
+        private int _selectedTownClusterIndex;
+        private int _selectedMininumTierIndex;
+        private Dictionary<GatherInformation, bool> _gatherInformations;
 
-        void LoadSettings()
+        private void LoadSettings()
         {
             _allowMobHunting = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowMobHunting)}", bool.FalseString));
             _skipUnrestrictedPvPZones = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", bool.TrueString));
@@ -42,7 +42,7 @@ namespace Merlin.Profiles.Gatherer
                 foreach (var tier in Enum.GetValues(typeof(Tier)).Cast<Tier>())
                     foreach (var enchantment in Enum.GetValues(typeof(EnchantmentLevel)).Cast<EnchantmentLevel>())
                     {
-                        if ((tier < Tier.IV || resourceType == ResourceType.Rock) && enchantment != EnchantmentLevel.White )
+                        if ((tier < Tier.IV || resourceType == ResourceType.Rock) && enchantment != EnchantmentLevel.White)
                             continue;
 
                         var info = new GatherInformation(resourceType, tier, enchantment);
@@ -51,7 +51,7 @@ namespace Merlin.Profiles.Gatherer
                     }
         }
 
-        void SaveSettings()
+        private void SaveSettings()
         {
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_allowMobHunting)}", _allowMobHunting.ToString());
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", _skipUnrestrictedPvPZones.ToString());

@@ -6,11 +6,10 @@ namespace Merlin
 {
     public static class MobViewExtensions
     {
-        static Dictionary<string, ResourceType> _knownResourceTypes = new Dictionary<string, ResourceType>();
+        private static Dictionary<string, ResourceType> _knownResourceTypes = new Dictionary<string, ResourceType>();
 
         static MobViewExtensions()
         {
-
         }
 
         public static int GetTier(this MobView instance)
@@ -24,7 +23,7 @@ namespace Merlin
             var resourceMobType = instance.MobType();
             if (_knownResourceTypes.ContainsKey(resourceMobType))
                 return _knownResourceTypes[resourceMobType];
-            
+
             //Second we try to get a known value for the MobName
             var resourceMobName = instance.name;
             if (_knownResourceTypes.ContainsKey(resourceMobName))
@@ -50,7 +49,7 @@ namespace Merlin
             return null;
         }
 
-        static ResourceType? GetResouceTypeFromString(string mobString, int stringIndex)
+        private static ResourceType? GetResouceTypeFromString(string mobString, int stringIndex)
         {
             var resourceTypeString = string.Empty;
             try
@@ -65,12 +64,16 @@ namespace Merlin
                     {
                         case (Biome.Steppe):
                             return ResourceType.Hide;
+
                         case (Biome.Swamp):
                             return ResourceType.Fiber;
+
                         case (Biome.Highlands):
                             return ResourceType.Rock;
+
                         case (Biome.Mountains):
                             return ResourceType.Ore;
+
                         case (Biome.Forest):
                             return ResourceType.Wood;
                     }

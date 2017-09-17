@@ -10,10 +10,12 @@ namespace Merlin.API.Direct
         {
             return _internal.ak().GetHashCode();
         }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as ClusterDescriptor);
         }
+
         public bool Equals(ClusterDescriptor obj)
         {
             return obj != null && obj._internal.ak().Equals(_internal.ak());

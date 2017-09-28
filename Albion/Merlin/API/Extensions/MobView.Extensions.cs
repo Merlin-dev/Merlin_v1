@@ -14,7 +14,7 @@ namespace Merlin
 
         public static int GetTier(this MobView instance)
         {
-            return instance.Mob.sf().da();
+            return instance.Mob.s0().dc();
         }
 
         public static ResourceType? GetResourceType(this MobView instance)
@@ -84,7 +84,7 @@ namespace Merlin
 
         public static int GetRareState(this MobView instance)
         {
-            return instance.Mob.si();
+            return instance.Mob.s3();
         }
     }
 }

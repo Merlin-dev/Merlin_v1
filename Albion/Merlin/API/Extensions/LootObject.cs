@@ -2,6 +2,6 @@
 {
     public partial class LootObject
     {
-        public bool CanLoot() => LootObject_Internal.mh() && !LootObject_Internal.sg();
+        public bool CanLoot() => LootObject_Internal.mk() && !LootObject_Internal.s1();
     }
 }

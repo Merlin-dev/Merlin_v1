@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a7d */
-    public partial class GuiSimpleItemProxy : GuiItemProxy
+    /* Internal type: a7w */
+    public partial class ClientTools
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a7d _internal;
+        private a7w _internal;
         
         #region Properties
         
-        public a7d GuiSimpleItemProxy_Internal => _internal;
+        public a7w ClientTools_Internal => _internal;
         
         #endregion
         
@@ -43,17 +43,19 @@ namespace Merlin.API.Direct
         
         #region Methods
         
+        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a7w.a((as7)A_0);
+        public static int SomeCalculationWithUnfloatyFloats(Number A_0, Number A_1) => a7w.b((n5)A_0, (n5)A_1);
         
         #endregion
         
         #region Constructor
         
-        public GuiSimpleItemProxy(a7d instance) : base(instance)
+        public ClientTools(a7w instance)
         {
             _internal = instance;
         }
         
-        static GuiSimpleItemProxy()
+        static ClientTools()
         {
             
         }
@@ -62,17 +64,17 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a7d(GuiSimpleItemProxy instance)
+        public static implicit operator a7w(ClientTools instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GuiSimpleItemProxy(a7d instance)
+        public static implicit operator ClientTools(a7w instance)
         {
-            return new GuiSimpleItemProxy(instance);
+            return new ClientTools(instance);
         }
         
-        public static implicit operator bool(GuiSimpleItemProxy instance)
+        public static implicit operator bool(ClientTools instance)
         {
             return instance._internal != null;
         }

@@ -2,6 +2,7 @@
 using Stateless;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -36,6 +37,8 @@ namespace Merlin.Profiles.Gatherer
 
     public sealed partial class Gatherer : Profile
     {
+        public KeyCode toggleKey = KeyCode.F12;
+
         private bool _isRunning = false;
 
         private StateMachine<State, Trigger> _state;
@@ -44,7 +47,7 @@ namespace Merlin.Profiles.Gatherer
         private List<Point2> _keeperSpots;
         private List<MountObjectView> _mounts;
         private bool _knockedDown;
-
+        
         public override string Name => "Gatherer";
 
         protected override void OnStart()
@@ -126,7 +129,8 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && mob.MobType().ToLowerInvariant().Contains("keeper")))
+
+                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead"))))
                 {
                     var keeperPosition = keeper.GetInternalPosition();
                     if (!_keeperSpots.Contains(keeperPosition))
@@ -161,6 +165,14 @@ namespace Merlin.Profiles.Gatherer
 
                 ResetCriticalVariables();
                 _state.Fire(Trigger.Failure);
+            }
+        }
+
+        protected override void HotKey()
+        {
+            if (Input.GetKeyDown(toggleKey))
+            {
+                _isRunning = !_isRunning;
             }
         }
 

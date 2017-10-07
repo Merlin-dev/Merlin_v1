@@ -80,6 +80,9 @@ namespace Merlin
         /// </summary>
         private void Update()
         {
+
+            HotKey();
+
             if (_client.GetState() == GameState.Playing)
             {
                 if (refresh)
@@ -122,6 +125,8 @@ namespace Merlin
         protected abstract void OnStop();
 
         protected abstract void OnUpdate();
+
+        protected abstract void HotKey();
 
         protected virtual void OnUI()
         {

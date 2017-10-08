@@ -22,7 +22,7 @@ public class Console : MonoBehaviour
     private Vector2 scrollPosition;
     private bool show;
     private bool collapse;
-    private bool scroll;
+    private bool scroll = true;
 
     // Visual elements:
 

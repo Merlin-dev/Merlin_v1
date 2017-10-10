@@ -198,6 +198,23 @@ namespace Merlin.Profiles.Gatherer
             else
                 DrawGatheringUIButton();
         }
+        
+        protected override void HotKey()
+        {
+            if (Input.GetKeyDown(toggleKey))
+            {
+                _isRunning = !_isRunning;
+                if (_isRunning)
+                {
+                    ResetCriticalVariables();
+                    if (_selectedGatherCluster == "Unknown" && _world.GetCurrentCluster() != null)
+                        _selectedGatherCluster = _world.GetCurrentCluster().GetName();
+                    _localPlayerCharacterView.CreateTextEffect("[Start]");
+                    if (_state.CanFire(Trigger.Failure))
+                        _state.Fire(Trigger.Failure);
+                }
+            }
+        }
 
         #endregion Methods
     }

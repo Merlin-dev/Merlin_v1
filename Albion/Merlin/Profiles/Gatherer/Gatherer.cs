@@ -167,15 +167,7 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.Failure);
             }
         }
-
-        protected override void HotKey()
-        {
-            if (Input.GetKeyDown(toggleKey))
-            {
-                _isRunning = !_isRunning;
-            }
-        }
-
+        
         private void ResetCriticalVariables()
         {
             _worldPathingRequest = null;

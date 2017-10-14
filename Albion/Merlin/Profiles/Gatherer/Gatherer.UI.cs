@@ -70,7 +70,7 @@ namespace Merlin.Profiles.Gatherer
 
         private void DrawGatheringUI_Toggles()
         {
-            _allowMobHunting = GUILayout.Toggle(_allowMobHunting, "Allow hunting of living mobs (exerimental - can cause issues)");
+            _allowMobHunting = GUILayout.Toggle(_allowMobHunting, "Allow hunting of living mobs (experimental - can cause issues)");
             _skipUnrestrictedPvPZones = GUILayout.Toggle(_skipUnrestrictedPvPZones, "Skip unrestricted PvP zones while gathering");
             _skipKeeperPacks = GUILayout.Toggle(_skipKeeperPacks, "Skip keeper mobs while gathering");
             _allowSiegeCampTreasure = GUILayout.Toggle(_allowSiegeCampTreasure, "Allow usage of siege camp treasures");

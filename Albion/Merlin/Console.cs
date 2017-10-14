@@ -23,6 +23,7 @@ public class Console : MonoBehaviour
     private bool show;
     private bool collapse;
     private bool scroll;
+    private bool limit = true;
 
     // Visual elements:
 
@@ -42,6 +43,7 @@ public class Console : MonoBehaviour
     private GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
     private GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
     private GUIContent scrollLabel = new GUIContent("Auto scroll", "Scroll automatically.");
+    private GUIContent limitLabel = new GUIContent("Limit messages", "Show just the last 50 messages.");
 
     private void OnEnable()
     {
@@ -79,8 +81,12 @@ public class Console : MonoBehaviour
     {
         scrollPosition = GUILayout.BeginScrollView(scroll ? new Vector2(0, float.MaxValue) : scrollPosition);
 
+        int i = 0;
+        if (limit && logs.Count > 50)
+            i = logs.Count - 50; // Starts the log in the last 50 messages
+
         // Iterate through the recorded logs.
-        for (int i = 0; i < logs.Count; i++)
+        for (; i < logs.Count; i++)
         {
             var log = logs[i];
 
@@ -114,6 +120,7 @@ public class Console : MonoBehaviour
 
         collapse = GUILayout.Toggle(collapse, collapseLabel, GUILayout.ExpandWidth(false));
         scroll = GUILayout.Toggle(scroll, scrollLabel, GUILayout.ExpandWidth(false));
+        limit = GUILayout.Toggle(limit, limitLabel, GUILayout.ExpandWidth(false));
 
         GUILayout.EndHorizontal();
 

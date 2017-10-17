@@ -40,7 +40,7 @@ namespace Merlin
         public static bool IsInLineOfSight(this LocalPlayerCharacterView instance, FightingObjectView target)
         {
             var targetPos = target.FightingObject.h1();
-            var sightChecker = instance.PlayerCharacter.yg<awp>();
+            var sightChecker = instance.PlayerCharacter.yi<aw0>();
 
             return !ObjectManager.GetInstance().ObjectManager_Internal.x().f(sightChecker.n().h1(), targetPos, out var outPoint, 2);
         }

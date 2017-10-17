@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a1z */
-    public partial class FurnitureObject : BuildingObject
+    /* Internal type: ig */
+    public partial class SpellsDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a1z _internal;
+        private ig _internal;
         
         #region Properties
         
-        public a1z FurnitureObject_Internal => _internal;
+        public ig SpellsDataFile_Internal => _internal;
         
         #endregion
         
@@ -48,12 +48,12 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FurnitureObject(a1z instance) : base(instance)
+        public SpellsDataFile(ig instance) : base(instance)
         {
             _internal = instance;
         }
         
-        static FurnitureObject()
+        static SpellsDataFile()
         {
             
         }
@@ -62,17 +62,17 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a1z(FurnitureObject instance)
+        public static implicit operator ig(SpellsDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FurnitureObject(a1z instance)
+        public static implicit operator SpellsDataFile(ig instance)
         {
-            return new FurnitureObject(instance);
+            return new SpellsDataFile(instance);
         }
         
-        public static implicit operator bool(FurnitureObject instance)
+        public static implicit operator bool(SpellsDataFile instance)
         {
             return instance._internal != null;
         }

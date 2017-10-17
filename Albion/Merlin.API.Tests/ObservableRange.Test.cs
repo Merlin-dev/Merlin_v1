@@ -31,7 +31,7 @@ namespace Merlin.API.Direct.Tests
         [Test]
         public void SetMinimum_ReflectionTest()
         {
-            MethodInfo info = typeof(ad4<ad0>).GetMethod("k", new Type[]{typeof(float)});
+            MethodInfo info = typeof(aec<ad8>).GetMethod("k", new Type[]{typeof(float)});
             Assert.Null(info,"Method ObservableRange.SetMinimum(ad4.k) is null");
         }
         

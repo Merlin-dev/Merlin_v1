@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: nf */
+    /* Internal type: nn */
     public partial class ClusterTypeDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private nf _internal;
+        private nn _internal;
         
         #region Properties
         
-        public nf ClusterTypeDescriptor_Internal => _internal;
+        public nn ClusterTypeDescriptor_Internal => _internal;
         
         #endregion
         
@@ -49,7 +49,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ClusterTypeDescriptor(nf instance)
+        public ClusterTypeDescriptor(nn instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator nf(ClusterTypeDescriptor instance)
+        public static implicit operator nn(ClusterTypeDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClusterTypeDescriptor(nf instance)
+        public static implicit operator ClusterTypeDescriptor(nn instance)
         {
             return new ClusterTypeDescriptor(instance);
         }

@@ -43,8 +43,8 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public string GetIdent() => _internal.jz();
-        public string GetName() => _internal.j0();
+        public string GetIdent() => _internal.j0();
+        public string GetName() => _internal.j1();
         public string GetNameTag() => (string)_methodReflectionPool[0].Invoke(_internal,new object[]{});
         
         #endregion

@@ -12,7 +12,7 @@
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ak7 */
+    /* Internal type: alg */
     public enum GameState
     {
         Unknown = 0,
@@ -23,12 +23,12 @@ namespace Merlin.API.Direct
     
     public static class GameStateExtensions
     {
-        public static ak7 ToInternal(this GameState instance)
+        public static alg ToInternal(this GameState instance)
         {
-            return (ak7)instance;
+            return (alg)instance;
         }
         
-        public static GameState ToWrapped(this ak7 instance)
+        public static GameState ToWrapped(this alg instance)
         {
             return (GameState)instance;
         }

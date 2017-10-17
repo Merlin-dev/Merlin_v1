@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ass */
+    /* Internal type: as2 */
     public partial class PhotonClient
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ass _internal;
+        private as2 _internal;
         
         #region Properties
         
-        public ass PhotonClient_Internal => _internal;
+        public as2 PhotonClient_Internal => _internal;
         
         #endregion
         
@@ -44,13 +44,13 @@ namespace Merlin.API.Direct
         #region Methods
         
         public GameData GetGameData() => _internal.an();
-        public static PhotonClient GetInstance() => ass.aj();
+        public static PhotonClient GetInstance() => as2.aj();
         
         #endregion
         
         #region Constructor
         
-        public PhotonClient(ass instance)
+        public PhotonClient(as2 instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ass(PhotonClient instance)
+        public static implicit operator as2(PhotonClient instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PhotonClient(ass instance)
+        public static implicit operator PhotonClient(as2 instance)
         {
             return new PhotonClient(instance);
         }

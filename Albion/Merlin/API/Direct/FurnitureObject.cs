@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a1o */
+    /* Internal type: a1z */
     public partial class FurnitureObject : BuildingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a1o _internal;
+        private a1z _internal;
         
         #region Properties
         
-        public a1o FurnitureObject_Internal => _internal;
+        public a1z FurnitureObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FurnitureObject(a1o instance) : base(instance)
+        public FurnitureObject(a1z instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a1o(FurnitureObject instance)
+        public static implicit operator a1z(FurnitureObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FurnitureObject(a1o instance)
+        public static implicit operator FurnitureObject(a1z instance)
         {
             return new FurnitureObject(instance);
         }

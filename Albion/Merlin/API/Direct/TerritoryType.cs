@@ -12,7 +12,7 @@
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: alr.TerritoryType */
+    /* Internal type: al0.TerritoryType */
     public enum TerritoryType
     {
         NORMAL = 0,
@@ -24,12 +24,12 @@ namespace Merlin.API.Direct
     
     public static class TerritoryTypeExtensions
     {
-        public static alr.TerritoryType ToInternal(this TerritoryType instance)
+        public static al0.TerritoryType ToInternal(this TerritoryType instance)
         {
-            return (alr.TerritoryType)instance;
+            return (al0.TerritoryType)instance;
         }
         
-        public static TerritoryType ToWrapped(this alr.TerritoryType instance)
+        public static TerritoryType ToWrapped(this al0.TerritoryType instance)
         {
             return (TerritoryType)instance;
         }

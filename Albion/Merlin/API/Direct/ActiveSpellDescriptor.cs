@@ -33,10 +33,10 @@ namespace Merlin.API.Direct
         #region Properties
         
         public g7 ActiveSpellDescriptor_Internal => _internal;
-        public SpellAssessment Assesment => _internal.d5.ToWrapped();
-        public SpellCategory Category => _internal.d4.ToWrapped();
-        public float EnergyCost => _internal.dv;
-        public SpellTarget Target => _internal.d1.ToWrapped();
+        public SpellAssessment Assesment => _internal.d6.ToWrapped();
+        public SpellCategory Category => _internal.d5.ToWrapped();
+        public float EnergyCost => _internal.dw;
+        public SpellTarget Target => _internal.d2.ToWrapped();
         
         #endregion
         

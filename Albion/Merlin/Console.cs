@@ -84,6 +84,10 @@ public class Console : MonoBehaviour
         if (limit && logs.Count > 50)
             i = logs.Count - 50; // Starts the log in the last 50 messages
 
+        int i = 0;
+        if (limit && logs.Count > 50)
+            i = logs.Count - 50; // Starts the log in the last 50 messages
+
         // Iterate through the recorded logs.
         for (; i < logs.Count; i++)
         {

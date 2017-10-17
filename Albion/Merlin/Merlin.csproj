@@ -38,22 +38,22 @@
   <ItemGroup>
     <Reference Include="Albion.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Albion.Common.dll</HintPath>
+      <HintPath>..\Dependencies\Albion.Common.dll</HintPath>
     </Reference>
     <Reference Include="Albion.PhotonClient, Version=1.0.6284.40808, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Albion.PhotonClient.dll</HintPath>
+      <HintPath>..\Dependencies\Albion.PhotonClient.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\Dependencies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Photon3Unity3D.dll</HintPath>
+      <HintPath>..\Dependencies\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="Stateless, Version=2.4.0.1, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoStateless.2.5.29\lib\Stateless.dll</HintPath>
@@ -63,14 +63,14 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
-      <HintPath>..\..\..\..\Program Files (x86)\Albion Online\game\Albion-Online_Data\Managed\System.Xml.dll</HintPath>
+      <HintPath>..\Dependencies\System.Xml.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\Dependencies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>..\Dependencies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

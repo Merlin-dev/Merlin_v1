@@ -46,7 +46,7 @@ namespace Merlin.API.Direct
         public ClusterDescriptor GetCluster(string A_0) => _internal.id((string)A_0);
         public IEnumerable<ClusterDescriptor> GetClusters() => _internal.ie().Select(x =>(ClusterDescriptor)x);
         public ClusterExitDescriptor GetExit(string A_0) => _internal.ie((string)A_0);
-        //public TerritoryDescriptor GetTerritory(string A_0) => _internal.if((string)A_0);
+        public TerritoryDescriptor GetTerritory(string A_0) => _internal.@if((string)A_0);
 
         #endregion
 

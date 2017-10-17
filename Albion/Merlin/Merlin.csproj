@@ -184,6 +184,7 @@
     <Compile Include="API\Direct\SpellCategory.cs" />
     <Compile Include="API\Direct\SpellDescriptor.cs" />
     <Compile Include="API\Direct\SpellEffectAreaObject.cs" />
+    <Compile Include="API\Direct\SpellsDataFile.cs" />
     <Compile Include="API\Direct\SpellSlot.cs" />
     <Compile Include="API\Direct\SpellTarget.cs" />
     <Compile Include="API\Direct\StaticObject.cs" />

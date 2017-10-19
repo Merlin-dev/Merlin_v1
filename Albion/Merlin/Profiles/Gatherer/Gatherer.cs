@@ -44,7 +44,7 @@ namespace Merlin.Profiles.Gatherer
         private List<Point2> _keeperSpots;
         private List<MountObjectView> _mounts;
         private bool _knockedDown;
-        
+
         public override string Name => "Gatherer";
 
         protected override void OnStart()
@@ -163,7 +163,7 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.Failure);
             }
         }
-        
+
         private void ResetCriticalVariables()
         {
             _worldPathingRequest = null;

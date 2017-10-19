@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-
 using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
@@ -8,6 +7,9 @@ namespace Merlin.Profiles.Gatherer
     public partial class Gatherer
     {
         #region Fields
+
+        public KeyCode toggleKey = KeyCode.F12;
+        public KeyCode testkey = KeyCode.F11;
 
         private static int SpaceBetweenSides = 40;
         private static int SpaceBetweenItems = 4;
@@ -197,6 +199,26 @@ namespace Merlin.Profiles.Gatherer
                 GatheringWindowRect = GUILayout.Window(0, GatheringWindowRect, DrawGatheringUIWindow, "Gathering UI");
             else
                 DrawGatheringUIButton();
+        }
+        
+        protected override void HotKey()
+        {
+            if (Input.GetKeyDown(toggleKey))
+            {
+                _isRunning = !_isRunning;
+                if (_isRunning)
+                {
+                    ResetCriticalVariables();
+                    if (_selectedGatherCluster == "Unknown" && _world.GetCurrentCluster() != null)
+                        _selectedGatherCluster = _world.GetCurrentCluster().GetName();
+                    _localPlayerCharacterView.CreateTextEffect("[Start]");
+                    if (_state.CanFire(Trigger.Failure))
+                        _state.Fire(Trigger.Failure);
+                }
+            } else if(Input.GetKeyDown(testkey))
+            {
+                
+            }
         }
 
         #endregion Methods

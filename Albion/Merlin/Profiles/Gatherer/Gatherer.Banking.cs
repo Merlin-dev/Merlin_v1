@@ -13,6 +13,7 @@ namespace Merlin.Profiles.Gatherer
     {
         private WorldPathingRequest _worldPathingRequest;
         private ClusterPathingRequest _bankPathingRequest;
+        private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
 
         public void Bank()
@@ -28,21 +29,26 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.Restart);
                 return;
             }
-
+            
             if (HandlePathing(ref _worldPathingRequest))
                 return;
 
-            if (HandlePathing(ref _bankPathingRequest))
+            if (HandlePathing(ref _bankFindPathingRequest, () => _client.GetEntities<BankBuildingView>((x) => { return true; }).Count > 0))
                 return;
 
-            API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+            if (HandlePathing(ref _bankPathingRequest, null, () => _reachedPointInBetween = true))
+                return;
+
+            Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
             ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
-            ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
 
-            if (currentWorldCluster.GetName() == bankCluster.GetName())
+            //No longer valid in most instances. Need to find way to implement just for Caerleon.
+            //ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
+
+            if (currentWorldCluster.GetName() == townCluster.GetName())
             {
                 var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
 
@@ -70,13 +76,18 @@ namespace Merlin.Profiles.Gatherer
 
                     var ToDeposit = new List<UIItemSlot>();
 
-                    //Get all items we need
+                    //Get all items we need that are visible. Need to find a way to get all items in player inventory.
                     var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
                     foreach (var slot in playerStorage.ItemsSlotsRegistered)
                         if (slot != null && slot.ObservedItemView != null)
                         {
                             var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
-                            if (resourceTypes.Any(r => slotItemName.Contains(r)))
+                            //All items not including journals
+                            if(!slotItemName.Contains("journalitem"))
+                                if (resourceTypes.Any(r => slotItemName.Contains(r)))
+                                    ToDeposit.Add(slot);
+                            //adding full journals to deposit list
+                            if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
                                 ToDeposit.Add(slot);
                         }
 
@@ -98,8 +109,8 @@ namespace Merlin.Profiles.Gatherer
             else
             {
                 var pathfinder = new WorldmapPathfinder();
-                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, StopClusterFunction, out var path, out var pivots))
-                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path, _skipUnrestrictedPvPZones);
+                if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
+                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
             }
         }
     }

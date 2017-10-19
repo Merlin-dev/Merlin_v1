@@ -1,8 +1,8 @@
 # Merlin - Albion Online BOT
 
-## Merlin is currently working with Albion 1.0.332.98729
+## Merlin is currently working with Albion AO 1.0.336.100246
 
-[[NEW] How to download and install merlin](https://github.com/klukule/merlin/wiki/%5BMerlin%5D-How-to-Download-&-Install)
+[How to download and install merlin](https://github.com/klukule/merlin/wiki/%5BMerlin%5D-How-to-Download-&-Install)
 
 This project started as work of one guy, now there a whole open community developing it. Its free and you can download it any time from this github. Merlin its a project that automates (BOT) your actions inside the game Albion Online.
 

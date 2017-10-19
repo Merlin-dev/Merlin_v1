@@ -2,7 +2,6 @@
 using Stateless;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -127,7 +126,6 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-
                 foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead"))))
                 {
                     var keeperPosition = keeper.GetInternalPosition();

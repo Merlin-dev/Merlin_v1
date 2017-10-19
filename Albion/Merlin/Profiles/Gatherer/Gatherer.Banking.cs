@@ -19,7 +19,6 @@ namespace Merlin.Profiles.Gatherer
         public void Bank()
         {
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
-            if (player == null) Core.Log("player == NULL");
 
             if (!HandleMounting(Vector3.zero))
                 return;
@@ -41,21 +40,17 @@ namespace Merlin.Profiles.Gatherer
                 return;
 
             Worldmap worldmapInstance = GameGui.Instance.WorldMap;
-            if (worldmapInstance == null) Core.Log("worldmapInstance == NULL");
 
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
-            if (playerCenter == null) Core.Log("playerCenter == NULL");
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
-            if(currentWorldCluster == null) Core.Log("CurrentWorldClust == NULL");
             ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
-            if (townCluster == null) Core.Log("townCluster == NULL");
+
+            //No longer valid in most instances. Need to find way to implement just for Caerleon.
             //ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
-            //if (bankCluster == null) Core.Log("bankCluster == NULL");
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
                 var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
-                if (banks == null) Core.Log("banks == NULL");
 
                 if (banks.Count == 0)
                     return;
@@ -81,15 +76,17 @@ namespace Merlin.Profiles.Gatherer
 
                     var ToDeposit = new List<UIItemSlot>();
 
-                    //Get all items we need
+                    //Get all items we need that are visible. Need to find a way to get all items in player inventory.
                     var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
                     foreach (var slot in playerStorage.ItemsSlotsRegistered)
                         if (slot != null && slot.ObservedItemView != null)
                         {
                             var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
+                            //All items not including journals
                             if(!slotItemName.Contains("journalitem"))
                                 if (resourceTypes.Any(r => slotItemName.Contains(r)))
                                     ToDeposit.Add(slot);
+                            //adding full journals to deposit list
                             if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
                                 ToDeposit.Add(slot);
                         }

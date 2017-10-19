@@ -88,7 +88,7 @@ namespace Merlin.Profiles.Gatherer
                             var repairUsage = GameGui.Instance.BuildingUsageAndManagementGui.BuildingUsage;
                             var silverUI = GameGui.Instance.PaySilverDetailGui;
 
-                            if (silverUI.UserData == repairUsage.RepairItemView && silverUI.gameObject.activeInHierarchy)
+                            if ((silverUI.UserData as RepairItemView) == repairUsage.RepairItemView)
                             {
                                 Core.Log("[Paying silver costs]");
                                 silverUI.OnPay();

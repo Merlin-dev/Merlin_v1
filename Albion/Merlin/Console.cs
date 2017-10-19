@@ -23,7 +23,7 @@ public class Console : MonoBehaviour
     private bool show;
     private bool collapse;
     private bool scroll = true;
-    private bool limit = true;
+    private bool limit = false;
 
     // Visual elements:
 

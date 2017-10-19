@@ -13,11 +13,13 @@ namespace Merlin.Profiles.Gatherer
     {
         private WorldPathingRequest _worldPathingRequest;
         private ClusterPathingRequest _bankPathingRequest;
+        private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
 
         public void Bank()
         {
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            if (player == null) Core.Log("player == NULL");
 
             if (!HandleMounting(Vector3.zero))
                 return;
@@ -28,23 +30,32 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.Restart);
                 return;
             }
-
+            
             if (HandlePathing(ref _worldPathingRequest))
                 return;
 
-            if (HandlePathing(ref _bankPathingRequest))
+            if (HandlePathing(ref _bankFindPathingRequest, () => _client.GetEntities<BankBuildingView>((x) => { return true; }).Count > 0))
                 return;
 
-            API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+            if (HandlePathing(ref _bankPathingRequest, null, () => _reachedPointInBetween = true))
+                return;
+
+            Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+            if (worldmapInstance == null) Core.Log("worldmapInstance == NULL");
 
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
+            if (playerCenter == null) Core.Log("playerCenter == NULL");
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
+            if(currentWorldCluster == null) Core.Log("CurrentWorldClust == NULL");
             ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
-            ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
+            if (townCluster == null) Core.Log("townCluster == NULL");
+            //ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
+            //if (bankCluster == null) Core.Log("bankCluster == NULL");
 
-            if (currentWorldCluster.GetName() == bankCluster.GetName())
+            if (currentWorldCluster.GetName() == townCluster.GetName())
             {
                 var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
+                if (banks == null) Core.Log("banks == NULL");
 
                 if (banks.Count == 0)
                     return;
@@ -76,7 +87,10 @@ namespace Merlin.Profiles.Gatherer
                         if (slot != null && slot.ObservedItemView != null)
                         {
                             var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
-                            if (resourceTypes.Any(r => slotItemName.Contains(r)))
+                            if(!slotItemName.Contains("journalitem"))
+                                if (resourceTypes.Any(r => slotItemName.Contains(r)))
+                                    ToDeposit.Add(slot);
+                            if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
                                 ToDeposit.Add(slot);
                         }
 
@@ -98,8 +112,8 @@ namespace Merlin.Profiles.Gatherer
             else
             {
                 var pathfinder = new WorldmapPathfinder();
-                if (pathfinder.TryFindPath(currentWorldCluster, bankCluster, StopClusterFunction, out var path, out var pivots))
-                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, bankCluster, path, _skipUnrestrictedPvPZones);
+                if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
+                    _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
             }
         }
     }

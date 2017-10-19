@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-
+using Merlin.API.Direct;
 using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
@@ -8,6 +8,9 @@ namespace Merlin.Profiles.Gatherer
     public partial class Gatherer
     {
         #region Fields
+
+        public KeyCode toggleKey = KeyCode.F12;
+        public KeyCode testkey = KeyCode.F11;
 
         private static int SpaceBetweenSides = 40;
         private static int SpaceBetweenItems = 4;
@@ -213,6 +216,9 @@ namespace Merlin.Profiles.Gatherer
                     if (_state.CanFire(Trigger.Failure))
                         _state.Fire(Trigger.Failure);
                 }
+            } else if(Input.GetKeyDown(testkey))
+            {
+                
             }
         }
 

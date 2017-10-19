@@ -37,8 +37,6 @@ namespace Merlin.Profiles.Gatherer
 
     public sealed partial class Gatherer : Profile
     {
-        public KeyCode toggleKey = KeyCode.F12;
-
         private bool _isRunning = false;
 
         private StateMachine<State, Trigger> _state;

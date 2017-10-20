@@ -90,7 +90,7 @@ namespace Merlin.Profiles.Gatherer
                             if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
                                 ToDeposit.Add(slot);
                         }
-
+                    
                     _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
                     foreach (var item in ToDeposit)
                     {

@@ -10,7 +10,8 @@ namespace Merlin.Profiles.Gatherer
 
         public KeyCode toggleKey = KeyCode.F12;
         public KeyCode testkey = KeyCode.F11;
-
+        public KeyCode unloadKey = KeyCode.F10;
+        
         private static int SpaceBetweenSides = 40;
         private static int SpaceBetweenItems = 4;
 
@@ -215,9 +216,14 @@ namespace Merlin.Profiles.Gatherer
                     if (_state.CanFire(Trigger.Failure))
                         _state.Fire(Trigger.Failure);
                 }
-            } else if(Input.GetKeyDown(testkey))
+            }
+            else if(Input.GetKeyDown(testkey))
             {
-                
+                Repair();
+            }
+            else if (Input.GetKeyDown(unloadKey))
+            {
+                Core.Unload();
             }
         }
 

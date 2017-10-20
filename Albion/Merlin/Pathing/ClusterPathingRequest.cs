@@ -66,14 +66,14 @@ namespace Merlin.Pathing
                 case State.Running:
                     {
                         //Early exit if one of them is null.
-                        if (_player == null || _target == null)
+                        if (_player == null)
                         {
                             _state.Fire(Trigger.ReachedTarget);
                             break;
                         }
 
                         var currentNode = _path[0];
-                        var minimumDistance = 3f;
+                        var minimumDistance = 2f;
 
                         if (_path.Count < 2 && _useCollider)
                         {

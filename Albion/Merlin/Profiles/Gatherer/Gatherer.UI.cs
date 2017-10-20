@@ -219,7 +219,7 @@ namespace Merlin.Profiles.Gatherer
             }
             else if(Input.GetKeyDown(testkey))
             {
-                Repair();
+
             }
             else if (Input.GetKeyDown(unloadKey))
             {

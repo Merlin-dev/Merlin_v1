@@ -36,6 +36,12 @@ namespace Merlin.Profiles.Gatherer
 
     public sealed partial class Gatherer : Profile
     {
+        #region [dTormentedSoul Area]
+        DateTime _startDateTime = DateTime.Now;
+        int messageDelayTrigger = 50;
+        int messageDelayIncrement = 0;
+        #endregion [dTormentedSoul Area]
+
         private bool _isRunning = false;
 
         private StateMachine<State, Trigger> _state;

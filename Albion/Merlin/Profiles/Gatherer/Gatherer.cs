@@ -130,18 +130,6 @@ namespace Merlin.Profiles.Gatherer
                     _blacklist.Remove(target);
             }
 
-            //untested
-            Worldmap worldmapInstance = GameGui.Instance.WorldMap;
-            ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
-            ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
-            
-            if (currentWorldCluster.GetName() == townCluster.GetName())
-            {
-                _showESP = false;
-                if (gameObject.GetComponent<ESP.ESP>() != null)
-                    Destroy(gameObject.GetComponent<ESP.ESP>());
-            }
-
             try
             {
                 foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead"))))

@@ -13,14 +13,12 @@ namespace Merlin.Profiles.Gatherer
         private ClusterPathingRequest _repairPathingRequest;
         private PositionPathingRequest _repairFindPathingRequest;
         private bool _reachedPointInBetween;
+        private bool _movingToRepair = false;
 
         public void Repair()
         {
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
-
-            if (!HandleMounting(Vector3.zero))
-                return;
-
+            
             if (HandlePathing(ref _worldPathingRequest))
                 return;
 
@@ -54,41 +52,45 @@ namespace Merlin.Profiles.Gatherer
                 {
                     if (!repairer.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        Core.Log("[Start Interacting with RepairStation]");
-                        _localPlayerCharacterView.Interact(repairer);
-                        return;
-                    }
-
-                    if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
-                    {
-                        if (_localPlayerCharacterView.IsItemRepairing())
-                            return;
-
-                        var repairUsage = GameGui.Instance.BuildingUsageAndManagementGui.BuildingUsage;
-                        var silverUI = GameGui.Instance.PaySilverDetailGui;
-
-                        if ((silverUI.UserData as RepairItemView) == repairUsage.RepairItemView)
+                        if(!_movingToRepair)
                         {
-                            Core.Log("[Paying silver costs]");
-                            silverUI.OnPay();
+                            _movingToRepair = true;
+                            Core.Log("[Start Interacting with RepairStation]");
+                            _localPlayerCharacterView.Interact(repairer);
                             return;
                         }
-
-                        if (repairUsage.gameObject.activeInHierarchy)
-                        {
-                            Core.Log("[Reparing all]");
-                            repairUsage.RepairItemView.OnClickRepairAllButton();
-                            return;
-                        }
-
-                        Core.Log("[Interact with RepairStation]");
-                        _localPlayerCharacterView.Interact(repairer);
                     }
                     else
                     {
-                        _reachedPointInBetween = false;
-                        Core.Log("[Repair Done]");
-                        _state.Fire(Trigger.RepairDone);
+                        if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
+                        {
+                            if (_localPlayerCharacterView.IsItemRepairing())
+                                return;
+
+                            var repairUsage = GameGui.Instance.BuildingUsageAndManagementGui.BuildingUsage;
+                            var silverUI = GameGui.Instance.PaySilverDetailGui;
+
+                            if ((silverUI.UserData as RepairItemView) == repairUsage.RepairItemView)
+                            {
+                                Core.Log("[Paying silver costs]");
+                                silverUI.OnPay();
+                                return;
+                            }
+
+                            if (repairUsage.gameObject.activeInHierarchy)
+                            {
+                                Core.Log("[Reparing all]");
+                                repairUsage.RepairItemView.OnClickRepairAllButton();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            _movingToRepair = false;
+                            _reachedPointInBetween = false;
+                            Core.Log("[Repair Done]");
+                            _state.Fire(Trigger.RepairDone);
+                        }
                     }
                 }
                 

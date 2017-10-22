@@ -160,33 +160,6 @@ namespace Merlin.Profiles.Gatherer
             if (HandleAttackers())
                 return;
             
-            #region [dTormentedSoul Area]
-            messageDelayIncrement++;
-            
-            
-            if (onDebugMode && (messageDelayIncrement % messageDelayTrigger == 0))
-            {
-                _localPlayerCharacterView.CreateTextEffect("Harvest()" + " | " +System.Convert.ToString(_localPlayerCharacterView.GetLocalPlayerCharacter().GetHealth().GetValue()) + "/" + System.Convert.ToString(_localPlayerCharacterView.GetLocalPlayerCharacter().GetHealth().GetMaximum()) + " | " +System.Convert.ToString(previousPlayerInfo.StuckCount) + " | " +(_currentTarget != null ? _currentTarget.name : "none"));
-                messageDelayIncrement = 0;
-            }
-            
-            if ((_currentTarget != null ? _currentTarget.name : "none") == "none")
-                Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
-            
-            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
-            {
-                _localPlayerCharacterView.CreateTextEffect("[Attacked]");
-                _state.Fire(Trigger.EncounteredAttacker);
-                return;
-            }
-            
-            _localPlayerCharacterView.AttackSelectedObject();
-            
-            if (StuckProtection())
-                return;
-            
-            #endregion [dTormentedSoul Area]
- 
             if (!ValidateTarget(_currentTarget))
             {
                 _state.Fire(Trigger.DepletedResource);

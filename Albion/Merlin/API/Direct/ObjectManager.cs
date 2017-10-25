@@ -52,7 +52,7 @@ namespace Merlin.API.Direct
         public SimulationObject GetObject(long A_0) => _internal.a((long)A_0);
         public Dictionary<long, atf> GetObjectMap() => (Dictionary<long, atf>)_methodReflectionPool[0].Invoke(_internal,new object[]{});
         public IEnumerable GetObjects() => _internal.aa();
-        public ICollection<SimulationObject> GetObjects<a>() where a: atf => (ICollection<SimulationObject>)_internal.am<a>();
+        public ICollection<SimulationObject> GetObjects<a>() where a:atf => (ICollection<SimulationObject>)_internal.am<a>();
         public PlayerCharacter GetPlayerCharacter(Guid A_0) => _internal.a((Guid)A_0);
         
         #endregion

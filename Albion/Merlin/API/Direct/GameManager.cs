@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a90 */
+    /* Internal type: a92 */
     public partial class GameManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a90 _internal;
+        private a92 _internal;
         
         #region Properties
         
-        public a90 GameManager_Internal => _internal;
+        public a92 GameManager_Internal => _internal;
         
         #endregion
         
@@ -43,18 +43,18 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public static GameManager GetInstance() => a90.s();
+        public static GameManager GetInstance() => a92.s();
         public LandscapeManager GetLandscapeManager() => _internal.z();
         public LocalPlayerCharacterView GetLocalPlayerCharacterView() => _internal.v();
         public GameState GetState() => _internal.w().ToWrapped();
-        public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((atd)A_0);
+        public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((atf)A_0);
         public SimulationObjectView GetView(long A_0) => _internal.a((long)A_0);
         
         #endregion
         
         #region Constructor
         
-        public GameManager(a90 instance)
+        public GameManager(a92 instance)
         {
             _internal = instance;
         }
@@ -68,12 +68,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a90(GameManager instance)
+        public static implicit operator a92(GameManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GameManager(a90 instance)
+        public static implicit operator GameManager(a92 instance)
         {
             return new GameManager(instance);
         }

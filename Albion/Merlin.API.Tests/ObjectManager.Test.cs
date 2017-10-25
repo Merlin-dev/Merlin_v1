@@ -22,7 +22,7 @@ using NUnit.Framework;
 
 namespace Merlin.API.Direct.Tests
 {
-    /* Internal type: amv */
+    /* Internal type: amw */
     [TestFixture]
     public class ObjectManagerTests
     {
@@ -31,8 +31,8 @@ namespace Merlin.API.Direct.Tests
         [Test]
         public void GetObjectMap_ReflectionTest()
         {
-            MethodInfo info = typeof(amv).GetMethod("ak", new Type[]{});
-            Assert.Null(info,"Method ObjectManager.GetObjectMap(amv.ak) is null");
+            MethodInfo info = typeof(amw).GetMethod("ak", new Type[]{});
+            Assert.Null(info,"Method ObjectManager.GetObjectMap(amw.ak) is null");
         }
         
         

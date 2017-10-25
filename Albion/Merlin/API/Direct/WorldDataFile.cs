@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: al1 */
+    /* Internal type: al2 */
     public partial class WorldDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private al1 _internal;
+        private al2 _internal;
         
         #region Properties
         
-        public al1 WorldDataFile_Internal => _internal;
+        public al2 WorldDataFile_Internal => _internal;
         
         #endregion
         
@@ -52,7 +52,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public WorldDataFile(al1 instance) : base(instance)
+        public WorldDataFile(al2 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -66,12 +66,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator al1(WorldDataFile instance)
+        public static implicit operator al2(WorldDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator WorldDataFile(al1 instance)
+        public static implicit operator WorldDataFile(al2 instance)
         {
             return new WorldDataFile(instance);
         }

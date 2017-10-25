@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afi */
+    /* Internal type: afj */
     public partial struct Rectangle
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private afi _internal;
+        private afj _internal;
         
         #region Properties
         
-        public afi Rectangle_Internal => _internal;
+        public afj Rectangle_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public Rectangle(afi instance)
+        public Rectangle(afj instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afi(Rectangle instance)
+        public static implicit operator afj(Rectangle instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Rectangle(afi instance)
+        public static implicit operator Rectangle(afj instance)
         {
             return new Rectangle(instance);
         }

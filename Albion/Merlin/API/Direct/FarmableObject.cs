@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a2b */
+    /* Internal type: a2d */
     public partial class FarmableObject : BuildingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a2b _internal;
+        private a2d _internal;
         
         #region Properties
         
-        public a2b FarmableObject_Internal => _internal;
+        public a2d FarmableObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FarmableObject(a2b instance) : base(instance)
+        public FarmableObject(a2d instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a2b(FarmableObject instance)
+        public static implicit operator a2d(FarmableObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FarmableObject(a2b instance)
+        public static implicit operator FarmableObject(a2d instance)
         {
             return new FarmableObject(instance);
         }

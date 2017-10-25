@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ae4 */
+    /* Internal type: ae5 */
     public partial class SpellSlot
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ae4 _internal;
+        private ae5 _internal;
         
         #region Properties
         
-        public ae4 SpellSlot_Internal => _internal;
+        public ae5 SpellSlot_Internal => _internal;
         
         #endregion
         
@@ -51,7 +51,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public SpellSlot(ae4 instance)
+        public SpellSlot(ae5 instance)
         {
             _internal = instance;
         }
@@ -65,12 +65,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ae4(SpellSlot instance)
+        public static implicit operator ae5(SpellSlot instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellSlot(ae4 instance)
+        public static implicit operator SpellSlot(ae5 instance)
         {
             return new SpellSlot(instance);
         }

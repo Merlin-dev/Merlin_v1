@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: at6 */
+    /* Internal type: at8 */
     public partial class MovingObject : WorldObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private at6 _internal;
+        private at8 _internal;
         
         #region Properties
         
-        public at6 MovingObject_Internal => _internal;
+        public at8 MovingObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public MovingObject(at6 instance) : base(instance)
+        public MovingObject(at8 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator at6(MovingObject instance)
+        public static implicit operator at8(MovingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MovingObject(at6 instance)
+        public static implicit operator MovingObject(at8 instance)
         {
             return new MovingObject(instance);
         }

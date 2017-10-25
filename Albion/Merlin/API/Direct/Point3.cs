@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afl */
+    /* Internal type: afm */
     public partial struct Point3
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private afl _internal;
+        private afm _internal;
         
         #region Properties
         
-        public afl Point3_Internal => _internal;
+        public afm Point3_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public Point3(afl instance)
+        public Point3(afm instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afl(Point3 instance)
+        public static implicit operator afm(Point3 instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Point3(afl instance)
+        public static implicit operator Point3(afm instance)
         {
             return new Point3(instance);
         }

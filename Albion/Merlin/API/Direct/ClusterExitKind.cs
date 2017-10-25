@@ -12,7 +12,7 @@
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: alw.Kind */
+    /* Internal type: alx.Kind */
     public enum ClusterExitKind
     {
         Cluster = 0,
@@ -27,12 +27,12 @@ namespace Merlin.API.Direct
     
     public static class ClusterExitKindExtensions
     {
-        public static alw.Kind ToInternal(this ClusterExitKind instance)
+        public static alx.Kind ToInternal(this ClusterExitKind instance)
         {
-            return (alw.Kind)instance;
+            return (alx.Kind)instance;
         }
         
-        public static ClusterExitKind ToWrapped(this alw.Kind instance)
+        public static ClusterExitKind ToWrapped(this alx.Kind instance)
         {
             return (ClusterExitKind)instance;
         }

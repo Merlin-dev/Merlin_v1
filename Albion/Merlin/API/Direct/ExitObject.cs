@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a2t */
+    /* Internal type: a2v */
     public partial class ExitObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a2t _internal;
+        private a2v _internal;
         
         #region Properties
         
-        public a2t ExitObject_Internal => _internal;
+        public a2v ExitObject_Internal => _internal;
         
         #endregion
         
@@ -49,7 +49,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ExitObject(a2t instance) : base(instance)
+        public ExitObject(a2v instance) : base(instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a2t(ExitObject instance)
+        public static implicit operator a2v(ExitObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ExitObject(a2t instance)
+        public static implicit operator ExitObject(a2v instance)
         {
             return new ExitObject(instance);
         }

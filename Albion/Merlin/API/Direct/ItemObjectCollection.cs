@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: at1 */
+    /* Internal type: at3 */
     public partial class ItemObjectCollection
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private at1 _internal;
+        private at3 _internal;
         
         #region Properties
         
-        public at1 ItemObjectCollection_Internal => _internal;
+        public at3 ItemObjectCollection_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ItemObjectCollection(at1 instance)
+        public ItemObjectCollection(at3 instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator at1(ItemObjectCollection instance)
+        public static implicit operator at3(ItemObjectCollection instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ItemObjectCollection(at1 instance)
+        public static implicit operator ItemObjectCollection(at3 instance)
         {
             return new ItemObjectCollection(instance);
         }

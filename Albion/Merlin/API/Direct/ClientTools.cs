@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a77 */
+    /* Internal type: a79 */
     public partial class ClientTools
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a77 _internal;
+        private a79 _internal;
         
         #region Properties
         
-        public a77 ClientTools_Internal => _internal;
+        public a79 ClientTools_Internal => _internal;
         
         #endregion
         
@@ -43,14 +43,14 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a77.a((ath)A_0);
-        public static int SomeCalculationWithUnfloatyFloats(Number A_0, Number A_1) => a77.b((od)A_0, (od)A_1);
+        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a79.a((atj)A_0);
+        public static int SomeCalculationWithUnfloatyFloats(Number A_0, Number A_1) => a79.b((oe)A_0, (oe)A_1);
         
         #endregion
         
         #region Constructor
         
-        public ClientTools(a77 instance)
+        public ClientTools(a79 instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a77(ClientTools instance)
+        public static implicit operator a79(ClientTools instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClientTools(a77 instance)
+        public static implicit operator ClientTools(a79 instance)
         {
             return new ClientTools(instance);
         }

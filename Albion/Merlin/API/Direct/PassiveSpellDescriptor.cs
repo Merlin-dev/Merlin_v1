@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: aeg */
+    /* Internal type: aeh */
     public partial class PassiveSpellDescriptor : SpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aeg _internal;
+        private aeh _internal;
         
         #region Properties
         
-        public aeg PassiveSpellDescriptor_Internal => _internal;
+        public aeh PassiveSpellDescriptor_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public PassiveSpellDescriptor(aeg instance) : base(instance)
+        public PassiveSpellDescriptor(aeh instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator aeg(PassiveSpellDescriptor instance)
+        public static implicit operator aeh(PassiveSpellDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PassiveSpellDescriptor(aeg instance)
+        public static implicit operator PassiveSpellDescriptor(aeh instance)
         {
             return new PassiveSpellDescriptor(instance);
         }

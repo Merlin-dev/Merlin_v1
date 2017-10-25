@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a3n */
+    /* Internal type: a3p */
     public partial class HarvestableObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a3n _internal;
+        private a3p _internal;
         
         #region Properties
         
-        public a3n HarvestableObject_Internal => _internal;
+        public a3p HarvestableObject_Internal => _internal;
         
         #endregion
         
@@ -43,7 +43,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public ActionPoint GetActionPoint(Point2 A_0) => _internal.az((aky)A_0);
+        public ActionPoint GetActionPoint(Point2 A_0) => _internal.az((akz)A_0);
         public HarvestableDescriptor GetDescriptor() => _internal.s0();
         public HarvestableChargeDescriptor GetChargeDescriptor() => _internal.s2();
         public long GetCharges() => _internal.tb();
@@ -52,7 +52,7 @@ namespace Merlin.API.Direct
         public int GetRareState() => _internal.ta();
         public ItemDescriptor GetResourceDescriptor() => _internal.tg();
         public HarvestableTierDescriptor GetTierDescriptor() => _internal.s1();
-        public EquipmentItemProxy GetTool(LocalPlayerCharacter A_0, bool A_1) => _internal.az((ayp)A_0, (bool)A_1);
+        public EquipmentItemProxy GetTool(LocalPlayerCharacter A_0, bool A_1) => _internal.az((ayr)A_0, (bool)A_1);
         public long GetYield() => _internal.td();
         public bool IsHarvestable() => _internal.te();
         
@@ -60,7 +60,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public HarvestableObject(a3n instance) : base(instance)
+        public HarvestableObject(a3p instance) : base(instance)
         {
             _internal = instance;
         }
@@ -74,12 +74,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a3n(HarvestableObject instance)
+        public static implicit operator a3p(HarvestableObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator HarvestableObject(a3n instance)
+        public static implicit operator HarvestableObject(a3p instance)
         {
             return new HarvestableObject(instance);
         }

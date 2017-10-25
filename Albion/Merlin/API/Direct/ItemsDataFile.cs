@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: aei */
+    /* Internal type: aej */
     public partial class ItemsDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aei _internal;
+        private aej _internal;
         
         #region Properties
         
-        public aei ItemsDataFile_Internal => _internal;
+        public aej ItemsDataFile_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ItemsDataFile(aei instance) : base(instance)
+        public ItemsDataFile(aej instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator aei(ItemsDataFile instance)
+        public static implicit operator aej(ItemsDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ItemsDataFile(aei instance)
+        public static implicit operator ItemsDataFile(aej instance)
         {
             return new ItemsDataFile(instance);
         }

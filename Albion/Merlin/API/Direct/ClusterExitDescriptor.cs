@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: alw */
+    /* Internal type: alx */
     public partial class ClusterExitDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private alw _internal;
+        private alx _internal;
         
         #region Properties
         
-        public alw ClusterExitDescriptor_Internal => _internal;
+        public alx ClusterExitDescriptor_Internal => _internal;
         
         #endregion
         
@@ -47,34 +47,34 @@ namespace Merlin.API.Direct
         public ClusterExitKind GetKind() => _internal.r().ToWrapped();
         public Point2 GetPosition() => _internal.v();
         public ClusterDescriptor GetSource() => _internal.l();
-        public void SetDestination(ClusterDescriptor A_0) => _methodReflectionPool[0].Invoke(_internal,new object[]{(alv)A_0});
-        public void SetSource(ClusterDescriptor A_0) => _methodReflectionPool[1].Invoke(_internal,new object[]{(alv)A_0});
+        public void SetDestination(ClusterDescriptor A_0) => _methodReflectionPool[0].Invoke(_internal,new object[]{(alw)A_0});
+        public void SetSource(ClusterDescriptor A_0) => _methodReflectionPool[1].Invoke(_internal,new object[]{(alw)A_0});
         
         #endregion
         
         #region Constructor
         
-        public ClusterExitDescriptor(alw instance)
+        public ClusterExitDescriptor(alx instance)
         {
             _internal = instance;
         }
         
         static ClusterExitDescriptor()
         {
-            _methodReflectionPool.Add(typeof(alw).GetMethod("l", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alv)}, null));
-            _methodReflectionPool.Add(typeof(alw).GetMethod("m", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alv)}, null));
+            _methodReflectionPool.Add(typeof(alx).GetMethod("l", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alw)}, null));
+            _methodReflectionPool.Add(typeof(alx).GetMethod("m", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alw)}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator alw(ClusterExitDescriptor instance)
+        public static implicit operator alx(ClusterExitDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClusterExitDescriptor(alw instance)
+        public static implicit operator ClusterExitDescriptor(alx instance)
         {
             return new ClusterExitDescriptor(instance);
         }

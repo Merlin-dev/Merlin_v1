@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: at7 */
+    /* Internal type: at9 */
     public partial class SpellEffectAreaObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private at7 _internal;
+        private at9 _internal;
         
         #region Properties
         
-        public at7 SpellEffectAreaObject_Internal => _internal;
+        public at9 SpellEffectAreaObject_Internal => _internal;
         
         #endregion
         
@@ -49,7 +49,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public SpellEffectAreaObject(at7 instance) : base(instance)
+        public SpellEffectAreaObject(at9 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator at7(SpellEffectAreaObject instance)
+        public static implicit operator at9(SpellEffectAreaObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellEffectAreaObject(at7 instance)
+        public static implicit operator SpellEffectAreaObject(at9 instance)
         {
             return new SpellEffectAreaObject(instance);
         }

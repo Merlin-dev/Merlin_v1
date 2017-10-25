@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afk */
+    /* Internal type: afl */
     public partial struct ActionPoint
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private afk _internal;
+        private afl _internal;
         
         #region Properties
         
-        public afk ActionPoint_Internal => _internal;
+        public afl ActionPoint_Internal => _internal;
         
         #endregion
         
@@ -57,7 +57,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ActionPoint(afk instance)
+        public ActionPoint(afl instance)
         {
             _internal = instance;
         }
@@ -71,12 +71,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afk(ActionPoint instance)
+        public static implicit operator afl(ActionPoint instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ActionPoint(afk instance)
+        public static implicit operator ActionPoint(afl instance)
         {
             return new ActionPoint(instance);
         }

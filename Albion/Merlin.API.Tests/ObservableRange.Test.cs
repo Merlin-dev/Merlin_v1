@@ -22,7 +22,7 @@ using NUnit.Framework;
 
 namespace Merlin.API.Direct.Tests
 {
-    /* Internal type: aec */
+    /* Internal type: aed */
     [TestFixture]
     public class ObservableRangeTests
     {
@@ -31,8 +31,8 @@ namespace Merlin.API.Direct.Tests
         [Test]
         public void SetMinimum_ReflectionTest()
         {
-            MethodInfo info = typeof(aec<ad8>).GetMethod("k", new Type[]{typeof(float)});
-            Assert.Null(info,"Method ObservableRange.SetMinimum(aec.k) is null");
+            MethodInfo info = typeof(aed<ad9>).GetMethod("k", new Type[]{typeof(float)});
+            Assert.Null(info,"Method ObservableRange.SetMinimum(aed.k) is null");
         }
         
         

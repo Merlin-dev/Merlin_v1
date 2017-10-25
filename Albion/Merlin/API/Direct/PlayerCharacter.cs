@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ayo */
+    /* Internal type: ayq */
     public partial class PlayerCharacter : FightingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ayo _internal;
+        private ayq _internal;
         
         #region Properties
         
-        public ayo PlayerCharacter_Internal => _internal;
+        public ayq PlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -49,16 +49,16 @@ namespace Merlin.API.Direct
         public bool GetIsMounted() => _internal.vx();
         public bool GetIsMounting() => _internal.v9();
         public MountItemDescriptor GetMount() => _internal.vy();
-        public ObservableRange<aeb> GetMountHealth() => _internal.vz();
+        public ObservableRange<aec> GetMountHealth() => _internal.vz();
         public PlayerCharacterDescriptor GetPlayerDescriptor() => _internal.vs();
-        public ObservableRange<ad9> GetReputation() => _internal.v0();
+        public ObservableRange<aea> GetReputation() => _internal.v0();
         public Guid GetUid() => _internal.@as();
         
         #endregion
         
         #region Constructor
         
-        public PlayerCharacter(ayo instance) : base(instance)
+        public PlayerCharacter(ayq instance) : base(instance)
         {
             _internal = instance;
         }
@@ -72,12 +72,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ayo(PlayerCharacter instance)
+        public static implicit operator ayq(PlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PlayerCharacter(ayo instance)
+        public static implicit operator PlayerCharacter(ayq instance)
         {
             return new PlayerCharacter(instance);
         }

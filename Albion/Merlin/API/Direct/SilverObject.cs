@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a26 */
+    /* Internal type: a28 */
     public partial class SilverObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a26 _internal;
+        private a28 _internal;
         
         #region Properties
         
-        public a26 SilverObject_Internal => _internal;
+        public a28 SilverObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public SilverObject(a26 instance) : base(instance)
+        public SilverObject(a28 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a26(SilverObject instance)
+        public static implicit operator a28(SilverObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SilverObject(a26 instance)
+        public static implicit operator SilverObject(a28 instance)
         {
             return new SilverObject(instance);
         }

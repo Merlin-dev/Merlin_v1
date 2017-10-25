@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: aec<a> */
-    public partial class ObservableRange<a> where a:ad8
+    /* Internal type: aed<a> */
+    public partial class ObservableRange<a> where a: ad9
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aec<a> _internal;
+        private aed<a> _internal;
         
         #region Properties
         
-        public aec<a> ObservableRange_Internal => _internal;
+        public aed<a> ObservableRange_Internal => _internal;
         
         #endregion
         
@@ -53,26 +53,26 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ObservableRange(aec<a> instance)
+        public ObservableRange(aed<a> instance)
         {
             _internal = instance;
         }
         
         static ObservableRange()
         {
-            _methodReflectionPool.Add(typeof(aec<a>).GetMethod("k", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(float)}, null));
+            _methodReflectionPool.Add(typeof(aed<a>).GetMethod("k", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(float)}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator aec<a>(ObservableRange<a> instance)
+        public static implicit operator aed<a>(ObservableRange<a> instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ObservableRange<a>(aec<a> instance)
+        public static implicit operator ObservableRange<a>(aed<a> instance)
         {
             return new ObservableRange<a>(instance);
         }

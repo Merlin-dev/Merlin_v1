@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ato */
+    /* Internal type: atq */
     public partial class SimpleItemProxy : ItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ato _internal;
+        private atq _internal;
         
         #region Properties
         
-        public ato SimpleItemProxy_Internal => _internal;
+        public atq SimpleItemProxy_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public SimpleItemProxy(ato instance) : base(instance)
+        public SimpleItemProxy(atq instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ato(SimpleItemProxy instance)
+        public static implicit operator atq(SimpleItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SimpleItemProxy(ato instance)
+        public static implicit operator SimpleItemProxy(atq instance)
         {
             return new SimpleItemProxy(instance);
         }

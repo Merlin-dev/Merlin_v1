@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afd */
+    /* Internal type: afe */
     public partial class GameDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afd _internal;
+        private afe _internal;
         
         #region Properties
         
-        public afd GameDataFile_Internal => _internal;
+        public afe GameDataFile_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public GameDataFile(afd instance) : base(instance)
+        public GameDataFile(afe instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afd(GameDataFile instance)
+        public static implicit operator afe(GameDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GameDataFile(afd instance)
+        public static implicit operator GameDataFile(afe instance)
         {
             return new GameDataFile(instance);
         }

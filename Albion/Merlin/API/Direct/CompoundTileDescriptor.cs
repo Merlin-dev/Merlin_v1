@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ns */
+    /* Internal type: nt */
     public partial class CompoundTileDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ns _internal;
+        private nt _internal;
         
         #region Properties
         
-        public ns CompoundTileDescriptor_Internal => _internal;
+        public nt CompoundTileDescriptor_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public CompoundTileDescriptor(ns instance)
+        public CompoundTileDescriptor(nt instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ns(CompoundTileDescriptor instance)
+        public static implicit operator nt(CompoundTileDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CompoundTileDescriptor(ns instance)
+        public static implicit operator CompoundTileDescriptor(nt instance)
         {
             return new CompoundTileDescriptor(instance);
         }

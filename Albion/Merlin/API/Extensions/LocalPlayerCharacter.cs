@@ -19,13 +19,13 @@ namespace Merlin.API.Direct
             return _internal.s7().eg().dv().Union(_internal.s9().eg().dv()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is atj equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
+                return i is atl equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
             });
         }
 
-        public bool IsTheItemQualityPoor(atj item)
+        public bool IsTheItemQualityPoor(atl item)
         {
-            return item.b6() <= 40;
+            return item.b6() <= 10;
         }
     }
 }

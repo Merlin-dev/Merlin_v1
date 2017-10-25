@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: as2 */
+    /* Internal type: as4 */
     public partial class PhotonClient
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private as2 _internal;
+        private as4 _internal;
         
         #region Properties
         
-        public as2 PhotonClient_Internal => _internal;
+        public as4 PhotonClient_Internal => _internal;
         
         #endregion
         
@@ -44,16 +44,16 @@ namespace Merlin.API.Direct
         #region Methods
         
         public GameData GetGameData() => _internal.an();
-        public ap3 GetGamePeer() => _internal.ap();
-        public ap2 GetChatPeer() => _internal.ar();
-        public static PhotonClient GetInstance() => as2.aj();
-        public ap4 GetLoginPeer() => _internal.aq();
+        public ap5 GetGamePeer() => _internal.ap();
+        public ap4 GetChatPeer() => _internal.ar();
+        public static PhotonClient GetInstance() => as4.aj();
+        public ap6 GetLoginPeer() => _internal.aq();
         
         #endregion
         
         #region Constructor
         
-        public PhotonClient(as2 instance)
+        public PhotonClient(as4 instance)
         {
             _internal = instance;
         }
@@ -67,12 +67,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator as2(PhotonClient instance)
+        public static implicit operator as4(PhotonClient instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PhotonClient(as2 instance)
+        public static implicit operator PhotonClient(as4 instance)
         {
             return new PhotonClient(instance);
         }

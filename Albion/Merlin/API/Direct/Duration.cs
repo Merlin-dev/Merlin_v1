@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: alc */
+    /* Internal type: ald */
     public partial struct Duration
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private alc _internal;
+        private ald _internal;
         
         #region Properties
         
-        public alc Duration_Internal => _internal;
+        public ald Duration_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public Duration(alc instance)
+        public Duration(ald instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator alc(Duration instance)
+        public static implicit operator ald(Duration instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Duration(alc instance)
+        public static implicit operator Duration(ald instance)
         {
             return new Duration(instance);
         }

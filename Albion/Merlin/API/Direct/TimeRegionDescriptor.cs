@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: nk */
+    /* Internal type: nl */
     public partial class TimeRegionDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private nk _internal;
+        private nl _internal;
         
         #region Properties
         
-        public nk TimeRegionDescriptor_Internal => _internal;
+        public nl TimeRegionDescriptor_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public TimeRegionDescriptor(nk instance)
+        public TimeRegionDescriptor(nl instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator nk(TimeRegionDescriptor instance)
+        public static implicit operator nl(TimeRegionDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TimeRegionDescriptor(nk instance)
+        public static implicit operator TimeRegionDescriptor(nl instance)
         {
             return new TimeRegionDescriptor(instance);
         }

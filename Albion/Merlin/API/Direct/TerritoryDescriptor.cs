@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: al0 */
+    /* Internal type: al1 */
     public partial class TerritoryDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private al0 _internal;
+        private al1 _internal;
         
         #region Properties
         
-        public al0 TerritoryDescriptor_Internal => _internal;
+        public al1 TerritoryDescriptor_Internal => _internal;
         
         #endregion
         
@@ -52,7 +52,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public TerritoryDescriptor(al0 instance)
+        public TerritoryDescriptor(al1 instance)
         {
             _internal = instance;
         }
@@ -66,12 +66,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator al0(TerritoryDescriptor instance)
+        public static implicit operator al1(TerritoryDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TerritoryDescriptor(al0 instance)
+        public static implicit operator TerritoryDescriptor(al1 instance)
         {
             return new TerritoryDescriptor(instance);
         }

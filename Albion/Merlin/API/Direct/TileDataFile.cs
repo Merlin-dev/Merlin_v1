@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: n6 */
+    /* Internal type: n7 */
     public partial class TileDataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private n6 _internal;
+        private n7 _internal;
         
         #region Properties
         
-        public n6 TileDataFile_Internal => _internal;
+        public n7 TileDataFile_Internal => _internal;
         
         #endregion
         
@@ -52,27 +52,27 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public TileDataFile(n6 instance)
+        public TileDataFile(n7 instance)
         {
             _internal = instance;
         }
         
         static TileDataFile()
         {
-            _methodReflectionPool.Add(typeof(n6).GetMethod("b", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
-            _methodReflectionPool.Add(typeof(n6).GetMethod("d", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
+            _methodReflectionPool.Add(typeof(n7).GetMethod("b", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
+            _methodReflectionPool.Add(typeof(n7).GetMethod("d", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator n6(TileDataFile instance)
+        public static implicit operator n7(TileDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TileDataFile(n6 instance)
+        public static implicit operator TileDataFile(n7 instance)
         {
             return new TileDataFile(instance);
         }

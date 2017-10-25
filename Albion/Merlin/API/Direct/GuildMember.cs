@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: atc */
+    /* Internal type: ate */
     public partial class GuildMember
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atc _internal;
+        private ate _internal;
         
         #region Properties
         
-        public atc GuildMember_Internal => _internal;
+        public ate GuildMember_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public GuildMember(atc instance)
+        public GuildMember(ate instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator atc(GuildMember instance)
+        public static implicit operator ate(GuildMember instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GuildMember(atc instance)
+        public static implicit operator GuildMember(ate instance)
         {
             return new GuildMember(instance);
         }

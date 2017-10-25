@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a0x */
+    /* Internal type: a0z */
     public partial class RemotePlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a0x _internal;
+        private a0z _internal;
         
         #region Properties
         
-        public a0x RemotePlayerCharacter_Internal => _internal;
+        public a0z RemotePlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public RemotePlayerCharacter(a0x instance) : base(instance)
+        public RemotePlayerCharacter(a0z instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a0x(RemotePlayerCharacter instance)
+        public static implicit operator a0z(RemotePlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator RemotePlayerCharacter(a0x instance)
+        public static implicit operator RemotePlayerCharacter(a0z instance)
         {
             return new RemotePlayerCharacter(instance);
         }

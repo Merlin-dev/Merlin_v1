@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: adt */
+    /* Internal type: adu */
     public partial class FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private adt _internal;
+        private adu _internal;
         
         #region Properties
         
-        public adt FightingAttributes_Internal => _internal;
+        public adu FightingAttributes_Internal => _internal;
         
         #endregion
         
@@ -56,7 +56,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FightingAttributes(adt instance)
+        public FightingAttributes(adu instance)
         {
             _internal = instance;
         }
@@ -70,12 +70,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator adt(FightingAttributes instance)
+        public static implicit operator adu(FightingAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingAttributes(adt instance)
+        public static implicit operator FightingAttributes(adu instance)
         {
             return new FightingAttributes(instance);
         }

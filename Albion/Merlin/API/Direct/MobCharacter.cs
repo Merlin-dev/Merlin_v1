@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: au6 */
+    /* Internal type: au8 */
     public partial class MobCharacter : FightingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private au6 _internal;
+        private au8 _internal;
         
         #region Properties
         
-        public au6 MobCharacter_Internal => _internal;
+        public au8 MobCharacter_Internal => _internal;
         
         #endregion
         
@@ -49,7 +49,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public MobCharacter(au6 instance) : base(instance)
+        public MobCharacter(au8 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator au6(MobCharacter instance)
+        public static implicit operator au8(MobCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MobCharacter(au6 instance)
+        public static implicit operator MobCharacter(au8 instance)
         {
             return new MobCharacter(instance);
         }

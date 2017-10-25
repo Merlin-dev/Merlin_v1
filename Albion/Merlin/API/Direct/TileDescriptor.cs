@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afg */
+    /* Internal type: afh */
     public partial class TileDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afg _internal;
+        private afh _internal;
         
         #region Properties
         
-        public afg TileDescriptor_Internal => _internal;
+        public afh TileDescriptor_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public TileDescriptor(afg instance)
+        public TileDescriptor(afh instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afg(TileDescriptor instance)
+        public static implicit operator afh(TileDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TileDescriptor(afg instance)
+        public static implicit operator TileDescriptor(afh instance)
         {
             return new TileDescriptor(instance);
         }

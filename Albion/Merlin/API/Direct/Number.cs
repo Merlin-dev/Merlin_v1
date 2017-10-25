@@ -21,17 +21,17 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: od */
+    /* Internal type: oe */
     public partial struct Number
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private od _internal;
+        private oe _internal;
         
         #region Properties
         
-        public od Number_Internal => _internal;
+        public oe Number_Internal => _internal;
         
         #endregion
         
@@ -42,21 +42,21 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public static Number FromDouble(System.Double A_0) => od.e((System.Double)A_0);
-        public static Number FromInt64(long A_0) => od.f((long)A_0);
-        public static Number FromRaw(long A_0) => od.e((long)A_0);
+        public static Number FromDouble(System.Double A_0) => oe.e((System.Double)A_0);
+        public static Number FromInt64(long A_0) => oe.f((long)A_0);
+        public static Number FromRaw(long A_0) => oe.e((long)A_0);
         public long GetFractionalPart() => _internal.i();
         public System.Double GetFractions() => _internal.j();
         public long GetIntegerPart() => _internal.h();
         public System.Double ToDouble() => _internal.k();
-        //public static bool TryParse(string A_0, out Number A_1) => od.f((string)A_0, out A_1);
-        //public static bool TryParseRaw(string A_0, out Number A_1) => od.e((string)A_0, out A_1);
+        //public static bool TryParse(string A_0, out Number A_1) => oe.f((string)A_0, out A_1);
+        //public static bool TryParseRaw(string A_0, out Number A_1) => oe.e((string)A_0, out A_1);
         
         #endregion
         
         #region Constructor
         
-        public Number(od instance)
+        public Number(oe instance)
         {
             _internal = instance;
         }
@@ -70,12 +70,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator od(Number instance)
+        public static implicit operator oe(Number instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Number(od instance)
+        public static implicit operator Number(oe instance)
         {
             return new Number(instance);
         }

@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a3o */
+    /* Internal type: a3q */
     public partial class LootObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a3o _internal;
+        private a3q _internal;
         
         #region Properties
         
-        public a3o LootObject_Internal => _internal;
+        public a3q LootObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public LootObject(a3o instance) : base(instance)
+        public LootObject(a3q instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a3o(LootObject instance)
+        public static implicit operator a3q(LootObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LootObject(a3o instance)
+        public static implicit operator LootObject(a3q instance)
         {
             return new LootObject(instance);
         }

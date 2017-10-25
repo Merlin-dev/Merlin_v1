@@ -12,7 +12,7 @@
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afg.a */
+    /* Internal type: afh.a */
     public enum CollisionFlags
     {
         Terrain = 0,
@@ -28,12 +28,12 @@ namespace Merlin.API.Direct
     
     public static class CollisionFlagsExtensions
     {
-        public static afg.a ToInternal(this CollisionFlags instance)
+        public static afh.a ToInternal(this CollisionFlags instance)
         {
-            return (afg.a)instance;
+            return (afh.a)instance;
         }
         
-        public static CollisionFlags ToWrapped(this afg.a instance)
+        public static CollisionFlags ToWrapped(this afh.a instance)
         {
             return (CollisionFlags)instance;
         }

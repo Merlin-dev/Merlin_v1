@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: at8 */
+    /* Internal type: aua */
     public partial class FightingObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private at8 _internal;
+        private aua _internal;
         
         #region Properties
         
-        public at8 FightingObject_Internal => _internal;
+        public aua FightingObject_Internal => _internal;
         
         #endregion
         
@@ -44,8 +44,8 @@ namespace Merlin.API.Direct
         #region Methods
         
         public FightingAttributes GetAttributes() => _internal.at();
-        public ObservableRange<aeb> GetEnergy() => _internal.w1();
-        public ObservableRange<aeb> GetHealth() => _internal.w0();
+        public ObservableRange<aec> GetEnergy() => _internal.w1();
+        public ObservableRange<aec> GetHealth() => _internal.w0();
         public CharacterDescriptor GetCharacterDescriptor() => _internal.w8();
         public bool GetIsAttacking() => _internal.yw();
         public bool GetIsCasting() => _internal.ys();
@@ -58,13 +58,13 @@ namespace Merlin.API.Direct
         public float GetMaxLoad() => _internal.xa();
         public string GetName() => _internal.iu();
         public long GetTargetId() => _internal.w6();
-        public a GetEventHandler<a>() where a:at9 => (a)_internal.yi<a>();
+        public a GetEventHandler<a>() where a: aub => (a)_internal.yi<a>();
         
         #endregion
         
         #region Constructor
         
-        public FightingObject(at8 instance) : base(instance)
+        public FightingObject(aua instance) : base(instance)
         {
             _internal = instance;
         }
@@ -78,12 +78,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator at8(FightingObject instance)
+        public static implicit operator aua(FightingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingObject(at8 instance)
+        public static implicit operator FightingObject(aua instance)
         {
             return new FightingObject(instance);
         }

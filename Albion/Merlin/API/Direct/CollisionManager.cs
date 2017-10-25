@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afe */
+    /* Internal type: aff */
     public partial class CollisionManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afe _internal;
+        private aff _internal;
         
         #region Properties
         
-        public afe CollisionManager_Internal => _internal;
+        public aff CollisionManager_Internal => _internal;
         
         #endregion
         
@@ -43,13 +43,13 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public byte GetCollision(Point2 A_0, float A_1) => _internal.f((aky)A_0, (float)A_1);
+        public byte GetCollision(Point2 A_0, float A_1) => _internal.f((akz)A_0, (float)A_1);
         
         #endregion
         
         #region Constructor
         
-        public CollisionManager(afe instance)
+        public CollisionManager(aff instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afe(CollisionManager instance)
+        public static implicit operator aff(CollisionManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CollisionManager(afe instance)
+        public static implicit operator CollisionManager(aff instance)
         {
             return new CollisionManager(instance);
         }

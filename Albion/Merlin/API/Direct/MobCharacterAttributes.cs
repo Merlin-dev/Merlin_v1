@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: adu */
+    /* Internal type: adv */
     public partial class MobCharacterAttributes : FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private adu _internal;
+        private adv _internal;
         
         #region Properties
         
-        public adu MobCharacterAttributes_Internal => _internal;
+        public adv MobCharacterAttributes_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public MobCharacterAttributes(adu instance) : base(instance)
+        public MobCharacterAttributes(adv instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator adu(MobCharacterAttributes instance)
+        public static implicit operator adv(MobCharacterAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MobCharacterAttributes(adu instance)
+        public static implicit operator MobCharacterAttributes(adv instance)
         {
             return new MobCharacterAttributes(instance);
         }

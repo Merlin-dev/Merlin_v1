@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: atn */
+    /* Internal type: atp */
     public partial class FurnitureItemProxy : DurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atn _internal;
+        private atp _internal;
         
         #region Properties
         
-        public atn FurnitureItemProxy_Internal => _internal;
+        public atp FurnitureItemProxy_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FurnitureItemProxy(atn instance) : base(instance)
+        public FurnitureItemProxy(atp instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator atn(FurnitureItemProxy instance)
+        public static implicit operator atp(FurnitureItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FurnitureItemProxy(atn instance)
+        public static implicit operator FurnitureItemProxy(atp instance)
         {
             return new FurnitureItemProxy(instance);
         }

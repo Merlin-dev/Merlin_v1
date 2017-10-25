@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: afc */
+    /* Internal type: afd */
     public partial class PlayerCharacterDescriptor : CharacterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afc _internal;
+        private afd _internal;
         
         #region Properties
         
-        public afc PlayerCharacterDescriptor_Internal => _internal;
+        public afd PlayerCharacterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -51,7 +51,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public PlayerCharacterDescriptor(afc instance) : base(instance)
+        public PlayerCharacterDescriptor(afd instance) : base(instance)
         {
             _internal = instance;
         }
@@ -65,12 +65,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator afc(PlayerCharacterDescriptor instance)
+        public static implicit operator afd(PlayerCharacterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PlayerCharacterDescriptor(afc instance)
+        public static implicit operator PlayerCharacterDescriptor(afd instance)
         {
             return new PlayerCharacterDescriptor(instance);
         }

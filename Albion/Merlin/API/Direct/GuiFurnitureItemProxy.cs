@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a7l */
+    /* Internal type: a7n */
     public partial class GuiFurnitureItemProxy : GuiDurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a7l _internal;
+        private a7n _internal;
         
         #region Properties
         
-        public a7l GuiFurnitureItemProxy_Internal => _internal;
+        public a7n GuiFurnitureItemProxy_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public GuiFurnitureItemProxy(a7l instance) : base(instance)
+        public GuiFurnitureItemProxy(a7n instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a7l(GuiFurnitureItemProxy instance)
+        public static implicit operator a7n(GuiFurnitureItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GuiFurnitureItemProxy(a7l instance)
+        public static implicit operator GuiFurnitureItemProxy(a7n instance)
         {
             return new GuiFurnitureItemProxy(instance);
         }

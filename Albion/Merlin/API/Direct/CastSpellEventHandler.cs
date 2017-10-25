@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: aw0 */
+    /* Internal type: aw2 */
     public partial class CastSpellEventHandler
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aw0 _internal;
+        private aw2 _internal;
         
         #region Properties
         
-        public aw0 CastSpellEventHandler_Internal => _internal;
+        public aw2 CastSpellEventHandler_Internal => _internal;
         
         #endregion
         
@@ -49,7 +49,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public CastSpellEventHandler(aw0 instance)
+        public CastSpellEventHandler(aw2 instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator aw0(CastSpellEventHandler instance)
+        public static implicit operator aw2(CastSpellEventHandler instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CastSpellEventHandler(aw0 instance)
+        public static implicit operator CastSpellEventHandler(aw2 instance)
         {
             return new CastSpellEventHandler(instance);
         }

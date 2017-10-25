@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: alm */
+    /* Internal type: aln */
     public partial class AgentDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private alm _internal;
+        private aln _internal;
         
         #region Properties
         
-        public alm AgentDescriptor_Internal => _internal;
+        public aln AgentDescriptor_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public AgentDescriptor(alm instance)
+        public AgentDescriptor(aln instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator alm(AgentDescriptor instance)
+        public static implicit operator aln(AgentDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator AgentDescriptor(alm instance)
+        public static implicit operator AgentDescriptor(aln instance)
         {
             return new AgentDescriptor(instance);
         }

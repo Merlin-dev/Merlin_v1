@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: atu */
+    /* Internal type: atw */
     public partial class FarmableItemObject : SimpleItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atu _internal;
+        private atw _internal;
         
         #region Properties
         
-        public atu FarmableItemObject_Internal => _internal;
+        public atw FarmableItemObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FarmableItemObject(atu instance) : base(instance)
+        public FarmableItemObject(atw instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator atu(FarmableItemObject instance)
+        public static implicit operator atw(FarmableItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FarmableItemObject(atu instance)
+        public static implicit operator FarmableItemObject(atw instance)
         {
             return new FarmableItemObject(instance);
         }

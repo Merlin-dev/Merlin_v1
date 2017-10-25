@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: lb */
+    /* Internal type: lc */
     public partial class OperationRequestDataContract
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private lb _internal;
+        private lc _internal;
         
         #region Properties
         
-        public lb OperationRequestDataContract_Internal => _internal;
+        public lc OperationRequestDataContract_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public OperationRequestDataContract(lb instance)
+        public OperationRequestDataContract(lc instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator lb(OperationRequestDataContract instance)
+        public static implicit operator lc(OperationRequestDataContract instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator OperationRequestDataContract(lb instance)
+        public static implicit operator OperationRequestDataContract(lc instance)
         {
             return new OperationRequestDataContract(instance);
         }

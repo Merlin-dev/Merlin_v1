@@ -20,7 +20,7 @@ namespace Merlin
                                             Type.DefaultBinder, new Type[] { typeof(byte), typeof(FightingObjectView) }, null);
 
             _startCastInternalPosition = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
-                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(aky) }, null);
+                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(akz) }, null);
         }
 
         public static void Interact(this LocalInputHandler instance, WorldObjectView target, string collider = null) => _doActionStaticObjectInteraction.Invoke(instance, new object[] { target, collider ?? string.Empty });

@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: adv */
+    /* Internal type: adw */
     public partial class LocalPlayerAttributes : FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private adv _internal;
+        private adw _internal;
         
         #region Properties
         
-        public adv LocalPlayerAttributes_Internal => _internal;
+        public adw LocalPlayerAttributes_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public LocalPlayerAttributes(adv instance) : base(instance)
+        public LocalPlayerAttributes(adw instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator adv(LocalPlayerAttributes instance)
+        public static implicit operator adw(LocalPlayerAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LocalPlayerAttributes(adv instance)
+        public static implicit operator LocalPlayerAttributes(adw instance)
         {
             return new LocalPlayerAttributes(instance);
         }

@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: atk */
+    /* Internal type: atm */
     public partial class MountItemProxy : EquipmentItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atk _internal;
+        private atm _internal;
         
         #region Properties
         
-        public atk MountItemProxy_Internal => _internal;
+        public atm MountItemProxy_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public MountItemProxy(atk instance) : base(instance)
+        public MountItemProxy(atm instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator atk(MountItemProxy instance)
+        public static implicit operator atm(MountItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MountItemProxy(atk instance)
+        public static implicit operator MountItemProxy(atm instance)
         {
             return new MountItemProxy(instance);
         }

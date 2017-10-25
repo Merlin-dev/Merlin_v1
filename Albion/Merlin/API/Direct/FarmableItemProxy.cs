@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: atp */
+    /* Internal type: atr */
     public partial class FarmableItemProxy : SimpleItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atp _internal;
+        private atr _internal;
         
         #region Properties
         
-        public atp FarmableItemProxy_Internal => _internal;
+        public atr FarmableItemProxy_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public FarmableItemProxy(atp instance) : base(instance)
+        public FarmableItemProxy(atr instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator atp(FarmableItemProxy instance)
+        public static implicit operator atr(FarmableItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FarmableItemProxy(atp instance)
+        public static implicit operator FarmableItemProxy(atr instance)
         {
             return new FarmableItemProxy(instance);
         }

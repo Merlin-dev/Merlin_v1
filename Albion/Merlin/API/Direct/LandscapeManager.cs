@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a9x */
+    /* Internal type: a9z */
     public partial class LandscapeManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a9x _internal;
+        private a9z _internal;
         
         #region Properties
         
-        public a9x LandscapeManager_Internal => _internal;
+        public a9z LandscapeManager_Internal => _internal;
         
         #endregion
         
@@ -43,13 +43,13 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public float GetTerrainHeight(Point2 A_0, out RaycastHit A_1) => _internal.d((aky)A_0, out A_1);
+        public float GetTerrainHeight(Point2 A_0, out RaycastHit A_1) => _internal.d((akz)A_0, out A_1);
         
         #endregion
         
         #region Constructor
         
-        public LandscapeManager(a9x instance)
+        public LandscapeManager(a9z instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a9x(LandscapeManager instance)
+        public static implicit operator a9z(LandscapeManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LandscapeManager(a9x instance)
+        public static implicit operator LandscapeManager(a9z instance)
         {
             return new LandscapeManager(instance);
         }

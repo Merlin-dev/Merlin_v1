@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: a1q */
+    /* Internal type: a1s */
     public partial class StaticObject : WorldObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a1q _internal;
+        private a1s _internal;
         
         #region Properties
         
-        public a1q StaticObject_Internal => _internal;
+        public a1s StaticObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public StaticObject(a1q instance) : base(instance)
+        public StaticObject(a1s instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator a1q(StaticObject instance)
+        public static implicit operator a1s(StaticObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator StaticObject(a1q instance)
+        public static implicit operator StaticObject(a1s instance)
         {
             return new StaticObject(instance);
         }

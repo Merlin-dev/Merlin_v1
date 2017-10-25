@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ate */
+    /* Internal type: atg */
     public partial class ItemObject : SimulationObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ate _internal;
+        private atg _internal;
         
         #region Properties
         
-        public ate ItemObject_Internal => _internal;
+        public atg ItemObject_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public ItemObject(ate instance) : base(instance)
+        public ItemObject(atg instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ate(ItemObject instance)
+        public static implicit operator atg(ItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ItemObject(ate instance)
+        public static implicit operator ItemObject(atg instance)
         {
             return new ItemObject(instance);
         }

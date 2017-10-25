@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: ayp */
+    /* Internal type: ayr */
     public partial class LocalPlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ayp _internal;
+        private ayr _internal;
         
         #region Properties
         
-        public ayp LocalPlayerCharacter_Internal => _internal;
+        public ayr LocalPlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -43,7 +43,7 @@ namespace Merlin.API.Direct
         
         #region Methods
         
-        public ObservableRange<ad8> GetCraftingFocus() => _internal.s0();
+        public ObservableRange<ad9> GetCraftingFocus() => _internal.s0();
         public Point2 GetDestination() => _internal.uc();
         public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.t8();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hn((byte)A_0);
@@ -54,7 +54,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public LocalPlayerCharacter(ayp instance) : base(instance)
+        public LocalPlayerCharacter(ayr instance) : base(instance)
         {
             _internal = instance;
         }
@@ -68,12 +68,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator ayp(LocalPlayerCharacter instance)
+        public static implicit operator ayr(LocalPlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LocalPlayerCharacter(ayp instance)
+        public static implicit operator LocalPlayerCharacter(ayr instance)
         {
             return new LocalPlayerCharacter(instance);
         }

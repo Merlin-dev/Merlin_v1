@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Merlin.API.Direct
 {
-    /* Internal type: atj */
+    /* Internal type: atl */
     public partial class EquipmentItemProxy : DurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atj _internal;
+        private atl _internal;
         
         #region Properties
         
-        public atj EquipmentItemProxy_Internal => _internal;
+        public atl EquipmentItemProxy_Internal => _internal;
         
         #endregion
         
@@ -48,7 +48,7 @@ namespace Merlin.API.Direct
         
         #region Constructor
         
-        public EquipmentItemProxy(atj instance) : base(instance)
+        public EquipmentItemProxy(atl instance) : base(instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Merlin.API.Direct
         
         #region Conversion
         
-        public static implicit operator atj(EquipmentItemProxy instance)
+        public static implicit operator atl(EquipmentItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator EquipmentItemProxy(atj instance)
+        public static implicit operator EquipmentItemProxy(atl instance)
         {
             return new EquipmentItemProxy(instance);
         }

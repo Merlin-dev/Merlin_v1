@@ -17,118 +17,174 @@ namespace Merlin.Profiles.ESP
 
             public static void DrawLine(GameObject target, Vector3 from, Vector3 to, Color color)
             {
-                LineRenderer line = target.GetComponent<LineRenderer>();
-                if (line == null)
+                try
                 {
-                    line = target.AddComponent<LineRenderer>();
-                    line.material = new Material(Shader.Find("Particles/Additive"));
-                    line.startWidth = 0.05F;
-                    line.endWidth = 0.05F;
+                    LineRenderer line = target.GetComponent<LineRenderer>();
+                    if (line == null)
+                    {
+                        line = target.AddComponent<LineRenderer>();
+                        line.material = new Material(Shader.Find("Particles/Additive"));
+                        line.startWidth = 0.05F;
+                        line.endWidth = 0.05F;
+                    }
+                    line.startColor = color;
+                    line.endColor = color;
+                    line.SetPosition(0, new Vector3(from.x, from.y + 2, from.z));
+                    line.SetPosition(1, new Vector3(to.x, to.y + 1, to.z));
                 }
-                line.startColor = color;
-                line.endColor = color;
-                line.SetPosition(0, new Vector3(from.x, from.y + 2, from.z));
-                line.SetPosition(1, new Vector3(to.x, to.y + 1, to.z));
+                catch(Exception e)
+                {
+                    Core.Log("ESP DrawLine Error: " + e);
+                }
             }
 
             public static void BoxRect(Rect rect, Color color)
             {
-                if (color != color_0)
+                try
                 {
-                    texture2D_0.SetPixel(0, 0, color);
-                    texture2D_0.Apply();
-                    color_0 = color;
+                    if (color != color_0)
+                    {
+                        texture2D_0.SetPixel(0, 0, color);
+                        texture2D_0.Apply();
+                        color_0 = color;
+                    }
+                    GUI.DrawTexture(rect, texture2D_0);
                 }
-                GUI.DrawTexture(rect, texture2D_0);
+                catch (Exception e)
+                {
+                    Core.Log("ESP BoxRect Error: " + e);
+                }
             }
 
             public static void DrawBox(Vector2 pos, Vector2 size, float thick, Color color, Boolean center = false)
             {
-                if (center)
+                try
                 {
-                    pos.x -= size.x / 2;
-                    pos.y -= size.y / 2;
+                    if (center)
+                    {
+                        pos.x -= size.x / 2;
+                        pos.y -= size.y / 2;
+                    }
+                    BoxRect(new Rect(pos.x, pos.y, size.x, thick), color);
+                    BoxRect(new Rect(pos.x, pos.y, thick, size.y), color);
+                    BoxRect(new Rect(pos.x + size.x, pos.y, thick, size.y), color);
+                    BoxRect(new Rect(pos.x, pos.y + size.y, size.x + thick, thick), color);
                 }
-                BoxRect(new Rect(pos.x, pos.y, size.x, thick), color);
-                BoxRect(new Rect(pos.x, pos.y, thick, size.y), color);
-                BoxRect(new Rect(pos.x + size.x, pos.y, thick, size.y), color);
-                BoxRect(new Rect(pos.x, pos.y + size.y, size.x + thick, thick), color);
+                catch (Exception e)
+                {
+                    Core.Log("ESP DrawBox Error: " + e);
+                }
             }
 
             public static void DrawHealth(Vector2 pos, float health, bool center = false)
             {
-                if (center)
+                try
                 {
-                    pos -= new Vector2(26f, 0f);
+                    if (center)
+                    {
+                        pos -= new Vector2(26f, 0f);
+                    }
+                    pos -= new Vector2(0f, 8f);
+                    BoxRect(new Rect(pos.x, pos.y, 52f, 5f), Color.black);
+                    pos += new Vector2(1f, 1f);
+                    Color green = Color.green;
+                    if (health <= 60f)
+                    {
+                        green = Color.yellow;
+                    }
+                    if (health <= 25f)
+                    {
+                        green = Color.red;
+                    }
+                    BoxRect(new Rect(pos.x, pos.y, 0.5f * health, 3f), green);
                 }
-                pos -= new Vector2(0f, 8f);
-                BoxRect(new Rect(pos.x, pos.y, 52f, 5f), Color.black);
-                pos += new Vector2(1f, 1f);
-                Color green = Color.green;
-                if (health <= 60f)
+                catch (Exception e)
                 {
-                    green = Color.yellow;
+                    Core.Log("ESP DrawHealth Error: " + e);
                 }
-                if (health <= 25f)
-                {
-                    green = Color.red;
-                }
-                BoxRect(new Rect(pos.x, pos.y, 0.5f * health, 3f), green);
             }
 
             public static void DrawString(Vector2 pos, string text, Color color, bool center = true, int size = 12, bool outline = true, int lines = 1)
             {
-                guistyle_0.fontSize = size;
-                guistyle_0.normal.textColor = color;
-                GUIContent content = new GUIContent(text);
-                if (center)
+                try
                 {
-                    pos.x -= guistyle_0.CalcSize(content).x / 2f;
+                    guistyle_0.fontSize = size;
+                    guistyle_0.normal.textColor = color;
+                    GUIContent content = new GUIContent(text);
+                    if (center)
+                    {
+                        pos.x -= guistyle_0.CalcSize(content).x / 2f;
+                    }
+                    Rect rect = new Rect(pos.x, pos.y, 300f, lines * 25f);
+                    if (!outline)
+                    {
+                        GUI.Label(rect, content, guistyle_0);
+                    }
+                    else
+                    {
+                        DrawOutlinedString(rect, text, color);
+                    }
                 }
-                Rect rect = new Rect(pos.x, pos.y, 300f, lines * 25f);
-                if (!outline)
+                catch (Exception e)
                 {
-                    GUI.Label(rect, content, guistyle_0);
-                }
-                else
-                {
-                    DrawOutlinedString(rect, text, color);
+                    Core.Log("ESP DrawString Error: " + e);
                 }
             }
 
             public static void DrawWatermark(string text, Color color, int size = 12)
             {
-                guistyle_0.fontSize = size;
-                guistyle_0.normal.textColor = color;
-                GUIContent content = new GUIContent(text);
-                GUI.Label(new Rect(1, 1, 300f, 25f), content, guistyle_0);
+                try
+                {
+                    guistyle_0.fontSize = size;
+                    guistyle_0.normal.textColor = color;
+                    GUIContent content = new GUIContent(text);
+                    GUI.Label(new Rect(1, 1, 300f, 25f), content, guistyle_0);
+                }
+                catch (Exception e)
+                {
+                    Core.Log("ESP DrawWatermark Error: " + e);
+                }
             }
 
             public static void DrawWatermark2(string text, Color color, int size = 12)
             {
-                guistyle_0.fontSize = size;
-                guistyle_0.normal.textColor = color;
-                GUIContent content = new GUIContent(text);
-                GUI.Label(new Rect(250, 250, 300f, 25f), content, guistyle_0);
+                try
+                {
+                    guistyle_0.fontSize = size;
+                    guistyle_0.normal.textColor = color;
+                    GUIContent content = new GUIContent(text);
+                    GUI.Label(new Rect(250, 250, 300f, 25f), content, guistyle_0);
+                }
+                catch (Exception e)
+                {
+                    Core.Log("ESP DrawWatermark2 Error: " + e);
+                }
             }
 
             public static void DrawOutlinedString(Rect rect, string text, Color color)
             {
-                GUIStyle backupStyle = guistyle_0;
-                guistyle_0.normal.textColor = Color.black;
-                rect.x--;
-                GUI.Label(rect, text, guistyle_0);
-                rect.x += 2;
-                GUI.Label(rect, text, guistyle_0);
-                rect.x--;
-                rect.y--;
-                GUI.Label(rect, text, guistyle_0);
-                rect.y += 2;
-                GUI.Label(rect, text, guistyle_0);
-                rect.y--;
-                guistyle_0.normal.textColor = color;
-                GUI.Label(rect, text, guistyle_0);
-                guistyle_0 = backupStyle;
+                try
+                {
+                    GUIStyle backupStyle = guistyle_0;
+                    guistyle_0.normal.textColor = Color.black;
+                    rect.x--;
+                    GUI.Label(rect, text, guistyle_0);
+                    rect.x += 2;
+                    GUI.Label(rect, text, guistyle_0);
+                    rect.x--;
+                    rect.y--;
+                    GUI.Label(rect, text, guistyle_0);
+                    rect.y += 2;
+                    GUI.Label(rect, text, guistyle_0);
+                    rect.y--;
+                    guistyle_0.normal.textColor = color;
+                    GUI.Label(rect, text, guistyle_0);
+                    guistyle_0 = backupStyle;
+                }
+                catch (Exception e)
+                {
+                    Core.Log("ESP DrawOutlinedString Error: " + e);
+                }
             }
         }
 
@@ -175,7 +231,7 @@ namespace Merlin.Profiles.ESP
                 }
                 catch (Exception e)
                 {
-                    Core.Log($"[ESP - {e}");
+                    Core.Log("ESP Finding localPlayer error: " + e);
                 }
 
                 yield return new WaitForSeconds(0.2f);
@@ -186,7 +242,7 @@ namespace Merlin.Profiles.ESP
                 }
                 catch (Exception e)
                 {
-                    Core.Log($"[ESP - {e}");
+                    Core.Log("ESP Finding players Error: " + e);
                 }
 
                 yield return new WaitForSeconds(1f);
@@ -224,7 +280,7 @@ namespace Merlin.Profiles.ESP
                 }
                 catch (Exception e)
                 {
-                    Core.Log($"[ESP - {e}");
+                    Core.Log("ESP Finding Harvestable Views Error: " + e);
                 }
 
                 yield return new WaitForSeconds(1f);
@@ -233,13 +289,17 @@ namespace Merlin.Profiles.ESP
 
         private void OnGUI()
         {
-            DrawResourceESPs();
-            DrawPlayerESPs();
+            if(resources != null)
+                DrawResourceESPs();
+            
+            if (players != null)
+                DrawPlayerESPs();
         }
 
         private void DrawResourceESPs()
         {
             var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);
+
             foreach (var view in resources)
             {
                 if (view == null || view.transform == null)
@@ -259,6 +319,7 @@ namespace Merlin.Profiles.ESP
                         var harvestableObject = harvestable.GetHarvestableObject();
 
                         valid = harvestable.CanLoot(localPlayer) && harvestableObject.GetCharges() > 0;
+
                         enchantmentLevel = harvestableObject.GetRareState();
                     }
                     else if (view is MobView mob)
@@ -289,7 +350,7 @@ namespace Merlin.Profiles.ESP
                 }
                 catch (Exception e)
                 {
-                    Core.Log($"[ESP - {e}");
+                    Core.Log("ESP DrawResourceESPs Error: " + e);
                 }
             }
         }
@@ -297,6 +358,7 @@ namespace Merlin.Profiles.ESP
         private void DrawPlayerESPs()
         {
             Rendering.DrawString(new Vector2(Screen.width - 150, Screen.height - 320), "count: " + (players.Count() - 1), Color.white, true, 20);
+
             foreach (var player in players)
             {
                 if (player == null || player.transform == null)
@@ -306,10 +368,10 @@ namespace Merlin.Profiles.ESP
                 {
                     if (player == localPlayer)
                         continue;
-
+                        
                     var pos = Camera.main.WorldToScreenPoint(player.transform.position);
                     pos.y = Screen.height - (pos.y + 1f);
-
+                        
                     if (player.PlayerCharacter.jj() != localPlayer.PlayerCharacter.jj())
                     {
                         Rendering.DrawLine(player.gameObject, player.transform.position, localPlayer.transform.position, Color.red);
@@ -320,7 +382,7 @@ namespace Merlin.Profiles.ESP
                 }
                 catch (Exception e)
                 {
-                    Core.Log($"[ESP - {e}");
+                    Core.Log("ESP DrawPlayerESPs Error: " + e);
                 }
             }
         }

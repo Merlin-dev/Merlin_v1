@@ -56,11 +56,136 @@ namespace Merlin.Profiles.Gatherer
 
             return false;
         }
-
+        
+         #region StuckProtection - dTormentedSoul
+         /*** StuckProtection BEGIN ***/
+         private bool onDebugMode = true;
+         private static class previousPlayerInfo
+         {
+             public static float x = 0f;
+             public static float z = 0f;
+             public static double stuckProtectionRedivertDuration = 3.0d;
+             public static int violationCount = 0;
+             public static int violationTolerance = 10;
+             public static int StuckCount = 0;
+         }
+ 
+         private bool StuckProtection()
+         {
+             if (
+                     !_localPlayerCharacterView.IsHarvesting()
+                     && !_localPlayerCharacterView.IsAttacking()
+                     && _localPlayerCharacterView.IsMounted
+                     && Mathf.Abs(_localPlayerCharacterView.GetPosition().x - previousPlayerInfo.x) < 0.25f
+                     && Mathf.Abs(_localPlayerCharacterView.GetPosition().z - previousPlayerInfo.z) < 0.25f
+                 )
+             {
+                 previousPlayerInfo.violationCount++;
+ 
+                 if (previousPlayerInfo.violationCount
+                         >= previousPlayerInfo.violationTolerance)
+                 {
+                     _localPlayerCharacterView.CreateTextEffect("[Stuck detected - Resolving]");
+                     previousPlayerInfo.StuckCount++;
+                     if (forceMove())
+                     {
+                         previousPlayerInfo.violationCount = 0;
+                         return true;
+                     }
+                     else
+                     {
+                         Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                         return false;
+                     }
+                 }
+                 else
+                 {
+                     Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                     return false;
+                 }
+             }
+             else
+             {
+                 previousPlayerInfo.violationCount = 0;
+             }
+             previousPlayerInfo.x = _localPlayerCharacterView.GetPosition().x;
+             previousPlayerInfo.z = _localPlayerCharacterView.GetPosition().z;
+             return false;
+         }
+ 
+         private bool forceMove()
+         {
+             if (_localPlayerCharacterView.IsMounted)
+             {
+                 Profile.UpdateDelay = System.TimeSpan.FromSeconds(previousPlayerInfo.stuckProtectionRedivertDuration);
+                 _localPlayerCharacterView.RequestMove(GetUnstuckCoordinates());
+                 _currentTarget = null;
+                 _harvestPathingRequest = null;
+                 return true;
+             }
+             else
+             {
+                 Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                 return false;
+             }
+         }
+ 
+         private Vector3 GetUnstuckCoordinates()
+         {
+             var unstuckCoordinates = _localPlayerCharacterView.GetPosition();
+             var method = "variable";
+             switch (method)
+             {
+                 case "absolute":
+                     float[] arrayValues = { -15f, +15f };
+                     unstuckCoordinates.x = _localPlayerCharacterView.GetPosition().x + arrayValues[UnityEngine.Random.Range(0, arrayValues.Length)];
+                     unstuckCoordinates.z = _localPlayerCharacterView.GetPosition().z + arrayValues[UnityEngine.Random.Range(0, arrayValues.Length)];
+                     break;
+                 case "variable":
+                     unstuckCoordinates.x = _localPlayerCharacterView.GetPosition().x + (UnityEngine.Random.Range(-1f, +1.01f) * UnityEngine.Random.Range(25f, 55f));
+                     unstuckCoordinates.z = _localPlayerCharacterView.GetPosition().z + (UnityEngine.Random.Range(-1f, +1.01f) * UnityEngine.Random.Range(25f, 55f));
+                     break;
+                 default:
+                     break;
+             }
+             _localPlayerCharacterView.CreateTextEffect("x: " + unstuckCoordinates.x + " | z: " + unstuckCoordinates.z);
+             return unstuckCoordinates;
+         }
+ 
+         /*** StuckProtection END ***/
+         #endregion StuckProtection - dTormentedSoul
+ 
         public void Harvest()
         {
             if (HandleAttackers())
                 return;
+            
+            #region [dTormentedSoul Area]
+            messageDelayIncrement++;
+            
+            
+            if (onDebugMode && (messageDelayIncrement % messageDelayTrigger == 0))
+            {
+                //_localPlayerCharacterView.CreateTextEffect("Harvest()" + " | " + System.Convert.ToString(_localPlayerCharacterView.GetLocalPlayerCharacter().GetHealth().GetValue()) + "/" + System.Convert.ToString(_localPlayerCharacterView.GetLocalPlayerCharacter().GetHealth().GetMaximum()) + " | " + System.Convert.ToString(previousPlayerInfo.StuckCount) + " | " + (_currentTarget != null ? _currentTarget.name : "none"));
+                messageDelayIncrement = 0;
+            }
+            
+            if ((_currentTarget != null ? _currentTarget.name : "none") == "none")
+                Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+            
+            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
+            {
+                _localPlayerCharacterView.CreateTextEffect("[Attacked]");
+                _state.Fire(Trigger.EncounteredAttacker);
+                return;
+            }
+            
+            _localPlayerCharacterView.AttackSelectedObject();
+            
+            if (StuckProtection())
+                return;
+            
+            #endregion [dTormentedSoul Area]
 
             if (!ValidateTarget(_currentTarget))
             {
@@ -98,8 +223,8 @@ namespace Merlin.Profiles.Gatherer
             {
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlockedGathering, out List<Vector3> pathing))
                 {
-                    Core.lineRenderer.positionCount = pathing.Count;
-                    Core.lineRenderer.SetPositions(pathing.ToArray());
+                    //Core.lineRenderer.positionCount = pathing.Count;
+                    //Core.lineRenderer.SetPositions(pathing.ToArray());
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
                 }
                 else
@@ -170,8 +295,8 @@ namespace Merlin.Profiles.Gatherer
             {
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlockedGathering, out List<Vector3> pathing))
                 {
-                    Core.lineRenderer.positionCount = pathing.Count;
-                    Core.lineRenderer.SetPositions(pathing.ToArray());
+                    //Core.lineRenderer.positionCount = pathing.Count;
+                    //Core.lineRenderer.SetPositions(pathing.ToArray());
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
                 }
                 else

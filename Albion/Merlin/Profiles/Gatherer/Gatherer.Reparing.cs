@@ -10,14 +10,15 @@ namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
-        private PositionPathingRequest _repairPathingRequest;
+        private ClusterPathingRequest _repairPathingRequest;
         private PositionPathingRequest _repairFindPathingRequest;
         private bool _reachedPointInBetween;
+        private bool _movingToRepair = false;
 
         public void Repair()
         {
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
-
+            
             if (HandlePathing(ref _worldPathingRequest))
                 return;
 
@@ -38,44 +39,25 @@ namespace Merlin.Profiles.Gatherer
                 var repairs = _client.GetEntities<RepairBuildingView>((x) => { return true; });
 
                 if (repairs.Count == 0)
+                    return;
+
+                _currentTarget = repairs.First();
+                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
                 {
-                    var exitPositionPoint = _world.GetCurrentCluster().GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetPosition();
-                    var exitPosition = new Vector2(exitPositionPoint.GetX(), exitPositionPoint.GetY());
-                    var targetPosition = new Vector3(exitPosition.x, 0, exitPosition.y);
-
-                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                    {
-                        Core.Log("[No RepairStation found - moving to bank]");
-                        _repairFindPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
-                    }
-
+                    _repairPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
                     return;
                 }
 
-                _currentTarget = repairs.First();
-                if (_currentTarget is RepairBuildingView repairer)
+                if(_currentTarget is RepairBuildingView repairer)
                 {
                     if (!repairer.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        if (!_reachedPointInBetween)
+                        if(!_movingToRepair)
                         {
-                            var repairCollider = repairer.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
-                            var repairColliderPosition = new Vector2(repairCollider.transform.position.x, repairCollider.transform.position.z);
-                            var exitPositionPoint = _world.GetCurrentCluster().GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetPosition();
-                            var exitPosition = new Vector2(exitPositionPoint.GetX(), exitPositionPoint.GetY());
-                            var clampedPosition = Vector2.MoveTowards(repairColliderPosition, exitPosition, 10);
-                            var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);
-
-                            Core.Log("[Move closer to RepairStation]");
-                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                            {
-                                _repairPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
-                            }
-                        }
-                        else
-                        {
+                            _movingToRepair = true;
                             Core.Log("[Start Interacting with RepairStation]");
                             _localPlayerCharacterView.Interact(repairer);
+                            return;
                         }
                     }
                     else
@@ -101,18 +83,17 @@ namespace Merlin.Profiles.Gatherer
                                 repairUsage.RepairItemView.OnClickRepairAllButton();
                                 return;
                             }
-
-                            Core.Log("[Interact with RepairStation]");
-                            _localPlayerCharacterView.Interact(repairer);
                         }
                         else
                         {
+                            _movingToRepair = false;
                             _reachedPointInBetween = false;
                             Core.Log("[Repair Done]");
                             _state.Fire(Trigger.RepairDone);
                         }
                     }
                 }
+                
             }
             else
             {

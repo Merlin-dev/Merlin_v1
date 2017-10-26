@@ -25,7 +25,7 @@ namespace Merlin.API.Direct
 
         public bool IsTheItemQualityPoor(atl item)
         {
-            return item.b6() <= 50;
+            return item.b6() <= 10;
         }
     }
 }

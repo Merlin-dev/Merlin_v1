@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using Merlin.API.Direct;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -8,8 +9,10 @@ namespace Merlin.Profiles.Gatherer
     {
         #region Fields
 
-        public KeyCode toggleKey = KeyCode.F12;
-        public KeyCode testkey = KeyCode.F11;
+        public KeyCode runningKey = KeyCode.F12;
+        public KeyCode espKey = KeyCode.F11;
+        public KeyCode unloadKey = KeyCode.F10;
+        public KeyCode testkey = KeyCode.F9;
 
         private static int SpaceBetweenSides = 40;
         private static int SpaceBetweenItems = 4;
@@ -203,7 +206,7 @@ namespace Merlin.Profiles.Gatherer
         
         protected override void HotKey()
         {
-            if (Input.GetKeyDown(toggleKey))
+            if (Input.GetKeyDown(runningKey))
             {
                 _isRunning = !_isRunning;
                 if (_isRunning)
@@ -215,9 +218,27 @@ namespace Merlin.Profiles.Gatherer
                     if (_state.CanFire(Trigger.Failure))
                         _state.Fire(Trigger.Failure);
                 }
-            } else if(Input.GetKeyDown(testkey))
+            }
+            else if(Input.GetKeyDown(testkey))
             {
-                
+
+            }
+            else if (Input.GetKeyDown(unloadKey))
+            {
+                Core.Unload();
+            }
+            else if (Input.GetKeyDown(espKey))
+            {
+                var oldValue = _showESP;
+                _showESP = !_showESP;
+
+                if (oldValue != _showESP)
+                {
+                    if (_showESP)
+                        gameObject.AddComponent<ESP.ESP>().StartESP(_gatherInformations);
+                    else if (gameObject.GetComponent<ESP.ESP>() != null)
+                        Destroy(gameObject.GetComponent<ESP.ESP>());
+                }
             }
         }
 

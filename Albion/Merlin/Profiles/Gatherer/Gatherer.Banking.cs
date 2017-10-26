@@ -15,6 +15,7 @@ namespace Merlin.Profiles.Gatherer
         private ClusterPathingRequest _bankPathingRequest;
         private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
+        private bool _movingToBank = false;
 
         public void Bank()
         {
@@ -45,13 +46,10 @@ namespace Merlin.Profiles.Gatherer
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
             ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
 
-            //No longer valid in most instances. Need to find way to implement just for Caerleon.
-            //ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
-
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
                 var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
-
+                
                 if (banks.Count == 0)
                     return;
 
@@ -64,45 +62,54 @@ namespace Merlin.Profiles.Gatherer
 
                 if (_currentTarget is BankBuildingView resource)
                 {
-                    if (!GameGui.Instance.BankBuildingVaultGui.gameObject.activeInHierarchy)
+                    if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        _localPlayerCharacterView.Interact(resource);
-                        return;
-                    }
-
-                    //Get inventory
-                    var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
-                    var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;
-
-                    var ToDeposit = new List<UIItemSlot>();
-
-                    //Get all items we need that are visible. Need to find a way to get all items in player inventory.
-                    var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
-                    foreach (var slot in playerStorage.ItemsSlotsRegistered)
-                        if (slot != null && slot.ObservedItemView != null)
+                        if(!_movingToBank)
                         {
-                            var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
-                            //All items not including journals
-                            if(!slotItemName.Contains("journalitem"))
-                                if (resourceTypes.Any(r => slotItemName.Contains(r)))
-                                    ToDeposit.Add(slot);
-                            //adding full journals to deposit list
-                            if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
-                                ToDeposit.Add(slot);
+                            _movingToBank = true;
+                            Core.Log("[Start Interacting with Bank]");
+                            
+                            _localPlayerCharacterView.Interact(resource);
+                            return;
                         }
-
-                    _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
-                    foreach (var item in ToDeposit)
-                    {
-                        GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
                     }
-
-                    if (_isDepositing)
-                        return;
                     else
                     {
-                        Core.Log("[Bank Done]");
-                        _state.Fire(Trigger.BankDone);
+                        //Get inventory
+                        var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
+                        var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;
+
+                        var ToDeposit = new List<UIItemSlot>();
+
+                        //Get all items we need that are visible. Need to find a way to get all items in player inventory.
+                        var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
+                        foreach (var slot in playerStorage.ItemsSlotsRegistered)
+                            if (slot != null && slot.ObservedItemView != null)
+                            {
+                                var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
+                                //All items not including journals
+                                if(!slotItemName.Contains("journalitem"))
+                                    if (resourceTypes.Any(r => slotItemName.Contains(r)))
+                                        ToDeposit.Add(slot);
+                                //adding full journals to deposit list
+                                if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
+                                    ToDeposit.Add(slot);
+                            }
+
+                        _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
+                        foreach (var item in ToDeposit)
+                        {
+                            GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
+                        }
+
+                        if (_isDepositing)
+                            return;
+                        else
+                        {
+                            _movingToBank = false;
+                            Core.Log("[Bank Done]");
+                            _state.Fire(Trigger.BankDone);
+                        }
                     }
                 }
             }

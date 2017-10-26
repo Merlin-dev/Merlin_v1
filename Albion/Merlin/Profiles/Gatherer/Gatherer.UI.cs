@@ -221,9 +221,7 @@ namespace Merlin.Profiles.Gatherer
             }
             else if(Input.GetKeyDown(testkey))
             {
-                LocalPlayerCharacterView localPlayer = GameManager.GetInstance().GetLocalPlayerCharacterView();
-                if (Camera.main.WorldToScreenPoint(localPlayer.transform.position) == null)
-                    Core.Log("myPos == null!!!");
+
             }
             else if (Input.GetKeyDown(unloadKey))
             {

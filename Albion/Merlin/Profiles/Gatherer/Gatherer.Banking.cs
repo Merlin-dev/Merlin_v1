@@ -46,13 +46,10 @@ namespace Merlin.Profiles.Gatherer
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
             ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
 
-            //No longer valid in most instances. Need to find way to implement just for Caerleon.
-            //ClusterDescriptor bankCluster = townCluster.GetExits().Find(e => e.GetDestination().GetName().Contains("Bank")).GetDestination();
-
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
                 var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
-
+                
                 if (banks.Count == 0)
                     return;
 
@@ -71,6 +68,7 @@ namespace Merlin.Profiles.Gatherer
                         {
                             _movingToBank = true;
                             Core.Log("[Start Interacting with Bank]");
+                            
                             _localPlayerCharacterView.Interact(resource);
                             return;
                         }

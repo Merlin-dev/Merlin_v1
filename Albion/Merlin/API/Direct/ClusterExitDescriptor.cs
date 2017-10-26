@@ -61,8 +61,8 @@ namespace Merlin.API.Direct
         
         static ClusterExitDescriptor()
         {
-            _methodReflectionPool.Add(typeof(alx).GetMethod("l", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alw)}, null));
-            _methodReflectionPool.Add(typeof(alx).GetMethod("m", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alw)}, null));
+            _methodReflectionPool.Add(typeof(alx).GetMethod("l", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alv)}, null));
+            _methodReflectionPool.Add(typeof(alx).GetMethod("m", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alv)}, null));
         }
         
         #endregion

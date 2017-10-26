@@ -193,7 +193,7 @@ namespace Merlin.Profiles.Gatherer
             {
                 views.Add(r);
             }
-
+            
             var filteredViews = views.Where(view =>
             {
                 if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(view.transform.position))

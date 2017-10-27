@@ -44,6 +44,20 @@ namespace Merlin.Profiles.Gatherer
                     if (_localPlayerCharacterView.IsIdle())
                     {
                         Core.Log("Character Idle. Moving to default bank location");
+                        Vector3 bankVector = Vector3.zero;
+                        if (currentWorldCluster.GetName().ToLowerInvariant().Equals("bridgewatch"))
+                            bankVector = bridgewatch;
+                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("caerleon"))
+                            bankVector = caerleon;
+                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("fort sterling"))
+                            bankVector = fort_sterling;
+                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("lymhurst"))
+                            bankVector = lymhurst;
+                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("martlock"))
+                            bankVector = martlock;
+                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("thetford"))
+                            bankVector = thetford;
+                        
                         _localPlayerCharacterView.RequestMove(bankVector);
                     }
                     return;
@@ -99,6 +113,21 @@ namespace Merlin.Profiles.Gatherer
                             _reachedPointInBetween = false;
 
                             var mounting = HandleMounting(Vector3.zero);
+
+                            Vector3 bankVector = Vector3.zero;
+                            if (currentWorldCluster.GetName().ToLowerInvariant().Equals("bridgewatch"))
+                                bankVector = bridgewatch;
+                            else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("caerleon"))
+                                bankVector = caerleon;
+                            else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("fort sterling"))
+                                bankVector = fort_sterling;
+                            else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("lymhurst"))
+                                bankVector = lymhurst;
+                            else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("martlock"))
+                                bankVector = martlock;
+                            else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("thetford"))
+                                bankVector = thetford;
+
                             _localPlayerCharacterView.RequestMove(bankVector);
 
                             Core.Log("[Repair Done]");

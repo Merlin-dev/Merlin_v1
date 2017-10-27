@@ -223,6 +223,9 @@ namespace Merlin.Profiles.Gatherer
             {
                 Vector3 playerCenter = _localPlayerCharacterView.transform.position;
                 Core.Log("X: " + playerCenter.x + " Y: " + playerCenter.y + " Z: " + playerCenter.z);
+
+                ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
+                Core.Log("City: " + currentWorldCluster.GetName().ToLowerInvariant());
             }
             else if (Input.GetKeyDown(unloadKey))
             {

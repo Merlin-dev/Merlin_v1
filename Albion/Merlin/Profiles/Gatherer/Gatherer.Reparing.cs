@@ -18,10 +18,7 @@ namespace Merlin.Profiles.Gatherer
         public void Repair()
         {
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
-
-            if (!HandleMounting(Vector3.zero))
-                return;
-
+            
             if (HandlePathing(ref _worldPathingRequest))
                 return;
 

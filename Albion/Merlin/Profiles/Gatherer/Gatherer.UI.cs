@@ -221,7 +221,8 @@ namespace Merlin.Profiles.Gatherer
             }
             else if(Input.GetKeyDown(testkey))
             {
-
+                Vector3 playerCenter = _localPlayerCharacterView.transform.position;
+                Core.Log("X: " + playerCenter.x + " Y: " + playerCenter.y + " Z: " + playerCenter.z);
             }
             else if (Input.GetKeyDown(unloadKey))
             {

@@ -16,6 +16,7 @@ namespace Merlin.Profiles.Gatherer
         private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
         private bool _movingToBank = false;
+        private Vector3 bankVector = new Vector3((float)-10, (float)14, (float)-5);
 
         public void Bank()
         {
@@ -49,32 +50,42 @@ namespace Merlin.Profiles.Gatherer
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
                 var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
-                
-                if (banks.Count == 0)
-                    return;
 
-                _currentTarget = banks.First();
-                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                if (banks.Count == 0)
                 {
-                    _bankPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                    Core.Log("No Banks found.");
+                    if (_localPlayerCharacterView.IsIdle())
+                    {
+                        Core.Log("Character Idle. Moving to default bank location");
+                        _localPlayerCharacterView.RequestMove(bankVector);
+                    }
                     return;
                 }
+
+                _currentTarget = banks.First();
 
                 if (_currentTarget is BankBuildingView resource)
                 {
                     if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        if(!_movingToBank)
+                        if (!_movingToBank)
                         {
+                            Core.Log("Bank found, but it's not in range. Interact with it to move into range.");
+
+                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                            {
+                                _bankPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                                return;
+                            }
+
                             _movingToBank = true;
-                            Core.Log("[Start Interacting with Bank]");
-                            
                             _localPlayerCharacterView.Interact(resource);
                             return;
                         }
                     }
                     else
                     {
+                        Core.Log("Begin Banking.");
                         //Get inventory
                         var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
                         var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;

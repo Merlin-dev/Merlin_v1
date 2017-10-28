@@ -11,14 +11,6 @@ namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
-
-        private Vector3 bridgewatch = new Vector3((float)-5.25, (float)-3.5, (float)-13.25);
-        private Vector3 caerleon = new Vector3((float)15.8, (float)0.5, (float)-26.5);
-        private Vector3 fort_sterling = new Vector3((float)-7.5, (float)2.7, (float)1.75);
-        private Vector3 lymhurst = new Vector3((float)-20, (float)2.5, (float)-8.25);
-        private Vector3 martlock = new Vector3((float)-3.8, (float)0.5, (float)-14.25);
-        private Vector3 thetford = new Vector3((float)-10, (float)14, (float)-5);
-
         private WorldPathingRequest _worldPathingRequest;
         private ClusterPathingRequest _bankPathingRequest;
         private PositionPathingRequest _bankFindPathingRequest;
@@ -62,24 +54,7 @@ namespace Merlin.Profiles.Gatherer
                 {
                     Core.Log("No Banks found.");
                     if (_localPlayerCharacterView.IsIdle())
-                    {
-                        Core.Log("Character Idle. Moving to default bank location");
-                        Vector3 bankVector = Vector3.zero;
-                        if (currentWorldCluster.GetName().ToLowerInvariant().Equals("bridgewatch"))
-                            bankVector = bridgewatch;
-                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("caerleon"))
-                            bankVector = caerleon;
-                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("fort sterling"))
-                            bankVector = fort_sterling;
-                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("lymhurst"))
-                            bankVector = lymhurst;
-                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("martlock"))
-                            bankVector = martlock;
-                        else if (currentWorldCluster.GetName().ToLowerInvariant().Equals("thetford"))
-                            bankVector = thetford;
-
-                        _localPlayerCharacterView.RequestMove(bankVector);
-                    }
+                        _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));
                     return;
                 }
 
@@ -151,6 +126,27 @@ namespace Merlin.Profiles.Gatherer
                 if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
             }
+        }
+
+        private Vector3 GetDefaultBankVector(string cityName)
+        {
+            ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
+            Vector3 bankVector = Vector3.zero;
+
+            if (cityName.Equals("bridgewatch"))
+                bankVector = new Vector3((float)-5.25, (float)-3.5, (float)-13.25);
+            else if (cityName.Equals("caerleon"))
+                bankVector = new Vector3((float)15.8, (float)0.5, (float)-26.5);
+            else if (cityName.Equals("fort sterling"))
+                bankVector = new Vector3((float)-7.5, (float)2.7, (float)1.75);
+            else if (cityName.Equals("lymhurst"))
+                bankVector = new Vector3(-20, (float)2.5, (float)-8.25);
+            else if (cityName.Equals("martlock"))
+                bankVector = new Vector3((float)-3.8, (float)0.5, (float)-14.25);
+            else if (cityName.Equals("thetford"))
+                bankVector = new Vector3(-10, 14, -5);
+
+            return bankVector;
         }
     }
 }

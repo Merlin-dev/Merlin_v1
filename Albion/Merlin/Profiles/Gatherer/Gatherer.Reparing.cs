@@ -103,9 +103,7 @@ namespace Merlin.Profiles.Gatherer
             {
                 Core.Log("No Repair Stations found.");
                 if (_localPlayerCharacterView.IsIdle())
-                {
                     _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
-                }
                 return false;
             }
             else
@@ -120,9 +118,7 @@ namespace Merlin.Profiles.Gatherer
                         {
                             Core.Log("Repair Station found, but it's not in range. Interact with it to move into range.");
                             if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                            {
                                 _repairPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
-                            }
 
                             _movingToRepair = true;
                         }

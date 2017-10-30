@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Merlin.Profiles.Gatherer.Gatherer;
+using Merlin.API.Direct;
 
 namespace Merlin.Profiles.ESP
 {
@@ -289,11 +290,17 @@ namespace Merlin.Profiles.ESP
 
         private void OnGUI()
         {
-            if(resources != null)
-                DrawResourceESPs();
-            
-            if (players != null)
-                DrawPlayerESPs();
+            GameManager _client;
+            _client = GameManager.GetInstance();
+
+            if (_client.GetState() == GameState.Playing)
+            {
+                if (resources != null)
+                    DrawResourceESPs();
+
+                if (players != null)
+                    DrawPlayerESPs();
+            }
         }
 
         private void DrawResourceESPs()

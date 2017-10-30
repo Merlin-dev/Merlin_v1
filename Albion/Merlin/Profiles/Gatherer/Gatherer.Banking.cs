@@ -48,75 +48,21 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
-                var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
-
-                if (banks.Count == 0)
+                if (!moveToTownBank(currentWorldCluster))
                 {
-                    Core.Log("No Banks found.");
-                    if (_localPlayerCharacterView.IsIdle())
-                        _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));
                     return;
                 }
-
-                _currentTarget = banks.First();
-
-                if (_currentTarget is BankBuildingView resource)
+                else
                 {
-                    if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
-                    {
-                        if (!_movingToBank)
-                        {
-                            Core.Log("Bank found, but it's not in range. Interact with it to move into range.");
+                    Core.Log("Begin Banking.");
 
-                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                            {
-                                _bankPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
-                                return;
-                            }
-
-                            _movingToBank = true;
-                            _localPlayerCharacterView.Interact(resource);
-                            return;
-                        }
-                    }
+                    if (moveObjectsToBank())
+                        return;
                     else
                     {
-                        Core.Log("Begin Banking.");
-                        //Get inventory
-                        var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
-                        var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;
-
-                        var ToDeposit = new List<UIItemSlot>();
-
-                        //Get all items we need that are visible. Need to find a way to get all items in player inventory.
-                        var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
-                        foreach (var slot in playerStorage.ItemsSlotsRegistered)
-                            if (slot != null && slot.ObservedItemView != null)
-                            {
-                                var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
-                                //All items not including journals
-                                if(!slotItemName.Contains("journalitem"))
-                                    if (resourceTypes.Any(r => slotItemName.Contains(r)))
-                                        ToDeposit.Add(slot);
-                                //adding full journals to deposit list
-                                if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
-                                    ToDeposit.Add(slot);
-                            }
-
-                        _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
-                        foreach (var item in ToDeposit)
-                        {
-                            GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
-                        }
-
-                        if (_isDepositing)
-                            return;
-                        else
-                        {
-                            _movingToBank = false;
-                            Core.Log("[Bank Done]");
-                            _state.Fire(Trigger.BankDone);
-                        }
+                        _movingToBank = false;
+                        Core.Log("[Bank Done]");
+                        _state.Fire(Trigger.BankDone);
                     }
                 }
             }
@@ -147,6 +93,74 @@ namespace Merlin.Profiles.Gatherer
                 bankVector = new Vector3(-10, 14, -5);
 
             return bankVector;
+        }
+
+        private bool moveObjectsToBank()
+        {
+            //Get inventory
+            var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
+            var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;
+
+            var ToDeposit = new List<UIItemSlot>();
+
+            //Get all items we need that are visible. Need to find a way to get all items in player inventory.
+            var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
+            foreach (var slot in playerStorage.ItemsSlotsRegistered)
+                if (slot != null && slot.ObservedItemView != null)
+                {
+                    var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
+                    //All items not including journals
+                    if (!slotItemName.Contains("journalitem"))
+                        if (resourceTypes.Any(r => slotItemName.Contains(r)))
+                            ToDeposit.Add(slot);
+                    //adding full journals to deposit list
+                    if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
+                        ToDeposit.Add(slot);
+                }
+            
+            _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
+            foreach (var item in ToDeposit)
+            {
+                GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
+            }
+            return _isDepositing;
+        }
+
+        private bool moveToTownBank(ClusterDescriptor currentCluster)
+        {
+            var banks = _client.GetEntities<BankBuildingView>((x) => { return true; });
+
+            if (banks.Count == 0)
+            {
+                Core.Log("No Banks found.");
+                if (_localPlayerCharacterView.IsIdle())
+                    _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
+                return false;
+            }
+            else
+            {
+                _currentTarget = banks.First();
+
+                if (_currentTarget is BankBuildingView resource)
+                {
+                    if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
+                    {
+                        if (!_movingToBank)
+                        {
+                            Core.Log("Bank found, but it's not in range. Interact with it to move into range.");
+                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                                _bankPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                            
+                            _movingToBank = true;
+                            _localPlayerCharacterView.Interact(resource);
+                        }
+                        return false;
+                    }
+                    _localPlayerCharacterView.Interact(resource);
+                    return true;
+                }
+                return false;
+            }
         }
     }
 }

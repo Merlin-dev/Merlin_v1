@@ -209,6 +209,7 @@ namespace Merlin.Profiles.ESP
         private SimulationObjectView[] resources;
         private LocalPlayerCharacterView localPlayer;
         private PlayerCharacterView[] players;
+        private GameManager _client;
 
         public void StartESP(Dictionary<GatherInformation, bool> gatherInformations)
         {
@@ -290,7 +291,6 @@ namespace Merlin.Profiles.ESP
 
         private void OnGUI()
         {
-            GameManager _client;
             _client = GameManager.GetInstance();
 
             if (_client.GetState() == GameState.Playing)

@@ -2,6 +2,7 @@
 using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,9 +17,15 @@ namespace Merlin.Profiles.Gatherer
         private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
         private bool _movingToBank = false;
+        private static DateTime _nextBankAction;
 
         public void Bank()
         {
+
+            _client = GameManager.GetInstance();
+            if (_client.GetState() != GameState.Playing)
+                return;
+
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
 
             if (!HandleMounting(Vector3.zero))
@@ -48,6 +55,15 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
+                if(_nextBankAction == new DateTime())
+                {
+                    Core.Log("Adding 5 seconds to banking wait time to avoid load issues.");
+                    _nextBankAction = DateTime.UtcNow.AddSeconds(5);
+                }
+
+                if (waiting())
+                    return;
+
                 if (!moveToTownBank(currentWorldCluster))
                 {
                     return;
@@ -60,6 +76,8 @@ namespace Merlin.Profiles.Gatherer
                         return;
                     else
                     {
+                        _nextBankAction = new DateTime();
+                        _nextBankAction = new DateTime();
                         _movingToBank = false;
                         Core.Log("[Bank Done]");
                         _state.Fire(Trigger.BankDone);
@@ -80,7 +98,7 @@ namespace Merlin.Profiles.Gatherer
             Vector3 bankVector = Vector3.zero;
 
             if (cityName.Equals("bridgewatch"))
-                bankVector = new Vector3((float)-5.25, (float)-3.5, (float)-13.25);
+                bankVector = new Vector3((float)-2.5, (float)-4.25, -20);
             else if (cityName.Equals("caerleon"))
                 bankVector = new Vector3((float)15.8, (float)0.5, (float)-26.5);
             else if (cityName.Equals("fort sterling"))
@@ -139,28 +157,30 @@ namespace Merlin.Profiles.Gatherer
             }
             else
             {
+                Core.Log("Bank found.");
                 _currentTarget = banks.First();
 
                 if (_currentTarget is BankBuildingView resource)
                 {
                     if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        if (!_movingToBank)
-                        {
-                            Core.Log("Bank found, but it's not in range. Interact with it to move into range.");
-                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                                _bankPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
-                            
-                            _movingToBank = true;
-                            _localPlayerCharacterView.Interact(resource);
-                        }
+                        Core.Log("Bank is not in range. Interact with Bank to move into range.");
+                        _localPlayerCharacterView.Interact(resource);
                         return false;
                     }
-                    _localPlayerCharacterView.Interact(resource);
                     return true;
                 }
                 return false;
             }
+        }
+
+        private bool waiting()
+        {
+            if (DateTime.UtcNow < _nextBankAction)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

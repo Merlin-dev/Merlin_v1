@@ -12,7 +12,6 @@ namespace Merlin.Profiles.Gatherer
     {
         private PositionPathingRequest _repairPathingRequest;
         private PositionPathingRequest _repairFindPathingRequest;
-        private bool _reachedPointInBetween;
         private bool _movingToRepair = false;
 
         public void Repair()
@@ -25,7 +24,7 @@ namespace Merlin.Profiles.Gatherer
             if (HandlePathing(ref _repairFindPathingRequest, () => _client.GetEntities<RepairBuildingView>((x) => { return true; }).Count > 0))
                 return;
 
-            if (HandlePathing(ref _repairPathingRequest, null, () => _reachedPointInBetween = true))
+            if (HandlePathing(ref _repairPathingRequest, null))
                 return;
 
             Worldmap worldmapInstance = GameGui.Instance.WorldMap;
@@ -42,18 +41,16 @@ namespace Merlin.Profiles.Gatherer
                 }
                 else
                 {
-                    if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
+                    if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyDamagedItem())
                     {
                         if (!repairItems())
                         {
                             return;
                         }
-                        //var mounting = HandleMounting(Vector3.zero);
                     }
                     else
                     {
                         _movingToRepair = false;
-                        _reachedPointInBetween = false;
 
                         _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));
 

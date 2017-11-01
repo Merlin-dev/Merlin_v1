@@ -27,5 +27,19 @@ namespace Merlin.API.Direct
         {
             return item.b6() <= 10;
         }
+
+        public bool HasAnyDamagedItem()
+        {
+            return _internal.s7().eg().dv().Union(_internal.s9().eg().dv()).Any(i =>
+            {
+                //EquipmentItemProxy
+                return i is atl equipableItem ? IsTheItemDamaged(equipableItem) : false;
+            });
+        }
+
+        public bool IsTheItemDamaged(atl item)
+        {
+            return item.b6() <= 95;
+        }
     }
 }

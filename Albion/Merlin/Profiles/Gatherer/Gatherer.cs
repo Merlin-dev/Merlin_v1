@@ -155,11 +155,7 @@ namespace Merlin.Profiles.Gatherer
                     case State.Search: Search(); break;
                     case State.Harvest: Harvest(); break;
                     case State.Combat: Fight(); break;
-                    case State.Bank:
-                        {
-                            Bank();
-                            break;
-                        }
+                    case State.Bank: Bank(); break;
                     case State.Repair: Repair(); break;
                     case State.Travel: Travel(); break;
                     case State.SiegeCampTreasure: SiegeCampTreasure(); break;
@@ -183,7 +179,6 @@ namespace Merlin.Profiles.Gatherer
             _harvestPathingRequest = null;
             _currentTarget = null;
             _failedFindAttempts = 0;
-            _reachedPointInBetween = false;
             _changeGatheringPathRequest = null;
             _siegeCampTreasureCoroutine = null;
             _targetCluster = null;

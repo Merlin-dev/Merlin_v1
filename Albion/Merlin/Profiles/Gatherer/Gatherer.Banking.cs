@@ -16,7 +16,6 @@ namespace Merlin.Profiles.Gatherer
         private ClusterPathingRequest _bankPathingRequest;
         private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
-        private bool _movingToBank = false;
         private static DateTime _nextBankAction;
 
         public void Bank()
@@ -44,7 +43,7 @@ namespace Merlin.Profiles.Gatherer
             if (HandlePathing(ref _bankFindPathingRequest, () => _client.GetEntities<BankBuildingView>((x) => { return true; }).Count > 0))
                 return;
 
-            if (HandlePathing(ref _bankPathingRequest, null, () => _reachedPointInBetween = true))
+            if (HandlePathing(ref _bankPathingRequest, null))
                 return;
 
             Worldmap worldmapInstance = GameGui.Instance.WorldMap;
@@ -78,7 +77,6 @@ namespace Merlin.Profiles.Gatherer
                     {
                         _nextBankAction = new DateTime();
                         _nextBankAction = new DateTime();
-                        _movingToBank = false;
                         Core.Log("[Bank Done]");
                         _state.Fire(Trigger.BankDone);
                     }

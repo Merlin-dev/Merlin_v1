@@ -22,6 +22,7 @@ namespace Merlin.Profiles.Gatherer
                 return;
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
+            var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == TownClusterNames[_selectedTownClusterIndex];
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
                 _state.Fire(Trigger.StartSiegeCampTreasure);
@@ -37,20 +38,23 @@ namespace Merlin.Profiles.Gatherer
             
             if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
             {
-                Core.Log("Damaged");
+                Core.Log("Damaged, Broken Items");
                 _state.Fire(Trigger.Damaged);
                 return;
             }
 
-            if (!isCurrentCluster)
+            if (isHomeCluster)
             {
                 if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyDamagedItem())
                 {
-                    Core.Log("Damaged");
+                    Core.Log("Damaged, Damaged Items");
                     _state.Fire(Trigger.Damaged);
                     return;
                 }
+            }
 
+            if (!isCurrentCluster)
+            {
                 Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
                 Core.Log("[Travel to target cluster]");

@@ -132,7 +132,7 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead"))))
+                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead") || mob.MobType().ToLowerInvariant().Contains("bonecrusher"))))
                 {
                     var keeperPosition = keeper.GetInternalPosition();
                     if (!_keeperSpots.Contains(keeperPosition))

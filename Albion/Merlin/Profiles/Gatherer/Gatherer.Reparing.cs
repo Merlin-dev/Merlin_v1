@@ -10,7 +10,7 @@ namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
-        private ClusterPathingRequest _repairPathingRequest;
+        private PositionPathingRequest _repairPathingRequest;
         private PositionPathingRequest _repairFindPathingRequest;
         private bool _reachedPointInBetween;
         private bool _movingToRepair = false;
@@ -48,13 +48,12 @@ namespace Merlin.Profiles.Gatherer
                         {
                             return;
                         }
+                        //var mounting = HandleMounting(Vector3.zero);
                     }
                     else
                     {
                         _movingToRepair = false;
                         _reachedPointInBetween = false;
-
-                        var mounting = HandleMounting(Vector3.zero);
 
                         _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));
 
@@ -116,15 +115,29 @@ namespace Merlin.Profiles.Gatherer
                     {
                         if (!_movingToRepair)
                         {
-                            Core.Log("Repair Station found, but it's not in range. Interact with it to move into range.");
-                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), _currentTarget, IsBlockedWithExitCheck, out List<Vector3> pathing))
-                                _repairPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                            Core.Log("Repair Station found, but it's not in range. PathFind");
 
-                            _movingToRepair = true;
+                            var repairCollider = repairer.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
+                            var repairColliderPosition = new Vector2(repairCollider.transform.position.x, repairCollider.transform.position.z);
+                            var exitPositionPoint = GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant());
+                            var exitPosition = new Vector2(exitPositionPoint.x, exitPositionPoint.y);
+                            var clampedPosition = Vector2.MoveTowards(repairColliderPosition, exitPosition, 10);
+                            var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);
+
+                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                            {
+                                Core.Log("Path found Move there now");
+                                _repairPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
+                                _movingToRepair = true;
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            _localPlayerCharacterView.Interact(repairer);
                         }
                         return false;
                     }
-                    _localPlayerCharacterView.Interact(repairer);
                     return true;
                 }
                 return false;

@@ -34,7 +34,7 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.Overweight);
                 return;
             }
-
+            
             if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
             {
                 Core.Log("Damaged");
@@ -44,6 +44,13 @@ namespace Merlin.Profiles.Gatherer
 
             if (!isCurrentCluster)
             {
+                if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyDamagedItem())
+                {
+                    Core.Log("Damaged");
+                    _state.Fire(Trigger.Damaged);
+                    return;
+                }
+
                 Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
                 Core.Log("[Travel to target cluster]");

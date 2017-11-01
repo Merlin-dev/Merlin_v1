@@ -14,8 +14,8 @@ namespace Merlin.Profiles.Gatherer
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Damage, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.CrowdControl, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.CrowdControl, true),
-            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.Damage, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.Damage, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.Damage, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.MovementBuff, true),
         };
 
@@ -41,6 +41,9 @@ namespace Merlin.Profiles.Gatherer
             _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
             _combatTarget = _localPlayerCharacterView.GetAttackTarget();
             _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+
+            if (_localPlayerCharacterView.IsCasting() || _combatPlayer.GetIsCasting())
+                return;
 
             if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
                 return;
@@ -75,6 +78,7 @@ namespace Merlin.Profiles.Gatherer
         {
             try
             {
+
                 if (checkCastState && _localPlayerCharacterView.IsCasting())
                     return false;
 
@@ -111,6 +115,7 @@ namespace Merlin.Profiles.Gatherer
 
                     _combatCooldown = 0.1f;
                     return true;
+                    
                 }
                 catch (Exception e)
                 {

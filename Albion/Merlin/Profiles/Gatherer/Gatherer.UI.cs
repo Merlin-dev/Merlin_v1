@@ -230,7 +230,7 @@ namespace Merlin.Profiles.Gatherer
 
                 ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
                 Core.Log("City: " + currentWorldCluster.GetName().ToLowerInvariant());
-                
+
             }
             else if (Input.GetKeyDown(unloadKey))
             {

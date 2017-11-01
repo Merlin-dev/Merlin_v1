@@ -1,6 +1,7 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +14,14 @@ namespace Merlin.Profiles.Gatherer
         private PositionPathingRequest _repairPathingRequest;
         private PositionPathingRequest _repairFindPathingRequest;
         private bool _movingToRepair = false;
+        private static DateTime _nextRepairAction;
 
         public void Repair()
         {
+            _client = GameManager.GetInstance();
+            if (_client.GetState() != GameState.Playing)
+                return;
+
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
             
             if (HandlePathing(ref _worldPathingRequest))
@@ -35,6 +41,15 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
+                if (_nextRepairAction == new DateTime())
+                {
+                    Core.Log("Adding 3 seconds to Repair wait time to avoid load issues.");
+                    _nextRepairAction = DateTime.UtcNow.AddSeconds(3);
+                }
+
+                if (waiting(_nextRepairAction))
+                    return;
+
                 if (!moveToTownRepair(currentWorldCluster))
                 {
                     return;
@@ -50,6 +65,7 @@ namespace Merlin.Profiles.Gatherer
                     }
                     else
                     {
+                        _nextRepairAction = new DateTime();
                         _movingToRepair = false;
 
                         _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));

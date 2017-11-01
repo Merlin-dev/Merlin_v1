@@ -2,7 +2,6 @@
 using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
 using System;
-using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +12,10 @@ namespace Merlin.Profiles.Gatherer
     public sealed partial class Gatherer
     {
         private WorldPathingRequest _worldPathingRequest;
-        private ClusterPathingRequest _bankPathingRequest;
+        private PositionPathingRequest _bankPathingRequest;
         private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
+        private bool _movingToBank = false;
         private static DateTime _nextBankAction;
 
         public void Bank()
@@ -56,11 +56,11 @@ namespace Merlin.Profiles.Gatherer
             {
                 if(_nextBankAction == new DateTime())
                 {
-                    Core.Log("Adding 5 seconds to banking wait time to avoid load issues.");
-                    _nextBankAction = DateTime.UtcNow.AddSeconds(5);
+                    Core.Log("Adding 3 seconds to banking wait time to avoid load issues.");
+                    _nextBankAction = DateTime.UtcNow.AddSeconds(3);
                 }
 
-                if (waiting())
+                if (waiting(_nextBankAction))
                     return;
 
                 if (!moveToTownBank(currentWorldCluster))
@@ -76,7 +76,7 @@ namespace Merlin.Profiles.Gatherer
                     else
                     {
                         _nextBankAction = new DateTime();
-                        _nextBankAction = new DateTime();
+                        _movingToBank = false;
                         Core.Log("[Bank Done]");
                         _state.Fire(Trigger.BankDone);
                     }
@@ -162,8 +162,29 @@ namespace Merlin.Profiles.Gatherer
                 {
                     if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        Core.Log("Bank is not in range. Interact with Bank to move into range.");
-                        _localPlayerCharacterView.Interact(resource);
+                        if (!_movingToBank)
+                        {
+                            Core.Log("Bank found, but it's not in range. PathFind");
+
+                            var bankCollider = resource.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
+                            var bankColliderPosition = new Vector2(bankCollider.transform.position.x, bankCollider.transform.position.z);
+                            var exitPositionPoint = GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant());
+                            var exitPosition = new Vector2(exitPositionPoint.x, exitPositionPoint.y);
+                            var clampedPosition = Vector2.MoveTowards(bankColliderPosition, exitPosition, 10);
+                            var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);
+
+                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                            {
+                                Core.Log("Path found Move there now");
+                                _bankPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
+                                _movingToBank = true;
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            _localPlayerCharacterView.Interact(resource);
+                        }
                         return false;
                     }
                     return true;
@@ -172,9 +193,9 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        private bool waiting()
+        private bool waiting(DateTime _nextAction)
         {
-            if (DateTime.UtcNow < _nextBankAction)
+            if (DateTime.UtcNow < _nextAction)
             {
                 return true;
             }

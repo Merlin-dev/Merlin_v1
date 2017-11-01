@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using Merlin.API.Direct;
+using Merlin.Pathing;
+using Merlin.Pathing.Worldmap;
+using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -226,6 +230,27 @@ namespace Merlin.Profiles.Gatherer
 
                 ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
                 Core.Log("City: " + currentWorldCluster.GetName().ToLowerInvariant());
+
+
+                var repairs = _client.GetEntities<RepairBuildingView>((x) => { return true; });
+                _currentTarget = repairs.First();
+                if (_currentTarget is RepairBuildingView repairer)
+                {
+                    var repairCollider = repairer.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
+                    var repairColliderPosition = new Vector2(repairCollider.transform.position.x, repairCollider.transform.position.z);
+                    var exitPositionPoint = GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant());
+                    var exitPosition = new Vector2(exitPositionPoint.x, exitPositionPoint.y);
+                    var clampedPosition = Vector2.MoveTowards(repairColliderPosition, exitPosition, 10);
+                    var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);
+
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                    {
+                        Core.Log("Path Found" + targetPosition.ToString());
+                    }
+                }
+
+
+
             }
             else if (Input.GetKeyDown(unloadKey))
             {

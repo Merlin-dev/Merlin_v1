@@ -2,7 +2,6 @@
 using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
 using System;
-using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +12,10 @@ namespace Merlin.Profiles.Gatherer
     public sealed partial class Gatherer
     {
         private WorldPathingRequest _worldPathingRequest;
-        private ClusterPathingRequest _bankPathingRequest;
+        private PositionPathingRequest _bankPathingRequest;
         private PositionPathingRequest _bankFindPathingRequest;
         private bool _isDepositing;
+        private bool _movingToBank = false;
         private static DateTime _nextBankAction;
 
         public void Bank()
@@ -23,12 +23,18 @@ namespace Merlin.Profiles.Gatherer
 
             _client = GameManager.GetInstance();
             if (_client.GetState() != GameState.Playing)
+            {
+                Core.Log("Client state not equal to Playing so we will wait");
                 return;
+            }
 
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
 
             if (!HandleMounting(Vector3.zero))
+            {
+                Core.Log("Handle mounting");
                 return;
+            }
 
             if (!_isDepositing && _localPlayerCharacterView.GetLoadPercent() <= _percentageForBanking)
             {
@@ -54,17 +60,22 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
-                if(_nextBankAction == new DateTime())
+                Core.Log("Arrived at town");
+
+                if (_nextBankAction == new DateTime())
                 {
-                    Core.Log("Adding 5 seconds to banking wait time to avoid load issues.");
-                    _nextBankAction = DateTime.UtcNow.AddSeconds(5);
+                    Core.Log("Adding 3 seconds to banking wait time to avoid load issues.");
+                    _nextBankAction = DateTime.UtcNow.AddSeconds(3);
                 }
 
-                if (waiting())
+                if (waiting(_nextBankAction))
+                {
                     return;
+                }
 
                 if (!moveToTownBank(currentWorldCluster))
                 {
+                    Core.Log("moving to Town Bank location");
                     return;
                 }
                 else
@@ -76,7 +87,7 @@ namespace Merlin.Profiles.Gatherer
                     else
                     {
                         _nextBankAction = new DateTime();
-                        _nextBankAction = new DateTime();
+                        _movingToBank = false;
                         Core.Log("[Bank Done]");
                         _state.Fire(Trigger.BankDone);
                     }
@@ -84,9 +95,13 @@ namespace Merlin.Profiles.Gatherer
             }
             else
             {
+                Core.Log("Not in town. Try to find path to town.");
                 var pathfinder = new WorldmapPathfinder();
                 if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
+                {
+                    Core.Log("Path Found to Town.");
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
+                }
             }
         }
 
@@ -150,7 +165,10 @@ namespace Merlin.Profiles.Gatherer
             {
                 Core.Log("No Banks found.");
                 if (_localPlayerCharacterView.IsIdle())
+                {
+                    Core.Log("Player is Idle. Moving to Default bank location");
                     _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
+                }
                 return false;
             }
             else
@@ -162,8 +180,31 @@ namespace Merlin.Profiles.Gatherer
                 {
                     if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
-                        Core.Log("Bank is not in range. Interact with Bank to move into range.");
-                        _localPlayerCharacterView.Interact(resource);
+                        Core.Log("Bank not in range.");
+                        if (!_movingToBank)
+                        {
+                            Core.Log("Find Bank Collider");
+
+                            var bankCollider = resource.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
+                            var bankColliderPosition = new Vector2(bankCollider.transform.position.x, bankCollider.transform.position.z);
+                            var exitPositionPoint = GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant());
+                            var exitPosition = new Vector2(exitPositionPoint.x, exitPositionPoint.y);
+                            var clampedPosition = Vector2.MoveTowards(bankColliderPosition, exitPosition, 10);
+                            var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);
+
+                            if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetPosition, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                            {
+                                Core.Log("Path found Move there now");
+                                _bankPathingRequest = new PositionPathingRequest(_localPlayerCharacterView, targetPosition, pathing);
+                                _movingToBank = true;
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            Core.Log("Interact with Bank");
+                            _localPlayerCharacterView.Interact(resource);
+                        }
                         return false;
                     }
                     return true;
@@ -172,9 +213,9 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        private bool waiting()
+        private bool waiting(DateTime _nextAction)
         {
-            if (DateTime.UtcNow < _nextBankAction)
+            if (DateTime.UtcNow < _nextAction)
             {
                 return true;
             }

@@ -183,6 +183,8 @@ namespace Merlin.Profiles.Gatherer
             _siegeCampTreasureCoroutine = null;
             _targetCluster = null;
             _travelPathingRequest = null;
+            _movingToRepair = false;
+            _movingToBank = false;
         }
 
         private void Blacklist(SimulationObjectView target, TimeSpan duration)

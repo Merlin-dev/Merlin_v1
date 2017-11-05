@@ -1,6 +1,7 @@
 ﻿using Merlin.API.Direct;
 using Merlin.Pathing;
 using Merlin.Pathing.Worldmap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +14,17 @@ namespace Merlin.Profiles.Gatherer
         private PositionPathingRequest _repairPathingRequest;
         private PositionPathingRequest _repairFindPathingRequest;
         private bool _movingToRepair = false;
+        private static DateTime _nextRepairAction;
 
         public void Repair()
         {
+            _client = GameManager.GetInstance();
+            if (_client.GetState() != GameState.Playing)
+            {
+                Core.Log("Client state not equal to Playing so we will wait");
+                return;
+            }
+
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
             
             if (HandlePathing(ref _worldPathingRequest))
@@ -35,12 +44,24 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
+                Core.Log("Arrived at town");
+                if (_nextRepairAction == new DateTime())
+                {
+                    Core.Log("Adding 3 seconds to Repair wait time to avoid load issues.");
+                    _nextRepairAction = DateTime.UtcNow.AddSeconds(3);
+                }
+
+                if (waiting(_nextRepairAction))
+                    return;
+
                 if (!moveToTownRepair(currentWorldCluster))
                 {
+                    Core.Log("moving to Town Repair location");
                     return;
                 }
                 else
                 {
+                    Core.Log("Begin Repairing.");
                     if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyDamagedItem())
                     {
                         if (!repairItems())
@@ -50,6 +71,7 @@ namespace Merlin.Profiles.Gatherer
                     }
                     else
                     {
+                        _nextRepairAction = new DateTime();
                         _movingToRepair = false;
 
                         _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));
@@ -61,9 +83,13 @@ namespace Merlin.Profiles.Gatherer
             }
             else
             {
+                Core.Log("Not in town. Try to find path to town.");
                 var pathfinder = new WorldmapPathfinder();
                 if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
+                {
+                    Core.Log("Path Found to Town.");
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
+                }
             }
         }
 
@@ -99,20 +125,25 @@ namespace Merlin.Profiles.Gatherer
             {
                 Core.Log("No Repair Stations found.");
                 if (_localPlayerCharacterView.IsIdle())
+                {
+                    Core.Log("Player is Idle. Moving to Default bank location");
                     _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
+                }
                 return false;
             }
             else
             {
+                Core.Log("Repair Station found.");
                 _currentTarget = repairs.First();
 
                 if (_currentTarget is RepairBuildingView repairer)
                 {
                     if (!repairer.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
+                        Core.Log("Repair not in range.");
                         if (!_movingToRepair)
                         {
-                            Core.Log("Repair Station found, but it's not in range. PathFind");
+                            Core.Log("Find Repair Collider");
 
                             var repairCollider = repairer.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
                             var repairColliderPosition = new Vector2(repairCollider.transform.position.x, repairCollider.transform.position.z);
@@ -131,6 +162,7 @@ namespace Merlin.Profiles.Gatherer
                         }
                         else
                         {
+                            Core.Log("Interact with Repair");
                             _localPlayerCharacterView.Interact(repairer);
                         }
                         return false;

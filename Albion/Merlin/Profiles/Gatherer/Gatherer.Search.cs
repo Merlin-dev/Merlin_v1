@@ -23,22 +23,24 @@ namespace Merlin.Profiles.Gatherer
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
             var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == TownClusterNames[_selectedTownClusterIndex];
+
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
+                Core.Log("Start Seige Camp Treasure Routine");
                 _state.Fire(Trigger.StartSiegeCampTreasure);
                 return;
             }
 
             if (_localPlayerCharacterView.GetLoadPercent() > _percentageForBanking)
             {
-                Core.Log("Overweight");
+                Core.Log("Over allowed Weight. Start Banking procedure.");
                 _state.Fire(Trigger.Overweight);
                 return;
             }
             
             if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
             {
-                Core.Log("Damaged, Broken Items");
+                Core.Log("Damaged - Items fell below 10% durability. Head to Repair in home town");
                 _state.Fire(Trigger.Damaged);
                 return;
             }
@@ -47,7 +49,7 @@ namespace Merlin.Profiles.Gatherer
             {
                 if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyDamagedItem())
                 {
-                    Core.Log("Damaged, Damaged Items");
+                    Core.Log("We are in home town with damaged items. Fix them before going to harvest.");
                     _state.Fire(Trigger.Damaged);
                     return;
                 }
@@ -153,6 +155,13 @@ namespace Merlin.Profiles.Gatherer
             var loot = _client.GetEntities<LootObjectView>(l => l.CanLoot()).FirstOrDefault();
             if (loot != null)
             {
+                if (ContainKeepers(loot.transform.position))
+                {
+                    Core.Log($"[Loot in range of Keepers.Add to Blacklist]");
+                    Blacklist(loot, TimeSpan.FromMinutes(2));
+                    return false;
+                }
+
                 var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed;
 
                 if (needsInteraction)
@@ -163,7 +172,6 @@ namespace Merlin.Profiles.Gatherer
                 }
                 else
                 {
-                    Core.Log($"[Moving Loot]");
                     var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
                     var lootStorage = GameGui.Instance.LootGui.YourInventoryStorage;
 

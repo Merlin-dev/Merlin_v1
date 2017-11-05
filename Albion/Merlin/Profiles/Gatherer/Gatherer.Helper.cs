@@ -12,7 +12,7 @@ namespace Merlin.Profiles.Gatherer
         {
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
-                Core.Log("[Attacked]");
+                Core.Log("[Under Attack]");
                 _state.Fire(Trigger.EncounteredAttacker);
                 return true;
             }

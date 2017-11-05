@@ -43,7 +43,7 @@ public class Console : MonoBehaviour
     private GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
     private GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
     private GUIContent scrollLabel = new GUIContent("Auto scroll", "Scroll automatically.");
-    private GUIContent limitLabel = new GUIContent("Limit messages", "Show just the last 50 messages.");
+    private GUIContent limitLabel = new GUIContent("Limit messages", "Show just the last 200 messages.");
 
     private void OnEnable()
     {
@@ -82,8 +82,8 @@ public class Console : MonoBehaviour
         scrollPosition = GUILayout.BeginScrollView(scroll ? new Vector2(0, float.MaxValue) : scrollPosition);
 
         int i = 0;
-        if (limit && logs.Count > 50)
-            i = logs.Count - 50; // Starts the log in the last 50 messages
+        if (limit && logs.Count > 200)
+            i = logs.Count - 200; // Starts the log in the last 200 messages
 
         // Iterate through the recorded logs.
         for (; i < logs.Count; i++)

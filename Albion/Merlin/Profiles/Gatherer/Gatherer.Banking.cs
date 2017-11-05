@@ -23,12 +23,18 @@ namespace Merlin.Profiles.Gatherer
 
             _client = GameManager.GetInstance();
             if (_client.GetState() != GameState.Playing)
+            {
+                Core.Log("Client state not equal to Playing so we will wait");
                 return;
+            }
 
             var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
 
             if (!HandleMounting(Vector3.zero))
+            {
+                Core.Log("Handle mounting");
                 return;
+            }
 
             if (!_isDepositing && _localPlayerCharacterView.GetLoadPercent() <= _percentageForBanking)
             {
@@ -54,17 +60,22 @@ namespace Merlin.Profiles.Gatherer
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {
-                if(_nextBankAction == new DateTime())
+                Core.Log("Arrived at town");
+
+                if (_nextBankAction == new DateTime())
                 {
                     Core.Log("Adding 3 seconds to banking wait time to avoid load issues.");
                     _nextBankAction = DateTime.UtcNow.AddSeconds(3);
                 }
 
                 if (waiting(_nextBankAction))
+                {
                     return;
+                }
 
                 if (!moveToTownBank(currentWorldCluster))
                 {
+                    Core.Log("moving to Town Bank location");
                     return;
                 }
                 else
@@ -84,9 +95,13 @@ namespace Merlin.Profiles.Gatherer
             }
             else
             {
+                Core.Log("Not in town. Try to find path to town.");
                 var pathfinder = new WorldmapPathfinder();
                 if (pathfinder.TryFindPath(currentWorldCluster, townCluster, StopClusterFunction, out var path, out var pivots))
+                {
+                    Core.Log("Path Found to Town.");
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
+                }
             }
         }
 
@@ -150,7 +165,10 @@ namespace Merlin.Profiles.Gatherer
             {
                 Core.Log("No Banks found.");
                 if (_localPlayerCharacterView.IsIdle())
+                {
+                    Core.Log("Player is Idle. Moving to Default bank location");
                     _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
+                }
                 return false;
             }
             else
@@ -162,9 +180,10 @@ namespace Merlin.Profiles.Gatherer
                 {
                     if (!resource.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter))
                     {
+                        Core.Log("Bank not in range.");
                         if (!_movingToBank)
                         {
-                            Core.Log("Bank found, but it's not in range. PathFind");
+                            Core.Log("Find Bank Collider");
 
                             var bankCollider = resource.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
                             var bankColliderPosition = new Vector2(bankCollider.transform.position.x, bankCollider.transform.position.z);
@@ -183,6 +202,7 @@ namespace Merlin.Profiles.Gatherer
                         }
                         else
                         {
+                            Core.Log("Interact with Bank");
                             _localPlayerCharacterView.Interact(resource);
                         }
                         return false;

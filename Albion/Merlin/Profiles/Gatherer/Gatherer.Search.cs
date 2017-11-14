@@ -167,6 +167,14 @@ namespace Merlin.Profiles.Gatherer
                 if (needsInteraction)
                 {
                     Core.Log($"[Loot {loot.name}]");
+
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), loot, IsBlockedWithExitCheck, out List<Vector3> pathing))
+                    {
+                        Core.Log("Path found Move there now");
+                        var _lootPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, loot, pathing);
+                        var handle = HandlePathing(ref _lootPathingRequest, null);
+                    }
+
                     _localPlayerCharacterView.Interact(loot);
                     return true;
                 }

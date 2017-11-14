@@ -1,4 +1,5 @@
-﻿using Merlin.Pathing;
+﻿using Albion_Direct;
+using Albion_Direct.Pathing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -103,7 +104,7 @@ namespace Merlin.Profiles.Gatherer
             {
                 itemsToDeposit = new List<UIItemSlot>();
 
-                var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
+                var resourceTypes = Enum.GetNames(typeof(Albion_Direct.ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
                 var slots = playerStorage.ItemsSlotsRegistered;
 
                 foreach (var slot in slots)

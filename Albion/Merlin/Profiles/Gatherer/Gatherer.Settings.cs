@@ -38,15 +38,15 @@ namespace Merlin.Profiles.Gatherer
             _selectedTownClusterIndex = PlayerPrefs.GetInt($"{_prefsIdentifier}{nameof(_selectedTownClusterIndex)}", 0);
             _selectedMininumTierIndex = PlayerPrefs.GetInt($"{_prefsIdentifier}{nameof(_selectedMininumTierIndex)}", 0);
             _gatherInformations = new Dictionary<GatherInformation, bool>();
-            foreach (var resourceType in Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>())
-                foreach (var tier in Enum.GetValues(typeof(Tier)).Cast<Tier>())
-                    foreach (var enchantment in Enum.GetValues(typeof(EnchantmentLevel)).Cast<EnchantmentLevel>())
+            foreach (var resourceType in Enum.GetValues(typeof(Albion_Direct.ResourceType)).Cast<Albion_Direct.ResourceType>())
+                foreach (var tier in Enum.GetValues(typeof(Albion_Direct.Tier)).Cast<Albion_Direct.Tier>())
+                    foreach (var enchantment in Enum.GetValues(typeof(Albion_Direct.EnchantmentLevel)).Cast<Albion_Direct.EnchantmentLevel>())
                     {
-                        if ((tier < Tier.IV || resourceType == ResourceType.Rock) && enchantment != EnchantmentLevel.White)
+                        if ((tier < Albion_Direct.Tier.IV || resourceType == Albion_Direct.ResourceType.Rock) && enchantment != Albion_Direct.EnchantmentLevel.White)
                             continue;
 
                         var info = new GatherInformation(resourceType, tier, enchantment);
-                        var val = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{info.ToString()}", (tier >= Tier.II).ToString()));
+                        var val = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{info.ToString()}", (tier >= Albion_Direct.Tier.II).ToString()));
                         _gatherInformations.Add(info, val);
                     }
         }

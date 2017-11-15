@@ -30,26 +30,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Albion.Common">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Albion.Common.dll</HintPath>
+    <Reference Include="Albion.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Albion.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Albion.PhotonClient">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Albion.PhotonClient.dll</HintPath>
+    <Reference Include="Albion.PhotonClient, Version=1.0.6526.37210, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Albion.PhotonClient.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-UnityScript">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Assembly-UnityScript.dll</HintPath>
+    <Reference Include="Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Assembly-UnityScript.dll</HintPath>
     </Reference>
-    <Reference Include="JsonFx.Json">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\JsonFx.Json.dll</HintPath>
+    <Reference Include="JsonFx.Json, Version=1.4.1003.3007, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\JsonFx.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.7.1\lib\net35\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Photon3Unity3D">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\Photon3Unity3D.dll</HintPath>
+    <Reference Include="Photon3Unity3D, Version=4.1.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,11 +63,13 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\AlbionOnline\game\Albion-Online_Data\Managed\UnityEngine.UI.dll</HintPath>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

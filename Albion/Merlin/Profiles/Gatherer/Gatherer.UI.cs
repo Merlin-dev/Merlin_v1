@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using Merlin.API.Direct;
-using Merlin.Pathing;
-using Merlin.Pathing.Worldmap;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
+using Albion_Direct;
 
 namespace Merlin.Profiles.Gatherer
 {

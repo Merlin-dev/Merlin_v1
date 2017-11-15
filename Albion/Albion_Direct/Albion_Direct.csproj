@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C288F801-7FA5-4C14-A90E-71B71615103C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Albion_Direct</RootNamespace>
+    <AssemblyName>Albion_Direct</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Albion.Common">
+      <HintPath>..\Dependencies\Albion.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Albion.PhotonClient">
+      <HintPath>..\Dependencies\Albion.PhotonClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\Dependencies\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>..\Dependencies\Photon3Unity3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Stateless, Version=2.4.0.1, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoStateless.2.5.29\lib\Stateless.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\Dependencies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\Dependencies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Direct\ActionBuildingObject.cs" />
+    <Compile Include="Direct\ActionPoint.cs" />
+    <Compile Include="Direct\ActiveSpellDescriptor.cs" />
+    <Compile Include="Direct\AgentDescriptor.cs" />
+    <Compile Include="Direct\AgentsDataFile.cs" />
+    <Compile Include="Direct\AgentTypeDescriptor.cs" />
+    <Compile Include="Direct\BuildingDataFile.cs" />
+    <Compile Include="Direct\BuildingDescriptor.cs" />
+    <Compile Include="Direct\BuildingObject.cs" />
+    <Compile Include="Direct\CastleGateObject.cs" />
+    <Compile Include="Direct\CastSpellDescriptor.cs" />
+    <Compile Include="Direct\CastSpellEventHandler.cs" />
+    <Compile Include="Direct\ChannelSpellDescriptor.cs" />
+    <Compile Include="Direct\CharacterDescriptor.cs" />
+    <Compile Include="Direct\CharactersDataFile.cs" />
+    <Compile Include="Direct\CharacterSpellSlot.cs" />
+    <Compile Include="Direct\ClientTools.cs" />
+    <Compile Include="Direct\ClusterDescriptor.cs" />
+    <Compile Include="Direct\ClusterExitDescriptor.cs" />
+    <Compile Include="Direct\ClusterExitKind.cs" />
+    <Compile Include="Direct\ClusterTypeDescriptor.cs" />
+    <Compile Include="Direct\ClusterXmlOperator.cs" />
+    <Compile Include="Direct\CollisionFlags.cs" />
+    <Compile Include="Direct\CollisionManager.cs" />
+    <Compile Include="Direct\CompoundTileDescriptor.cs" />
+    <Compile Include="Direct\ConsumableItemDescriptor.cs" />
+    <Compile Include="Direct\ConsumableItemObject.cs" />
+    <Compile Include="Direct\ConsumableItemProxy.cs" />
+    <Compile Include="Direct\DataFile.cs" />
+    <Compile Include="Direct\DurableItemDescriptor.cs" />
+    <Compile Include="Direct\DurableItemObject.cs" />
+    <Compile Include="Direct\DurableItemProxy.cs" />
+    <Compile Include="Direct\Duration.cs" />
+    <Compile Include="Direct\EquipmentItemDescriptor.cs" />
+    <Compile Include="Direct\EquipmentItemObject.cs" />
+    <Compile Include="Direct\EquipmentItemProxy.cs" />
+    <Compile Include="Direct\EventDataContract.cs" />
+    <Compile Include="Direct\ExitObject.cs" />
+    <Compile Include="Direct\FarmableItemDescriptor.cs" />
+    <Compile Include="Direct\FarmableItemObject.cs" />
+    <Compile Include="Direct\FarmableItemProxy.cs" />
+    <Compile Include="Direct\FarmableObject.cs" />
+    <Compile Include="Direct\FightingAttributes.cs" />
+    <Compile Include="Direct\FightingObject.cs" />
+    <Compile Include="Direct\FurnitureItemDescriptor.cs" />
+    <Compile Include="Direct\FurnitureItemObject.cs" />
+    <Compile Include="Direct\FurnitureItemProxy.cs" />
+    <Compile Include="Direct\FurnitureObject.cs" />
+    <Compile Include="Direct\GameData.cs" />
+    <Compile Include="Direct\GameDataFile.cs" />
+    <Compile Include="Direct\GameManager.cs" />
+    <Compile Include="Direct\GameState.cs" />
+    <Compile Include="Direct\GuiDurableItemProxy.cs" />
+    <Compile Include="Direct\GuiEquipmentItemProxy.cs" />
+    <Compile Include="Direct\GuiFurnitureItemProxy.cs" />
+    <Compile Include="Direct\GuiItemProxy.cs" />
+    <Compile Include="Direct\GuiJournalItemProxy.cs" />
+    <Compile Include="Direct\Guild.cs" />
+    <Compile Include="Direct\GuildMember.cs" />
+    <Compile Include="Direct\GuiSimpleItemProxy.cs" />
+    <Compile Include="Direct\HarvestableChargeDescriptor.cs" />
+    <Compile Include="Direct\HarvestableDescriptor.cs" />
+    <Compile Include="Direct\HarvestableObject.cs" />
+    <Compile Include="Direct\HarvestableRareStateDescriptor.cs" />
+    <Compile Include="Direct\HarvestableTierDescriptor.cs" />
+    <Compile Include="Direct\ItemDescriptor.cs" />
+    <Compile Include="Direct\ItemObject.cs" />
+    <Compile Include="Direct\ItemObjectCollection.cs" />
+    <Compile Include="Direct\ItemProxy.cs" />
+    <Compile Include="Direct\ItemsDataFile.cs" />
+    <Compile Include="Direct\JournalItemDescriptor.cs" />
+    <Compile Include="Direct\JournalItemObject.cs" />
+    <Compile Include="Direct\JournalItemProxy.cs" />
+    <Compile Include="Direct\LandscapeManager.cs" />
+    <Compile Include="Direct\LocalPlayerAttributes.cs" />
+    <Compile Include="Direct\LocalPlayerCharacter.cs" />
+    <Compile Include="Direct\LootObject.cs" />
+    <Compile Include="Direct\MobCharacter.cs" />
+    <Compile Include="Direct\MobCharacterAttributes.cs" />
+    <Compile Include="Direct\MobCharacterDescriptor.cs" />
+    <Compile Include="Direct\MobCharactersDataFile.cs" />
+    <Compile Include="Direct\MountItemDescriptor.cs" />
+    <Compile Include="Direct\MountItemObject.cs" />
+    <Compile Include="Direct\MountItemProxy.cs" />
+    <Compile Include="Direct\MountObject.cs" />
+    <Compile Include="Direct\MovingObject.cs" />
+    <Compile Include="Direct\Number.cs" />
+    <Compile Include="Direct\ObjectManager.cs" />
+    <Compile Include="Direct\ObservableRange.cs" />
+    <Compile Include="Direct\OperationRequestDataContract.cs" />
+    <Compile Include="Direct\OperationResponseDataContract.cs" />
+    <Compile Include="Direct\PassiveSpellDescriptor.cs" />
+    <Compile Include="Direct\PhotonClient.cs" />
+    <Compile Include="Direct\PlayerCharacter.cs" />
+    <Compile Include="Direct\PlayerCharacterDescriptor.cs" />
+    <Compile Include="Direct\PlayerCharactersDataFile.cs" />
+    <Compile Include="Direct\Point2.cs" />
+    <Compile Include="Direct\Point3.cs" />
+    <Compile Include="Extensions\Biome.cs" />
+    <Compile Include="Extensions\CastSpellDescriptor.cs" />
+    <Compile Include="Extensions\ClusterDescriptor.cs" />
+    <Compile Include="Extensions\ClusterTypeDescriptor.cs" />
+    <Compile Include="Extensions\Collider.Extensions.cs" />
+    <Compile Include="Extensions\Enum.Extensions.cs" />
+    <Compile Include="Extensions\FightingObject.cs" />
+    <Compile Include="Extensions\FightingObjectView.Extensions.cs" />
+    <Compile Include="Extensions\GameManager.cs" />
+    <Compile Include="Extensions\HarvestableObject.cs" />
+    <Compile Include="Extensions\HarvestableObjectView.Extensions.cs" />
+    <Compile Include="Extensions\LandscapeManager.cs" />
+    <Compile Include="Extensions\LocalInputHandler.Extensions.cs" />
+    <Compile Include="Extensions\LocalPlayerCharacter.cs" />
+    <Compile Include="Extensions\LocalPlayerCharacterView.Extensions.cs" />
+    <Compile Include="Extensions\LootObject.cs" />
+    <Compile Include="Extensions\LootObjectView.Extensions.cs" />
+    <Compile Include="Extensions\MobView.Extensions.cs" />
+    <Compile Include="Extensions\Point2.cs" />
+    <Compile Include="Extensions\SilverObject.cs" />
+    <Compile Include="Extensions\SilverObjectView.Extensions.cs" />
+    <Compile Include="Extensions\SimulationObject.cs" />
+    <Compile Include="Extensions\SimulationObjectView.Extensions.cs" />
+    <Compile Include="Extensions\SpellSlot.cs" />
+    <Compile Include="Extensions\UiPvpTypes.cs" />
+    <Compile Include="Extensions\Worldmap.cs" />
+    <Compile Include="Extensions\Worldmap.Extensions.cs" />
+    <Compile Include="Pathing\AStar\AStarMap.cs" />
+    <Compile Include="Pathing\AStar\AStarNode.cs" />
+    <Compile Include="Pathing\AStar\AStarPathfinder.cs" />
+    <Compile Include="Pathing\BaseGraphSearchMap.cs" />
+    <Compile Include="Pathing\BaseGraphSearchNode.cs" />
+    <Compile Include="Pathing\BaseGraphSearchPathfinder.cs" />
+    <Compile Include="Pathing\BasePathfinder.cs" />
+    <Compile Include="Pathing\ClusterPathingRequest.cs" />
+    <Compile Include="Pathing\Cluster\ClusterPathfinder.cs" />
+    <Compile Include="Pathing\Dijkstra\BaseDijkstraMap.cs" />
+    <Compile Include="Pathing\Dijkstra\DijkstraMap.cs" />
+    <Compile Include="Pathing\Dijkstra\DijkstraNode.cs" />
+    <Compile Include="Pathing\Dijkstra\DijkstraPathfinder.cs" />
+    <Compile Include="Pathing\Helpers\BlockMethodType.cs" />
+    <Compile Include="Pathing\Helpers\DirectionHelper.cs" />
+    <Compile Include="Pathing\Helpers\DirectionType.cs" />
+    <Compile Include="Pathing\Helpers\EllipseRasterizer.cs" />
+    <Compile Include="Pathing\Helpers\HeuristicHelper.cs" />
+    <Compile Include="Pathing\Helpers\LineRasterizer.cs" />
+    <Compile Include="Pathing\Helpers\PathDelegates.cs" />
+    <Compile Include="Pathing\Helpers\PriorityQueue.cs" />
+    <Compile Include="Pathing\IPathfinder.cs" />
+    <Compile Include="Pathing\PositionPathingRequest.cs" />
+    <Compile Include="Pathing\Worldmap\WorldmapMap.cs" />
+    <Compile Include="Pathing\Worldmap\WorldmapNode.cs" />
+    <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
+    <Compile Include="Pathing\WorldPathingRequest.cs" />
+    <Compile Include="Pathing\World\WorldPathfinder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Direct\PvpRules.cs" />
+    <Compile Include="Direct\Rectangle.cs" />
+    <Compile Include="Direct\RemotePlayerCharacter.cs" />
+    <Compile Include="Direct\SilverObject.cs" />
+    <Compile Include="Direct\SimpleItemDescriptor.cs" />
+    <Compile Include="Direct\SimpleItemObject.cs" />
+    <Compile Include="Direct\SimpleItemProxy.cs" />
+    <Compile Include="Direct\SimulationObject.cs" />
+    <Compile Include="Direct\SpellAssessment.cs" />
+    <Compile Include="Direct\SpellCategory.cs" />
+    <Compile Include="Direct\SpellDescriptor.cs" />
+    <Compile Include="Direct\SpellEffectAreaObject.cs" />
+    <Compile Include="Direct\SpellsDataFile.cs" />
+    <Compile Include="Direct\SpellSlot.cs" />
+    <Compile Include="Direct\SpellTarget.cs" />
+    <Compile Include="Direct\StaticObject.cs" />
+    <Compile Include="Direct\TemplateXmlOperator.cs" />
+    <Compile Include="Direct\TerritoryDescriptor.cs" />
+    <Compile Include="Direct\TerritoryObject.cs" />
+    <Compile Include="Direct\TerritoryType.cs" />
+    <Compile Include="Direct\TileDataFile.cs" />
+    <Compile Include="Direct\TileDescriptor.cs" />
+    <Compile Include="Direct\TimeRegionDescriptor.cs" />
+    <Compile Include="Direct\WorldDataFile.cs" />
+    <Compile Include="Direct\Worldmap.cs" />
+    <Compile Include="Direct\WorldObject.cs" />
+    <Compile Include="Resources\EnchantmentLevel.cs" />
+    <Compile Include="Resources\ResourceType.cs" />
+    <Compile Include="Resources\Tier.cs" />
+    <Compile Include="Resources\TownClusterName.cs" />
+    <Compile Include="SpellFilter.cs" />
+    <Compile Include="Tuple\IStructuralComparable.cs" />
+    <Compile Include="Tuple\IStructuralEquatable.cs" />
+    <Compile Include="Tuple\Tuple.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

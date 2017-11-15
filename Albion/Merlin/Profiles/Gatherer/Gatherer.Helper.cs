@@ -1,5 +1,5 @@
-﻿using Merlin.API.Direct;
-using Merlin.Pathing;
+﻿using Albion_Direct;
+using Albion_Direct.Pathing;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -92,6 +92,7 @@ namespace Merlin.Profiles.Gatherer
         {
             if (!_localPlayerCharacterView.IsMounted)
             {
+
                 LocalPlayerCharacter localPlayer = _localPlayerCharacterView.LocalPlayerCharacter;
                 if (localPlayer.GetIsMounting())
                     return false;
@@ -108,7 +109,13 @@ namespace Merlin.Profiles.Gatherer
                         _localPlayerCharacterView.MountOrDismount();
                 }
                 else
+                {
+                    //Not yet working. Meant to make character walk home if mount is broken.
+                    //if (_localPlayerCharacterView.GetLocalPlayerCharacter().IsMountBroken())
+                        //return false;
+
                     _localPlayerCharacterView.MountOrDismount();
+                }
 
                 return false;
             }

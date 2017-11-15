@@ -1,4 +1,5 @@
-﻿using Merlin.Pathing;
+﻿using Albion_Direct;
+using Albion_Direct.Pathing;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -187,12 +188,12 @@ namespace Merlin.Profiles.Gatherer
 
             if (_currentTarget is HarvestableObjectView harvestableObject)
             {
-                Core.Log("Begin Harvest of Resource");
+                //Core.Log("Begin Harvest of Resource");
                 HarvestHarvestableObjec(harvestableObject);
             }
             else if (_currentTarget is MobView mob)
             {
-                Core.Log("Begin Harvest of Mob");
+                //Core.Log("Begin Harvest of Mob");
                 HarvestMob(mob);
             }
         }
@@ -253,8 +254,8 @@ namespace Merlin.Profiles.Gatherer
             var harvestableObject2 = resource.GetHarvestableObject();
 
             var resourceType = harvestableObject2.GetResourceType().Value;
-            var tier = (Tier)harvestableObject2.GetTier();
-            var enchantmentLevel = (EnchantmentLevel)harvestableObject2.GetRareState();
+            var tier = (Albion_Direct.Tier)harvestableObject2.GetTier();
+            var enchantmentLevel = (Albion_Direct.EnchantmentLevel)harvestableObject2.GetRareState();
 
             var info = new GatherInformation(resourceType, tier, enchantmentLevel)
             {

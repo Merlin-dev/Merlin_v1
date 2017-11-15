@@ -1,6 +1,6 @@
-﻿using Merlin.API.Direct;
-using Merlin.Pathing;
-using Merlin.Pathing.Worldmap;
+﻿using Albion_Direct;
+using Albion_Direct.Pathing;
+using Albion_Direct.Pathing.Worldmap;
 using System.Linq;
 using UnityEngine;
 
@@ -25,7 +25,7 @@ namespace Merlin.Profiles.Gatherer
             if (HandlePathing(ref _travelPathingRequest))
                 return;
 
-            API.Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
+            Albion_Direct.Worldmap worldmapInstance = GameGui.Instance.WorldMap;
 
             var currentCluster = _world.GetCurrentCluster();
             if (currentCluster.GetName() == _targetCluster.GetName())

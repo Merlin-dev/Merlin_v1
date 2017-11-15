@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a0z */
+    /* Internal type: a01 */
     public partial class RemotePlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a0z _internal;
+        private a01 _internal;
         
         #region Properties
         
-        public a0z RemotePlayerCharacter_Internal => _internal;
+        public a01 RemotePlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public RemotePlayerCharacter(a0z instance) : base(instance)
+        public RemotePlayerCharacter(a01 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a0z(RemotePlayerCharacter instance)
+        public static implicit operator a01(RemotePlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator RemotePlayerCharacter(a0z instance)
+        public static implicit operator RemotePlayerCharacter(a01 instance)
         {
             return new RemotePlayerCharacter(instance);
         }

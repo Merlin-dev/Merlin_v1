@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aej */
+    /* Internal type: ael */
     public partial class ItemsDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aej _internal;
+        private ael _internal;
         
         #region Properties
         
-        public aej ItemsDataFile_Internal => _internal;
+        public ael ItemsDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ItemsDataFile(aej instance) : base(instance)
+        public ItemsDataFile(ael instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aej(ItemsDataFile instance)
+        public static implicit operator ael(ItemsDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ItemsDataFile(aej instance)
+        public static implicit operator ItemsDataFile(ael instance)
         {
             return new ItemsDataFile(instance);
         }

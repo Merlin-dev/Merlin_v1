@@ -15,17 +15,17 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: oe */
+    /* Internal type: og */
     public partial struct Number
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private oe _internal;
+        private og _internal;
         
         #region Properties
         
-        public oe Number_Internal => _internal;
+        public og Number_Internal => _internal;
         
         #endregion
         
@@ -36,21 +36,21 @@ namespace Albion_Direct
         
         #region Methods
         
-        public static Number FromDouble(System.Double A_0) => oe.e((System.Double)A_0);
-        public static Number FromInt64(long A_0) => oe.f((long)A_0);
-        public static Number FromRaw(long A_0) => oe.e((long)A_0);
+        public static Number FromDouble(System.Double A_0) => og.e((System.Double)A_0);
+        public static Number FromInt64(long A_0) => og.f((long)A_0);
+        public static Number FromRaw(long A_0) => og.e((long)A_0);
         public long GetFractionalPart() => _internal.i();
         public System.Double GetFractions() => _internal.j();
         public long GetIntegerPart() => _internal.h();
         public System.Double ToDouble() => _internal.k();
-        //public static bool TryParse(string A_0, out Number A_1) => oe.f((string)A_0, out A_1);
-        //public static bool TryParseRaw(string A_0, out Number A_1) => oe.e((string)A_0, out A_1);
+        //public static bool TryParse(string A_0, out Number A_1) => og.f((string)A_0, out A_1);
+        //public static bool TryParseRaw(string A_0, out Number A_1) => og.e((string)A_0, out A_1);
         
         #endregion
         
         #region Constructor
         
-        public Number(oe instance)
+        public Number(og instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator oe(Number instance)
+        public static implicit operator og(Number instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Number(oe instance)
+        public static implicit operator Number(og instance)
         {
             return new Number(instance);
         }

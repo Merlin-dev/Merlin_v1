@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: at8 */
+    /* Internal type: aua */
     public partial class MovingObject : WorldObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private at8 _internal;
+        private aua _internal;
         
         #region Properties
         
-        public at8 MovingObject_Internal => _internal;
+        public aua MovingObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public MovingObject(at8 instance) : base(instance)
+        public MovingObject(aua instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator at8(MovingObject instance)
+        public static implicit operator aua(MovingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MovingObject(at8 instance)
+        public static implicit operator MovingObject(aua instance)
         {
             return new MovingObject(instance);
         }

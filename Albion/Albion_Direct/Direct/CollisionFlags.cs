@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: afh.a */
+    /* Internal type: afj.a */
     public enum CollisionFlags
     {
         Terrain = 0,
@@ -28,12 +28,12 @@ namespace Albion_Direct
     
     public static class CollisionFlagsExtensions
     {
-        public static afh.a ToInternal(this CollisionFlags instance)
+        public static afj.a ToInternal(this CollisionFlags instance)
         {
-            return (afh.a)instance;
+            return (afj.a)instance;
         }
         
-        public static CollisionFlags ToWrapped(this afh.a instance)
+        public static CollisionFlags ToWrapped(this afj.a instance)
         {
             return (CollisionFlags)instance;
         }

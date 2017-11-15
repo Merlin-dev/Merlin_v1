@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aln */
+    /* Internal type: alp */
     public partial class AgentDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aln _internal;
+        private alp _internal;
         
         #region Properties
         
-        public aln AgentDescriptor_Internal => _internal;
+        public alp AgentDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public AgentDescriptor(aln instance)
+        public AgentDescriptor(alp instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aln(AgentDescriptor instance)
+        public static implicit operator alp(AgentDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator AgentDescriptor(aln instance)
+        public static implicit operator AgentDescriptor(alp instance)
         {
             return new AgentDescriptor(instance);
         }

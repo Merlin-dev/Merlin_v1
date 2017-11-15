@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: adu */
+    /* Internal type: adw */
     public partial class FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private adu _internal;
+        private adw _internal;
         
         #region Properties
         
-        public adu FightingAttributes_Internal => _internal;
+        public adw FightingAttributes_Internal => _internal;
         
         #endregion
         
@@ -50,7 +50,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FightingAttributes(adu instance)
+        public FightingAttributes(adw instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator adu(FightingAttributes instance)
+        public static implicit operator adw(FightingAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingAttributes(adu instance)
+        public static implicit operator FightingAttributes(adw instance)
         {
             return new FightingAttributes(instance);
         }

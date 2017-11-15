@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: al1.TerritoryType */
+    /* Internal type: al3.TerritoryType */
     public enum TerritoryType
     {
         NORMAL = 0,
@@ -24,12 +24,12 @@ namespace Albion_Direct
     
     public static class TerritoryTypeExtensions
     {
-        public static al1.TerritoryType ToInternal(this TerritoryType instance)
+        public static al3.TerritoryType ToInternal(this TerritoryType instance)
         {
-            return (al1.TerritoryType)instance;
+            return (al3.TerritoryType)instance;
         }
         
-        public static TerritoryType ToWrapped(this al1.TerritoryType instance)
+        public static TerritoryType ToWrapped(this al3.TerritoryType instance)
         {
             return (TerritoryType)instance;
         }

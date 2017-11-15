@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aw2 */
+    /* Internal type: aw4 */
     public partial class CastSpellEventHandler
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aw2 _internal;
+        private aw4 _internal;
         
         #region Properties
         
-        public aw2 CastSpellEventHandler_Internal => _internal;
+        public aw4 CastSpellEventHandler_Internal => _internal;
         
         #endregion
         
@@ -43,7 +43,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public CastSpellEventHandler(aw2 instance)
+        public CastSpellEventHandler(aw4 instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aw2(CastSpellEventHandler instance)
+        public static implicit operator aw4(CastSpellEventHandler instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CastSpellEventHandler(aw2 instance)
+        public static implicit operator CastSpellEventHandler(aw4 instance)
         {
             return new CastSpellEventHandler(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a28 */
+    /* Internal type: a3a */
     public partial class SilverObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a28 _internal;
+        private a3a _internal;
         
         #region Properties
         
-        public a28 SilverObject_Internal => _internal;
+        public a3a SilverObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public SilverObject(a28 instance) : base(instance)
+        public SilverObject(a3a instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a28(SilverObject instance)
+        public static implicit operator a3a(SilverObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SilverObject(a28 instance)
+        public static implicit operator SilverObject(a3a instance)
         {
             return new SilverObject(instance);
         }

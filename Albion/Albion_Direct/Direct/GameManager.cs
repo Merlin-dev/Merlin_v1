@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a92 */
+    /* Internal type: a94 */
     public partial class GameManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a92 _internal;
+        private a94 _internal;
         
         #region Properties
         
-        public a92 GameManager_Internal => _internal;
+        public a94 GameManager_Internal => _internal;
         
         #endregion
         
@@ -37,18 +37,18 @@ namespace Albion_Direct
         
         #region Methods
         
-        public static GameManager GetInstance() => a92.s();
+        public static GameManager GetInstance() => a94.s();
         public LandscapeManager GetLandscapeManager() => _internal.z();
         public LocalPlayerCharacterView GetLocalPlayerCharacterView() => _internal.v();
         public GameState GetState() => _internal.w().ToWrapped();
-        public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((atf)A_0);
+        public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((ath)A_0);
         public SimulationObjectView GetView(long A_0) => _internal.a((long)A_0);
         
         #endregion
         
         #region Constructor
         
-        public GameManager(a92 instance)
+        public GameManager(a94 instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a92(GameManager instance)
+        public static implicit operator a94(GameManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GameManager(a92 instance)
+        public static implicit operator GameManager(a94 instance)
         {
             return new GameManager(instance);
         }

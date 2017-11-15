@@ -15,17 +15,17 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ald */
+    /* Internal type: alf */
     public partial struct Duration
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private ald _internal;
+        private alf _internal;
         
         #region Properties
         
-        public ald Duration_Internal => _internal;
+        public alf Duration_Internal => _internal;
         
         #endregion
         
@@ -41,7 +41,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public Duration(ald instance)
+        public Duration(alf instance)
         {
             _internal = instance;
         }
@@ -55,12 +55,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ald(Duration instance)
+        public static implicit operator alf(Duration instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Duration(ald instance)
+        public static implicit operator Duration(alf instance)
         {
             return new Duration(instance);
         }

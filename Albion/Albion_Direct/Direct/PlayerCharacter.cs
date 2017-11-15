@@ -17,18 +17,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ayq */
+    /* Internal type: ays */
     public partial class PlayerCharacter : FightingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ayq _internal;
+        private ays _internal;
         
         #region Properties
         
-        public ayq PlayerCharacter_Internal => _internal;
+        public ays PlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -45,16 +45,16 @@ namespace Albion_Direct
         public bool GetIsMounted() => _internal.vx();
         public bool GetIsMounting() => _internal.v9();
         public MountItemDescriptor GetMount() => _internal.vy();
-        public ObservableRange<aec> GetMountHealth() => _internal.vz();
+        public ObservableRange<aee> GetMountHealth() => _internal.vz();
         public PlayerCharacterDescriptor GetPlayerDescriptor() => _internal.vs();
-        public ObservableRange<aea> GetReputation() => _internal.v0();
+        public ObservableRange<aec> GetReputation() => _internal.v0();
         public Guid GetUid() => _internal.@as();
         
         #endregion
         
         #region Constructor
         
-        public PlayerCharacter(ayq instance) : base(instance)
+        public PlayerCharacter(ays instance) : base(instance)
         {
             _internal = instance;
         }
@@ -68,12 +68,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ayq(PlayerCharacter instance)
+        public static implicit operator ays(PlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PlayerCharacter(ayq instance)
+        public static implicit operator PlayerCharacter(ays instance)
         {
             return new PlayerCharacter(instance);
         }

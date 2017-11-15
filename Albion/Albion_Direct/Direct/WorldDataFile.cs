@@ -16,18 +16,18 @@ using System.Linq;
 
 namespace Albion_Direct
 {
-    /* Internal type: al2 */
+    /* Internal type: al4 */
     public partial class WorldDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private al2 _internal;
+        private al4 _internal;
         
         #region Properties
         
-        public al2 WorldDataFile_Internal => _internal;
+        public al4 WorldDataFile_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public WorldDataFile(al2 instance) : base(instance)
+        public WorldDataFile(al4 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator al2(WorldDataFile instance)
+        public static implicit operator al4(WorldDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator WorldDataFile(al2 instance)
+        public static implicit operator WorldDataFile(al4 instance)
         {
             return new WorldDataFile(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a1v */
+    /* Internal type: a1x */
     public partial class ActionBuildingObject : BuildingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
 
-        private a1v _internal;
+        private a1x _internal;
 
         #region Properties
 
-        public a1v ActionBuildingObject_Internal => _internal;
+        public a1x ActionBuildingObject_Internal => _internal;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace Albion_Direct
 
         #region Constructor
 
-        public ActionBuildingObject(a1v instance) : base(instance)
+        public ActionBuildingObject(a1x instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
 
         #region Conversion
 
-        public static implicit operator a1v(ActionBuildingObject instance)
+        public static implicit operator a1x(ActionBuildingObject instance)
         {
             return instance._internal;
         }
 
-        public static implicit operator ActionBuildingObject(a1v instance)
+        public static implicit operator ActionBuildingObject(a1x instance)
         {
             return new ActionBuildingObject(instance);
         }

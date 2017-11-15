@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: adv */
+    /* Internal type: adx */
     public partial class MobCharacterAttributes : FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private adv _internal;
+        private adx _internal;
         
         #region Properties
         
-        public adv MobCharacterAttributes_Internal => _internal;
+        public adx MobCharacterAttributes_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public MobCharacterAttributes(adv instance) : base(instance)
+        public MobCharacterAttributes(adx instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator adv(MobCharacterAttributes instance)
+        public static implicit operator adx(MobCharacterAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MobCharacterAttributes(adv instance)
+        public static implicit operator MobCharacterAttributes(adx instance)
         {
             return new MobCharacterAttributes(instance);
         }

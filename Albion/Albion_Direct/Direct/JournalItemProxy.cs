@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: att */
+    /* Internal type: atv */
     public partial class JournalItemProxy : DurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private att _internal;
+        private atv _internal;
         
         #region Properties
         
-        public att JournalItemProxy_Internal => _internal;
+        public atv JournalItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public JournalItemProxy(att instance) : base(instance)
+        public JournalItemProxy(atv instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator att(JournalItemProxy instance)
+        public static implicit operator atv(JournalItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator JournalItemProxy(att instance)
+        public static implicit operator JournalItemProxy(atv instance)
         {
             return new JournalItemProxy(instance);
         }

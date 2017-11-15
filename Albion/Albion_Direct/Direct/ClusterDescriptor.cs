@@ -17,18 +17,18 @@ using System.Linq;
 
 namespace Albion_Direct
 {
-    /* Internal type: alw */
+    /* Internal type: aly */
     public partial class ClusterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private alw _internal;
+        private aly _internal;
         
         #region Properties
         
-        public alw ClusterDescriptor_Internal => _internal;
+        public aly ClusterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -55,7 +55,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ClusterDescriptor(alw instance)
+        public ClusterDescriptor(aly instance)
         {
             _internal = instance;
         }
@@ -69,12 +69,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator alw(ClusterDescriptor instance)
+        public static implicit operator aly(ClusterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClusterDescriptor(alw instance)
+        public static implicit operator ClusterDescriptor(aly instance)
         {
             return new ClusterDescriptor(instance);
         }

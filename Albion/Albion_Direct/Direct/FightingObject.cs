@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aua */
+    /* Internal type: auc */
     public partial class FightingObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aua _internal;
+        private auc _internal;
         
         #region Properties
         
-        public aua FightingObject_Internal => _internal;
+        public auc FightingObject_Internal => _internal;
         
         #endregion
         
@@ -38,8 +38,8 @@ namespace Albion_Direct
         #region Methods
         
         public FightingAttributes GetAttributes() => _internal.at();
-        public ObservableRange<aec> GetEnergy() => _internal.w1();
-        public ObservableRange<aec> GetHealth() => _internal.w0();
+        public ObservableRange<aee> GetEnergy() => _internal.w1();
+        public ObservableRange<aee> GetHealth() => _internal.w0();
         public CharacterDescriptor GetCharacterDescriptor() => _internal.w8();
         public bool GetIsAttacking() => _internal.yw();
         public bool GetIsCasting() => _internal.ys();
@@ -52,13 +52,13 @@ namespace Albion_Direct
         public float GetMaxLoad() => _internal.xa();
         public string GetName() => _internal.iu();
         public long GetTargetId() => _internal.w6();
-        public a GetEventHandler<a>() where a: aub => (a)_internal.yi<a>();
+        public a GetEventHandler<a>() where a: aud => (a)_internal.yi<a>();
         
         #endregion
         
         #region Constructor
         
-        public FightingObject(aua instance) : base(instance)
+        public FightingObject(auc instance) : base(instance)
         {
             _internal = instance;
         }
@@ -72,12 +72,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aua(FightingObject instance)
+        public static implicit operator auc(FightingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingObject(aua instance)
+        public static implicit operator FightingObject(auc instance)
         {
             return new FightingObject(instance);
         }

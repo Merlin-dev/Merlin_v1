@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atm */
+    /* Internal type: ato */
     public partial class MountItemProxy : EquipmentItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atm _internal;
+        private ato _internal;
         
         #region Properties
         
-        public atm MountItemProxy_Internal => _internal;
+        public ato MountItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public MountItemProxy(atm instance) : base(instance)
+        public MountItemProxy(ato instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atm(MountItemProxy instance)
+        public static implicit operator ato(MountItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MountItemProxy(atm instance)
+        public static implicit operator MountItemProxy(ato instance)
         {
             return new MountItemProxy(instance);
         }

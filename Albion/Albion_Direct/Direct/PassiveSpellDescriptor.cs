@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aeh */
+    /* Internal type: aej */
     public partial class PassiveSpellDescriptor : SpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aeh _internal;
+        private aej _internal;
         
         #region Properties
         
-        public aeh PassiveSpellDescriptor_Internal => _internal;
+        public aej PassiveSpellDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public PassiveSpellDescriptor(aeh instance) : base(instance)
+        public PassiveSpellDescriptor(aej instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aeh(PassiveSpellDescriptor instance)
+        public static implicit operator aej(PassiveSpellDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PassiveSpellDescriptor(aeh instance)
+        public static implicit operator PassiveSpellDescriptor(aej instance)
         {
             return new PassiveSpellDescriptor(instance);
         }

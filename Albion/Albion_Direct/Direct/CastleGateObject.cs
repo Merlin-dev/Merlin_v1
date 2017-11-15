@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a1w */
+    /* Internal type: a1y */
     public partial class CastleGateObject : BuildingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a1w _internal;
+        private a1y _internal;
         
         #region Properties
         
-        public a1w CastleGateObject_Internal => _internal;
+        public a1y CastleGateObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public CastleGateObject(a1w instance) : base(instance)
+        public CastleGateObject(a1y instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a1w(CastleGateObject instance)
+        public static implicit operator a1y(CastleGateObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CastleGateObject(a1w instance)
+        public static implicit operator CastleGateObject(a1y instance)
         {
             return new CastleGateObject(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atn */
+    /* Internal type: atp */
     public partial class DurableItemObject : ItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atn _internal;
+        private atp _internal;
         
         #region Properties
         
-        public atn DurableItemObject_Internal => _internal;
+        public atp DurableItemObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public DurableItemObject(atn instance) : base(instance)
+        public DurableItemObject(atp instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atn(DurableItemObject instance)
+        public static implicit operator atp(DurableItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator DurableItemObject(atn instance)
+        public static implicit operator DurableItemObject(atp instance)
         {
             return new DurableItemObject(instance);
         }

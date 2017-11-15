@@ -20,11 +20,11 @@ namespace Albion_Direct
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
 
-        private afl _internal;
+        private afn _internal;
 
         #region Properties
 
-        public afl ActionPoint_Internal => _internal;
+        public afn ActionPoint_Internal => _internal;
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace Albion_Direct
 
         #region Constructor
 
-        public ActionPoint(afl instance)
+        public ActionPoint(afn instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Albion_Direct
 
         #region Conversion
 
-        public static implicit operator afl(ActionPoint instance)
+        public static implicit operator afn(ActionPoint instance)
         {
             return instance._internal;
         }
 
-        public static implicit operator ActionPoint(afl instance)
+        public static implicit operator ActionPoint(afn instance)
         {
             return new ActionPoint(instance);
         }

@@ -15,17 +15,17 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: og */
+    /* Internal type: oh */
     public partial struct Number
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private og _internal;
+        private oh _internal;
         
         #region Properties
         
-        public og Number_Internal => _internal;
+        public oh Number_Internal => _internal;
         
         #endregion
         
@@ -36,9 +36,9 @@ namespace Albion_Direct
         
         #region Methods
         
-        public static Number FromDouble(System.Double A_0) => og.e((System.Double)A_0);
-        public static Number FromInt64(long A_0) => og.f((long)A_0);
-        public static Number FromRaw(long A_0) => og.e((long)A_0);
+        public static Number FromDouble(System.Double A_0) => oh.e((System.Double)A_0);
+        public static Number FromInt64(long A_0) => oh.f((long)A_0);
+        public static Number FromRaw(long A_0) => oh.e((long)A_0);
         public long GetFractionalPart() => _internal.i();
         public System.Double GetFractions() => _internal.j();
         public long GetIntegerPart() => _internal.h();
@@ -50,7 +50,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public Number(og instance)
+        public Number(oh instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator og(Number instance)
+        public static implicit operator oh(Number instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Number(og instance)
+        public static implicit operator Number(oh instance)
         {
             return new Number(instance);
         }

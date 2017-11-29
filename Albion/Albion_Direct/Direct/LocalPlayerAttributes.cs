@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ady */
+    /* Internal type: adz */
     public partial class LocalPlayerAttributes : FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ady _internal;
+        private adz _internal;
         
         #region Properties
         
-        public ady LocalPlayerAttributes_Internal => _internal;
+        public adz LocalPlayerAttributes_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public LocalPlayerAttributes(ady instance) : base(instance)
+        public LocalPlayerAttributes(adz instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ady(LocalPlayerAttributes instance)
+        public static implicit operator adz(LocalPlayerAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LocalPlayerAttributes(ady instance)
+        public static implicit operator LocalPlayerAttributes(adz instance)
         {
             return new LocalPlayerAttributes(instance);
         }

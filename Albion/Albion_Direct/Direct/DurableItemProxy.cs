@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atm */
+    /* Internal type: atn */
     public partial class DurableItemProxy : ItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atm _internal;
+        private atn _internal;
         
         #region Properties
         
-        public atm DurableItemProxy_Internal => _internal;
+        public atn DurableItemProxy_Internal => _internal;
         
         #endregion
         
@@ -43,7 +43,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public DurableItemProxy(atm instance) : base(instance)
+        public DurableItemProxy(atn instance) : base(instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atm(DurableItemProxy instance)
+        public static implicit operator atn(DurableItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator DurableItemProxy(atm instance)
+        public static implicit operator DurableItemProxy(atn instance)
         {
             return new DurableItemProxy(instance);
         }

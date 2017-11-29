@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: al3 */
+    /* Internal type: al4 */
     public partial class TerritoryDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private al3 _internal;
+        private al4 _internal;
         
         #region Properties
         
-        public al3 TerritoryDescriptor_Internal => _internal;
+        public al4 TerritoryDescriptor_Internal => _internal;
         
         #endregion
         
@@ -46,7 +46,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public TerritoryDescriptor(al3 instance)
+        public TerritoryDescriptor(al4 instance)
         {
             _internal = instance;
         }
@@ -60,12 +60,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator al3(TerritoryDescriptor instance)
+        public static implicit operator al4(TerritoryDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TerritoryDescriptor(al3 instance)
+        public static implicit operator TerritoryDescriptor(al4 instance)
         {
             return new TerritoryDescriptor(instance);
         }

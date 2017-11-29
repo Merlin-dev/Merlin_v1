@@ -17,18 +17,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: amy */
+    /* Internal type: amz */
     public partial class ObjectManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private amy _internal;
+        private amz _internal;
         
         #region Properties
         
-        public amy ObjectManager_Internal => _internal;
+        public amz ObjectManager_Internal => _internal;
         
         #endregion
         
@@ -39,42 +39,42 @@ namespace Albion_Direct
         
         #region Methods
         
-        public ItemProxy CreateItemProxy(ItemObject A_0) => _internal.a((ati)A_0);
+        public ItemProxy CreateItemProxy(ItemObject A_0) => _internal.a((atj)A_0);
         public CollisionManager GetCollisionManager() => _internal.x();
         public ClusterDescriptor GetCurrentCluster() => _internal.v();
-        public static ObjectManager GetInstance() => amy.a();
+        public static ObjectManager GetInstance() => amz.a();
         public ItemProxy GetItemProxy(long A_0) => _internal.u((long)A_0);
         public LocalPlayerCharacter GetLocalPlayerCharacter() => _internal.ab();
         public SimulationObject GetObject(long A_0) => _internal.a((long)A_0);
-        public Dictionary<long, ath> GetObjectMap() => (Dictionary<long, ath>)_methodReflectionPool[0].Invoke(_internal,new object[]{});
+        public Dictionary<long, ati> GetObjectMap() => (Dictionary<long, ati>)_methodReflectionPool[0].Invoke(_internal,new object[]{});
         public IEnumerable GetObjects() => _internal.aa();
-        public ICollection<SimulationObject> GetObjects<a>() where a: ath => (ICollection<SimulationObject>)_internal.am<a>();
+        public ICollection<SimulationObject> GetObjects<a>() where a: ati => (ICollection<SimulationObject>)_internal.am<a>();
         public PlayerCharacter GetPlayerCharacter(Guid A_0) => _internal.a((Guid)A_0);
         
         #endregion
         
         #region Constructor
         
-        public ObjectManager(amy instance)
+        public ObjectManager(amz instance)
         {
             _internal = instance;
         }
         
         static ObjectManager()
         {
-            _methodReflectionPool.Add(typeof(amy).GetMethod("ak", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
+            _methodReflectionPool.Add(typeof(amz).GetMethod("ak", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator amy(ObjectManager instance)
+        public static implicit operator amz(ObjectManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ObjectManager(amy instance)
+        public static implicit operator ObjectManager(amz instance)
         {
             return new ObjectManager(instance);
         }

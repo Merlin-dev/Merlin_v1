@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atj */
+    /* Internal type: atk */
     public partial class SimpleItemObject : ItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atj _internal;
+        private atk _internal;
         
         #region Properties
         
-        public atj SimpleItemObject_Internal => _internal;
+        public atk SimpleItemObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public SimpleItemObject(atj instance) : base(instance)
+        public SimpleItemObject(atk instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atj(SimpleItemObject instance)
+        public static implicit operator atk(SimpleItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SimpleItemObject(atj instance)
+        public static implicit operator SimpleItemObject(atk instance)
         {
             return new SimpleItemObject(instance);
         }

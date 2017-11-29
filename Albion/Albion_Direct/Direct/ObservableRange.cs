@@ -16,18 +16,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aef<a> */
-    public partial class ObservableRange<a> where a: aeb
+    /* Internal type: aeg<a> */
+    public partial class ObservableRange<a> where a: aec
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aef<a> _internal;
+        private aeg<a> _internal;
         
         #region Properties
         
-        public aef<a> ObservableRange_Internal => _internal;
+        public aeg<a> ObservableRange_Internal => _internal;
         
         #endregion
         
@@ -48,26 +48,26 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ObservableRange(aef<a> instance)
+        public ObservableRange(aeg<a> instance)
         {
             _internal = instance;
         }
         
         static ObservableRange()
         {
-            _methodReflectionPool.Add(typeof(aef<a>).GetMethod("k", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(float)}, null));
+            _methodReflectionPool.Add(typeof(aeg<a>).GetMethod("k", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(float)}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator aef<a>(ObservableRange<a> instance)
+        public static implicit operator aeg<a>(ObservableRange<a> instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ObservableRange<a>(aef<a> instance)
+        public static implicit operator ObservableRange<a>(aeg<a> instance)
         {
             return new ObservableRange<a>(instance);
         }

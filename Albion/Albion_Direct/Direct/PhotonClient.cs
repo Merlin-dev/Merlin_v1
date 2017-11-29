@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: as6 */
+    /* Internal type: as7 */
     public partial class PhotonClient
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private as6 _internal;
+        private as7 _internal;
         
         #region Properties
         
-        public as6 PhotonClient_Internal => _internal;
+        public as7 PhotonClient_Internal => _internal;
         
         #endregion
         
@@ -38,16 +38,16 @@ namespace Albion_Direct
         #region Methods
         
         public GameData GetGameData() => _internal.an();
-        public ap7 GetGamePeer() => _internal.ap();
-        public ap6 GetChatPeer() => _internal.ar();
-        public static PhotonClient GetInstance() => as6.aj();
-        public ap8 GetLoginPeer() => _internal.aq();
+        public ap8 GetGamePeer() => _internal.ap();
+        public ap7 GetChatPeer() => _internal.ar();
+        public static PhotonClient GetInstance() => as7.aj();
+        public ap9 GetLoginPeer() => _internal.aq();
         
         #endregion
         
         #region Constructor
         
-        public PhotonClient(as6 instance)
+        public PhotonClient(as7 instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator as6(PhotonClient instance)
+        public static implicit operator as7(PhotonClient instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PhotonClient(as6 instance)
+        public static implicit operator PhotonClient(as7 instance)
         {
             return new PhotonClient(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aff */
+    /* Internal type: afg */
     public partial class PlayerCharacterDescriptor : CharacterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aff _internal;
+        private afg _internal;
         
         #region Properties
         
-        public aff PlayerCharacterDescriptor_Internal => _internal;
+        public afg PlayerCharacterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -45,7 +45,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public PlayerCharacterDescriptor(aff instance) : base(instance)
+        public PlayerCharacterDescriptor(afg instance) : base(instance)
         {
             _internal = instance;
         }
@@ -59,12 +59,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aff(PlayerCharacterDescriptor instance)
+        public static implicit operator afg(PlayerCharacterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PlayerCharacterDescriptor(aff instance)
+        public static implicit operator PlayerCharacterDescriptor(afg instance)
         {
             return new PlayerCharacterDescriptor(instance);
         }

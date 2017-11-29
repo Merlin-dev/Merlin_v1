@@ -1,4 +1,5 @@
 using Stateless;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -76,7 +77,7 @@ namespace Albion_Direct.Pathing
 
                         if (_completedpath.Count < 2)
                         {
-                            Core.Log("moving to random Location");
+                            //Core.Log("moving to random Location");
                             Vector3 randomSpot = new Vector3(UnityEngine.Random.Range(-100f, 100f), 0, UnityEngine.Random.Range(-100f, 100f)) + _player.transform.position;
                             _completedpath.Add(randomSpot);
                             break;
@@ -90,7 +91,7 @@ namespace Albion_Direct.Pathing
 
                         if (distancePreviousToNode < minimumDistance)
                         {
-                            Core.Log("Reached Previous Node");
+                            //Core.Log("Reached Previous Node");
 
                         }
                         else
@@ -125,7 +126,7 @@ namespace Albion_Direct.Pathing
                         {
                             _state.Fire(Trigger.Stuck);
                             _pauseTimer = DateTime.Now + TimeSpan.FromSeconds(0.5);
-                            Core.Log("Stuck Cluster Pathing Request");
+                            //Core.Log("Stuck Cluster Pathing Request");
                             break;
                         }
                         var currentNode = _path[0];

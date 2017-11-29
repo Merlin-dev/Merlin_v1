@@ -16,18 +16,18 @@ using System.Linq;
 
 namespace Albion_Direct
 {
-    /* Internal type: atf */
+    /* Internal type: atg */
     public partial class Guild
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atf _internal;
+        private atg _internal;
         
         #region Properties
         
-        public atf Guild_Internal => _internal;
+        public atg Guild_Internal => _internal;
         
         #endregion
         
@@ -44,7 +44,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public Guild(atf instance)
+        public Guild(atg instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atf(Guild instance)
+        public static implicit operator atg(Guild instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Guild(atf instance)
+        public static implicit operator Guild(atg instance)
         {
             return new Guild(instance);
         }

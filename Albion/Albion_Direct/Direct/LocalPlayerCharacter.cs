@@ -18,18 +18,18 @@ using Albion.Common.Time;
 
 namespace Albion_Direct
 {
-    /* Internal type: ayt */
+    /* Internal type: ayu */
     public partial class LocalPlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ayt _internal;
+        private ayu _internal;
         
         #region Properties
         
-        public ayt LocalPlayerCharacter_Internal => _internal;
+        public ayu LocalPlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -40,7 +40,7 @@ namespace Albion_Direct
         
         #region Methods
         
-        public ObservableRange<aeb> GetCraftingFocus() => _internal.s0();
+        public ObservableRange<aec> GetCraftingFocus() => _internal.s0();
         public Point2 GetDestination() => _internal.uc();
         public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.t8();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hn((byte)A_0);
@@ -51,7 +51,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public LocalPlayerCharacter(ayt instance) : base(instance)
+        public LocalPlayerCharacter(ayu instance) : base(instance)
         {
             _internal = instance;
         }
@@ -65,12 +65,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ayt(LocalPlayerCharacter instance)
+        public static implicit operator ayu(LocalPlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LocalPlayerCharacter(ayt instance)
+        public static implicit operator LocalPlayerCharacter(ayu instance)
         {
             return new LocalPlayerCharacter(instance);
         }

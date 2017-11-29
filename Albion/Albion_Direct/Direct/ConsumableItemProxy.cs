@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atu */
+    /* Internal type: atv */
     public partial class ConsumableItemProxy : SimpleItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atu _internal;
+        private atv _internal;
         
         #region Properties
         
-        public atu ConsumableItemProxy_Internal => _internal;
+        public atv ConsumableItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ConsumableItemProxy(atu instance) : base(instance)
+        public ConsumableItemProxy(atv instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atu(ConsumableItemProxy instance)
+        public static implicit operator atv(ConsumableItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ConsumableItemProxy(atu instance)
+        public static implicit operator ConsumableItemProxy(atv instance)
         {
             return new ConsumableItemProxy(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aub */
+    /* Internal type: auc */
     public partial class SpellEffectAreaObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aub _internal;
+        private auc _internal;
         
         #region Properties
         
-        public aub SpellEffectAreaObject_Internal => _internal;
+        public auc SpellEffectAreaObject_Internal => _internal;
         
         #endregion
         
@@ -43,7 +43,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public SpellEffectAreaObject(aub instance) : base(instance)
+        public SpellEffectAreaObject(auc instance) : base(instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aub(SpellEffectAreaObject instance)
+        public static implicit operator auc(SpellEffectAreaObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellEffectAreaObject(aub instance)
+        public static implicit operator SpellEffectAreaObject(auc instance)
         {
             return new SpellEffectAreaObject(instance);
         }

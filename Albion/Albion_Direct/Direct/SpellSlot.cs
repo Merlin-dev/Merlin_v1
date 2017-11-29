@@ -17,18 +17,18 @@ using Albion.Common.Time;
 
 namespace Albion_Direct
 {
-    /* Internal type: ae7 */
+    /* Internal type: ae8 */
     public partial class SpellSlot
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ae7 _internal;
+        private ae8 _internal;
         
         #region Properties
         
-        public ae7 SpellSlot_Internal => _internal;
+        public ae8 SpellSlot_Internal => _internal;
         
         #endregion
         
@@ -47,7 +47,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public SpellSlot(ae7 instance)
+        public SpellSlot(ae8 instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ae7(SpellSlot instance)
+        public static implicit operator ae8(SpellSlot instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellSlot(ae7 instance)
+        public static implicit operator SpellSlot(ae8 instance)
         {
             return new SpellSlot(instance);
         }

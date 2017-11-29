@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: nv */
+    /* Internal type: nw */
     public partial class CompoundTileDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private nv _internal;
+        private nw _internal;
         
         #region Properties
         
-        public nv CompoundTileDescriptor_Internal => _internal;
+        public nw CompoundTileDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public CompoundTileDescriptor(nv instance)
+        public CompoundTileDescriptor(nw instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator nv(CompoundTileDescriptor instance)
+        public static implicit operator nw(CompoundTileDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CompoundTileDescriptor(nv instance)
+        public static implicit operator CompoundTileDescriptor(nw instance)
         {
             return new CompoundTileDescriptor(instance);
         }

@@ -130,9 +130,16 @@ namespace Merlin.Profiles.Gatherer
         private void DrawGatheringUI_TextFields()
         {
             GUILayout.Label("Selected cluster for gathering:");
-            var currentClusterInfo = _world.GetCurrentCluster() != null ? _world.GetCurrentCluster().GetName() : "Unknown";
-            var selectedGatherCluster = string.IsNullOrEmpty(_selectedGatherCluster) ? currentClusterInfo : _selectedGatherCluster;
-            _selectedGatherCluster = GUILayout.TextField(selectedGatherCluster);
+            GUILayout.BeginHorizontal();
+            _selectedGatherCluster = GUILayout.TextField(_selectedGatherCluster);
+            if (GUILayout.Button("Use Current Cluster", GUILayout.Width(160)))
+            {
+                ClusterDescriptor currentClusterInfo = _world.GetCurrentCluster();
+                if (currentClusterInfo != null) {
+                    _selectedGatherCluster = _world.GetCurrentCluster().GetName();
+                }
+            }
+            GUILayout.EndHorizontal();
         }
 
         private void DrawGatheringUIRight()

@@ -20,6 +20,8 @@ namespace Merlin.Profiles.Gatherer
         private bool _isUIshown;
         private bool _showESP;
 
+        private string _lastSelectedGatherCluster = "";
+        private int _lastSelectedGatherClusterLength = 0;
         #endregion Fields
 
         #region Properties
@@ -127,11 +129,38 @@ namespace Merlin.Profiles.Gatherer
             _selectedMininumTierIndex = GUILayout.SelectionGrid(_selectedMininumTierIndex, TierNames, TierNames.Length);
         }
 
+        private void DrawGatheringUI_AutocompleteSelectedCluster()
+        {
+            if (_selectedGatherCluster.Length >= 3
+                && _lastSelectedGatherClusterLength <= _selectedGatherCluster.Length
+                && _selectedGatherCluster != _lastSelectedGatherCluster)
+            {
+                string[] clusterNames = GameGui.Instance.WorldMap.GetClusters().Values.Select(x => ((ClusterDescriptor)x.Info).GetName()).ToArray();
+                string autoComplete = Array.Find(clusterNames, x => (x.ToLower().StartsWith(_selectedGatherCluster.ToLower())));
+                if (!string.IsNullOrEmpty(autoComplete))
+                {
+                    _selectedGatherCluster = autoComplete;
+
+                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+                    if (editor != null)
+                    {
+                        editor.text = _selectedGatherCluster; // Internal text is only updated next frame.
+                        editor.SelectTextEnd();
+                    }
+                }
+            }
+        }
+
         private void DrawGatheringUI_TextFields()
         {
             GUILayout.Label("Selected cluster for gathering:");
             GUILayout.BeginHorizontal();
+
+            _lastSelectedGatherCluster = _selectedGatherCluster;
+            _lastSelectedGatherClusterLength = _selectedGatherCluster.Length;
             _selectedGatherCluster = GUILayout.TextField(_selectedGatherCluster);
+            DrawGatheringUI_AutocompleteSelectedCluster();
+
             if (GUILayout.Button("Use Current Cluster", GUILayout.Width(160)))
             {
                 ClusterDescriptor currentClusterInfo = _world.GetCurrentCluster();

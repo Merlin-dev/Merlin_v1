@@ -164,14 +164,34 @@ namespace Merlin.Profiles.Gatherer
                 var keys = groupedKeys[i].ToArray();
 
                 GUILayout.BeginVertical();
-                for (var j = 0; j < keys.Length; j++)
+                if (GUILayout.Button("Enable All"))
                 {
-                    var info = keys[j];
-                    if (info.Tier < selectedMinimumTier)
-                        _gatherInformations[info] = false;
-                    else
-                        _gatherInformations[info] = GUILayout.Toggle(_gatherInformations[info], info.ToString());
+                    for (var j = 0; j < keys.Length; j++)
+                    {
+                        var info = keys[j];
+                        _gatherInformations[info] = info.Tier > selectedMinimumTier;
+                    }
                 }
+                else if (GUILayout.Button("Disable All"))
+                {
+                    for (var j = 0; j < keys.Length; j++)
+                    {
+                        var info = keys[j];
+                        _gatherInformations[info] = false;
+                    }
+                }
+                else
+                {
+                    for (var j = 0; j < keys.Length; j++)
+                    {
+                        var info = keys[j];
+                        if (info.Tier < selectedMinimumTier)
+                            _gatherInformations[info] = false;
+                        else
+                            _gatherInformations[info] = GUILayout.Toggle(_gatherInformations[info], info.ToString());
+                    }
+                }
+
                 GUILayout.EndVertical();
                 GUILayout.Space(SpaceBetweenItems);
             }

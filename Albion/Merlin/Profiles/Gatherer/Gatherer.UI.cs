@@ -123,7 +123,7 @@ namespace Merlin.Profiles.Gatherer
         private void DrawGatheringUI_SelectionGrids()
         {
             GUILayout.Label("Selected city cluster for banking:");
-            _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, TownClusterNames, TownClusterNames.Length);
+            _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, TownClusterNames, 4);
 
             GUILayout.Label("Selected minimum resource tier of interest:");
             _selectedMininumTierIndex = GUILayout.SelectionGrid(_selectedMininumTierIndex, TierNames, TierNames.Length);

@@ -44,6 +44,7 @@ namespace Merlin
 
         public static void Unload()
         {
+            Albion_Direct.Logger.RemoveLogCallback(_coreObject.GetComponent<Console>().ManualLog);
             if (_activeProfile != null)
                 _activeProfile.enabled = false;
 

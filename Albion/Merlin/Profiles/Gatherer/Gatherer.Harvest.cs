@@ -237,7 +237,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_localPlayerCharacterView.IsHarvesting())
             {
-                Core.Log("Currently harvesting.Wait until done.");
+                Core.LogOnce("Currently harvesting. Wait until done.");
                 return;
             }
 

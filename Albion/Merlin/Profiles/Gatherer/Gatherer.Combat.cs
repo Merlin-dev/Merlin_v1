@@ -34,7 +34,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_combatCooldown > 0)
             {
-                Core.Log("Combat Cooldown > 0.");
+                Core.LogOnce("Combat Cooldown > 0.");
                 _combatCooldown -= UnityEngine.Time.deltaTime;
                 return;
             }
@@ -54,7 +54,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
-                Core.Log("You are under attack. Attack the attacker");
+                Core.LogOnce("You are under attack. Attack the attacker");
                 _localPlayerCharacterView.SetSelectedObject(attacker);
                 _localPlayerCharacterView.AttackSelectedObject();
                 return;
@@ -68,7 +68,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_combatPlayer.GetHealth().GetValue() < (_combatPlayer.GetHealth().GetMaximum() * 0.8f))
             {
-                Core.Log("Health below 80%");
+                Core.LogOnce("Health below 80%");
                 var healSpell = _combatSpells.Target(SpellTarget.Self).Category(SpellCategory.Heal);
 
                 if (healSpell.Any())
@@ -101,7 +101,7 @@ namespace Merlin.Profiles.Gatherer
                 var spellToCast = spells.Any() ? spells.First() : null;
                 if (spellToCast == null)
                 {
-                    Core.Log("Spell to Cast == Null. Exit spell cast");
+                    Core.LogOnce("Spell to Cast == Null. Exit spell cast");
                     return false;
                 }
 

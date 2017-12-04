@@ -11,6 +11,7 @@ namespace Merlin
         private static Profile _activeProfile;
 
         public static LineRenderer lineRenderer;
+        private static string _lastLogOnceMessage = "";
 
         public static void Load()
         {
@@ -63,6 +64,15 @@ namespace Merlin
         public static void Log(Exception e)
         {
             Debug.LogException(e);
+        }
+
+        public static void LogOnce(string message)
+        {
+            if (message == _lastLogOnceMessage)
+                return;
+
+            Debug.Log($"[{DateTime.Now}] {message}");
+            _lastLogOnceMessage = message;
         }
 
         public static void Activate(Profile profile)

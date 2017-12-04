@@ -17,8 +17,12 @@ namespace Merlin.Profiles.Gatherer
         {
             var resourceObject = resource.GetHarvestableObject();
 
-            if (!resourceObject.CanLoot(_localPlayerCharacterView) || resourceObject.GetCharges() <= 0 || resourceObject.GetResourceDescriptor().Tier < (int)SelectedMinimumTier)
+            if (!resourceObject.CanLoot(_localPlayerCharacterView)
+                || resourceObject.GetCharges() <= 0
+                || resourceObject.GetResourceDescriptor().Tier < (int)SelectedMinimumTier)
+            {
                 return false;
+            }
 
             Vector3 position = resource.transform.position;
             float terrainHeight = _landscape.GetTerrainHeight(position.c(), out RaycastHit hit);
@@ -58,8 +62,6 @@ namespace Merlin.Profiles.Gatherer
             return false;
         }
         
-         #region StuckProtection - dTormentedSoul
-         /*** StuckProtection BEGIN ***/
          private bool onDebugMode = true;
          private static class previousPlayerInfo
          {
@@ -153,32 +155,17 @@ namespace Merlin.Profiles.Gatherer
              return unstuckCoordinates;
          }
  
-         /*** StuckProtection END ***/
-         #endregion StuckProtection - dTormentedSoul
- 
         public void Harvest()
         {
             if (HandleAttackers())
                 return;
-            
-            #region [dTormentedSoul Area]
-            messageDelayIncrement++;
-            
-            
-            if (onDebugMode && (messageDelayIncrement % messageDelayTrigger == 0))
-            {
-                //_localPlayerCharacterView.CreateTextEffect("Harvest()" + " | " + System.Convert.ToString(_localPlayerCharacterView.GetLocalPlayerCharacter().GetHealth().GetValue()) + "/" + System.Convert.ToString(_localPlayerCharacterView.GetLocalPlayerCharacter().GetHealth().GetMaximum()) + " | " + System.Convert.ToString(previousPlayerInfo.StuckCount) + " | " + (_currentTarget != null ? _currentTarget.name : "none"));
-                messageDelayIncrement = 0;
-            }
-            
+
             if ((_currentTarget != null ? _currentTarget.name : "none") == "none")
                 Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
             
             if (StuckProtection())
                 return;
             
-            #endregion [dTormentedSoul Area]
-
             if (!ValidateTarget(_currentTarget))
             {
                 Core.Log("Resource DepletedSearch for new one.");
@@ -237,7 +224,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_localPlayerCharacterView.IsHarvesting())
             {
-                Core.Log("Currently harvesting.Wait until done.");
+                Core.LogOnce("Currently harvesting. Wait until done.");
                 return;
             }
 

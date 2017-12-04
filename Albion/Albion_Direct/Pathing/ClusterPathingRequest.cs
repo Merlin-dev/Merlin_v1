@@ -21,7 +21,7 @@ namespace Albion_Direct.Pathing
         DateTime _pauseTimer;
         //Moving fields
         private float noMovementThreshold = .0001f;
-        private const int noMovementFrames = 2;
+        private const int noMovementFrames = 30;
         Vector3[] previousLocations = new Vector3[noMovementFrames];
         private bool isMoving;
         #endregion Fields

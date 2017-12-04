@@ -136,6 +136,7 @@
     <Compile Include="Direct\LandscapeManager.cs" />
     <Compile Include="Direct\LocalPlayerAttributes.cs" />
     <Compile Include="Direct\LocalPlayerCharacter.cs" />
+    <Compile Include="Direct\Logger.cs" />
     <Compile Include="Direct\LootObject.cs" />
     <Compile Include="Direct\MobCharacter.cs" />
     <Compile Include="Direct\MobCharacterAttributes.cs" />

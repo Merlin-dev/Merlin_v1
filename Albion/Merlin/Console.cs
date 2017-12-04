@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -145,5 +146,10 @@ public class Console : MonoBehaviour
             stackTrace = stackTrace,
             type = type,
         });
+    }
+
+    public void ManualLog(string message)
+    {
+        HandleLog($"[{DateTime.Now}] {message}", "", LogType.Log);
     }
 }

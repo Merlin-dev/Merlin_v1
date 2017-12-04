@@ -32,7 +32,10 @@ namespace Merlin
                 lineRenderer.material = lineMaterial;
             }
 
-            _coreObject.AddComponent<Console>().enabled = true;
+            Console console = _coreObject.AddComponent<Console>();
+            console.enabled = true;
+            Albion_Direct.Logger.SetLogCallback(console.ManualLog);
+
             var gatherer = _coreObject.AddComponent<Gatherer>();
             Activate(gatherer);
 
@@ -41,6 +44,7 @@ namespace Merlin
 
         public static void Unload()
         {
+            Albion_Direct.Logger.RemoveLogCallback(_coreObject.GetComponent<Console>().ManualLog);
             if (_activeProfile != null)
                 _activeProfile.enabled = false;
 

@@ -61,17 +61,7 @@ namespace Albion_Direct
         public static bool TryFindPath(this LocalPlayerCharacterView instance, AStarPathfinder pathfinder, SimulationObjectView target,
                             StopFunction<Vector2> stopFunction, out List<Vector3> results)
         {
-            results = new List<Vector3>();
-
-            if (instance.TryFindPath(pathfinder, target.transform.position, stopFunction, out results))
-            {
-            }
-            else
-            {
-                return false;
-            }
-
-            return true;
+            return instance.TryFindPath(pathfinder, target.transform.position, stopFunction, out results);
         }
 
         public static bool TryFindPath(this LocalPlayerCharacterView instance, AStarPathfinder pathfinder, Vector3 target,
@@ -90,14 +80,12 @@ namespace Albion_Direct
             if (pathfinder.TryFindPath(startLocation, endLocation, stopFunction, out path, out pivotPoints, true))
             {
                 foreach (var point in path)
+                {
                     results.Add(new Vector3(point.x, landscape.GetTerrainHeight(point.b(), out RaycastHit hit) + 0.5f, point.y));
+                }
+                return true;
             }
-            else
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
     }
 }

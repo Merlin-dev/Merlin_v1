@@ -12,6 +12,7 @@ namespace Merlin.Profiles.Gatherer
         public const double MELEE_ATTACK_RANGE = 2.5;
 
         private ClusterPathingRequest _harvestPathingRequest;
+        private float _finishedDistance = 0f;
 
         public bool ValidateHarvestable(HarvestableObjectView resource)
         {
@@ -97,13 +98,13 @@ namespace Merlin.Profiles.Gatherer
                      }
                      else
                      {
-                         Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                         Profile.UpdateDelay = Profile.DefaultUpdateDelay;
                          return false;
                      }
                  }
                  else
                  {
-                     Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                     Profile.UpdateDelay = Profile.DefaultUpdateDelay;
                      return false;
                  }
              }
@@ -128,7 +129,7 @@ namespace Merlin.Profiles.Gatherer
              }
              else
              {
-                 Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                 Profile.UpdateDelay = Profile.DefaultUpdateDelay;
                  return false;
              }
          }
@@ -161,7 +162,7 @@ namespace Merlin.Profiles.Gatherer
                 return;
 
             if ((_currentTarget != null ? _currentTarget.name : "none") == "none")
-                Profile.UpdateDelay = System.TimeSpan.FromSeconds(0.1d);
+                Profile.UpdateDelay = Profile.DefaultUpdateDelay;
             
             if (StuckProtection())
                 return;
@@ -202,17 +203,19 @@ namespace Merlin.Profiles.Gatherer
             if (HandlePathing(ref _harvestPathingRequest))
                 return;
 
-            var centerDistance = (targetCenter - playerCenter).magnitude;
-            var minDistance = _currentTarget.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents() + 1.5f;
+            float currentDistance = ClusterPathingRequest.GetPlayerDistanceFromTarget(_localPlayerCharacterView, _currentTarget, true);
+            float minDistance = _currentTarget.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents() + 1.5f;
 
-            if (centerDistance >= minDistance)
+            if (currentDistance > _finishedDistance)
             {
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlockedGathering, out List<Vector3> pathing))
                 {
                     Core.Log("Path found, begin travel to resource");
                     Core.lineRenderer.positionCount = pathing.Count;
                     Core.lineRenderer.SetPositions(pathing.ToArray());
-                    _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                    _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing,
+                        UnityEngine.Random.Range(3f, 8f));
+                    _finishedDistance = _harvestPathingRequest.FinishedDistance;
                 }
                 else
                 {
@@ -236,6 +239,9 @@ namespace Merlin.Profiles.Gatherer
             }
 
             Core.Log("[Harvesting] - Interact with resource");
+            if (_localPlayerCharacterView.IsMounted)
+                _localPlayerCharacterView.MountOrDismount();
+
             _localPlayerCharacterView.Interact(resource);
 
             var harvestableObject2 = resource.GetHarvestableObject();

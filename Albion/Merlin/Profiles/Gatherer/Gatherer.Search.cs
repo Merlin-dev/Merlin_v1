@@ -1,5 +1,5 @@
 ﻿using Albion_Direct;
-using Albion_Direct.Pathing;
+using Merlin.Pathing;
 using System;
 using System.Collections.Generic;
 using System.Linq;

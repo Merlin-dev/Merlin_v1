@@ -1,6 +1,6 @@
 ﻿using Albion_Direct;
-using Albion_Direct.Pathing;
-using Albion_Direct.Pathing.Worldmap;
+using Merlin.Pathing;
+using Merlin.Pathing.Worldmap;
 using System.Linq;
 using UnityEngine;
 

@@ -37,7 +37,6 @@ namespace Merlin.Profiles.Gatherer
     public sealed partial class Gatherer : Profile
     {
         DateTime _startDateTime = DateTime.Now;
-        int messageDelayTrigger = 50;
 
         private bool _isRunning = false;
 

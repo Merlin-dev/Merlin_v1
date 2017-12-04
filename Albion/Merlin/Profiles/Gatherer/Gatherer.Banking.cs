@@ -1,6 +1,6 @@
 ﻿using Albion_Direct;
-using Albion_Direct.Pathing;
-using Albion_Direct.Pathing.Worldmap;
+using Merlin.Pathing;
+using Merlin.Pathing.Worldmap;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,8 +2,9 @@ using Stateless;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Albion_Direct;
 
-namespace Albion_Direct.Pathing
+namespace Merlin.Pathing
 {
     public class ClusterPathingRequest
     {
@@ -49,7 +50,7 @@ namespace Albion_Direct.Pathing
             _arrivalDistance = ArrivalDistance + _pathNodeLeeway;
             if (useCollider)
                 _arrivalDistance += _player.GetColliderExtents() + _target.GetColliderExtents();
-            Logger.Log("Arrival distance : " + _arrivalDistance.ToString());
+            Core.Log("Arrival distance : " + _arrivalDistance.ToString());
 
             _path = path;
             _completedpath = new List<Vector3>();
@@ -162,7 +163,7 @@ namespace Albion_Direct.Pathing
                                 }
                                 else
                                 {
-                                    Logger.Log("[ClusterPathingRequest] WARNING : No more path nodes, but we haven't arrived at destination yet.");
+                                    Core.Log("[ClusterPathingRequest] WARNING : No more path nodes, but we haven't arrived at destination yet.");
                                     break;
                                 }
                             }

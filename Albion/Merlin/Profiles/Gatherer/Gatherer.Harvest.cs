@@ -1,5 +1,5 @@
 ﻿using Albion_Direct;
-using Albion_Direct.Pathing;
+using Merlin.Pathing;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,7 +63,6 @@ namespace Merlin.Profiles.Gatherer
             return false;
         }
         
-         private bool onDebugMode = true;
          private static class previousPlayerInfo
          {
              public static float x = 0f;

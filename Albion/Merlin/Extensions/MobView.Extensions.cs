@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Albion_Direct;
 
-namespace Albion_Direct
+namespace Merlin
 {
     public static class MobViewExtensions
     {

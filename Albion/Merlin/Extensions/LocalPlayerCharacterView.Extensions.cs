@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Albion_Direct;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
-namespace Albion_Direct
+namespace Merlin
 {
     public static class LocalPlayerCharacterViewExtensions
     {

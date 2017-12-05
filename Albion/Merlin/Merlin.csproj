@@ -78,6 +78,7 @@
     <Compile Include="Extensions\Enum.Extensions.cs" />
     <Compile Include="Extensions\HarvestableObject.Extensions.cs" />
     <Compile Include="Extensions\HarvestableObjectView.Extensions.cs" />
+    <Compile Include="Extensions\List.Extensions.cs" />
     <Compile Include="Extensions\LocalInputHandler.Extensions.cs" />
     <Compile Include="Extensions\LocalPlayerCharacterView.Extensions.cs" />
     <Compile Include="Extensions\LootObjectView.Extensions.cs" />

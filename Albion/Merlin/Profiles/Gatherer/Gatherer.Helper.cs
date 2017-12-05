@@ -1,11 +1,42 @@
 ﻿using Albion_Direct;
 using Merlin.Pathing;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
+    public static class StuckHelper
+    {
+        struct SpeedValue
+        {
+            public float speed;
+            public DateTime stamp;
+        }
+
+        static readonly TimeSpan _stuckTimeInSeconds = TimeSpan.FromSeconds(0.25);
+        static List<SpeedValue> _previousSpeeds = new List<SpeedValue>();
+        public static bool IsPlayerStuck(LocalPlayerCharacterView player)
+        {
+            if (_previousSpeeds.Back().stamp != DateTime.Now)
+            {
+                _previousSpeeds.Add(new SpeedValue { speed = player.GetMoveSpeed(), stamp = DateTime.Now });
+            }
+
+            DateTime lastValidTime = DateTime.Now.Subtract(_stuckTimeInSeconds);
+            _previousSpeeds.RemoveAll(x => x.stamp < lastValidTime);
+
+            for (int i = 0; i < _previousSpeeds.Count; ++i)
+            {
+                if (_previousSpeeds[i].speed != 0f)
+                    return false;
+            }
+
+            return true;
+        }
+    }
+
     public partial class Gatherer
     {
         public bool HandleAttackers()

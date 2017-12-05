@@ -11,22 +11,10 @@ namespace Merlin.Profiles.Gatherer
 {
     public sealed partial class Gatherer
     {
-        public const double MeleeAttackRange = 2.5;
-        const float InteractRange = 2f; // Don't remount when arriving from killing mob.
-
-        static class PreviousPlayerInfo
-        {
-            public static float x = 0f;
-            public static float z = 0f;
-            public static double stuckProtectionRedivertDuration = 3.0d;
-            public static int violationCount = 0;
-            public static int violationTolerance = 10;
-            public static int StuckCount = 0;
-        }
-
         enum HarvestState
         {
             Enter,
+            Mounting,
             TravelToResource,
             TravelToMob,
             WalkToResource,
@@ -34,19 +22,32 @@ namespace Merlin.Profiles.Gatherer
             AttackMob,
             HarvestResource,
             HarvestMob,
+            UnstickYourself
         }
 
         enum HarvestTrigger
         {
             StartHarvest,
+            StartMounting,
             StartHarvestingResource,
             StartHarvestingMob,
             StartWalkingToResource,
             StartWalkingToMob,
             StartAttackingMob,
             StartTravelingToResource,
-            StartTravelingToMob
+            StartTravelingToResourceWithLittleWait,
+            StartTravelingToMob,
+            StartUnstickingYourself
         }
+
+        public const double MeleeAttackRange = 2.5;
+        const float InteractRange = 3f; // Don't remount when you just killed a mob.
+
+        static readonly TimeSpan _timeToUnstick = TimeSpan.FromSeconds(1.0);
+        DateTime _unstickStartTime = DateTime.Now;
+
+        const float _maxTravelWaitTime = 3f;
+        DateTime _travelStartTime = DateTime.Now;
 
         ClusterPathingRequest _harvestPathingRequest;
         StateMachine<HarvestState, HarvestTrigger> _harvestState;
@@ -57,20 +58,28 @@ namespace Merlin.Profiles.Gatherer
             _harvestState.Configure(HarvestState.Enter)
                 .OnEntry(() => OnHarvestEnter())
                 .PermitReentry(HarvestTrigger.StartHarvest)
-                .Permit(HarvestTrigger.StartTravelingToResource, HarvestState.TravelToResource)
+                .Permit(HarvestTrigger.StartTravelingToResourceWithLittleWait, HarvestState.TravelToResource)
                 .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
                 .Permit(HarvestTrigger.StartTravelingToMob, HarvestState.TravelToMob)
-                .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob);
+                .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
+
+            _harvestState.Configure(HarvestState.Mounting)
+                .OnEntry(() => OnMountingEnter())
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             // Resources
             _harvestState.Configure(HarvestState.TravelToResource)
                 .OnEntry(() => OnTravelToResourceEnter())
+                .OnEntryFrom(HarvestTrigger.StartTravelingToResourceWithLittleWait, () => OnTravelToResourceEnter(true))
                 .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.WalkToResource)
                 .OnEntry(() => OnWalkToResourceEnter())
                 .Permit(HarvestTrigger.StartHarvestingResource, HarvestState.HarvestResource)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.HarvestResource)
@@ -81,11 +90,13 @@ namespace Merlin.Profiles.Gatherer
             _harvestState.Configure(HarvestState.TravelToMob)
                 .OnEntry(() => OnTravelToMobEnter())
                 .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.WalkToMob)
                 .OnEntry(() => OnWalkToMobEnter())
                 .Permit(HarvestTrigger.StartAttackingMob, HarvestState.AttackMob)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.AttackMob)
@@ -96,6 +107,13 @@ namespace Merlin.Profiles.Gatherer
             _harvestState.Configure(HarvestState.HarvestMob)
                 .OnEntry(() => OnHarvestMobEnter())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+
+            // Being stuck sucks
+            _harvestState.Configure(HarvestState.UnstickYourself)
+                .OnEntry(() => OnUnstickYourselfEnter())
+                .PermitReentry(HarvestTrigger.StartUnstickingYourself)
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting)
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
         }
 
         void HarvestUpdate()
@@ -103,12 +121,10 @@ namespace Merlin.Profiles.Gatherer
             if (HandleAttackers())
                 return;
 
-            if ((_currentTarget != null ? _currentTarget.name : "none") == "none")
-                Profile.UpdateDelay = Profile.DefaultUpdateDelay;
-
             switch (_harvestState.State)
             {
                 case HarvestState.Enter: DoEnter(); break;
+                case HarvestState.Mounting: DoMounting(); break;
                 case HarvestState.TravelToResource: DoTravelToResource(); break;
                 case HarvestState.WalkToResource: DoWalkToResource(); break;
                 case HarvestState.HarvestResource: DoHarvestResource(); break;
@@ -116,6 +132,7 @@ namespace Merlin.Profiles.Gatherer
                 case HarvestState.WalkToMob: DoWalkToMob(); break;
                 case HarvestState.AttackMob: DoAttackMob(); break;
                 case HarvestState.HarvestMob: DoHarvestMob(); break;
+                case HarvestState.UnstickYourself: DoUnstickYourself(); break;
             }
         }
 
@@ -141,7 +158,10 @@ namespace Merlin.Profiles.Gatherer
                 }
                 else
                 {
-                    _harvestState.Fire(HarvestTrigger.StartTravelingToResource);
+                    if (!_localPlayerCharacterView.IsMounted)
+                        _harvestState.Fire(HarvestTrigger.StartMounting);
+                    else
+                        _harvestState.Fire(HarvestTrigger.StartTravelingToResourceWithLittleWait);
                 }
             }
             else if (_currentTarget is MobView)
@@ -152,7 +172,10 @@ namespace Merlin.Profiles.Gatherer
                 }
                 else
                 {
-                    _harvestState.Fire(HarvestTrigger.StartTravelingToMob);
+                    if (!_localPlayerCharacterView.IsMounted)
+                        _harvestState.Fire(HarvestTrigger.StartMounting);
+                    else
+                        _harvestState.Fire(HarvestTrigger.StartTravelingToMob);
                 }
             }
         }
@@ -160,8 +183,27 @@ namespace Merlin.Profiles.Gatherer
         void DoEnter()
         { }
 
+        void OnMountingEnter()
+        {
+            Core.Log("[Harvesting] -- OnMountingEnter");
+
+            if (!_localPlayerCharacterView.IsMounted)
+                _localPlayerCharacterView.MountOrDismount();
+        }
+
+        void DoMounting()
+        {
+            Core.LogOnce("[Harvesting] -- DoMounting");
+
+            StuckHelper.PretendPlayerIsMoving();
+            if (_localPlayerCharacterView.IsMounted)
+            {
+                _harvestState.Fire(HarvestTrigger.StartHarvest);
+            }
+        }
+
         #region Resources
-        void OnTravelToResourceEnter()
+        void OnTravelToResourceEnter(bool waitALittle = false)
         {
             Core.Log("[Harvesting] -- OnTravelToResourceEnter");
 
@@ -175,23 +217,41 @@ namespace Merlin.Profiles.Gatherer
                 Core.Log("[Harvesting] - Path found, begin travel to resource.");
                 Core.lineRenderer.positionCount = pathing.Count;
                 Core.lineRenderer.SetPositions(pathing.ToArray());
-                _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing,
-                    UnityEngine.Random.Range(3f, 8f));
+
+                // Walk to resource 25% of the time.
+                if (UnityEngine.Random.value > 0.75f)
+                {
+                    _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing,
+                        UnityEngine.Random.Range(1.5f, 8f));
+                }
+                else
+                {
+                    _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
+                }
             }
             else
             {
                 Core.Log("[Harvesting] - Path not found.");
                 _state.Fire(Trigger.DepletedResource);
             }
+
+            if (waitALittle)
+                _travelStartTime = DateTime.Now + TimeSpan.FromSeconds(UnityEngine.Random.value * _maxTravelWaitTime);
         }
 
         void DoTravelToResource()
         {
             Core.LogOnce("[Harvesting] -- DoTravelToResource");
 
-            if (StuckProtection())
+            if (DateTime.Now < _travelStartTime)
             {
-                _harvestState.Fire(HarvestTrigger.StartHarvest);
+                StuckHelper.PretendPlayerIsMoving();
+                return;
+            }
+
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+            {
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
                 return;
             }
 
@@ -222,8 +282,8 @@ namespace Merlin.Profiles.Gatherer
 
             if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
             {
-                Core.Log("[Harvesting] - Player was stuck. Restarting harvesting.");
-                _harvestState.Fire(HarvestTrigger.StartHarvest);
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
             }
         }
 
@@ -253,6 +313,7 @@ namespace Merlin.Profiles.Gatherer
         {
             Core.LogOnce("[Harvesting] -- DoHarvestResource");
 
+            StuckHelper.PretendPlayerIsMoving();
             HarvestableObjectView resource = _currentTarget as HarvestableObjectView;
             if (resource.GetHarvestableObject().GetCharges() <= 0)
             {
@@ -292,14 +353,14 @@ namespace Merlin.Profiles.Gatherer
         {
             Core.LogOnce("[Harvesting] -- DoTravelToMob");
 
-            Assert.IsTrue(_currentTarget is MobView);
-            MobView mob = _currentTarget as MobView;
-
-            if (StuckProtection())
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
             {
-                _harvestState.Fire(HarvestTrigger.StartHarvest);
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
                 return;
             }
+
+            Assert.IsTrue(_currentTarget is MobView);
+            MobView mob = _currentTarget as MobView;
 
             Vector3 targetCenter = _currentTarget.transform.position;
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
@@ -340,8 +401,8 @@ namespace Merlin.Profiles.Gatherer
 
             if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
             {
-                Core.Log("[Harvesting] - Player was stuck. Restarting harvesting.");
-                _harvestState.Fire(HarvestTrigger.StartHarvest);
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
             }
         }
 
@@ -354,6 +415,7 @@ namespace Merlin.Profiles.Gatherer
         {
             Core.Log("[Harvesting] -- DoAttackMob");
 
+            StuckHelper.PretendPlayerIsMoving();
             MobView mob = _currentTarget as MobView;
             if (mob.IsDead() && mob.DeadAnimationFinished)
             {
@@ -375,12 +437,56 @@ namespace Merlin.Profiles.Gatherer
         void DoHarvestMob()
         {
             //Core.LogOnce("[Harvesting] -- DoHarvestMob");
+            //StuckHelper.PretendPlayerIsMoving();
             //MobView mob = _currentTarget as MobView;
             //if (mob.)
 
             //    _state.Fire(Trigger.DepletedResource);
         }
         #endregion Mobs
+
+        #region Sticky
+        void OnUnstickYourselfEnter()
+        {
+            Core.Log("[Harvesting] -- OnUnstickYourselfEnter");
+
+            if (!_localPlayerCharacterView.IsMounted)
+            {
+                _harvestState.Fire(HarvestTrigger.StartMounting);
+                return;
+            }
+
+            // Chose a random point behind player.
+            Vector2 back = new Vector2((-_localPlayerCharacterView.transform.forward).x, (-_localPlayerCharacterView.transform.forward).z) * 15f;
+            float randAngle = UnityEngine.Random.Range(-75f, 75f);
+            back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
+            Vector3 randPos = new Vector3(back.x, 0f, back.y) + _localPlayerCharacterView.transform.position;
+
+            _localPlayerCharacterView.CreateTextEffect("[Stuck detected - Resolving]");
+            _localPlayerCharacterView.CreateTextEffect("x: " + randPos.x + " | z: " + randPos.z);
+
+            _harvestPathingRequest = null;
+            _localPlayerCharacterView.RequestMove(randPos);
+            _unstickStartTime = DateTime.Now;
+
+            //_currentTarget = null;
+        }
+
+        void DoUnstickYourself()
+        {
+            Core.Log("[Harvesting] -- DoUnstickYourself");
+
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+            {
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+            }
+
+            if (_unstickStartTime + _timeToUnstick < DateTime.Now)
+            {
+                _harvestState.Fire(HarvestTrigger.StartHarvest);
+            }
+        }
+        #endregion Sticky
 
         #region Helpers
         bool ValidateHarvestable(HarvestableObjectView resource)
@@ -443,88 +549,6 @@ namespace Merlin.Profiles.Gatherer
                 return ValidateMob(mob);
 
             return false;
-        }
-
-        bool StuckProtection()
-        {
-            if (
-                    !_localPlayerCharacterView.IsHarvesting()
-                    && !_localPlayerCharacterView.IsAttacking()
-                    && _localPlayerCharacterView.IsMounted
-                    && Mathf.Abs(_localPlayerCharacterView.GetPosition().x - PreviousPlayerInfo.x) < 0.25f
-                    && Mathf.Abs(_localPlayerCharacterView.GetPosition().z - PreviousPlayerInfo.z) < 0.25f
-                )
-            {
-                PreviousPlayerInfo.violationCount++;
-
-                if (PreviousPlayerInfo.violationCount
-                        >= PreviousPlayerInfo.violationTolerance)
-                {
-                    _localPlayerCharacterView.CreateTextEffect("[Stuck detected - Resolving]");
-                    PreviousPlayerInfo.StuckCount++;
-                    if (forceMove())
-                    {
-                        PreviousPlayerInfo.violationCount = 0;
-                        return true;
-                    }
-                    else
-                    {
-                        Profile.UpdateDelay = Profile.DefaultUpdateDelay;
-                        return false;
-                    }
-                }
-                else
-                {
-                    Profile.UpdateDelay = Profile.DefaultUpdateDelay;
-                    return false;
-                }
-            }
-            else
-            {
-                PreviousPlayerInfo.violationCount = 0;
-            }
-            PreviousPlayerInfo.x = _localPlayerCharacterView.GetPosition().x;
-            PreviousPlayerInfo.z = _localPlayerCharacterView.GetPosition().z;
-            return false;
-        }
-
-        bool forceMove()
-        {
-            if (_localPlayerCharacterView.IsMounted)
-            {
-                Profile.UpdateDelay = System.TimeSpan.FromSeconds(PreviousPlayerInfo.stuckProtectionRedivertDuration);
-                _localPlayerCharacterView.RequestMove(GetUnstuckCoordinates());
-                _currentTarget = null;
-                _harvestPathingRequest = null;
-                return true;
-            }
-            else
-            {
-                Profile.UpdateDelay = Profile.DefaultUpdateDelay;
-                return false;
-            }
-        }
-
-        Vector3 GetUnstuckCoordinates()
-        {
-            var unstuckCoordinates = _localPlayerCharacterView.GetPosition();
-            var method = "variable";
-            switch (method)
-            {
-                case "absolute":
-                    float[] arrayValues = { -15f, +15f };
-                    unstuckCoordinates.x = _localPlayerCharacterView.GetPosition().x + arrayValues[UnityEngine.Random.Range(0, arrayValues.Length)];
-                    unstuckCoordinates.z = _localPlayerCharacterView.GetPosition().z + arrayValues[UnityEngine.Random.Range(0, arrayValues.Length)];
-                    break;
-                case "variable":
-                    unstuckCoordinates.x = _localPlayerCharacterView.GetPosition().x + (UnityEngine.Random.Range(-1f, +1.01f) * UnityEngine.Random.Range(25f, 55f));
-                    unstuckCoordinates.z = _localPlayerCharacterView.GetPosition().z + (UnityEngine.Random.Range(-1f, +1.01f) * UnityEngine.Random.Range(25f, 55f));
-                    break;
-                default:
-                    break;
-            }
-            _localPlayerCharacterView.CreateTextEffect("x: " + unstuckCoordinates.x + " | z: " + unstuckCoordinates.z);
-            return unstuckCoordinates;
         }
         #endregion Helpers
     }

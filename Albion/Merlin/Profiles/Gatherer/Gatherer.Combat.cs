@@ -25,6 +25,8 @@ namespace Merlin.Profiles.Gatherer
 
         public void Fight()
         {
+            StuckHelper.PretendPlayerIsMoving();
+
             if (_localPlayerCharacterView.IsMounted)
             {
                 Core.Log("Player Mounted. Dismount now.");

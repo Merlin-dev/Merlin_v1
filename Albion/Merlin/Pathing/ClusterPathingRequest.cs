@@ -28,7 +28,7 @@ namespace Merlin.Pathing
         private bool isMoving;
         private const float _moveSpeed = 3f;
         private const float _turnSpeed = 90f;
-        private float _arrivalDistance = 1f;
+        private float _arrivalDistance = 1.5f;
         private const float _pathNodeLeeway = 1.7f;
 
         #endregion Fields
@@ -43,28 +43,29 @@ namespace Merlin.Pathing
         #region Constructors and Cleanup
 
         public ClusterPathingRequest(LocalPlayerCharacterView player, SimulationObjectView target, List<Vector3> path,
-            float ArrivalDistance = 1f, bool useCollider = true)
+            float ArrivalDistance = 1.5f, bool useCollider = true)
         {
             _player = player;
             _target = target;
+            _useCollider = useCollider;
+            _path = path;
+
+            _completedpath = new List<Vector3>();
+            DateTime _pauseTimer = DateTime.Now;
+
             _arrivalDistance = ArrivalDistance + _pathNodeLeeway;
             if (useCollider)
                 _arrivalDistance += _player.GetColliderExtents() + _target.GetColliderExtents();
             Core.Log("Arrival distance : " + _arrivalDistance.ToString());
 
-            _path = path;
-            _completedpath = new List<Vector3>();
-
-            _useCollider = useCollider;
-            DateTime _pauseTimer = DateTime.Now;
             _state = new StateMachine<State, Trigger>(State.Start);
 
             _state.Configure(State.Start)
-                      .Permit(Trigger.ApproachTarget, State.Running);
+                .Permit(Trigger.ApproachTarget, State.Running);
 
             _state.Configure(State.Running)
                 .Permit(Trigger.ReachedTarget, State.Finish)
-            .Permit(Trigger.Stuck, State.Pause);
+                .Permit(Trigger.Stuck, State.Pause);
 
             _state.Configure(State.Pause)
                 .Permit(Trigger.ReachedTarget, State.Finish)
@@ -79,7 +80,6 @@ namespace Merlin.Pathing
         {
             switch (_state.State)
             {
-
                 case State.Pause:
                     {
                         if (DateTime.Now > _pauseTimer)

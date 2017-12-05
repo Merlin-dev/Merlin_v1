@@ -15,13 +15,14 @@ namespace Merlin.Profiles.Gatherer
             public DateTime stamp;
         }
 
-        static readonly TimeSpan _stuckTimeInSeconds = TimeSpan.FromSeconds(0.25);
+        static readonly TimeSpan _stuckTimeInSeconds = TimeSpan.FromSeconds(0.5);
         static List<SpeedValue> _previousSpeeds = new List<SpeedValue>();
-        public static bool IsPlayerStuck(LocalPlayerCharacterView player)
+
+        static bool IsPlayerStuck(float player_speed)
         {
-            if (_previousSpeeds.Back().stamp != DateTime.Now)
+            if (_previousSpeeds.Count == 0 || _previousSpeeds.Back().stamp != DateTime.Now)
             {
-                _previousSpeeds.Add(new SpeedValue { speed = player.GetMoveSpeed(), stamp = DateTime.Now });
+                _previousSpeeds.Add(new SpeedValue { speed = player_speed, stamp = DateTime.Now });
             }
 
             DateTime lastValidTime = DateTime.Now.Subtract(_stuckTimeInSeconds);
@@ -32,8 +33,17 @@ namespace Merlin.Profiles.Gatherer
                 if (_previousSpeeds[i].speed != 0f)
                     return false;
             }
-
             return true;
+        }
+
+        public static bool IsPlayerStuck(LocalPlayerCharacterView player)
+        {
+            return IsPlayerStuck(player.GetMoveSpeed());
+        }
+
+        public static void PretendPlayerIsMoving()
+        {
+            IsPlayerStuck(1f);
         }
     }
 

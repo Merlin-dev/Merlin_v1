@@ -219,7 +219,7 @@ namespace Merlin.Profiles.Gatherer
                 Core.lineRenderer.SetPositions(pathing.ToArray());
 
                 // Walk to resource 25% of the time.
-                if (UnityEngine.Random.value > 0.75f)
+                if (UnityEngine.Random.value < 0.25f)
                 {
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing,
                         UnityEngine.Random.Range(1.5f, 8f));
@@ -236,7 +236,13 @@ namespace Merlin.Profiles.Gatherer
             }
 
             if (waitALittle)
-                _travelStartTime = DateTime.Now + TimeSpan.FromSeconds(UnityEngine.Random.value * _maxTravelWaitTime);
+            {
+                // Wait 25% of the time.
+                if (UnityEngine.Random.value < 0.25f)
+                {
+                    _travelStartTime = DateTime.Now + TimeSpan.FromSeconds(UnityEngine.Random.value * _maxTravelWaitTime);
+                }
+            }
         }
 
         void DoTravelToResource()
@@ -420,28 +426,20 @@ namespace Merlin.Profiles.Gatherer
             if (mob.IsDead() && mob.DeadAnimationFinished)
             {
                 Core.Log("[Harvesting] - Mob dead.");
-                //_state.Fire(Trigger.DepletedResource);
-                //_harvestState.Fire(HarvestTrigger.StartHarvest);
                 _harvestState.Fire(HarvestTrigger.StartWalkingToResource);
             }
         }
 
         void OnHarvestMobEnter()
         {
-            //Core.Log("[Harvesting] -- OnHarvestMobEnter");
-
-            //MobView mob = _currentTarget as MobView;
-            //_localPlayerCharacterView.Interact(mob);
+            Core.Log("[Harvesting] -- OnHarvestMobEnter");
         }
 
         void DoHarvestMob()
         {
-            //Core.LogOnce("[Harvesting] -- DoHarvestMob");
-            //StuckHelper.PretendPlayerIsMoving();
-            //MobView mob = _currentTarget as MobView;
-            //if (mob.)
+            Core.LogOnce("[Harvesting] -- DoHarvestMob");
 
-            //    _state.Fire(Trigger.DepletedResource);
+            StuckHelper.PretendPlayerIsMoving();
         }
         #endregion Mobs
 
@@ -468,7 +466,6 @@ namespace Merlin.Profiles.Gatherer
             _harvestPathingRequest = null;
             _localPlayerCharacterView.RequestMove(randPos);
             _unstickStartTime = DateTime.Now;
-
             //_currentTarget = null;
         }
 

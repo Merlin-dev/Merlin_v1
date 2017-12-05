@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using UnityEngine;
+using Albion_Direct;
 
-namespace Albion_Direct
+namespace Merlin
 {
     public static class LocalInputHandlerExtensions
     {

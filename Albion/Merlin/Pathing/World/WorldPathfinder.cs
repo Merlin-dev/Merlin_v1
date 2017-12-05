@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Albion_Direct;
 
-namespace Albion_Direct.Pathing.World
+namespace Merlin.Pathing.World
 {
     public class WorldPathfinder
     {

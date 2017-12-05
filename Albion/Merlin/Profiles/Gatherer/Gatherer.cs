@@ -37,7 +37,6 @@ namespace Merlin.Profiles.Gatherer
     public sealed partial class Gatherer : Profile
     {
         DateTime _startDateTime = DateTime.Now;
-        int messageDelayTrigger = 50;
 
         private bool _isRunning = false;
 
@@ -71,6 +70,7 @@ namespace Merlin.Profiles.Gatherer
                 .Permit(Trigger.EliminatedAttacker, State.Search);
 
             _state.Configure(State.Harvest)
+                .OnEntry(() => _harvestState.Fire(HarvestTrigger.StartHarvest))
                 .Permit(Trigger.DepletedResource, State.Search)
                 .Permit(Trigger.EncounteredAttacker, State.Combat);
 
@@ -92,6 +92,8 @@ namespace Merlin.Profiles.Gatherer
                 if (state != State.Search)
                     _state.Configure(state).Permit(Trigger.Failure, State.Search);
             }
+
+            HarvestOnStart();
         }
 
         protected override void OnStop()
@@ -150,7 +152,7 @@ namespace Merlin.Profiles.Gatherer
                 switch (_state.State)
                 {
                     case State.Search: Search(); break;
-                    case State.Harvest: Harvest(); break;
+                    case State.Harvest: HarvestUpdate(); break;
                     case State.Combat: Fight(); break;
                     case State.Bank: Bank(); break;
                     case State.Repair: Repair(); break;

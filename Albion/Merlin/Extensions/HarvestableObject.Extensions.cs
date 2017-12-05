@@ -1,18 +1,19 @@
 ﻿using System;
+using Albion_Direct;
 
-namespace Albion_Direct
+namespace Merlin
 {
-    public partial class HarvestableObject
+    public static class HarvestableObjectExtensions
     {
-        public bool CanLoot(LocalPlayerCharacterView localPlayer)
+        public static bool CanLoot(this HarvestableObject obj, LocalPlayerCharacterView localPlayer)
         {
-            if (!IsHarvestable())
+            if (!obj.IsHarvestable())
             {
                 return false;
             }
 
-            bool requiresTool = RequiresTool();
-            EquipmentItemProxy tool = GetTool(localPlayer);
+            bool requiresTool = obj.RequiresTool();
+            EquipmentItemProxy tool = obj.GetTool(localPlayer);
 
             if (requiresTool && !tool)
                 return false;
@@ -28,21 +29,21 @@ namespace Albion_Direct
             return true;
         }
 
-        public EquipmentItemProxy GetTool(LocalPlayerCharacterView player)
+        public static EquipmentItemProxy GetTool(this HarvestableObject obj, LocalPlayerCharacterView player)
         {
-            return GetTool(player.GetLocalPlayerCharacter(), false);
+            return obj.GetTool(player.GetLocalPlayerCharacter(), false);
         }
 
-        public int GetTier()
+        public static int GetTier(this HarvestableObject obj)
         {
-            return GetResourceDescriptor().Tier;
+            return obj.GetResourceDescriptor().Tier;
         }
 
-        public ResourceType? GetResourceType()
+        public static ResourceType? GetResourceType(this HarvestableObject obj)
         {
             try
             {
-                var resourceTypeString = GetResourceDescriptor().ResourceType;
+                var resourceTypeString = obj.GetResourceDescriptor().ResourceType;
                 if (resourceTypeString.Contains("_"))
                     resourceTypeString = resourceTypeString.Substring(0, resourceTypeString.IndexOf("_"));
 
@@ -54,9 +55,9 @@ namespace Albion_Direct
             }
         }
 
-        public bool RequiresTool()
+        public static bool RequiresTool(this HarvestableObject obj)
         {
-            return GetTierDescriptor().RequiresTool();
+            return obj.GetTierDescriptor().RequiresTool();
         }
     }
 }

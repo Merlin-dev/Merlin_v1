@@ -520,10 +520,10 @@ namespace Merlin.Profiles.Gatherer
             }
 
             // Chose a random point behind player.
-            Vector2 back = new Vector2((-_localPlayerCharacterView.transform.forward).x, (-_localPlayerCharacterView.transform.forward).z) * 15f;
+            Vector3 back = -_localPlayerCharacterView.transform.forward * 15f;
             float randAngle = UnityEngine.Random.Range(-75f, 75f);
             back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
-            Vector3 randPos = new Vector3(back.x, 0f, back.y) + _localPlayerCharacterView.transform.position;
+            Vector3 randPos = back + _localPlayerCharacterView.transform.position;
 
             _localPlayerCharacterView.CreateTextEffect("[Stuck detected - Resolving]");
             _localPlayerCharacterView.CreateTextEffect("x: " + randPos.x + " | z: " + randPos.z);
@@ -531,7 +531,6 @@ namespace Merlin.Profiles.Gatherer
             _harvestPathingRequest = null;
             _localPlayerCharacterView.RequestMove(randPos);
             _unstickStartTime = DateTime.Now;
-            //_currentTarget = null;
         }
 
         void DoUnstickYourself()
@@ -546,6 +545,8 @@ namespace Merlin.Profiles.Gatherer
             if (_unstickStartTime + _timeToUnstick < DateTime.Now)
             {
                 _harvestState.Fire(HarvestTrigger.StartHarvest);
+                // Change resource, just in case ?
+                //_state.Fire(Trigger.DepletedResource);
             }
         }
         #endregion Sticky

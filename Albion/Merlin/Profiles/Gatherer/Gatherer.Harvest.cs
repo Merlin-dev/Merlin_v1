@@ -15,6 +15,8 @@ namespace Merlin.Profiles.Gatherer
         {
             Enter,
             Mounting,
+            DismountingFromMobWalk,
+            DismountingFromResourceWalk,
             TravelToResource,
             TravelToMob,
             WalkToResource,
@@ -29,6 +31,7 @@ namespace Merlin.Profiles.Gatherer
         {
             StartHarvest,
             StartMounting,
+            StartDismounting,
             StartHarvestingResource,
             StartHarvestingMob,
             StartWalkingToResource,
@@ -64,9 +67,18 @@ namespace Merlin.Profiles.Gatherer
                 .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
                 .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
 
+            // Mounting
             _harvestState.Configure(HarvestState.Mounting)
                 .OnEntry(() => OnMountingEnter())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+
+            _harvestState.Configure(HarvestState.DismountingFromMobWalk)
+                .OnEntry(() => OnDismountEnter())
+                .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob);
+
+            _harvestState.Configure(HarvestState.DismountingFromResourceWalk)
+                .OnEntry(() => OnDismountEnter())
+                .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource);
 
             // Resources
             _harvestState.Configure(HarvestState.TravelToResource)
@@ -80,6 +92,7 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnWalkToResourceEnter())
                 .Permit(HarvestTrigger.StartHarvestingResource, HarvestState.HarvestResource)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
+                .Permit(HarvestTrigger.StartDismounting, HarvestState.DismountingFromResourceWalk)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.HarvestResource)
@@ -97,6 +110,7 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnWalkToMobEnter())
                 .Permit(HarvestTrigger.StartAttackingMob, HarvestState.AttackMob)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
+                .Permit(HarvestTrigger.StartDismounting, HarvestState.DismountingFromMobWalk)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.AttackMob)
@@ -125,6 +139,8 @@ namespace Merlin.Profiles.Gatherer
             {
                 case HarvestState.Enter: DoEnter(); break;
                 case HarvestState.Mounting: DoMounting(); break;
+                case HarvestState.DismountingFromMobWalk: DoDismountFromMobWalk(); break;
+                case HarvestState.DismountingFromResourceWalk: DoDismountFromResourceWalk(); break;
                 case HarvestState.TravelToResource: DoTravelToResource(); break;
                 case HarvestState.WalkToResource: DoWalkToResource(); break;
                 case HarvestState.HarvestResource: DoHarvestResource(); break;
@@ -183,6 +199,7 @@ namespace Merlin.Profiles.Gatherer
         void DoEnter()
         { }
 
+        #region Mounting
         void OnMountingEnter()
         {
             Core.Log("[Harvesting] -- OnMountingEnter");
@@ -199,8 +216,50 @@ namespace Merlin.Profiles.Gatherer
             if (_localPlayerCharacterView.IsMounted)
             {
                 _harvestState.Fire(HarvestTrigger.StartHarvest);
+                return;
+            }
+
+            // FIXME: This is a hack to temporarily fix not mounting after combat.
+            // The real fix involves refactoring combat and making sure combat cooldowns
+            // are done before we get here.
+            if (!_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsMounting())
+            {
+                _localPlayerCharacterView.MountOrDismount();
             }
         }
+
+        void OnDismountEnter()
+        {
+            Core.Log("[Harvesting] -- OnDismountEnter");
+
+            if (_localPlayerCharacterView.IsMounted)
+                _localPlayerCharacterView.MountOrDismount();
+        }
+
+        void DoDismountFromMobWalk()
+        {
+            Core.LogOnce("[Harvesting] -- DoDismountFromMobWalk");
+
+            StuckHelper.PretendPlayerIsMoving();
+            if (!_localPlayerCharacterView.IsMounted)
+            {
+                _harvestState.Fire(HarvestTrigger.StartWalkingToMob);
+                return;
+            }
+        }
+
+        void DoDismountFromResourceWalk()
+        {
+            Core.LogOnce("[Harvesting] -- DoDismountFromResourceWalk");
+
+            StuckHelper.PretendPlayerIsMoving();
+            if (!_localPlayerCharacterView.IsMounted)
+            {
+                _harvestState.Fire(HarvestTrigger.StartWalkingToResource);
+                return;
+            }
+        }
+        #endregion Mounting
 
         #region Resources
         void OnTravelToResourceEnter(bool waitALittle = false)
@@ -271,7 +330,10 @@ namespace Merlin.Profiles.Gatherer
 
             HarvestableObjectView resource = _currentTarget as HarvestableObjectView;
             if (_localPlayerCharacterView.IsMounted)
-                _localPlayerCharacterView.MountOrDismount();
+            {
+                _harvestState.Fire(HarvestTrigger.StartDismounting);
+                return;
+            }
 
             _localPlayerCharacterView.Interact(resource);
         }
@@ -388,7 +450,10 @@ namespace Merlin.Profiles.Gatherer
 
             MobView mob = _currentTarget as MobView;
             if (_localPlayerCharacterView.IsMounted)
-                _localPlayerCharacterView.MountOrDismount();
+            {
+                _harvestState.Fire(HarvestTrigger.StartDismounting);
+                return;
+            }
 
             _localPlayerCharacterView.SetSelectedObject(mob);
             _localPlayerCharacterView.AttackSelectedObject();
@@ -419,7 +484,7 @@ namespace Merlin.Profiles.Gatherer
 
         void DoAttackMob()
         {
-            Core.Log("[Harvesting] -- DoAttackMob");
+            Core.LogOnce("[Harvesting] -- DoAttackMob");
 
             StuckHelper.PretendPlayerIsMoving();
             MobView mob = _currentTarget as MobView;
@@ -455,10 +520,10 @@ namespace Merlin.Profiles.Gatherer
             }
 
             // Chose a random point behind player.
-            Vector2 back = new Vector2((-_localPlayerCharacterView.transform.forward).x, (-_localPlayerCharacterView.transform.forward).z) * 15f;
+            Vector3 back = -_localPlayerCharacterView.transform.forward * 15f;
             float randAngle = UnityEngine.Random.Range(-75f, 75f);
             back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
-            Vector3 randPos = new Vector3(back.x, 0f, back.y) + _localPlayerCharacterView.transform.position;
+            Vector3 randPos = back + _localPlayerCharacterView.transform.position;
 
             _localPlayerCharacterView.CreateTextEffect("[Stuck detected - Resolving]");
             _localPlayerCharacterView.CreateTextEffect("x: " + randPos.x + " | z: " + randPos.z);
@@ -466,7 +531,6 @@ namespace Merlin.Profiles.Gatherer
             _harvestPathingRequest = null;
             _localPlayerCharacterView.RequestMove(randPos);
             _unstickStartTime = DateTime.Now;
-            //_currentTarget = null;
         }
 
         void DoUnstickYourself()
@@ -481,6 +545,8 @@ namespace Merlin.Profiles.Gatherer
             if (_unstickStartTime + _timeToUnstick < DateTime.Now)
             {
                 _harvestState.Fire(HarvestTrigger.StartHarvest);
+                // Change resource, just in case ?
+                //_state.Fire(Trigger.DepletedResource);
             }
         }
         #endregion Sticky

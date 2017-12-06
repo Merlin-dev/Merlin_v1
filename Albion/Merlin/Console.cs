@@ -12,6 +12,8 @@ public class Console : MonoBehaviour
         public string message;
         public string stackTrace;
         public LogType type;
+        public GUIContent gui_message;
+        public GUIContent gui_stackTrace;
     }
 
     /// <summary>
@@ -45,6 +47,7 @@ public class Console : MonoBehaviour
     private GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
     private GUIContent scrollLabel = new GUIContent("Auto scroll", "Scroll automatically.");
     private GUIContent limitLabel = new GUIContent("Limit messages", "Show just the last 200 messages.");
+    private GUIContent _labelConsole = new GUIContent("Console");
 
     private void OnEnable()
     {
@@ -71,7 +74,7 @@ public class Console : MonoBehaviour
             return;
         }
 
-        windowRect = GUILayout.Window(123456, windowRect, ConsoleWindow, "Console");
+        windowRect = GUILayout.Window(123456, windowRect, ConsoleWindow, _labelConsole);
     }
 
     /// <summary>
@@ -103,9 +106,9 @@ public class Console : MonoBehaviour
             }
 
             GUI.contentColor = logTypeColors[log.type];
-            GUILayout.Label(log.message);
+            GUILayout.Label(log.gui_message);
             if (!string.IsNullOrEmpty(log.stackTrace))
-                GUILayout.Label(log.stackTrace);
+                GUILayout.Label(log.gui_stackTrace);
         }
 
         GUILayout.EndScrollView();
@@ -145,6 +148,8 @@ public class Console : MonoBehaviour
             message = message,
             stackTrace = stackTrace,
             type = type,
+            gui_message = new GUIContent(message),
+            gui_stackTrace = new GUIContent(stackTrace)
         });
     }
 

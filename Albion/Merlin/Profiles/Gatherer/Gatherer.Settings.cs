@@ -21,7 +21,8 @@ namespace Merlin.Profiles.Gatherer
         private string _selectedGatherCluster;
         private int _selectedTownClusterIndex;
         private int _selectedMininumTierIndex;
-        private Dictionary<GatherInformation, bool> _gatherInformations;
+        //private Dictionary<GatherInformation, bool> _gatherInformations;
+        private GatherInformationContainer _gatherInformations = new GatherInformationContainer();
 
         private void LoadSettings()
         {
@@ -37,18 +38,7 @@ namespace Merlin.Profiles.Gatherer
             _selectedGatherCluster = PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_selectedGatherCluster)}", null);
             _selectedTownClusterIndex = PlayerPrefs.GetInt($"{_prefsIdentifier}{nameof(_selectedTownClusterIndex)}", 0);
             _selectedMininumTierIndex = PlayerPrefs.GetInt($"{_prefsIdentifier}{nameof(_selectedMininumTierIndex)}", 0);
-            _gatherInformations = new Dictionary<GatherInformation, bool>();
-            foreach (var resourceType in Enum.GetValues(typeof(Albion_Direct.ResourceType)).Cast<Albion_Direct.ResourceType>())
-                foreach (var tier in Enum.GetValues(typeof(Albion_Direct.Tier)).Cast<Albion_Direct.Tier>())
-                    foreach (var enchantment in Enum.GetValues(typeof(Albion_Direct.EnchantmentLevel)).Cast<Albion_Direct.EnchantmentLevel>())
-                    {
-                        if ((tier < Albion_Direct.Tier.IV || resourceType == Albion_Direct.ResourceType.Rock) && enchantment != Albion_Direct.EnchantmentLevel.White)
-                            continue;
-
-                        var info = new GatherInformation(resourceType, tier, enchantment);
-                        var val = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{info.ToString()}", (tier >= Albion_Direct.Tier.II).ToString()));
-                        _gatherInformations.Add(info, val);
-                    }
+            _gatherInformations.DeserializeFromPlayerPrefs(_prefsIdentifier);
         }
 
         private void SaveSettings()
@@ -65,8 +55,7 @@ namespace Merlin.Profiles.Gatherer
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_selectedGatherCluster)}", _selectedGatherCluster);
             PlayerPrefs.SetInt($"{_prefsIdentifier}{nameof(_selectedTownClusterIndex)}", _selectedTownClusterIndex);
             PlayerPrefs.SetInt($"{_prefsIdentifier}{nameof(_selectedMininumTierIndex)}", _selectedMininumTierIndex);
-            foreach (var kvp in _gatherInformations)
-                PlayerPrefs.SetString($"{_prefsIdentifier}{kvp.Key.ToString()}", kvp.Value.ToString());
+            _gatherInformations.SerializeToPlayerPrefs(_prefsIdentifier);
         }
     }
 }

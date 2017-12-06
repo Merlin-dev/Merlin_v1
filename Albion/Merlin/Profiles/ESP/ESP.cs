@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Merlin.Profiles.Gatherer.Gatherer;
+using Merlin.Profiles.Gatherer;
 using Albion_Direct;
 
 namespace Merlin.Profiles.ESP
@@ -205,13 +205,13 @@ namespace Merlin.Profiles.ESP
             public static Boolean DrawFriendly = true;
         }
 
-        private Dictionary<GatherInformation, bool> gatherInformations;
+        private GatherInformationContainer gatherInformations;
         private SimulationObjectView[] resources;
         private LocalPlayerCharacterView localPlayer;
         private PlayerCharacterView[] players;
         private GameManager _client;
 
-        public void StartESP(Dictionary<GatherInformation, bool> gatherInformations)
+        public void StartESP(GatherInformationContainer gatherInformations)
         {
             this.gatherInformations = gatherInformations;
 
@@ -258,10 +258,7 @@ namespace Merlin.Profiles.ESP
                         var resourceType = harvestableObject.GetResourceType().Value;
                         var tier = (Tier)harvestableObject.GetTier();
                         var enchantmentLevel = (EnchantmentLevel)harvestableObject.GetRareState();
-
-                        var info = new GatherInformation(resourceType, tier, enchantmentLevel);
-
-                        return enchantmentLevel > 0 && gatherInformations[info];
+                        return enchantmentLevel > 0 && gatherInformations.IsEnabled(resourceType, tier, enchantmentLevel);
                     }).ToArray();
 
                     var mobs = FindObjectsOfType<MobView>().Where(view =>
@@ -272,10 +269,7 @@ namespace Merlin.Profiles.ESP
 
                         var tier = (Tier)view.GetTier();
                         var enchantmentLevel = (EnchantmentLevel)view.GetRareState();
-
-                        var info = new GatherInformation(resourceType.Value, tier, enchantmentLevel);
-
-                        return enchantmentLevel > 0 && gatherInformations[info];
+                        return enchantmentLevel > 0 && gatherInformations.IsEnabled(resourceType.Value, tier, enchantmentLevel);
                     }).ToArray();
 
                     resources = harvestables.OfType<SimulationObjectView>().Union(mobs.OfType<SimulationObjectView>()).ToArray();

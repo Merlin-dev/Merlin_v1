@@ -129,6 +129,56 @@ namespace Merlin.Profiles.Gatherer
             return false;
         }
 
+        public bool IsBlockedMounting(Vector2 location)
+        {
+            var vector = new Vector3(location.x, 0, location.y);
+            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
+                return true;
+
+            MountObjectView mount = GetLocalMount();
+
+            if (mount != null)
+            {
+                var resourcePosition = new Vector2(mount.transform.position.x,
+                                                    mount.transform.position.z);
+                var resourceDistance = (resourcePosition - location).magnitude;
+
+                if (resourceDistance < (mount.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents()))
+                    return false;
+            }
+
+            var playerLocation = new Vector2(_localPlayerCharacterView.transform.position.x,
+                                                _localPlayerCharacterView.transform.position.z);
+            var playerDistance = (playerLocation - location).magnitude;
+
+            if (playerDistance < 2f)
+                return false;
+
+            byte cf = _collision.GetCollision(location.b(), 2.0f);
+            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
+        }
+
+        public bool HasLocalMount()
+        {
+            MountObjectView mount = GetLocalMount();
+            return mount != null;
+        }
+
+        public MountObjectView GetLocalMount()
+        {
+            MountObjectView mount = null;
+            foreach (var _mount in _mounts)
+            {
+                var IsLocalPlayers = _mount.MountObject.s9();
+                if (IsLocalPlayers)
+                {
+                    mount = _mount;
+                    break;
+                }
+            }
+            return mount;
+        }
+
         public bool HandleMounting(Vector3 target)
         {
             if (!_localPlayerCharacterView.IsMounted)

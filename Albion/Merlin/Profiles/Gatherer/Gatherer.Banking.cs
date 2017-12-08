@@ -21,6 +21,12 @@ namespace Merlin.Profiles.Gatherer
         public void Bank()
         {
 
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+            {
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
+            }
+
             _client = GameManager.GetInstance();
             if (_client.GetState() != GameState.Playing)
             {

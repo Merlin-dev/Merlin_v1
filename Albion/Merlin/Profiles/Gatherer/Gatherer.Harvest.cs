@@ -17,6 +17,8 @@ namespace Merlin.Profiles.Gatherer
             Mounting,
             DismountingFromMobWalk,
             DismountingFromResourceWalk,
+            SummonMount,
+            WalkToMount,
             TravelToResource,
             TravelToMob,
             WalkToResource,
@@ -31,6 +33,8 @@ namespace Merlin.Profiles.Gatherer
         {
             StartHarvest,
             StartMounting,
+            StartWalkingToMount,
+            StartSummonMount,
             StartDismounting,
             StartHarvestingResource,
             StartHarvestingMob,
@@ -44,7 +48,10 @@ namespace Merlin.Profiles.Gatherer
         }
 
         public const double MeleeAttackRange = 2.5;
-        const float InteractRange = 3f; // Don't remount when you just killed a mob.
+
+        const float InteractRangeMount = 2f;
+        const float InteractRangeResource = 12f;
+        const float InteractRangeMob = 20f;
 
         static readonly TimeSpan _timeToUnstick = TimeSpan.FromSeconds(1.0);
         DateTime _unstickStartTime = DateTime.Now;
@@ -53,6 +60,8 @@ namespace Merlin.Profiles.Gatherer
         DateTime _travelStartTime = DateTime.Now;
 
         ClusterPathingRequest _harvestPathingRequest;
+        ClusterPathingRequest _mountPathingRequest;
+
         StateMachine<HarvestState, HarvestTrigger> _harvestState;
 
         void HarvestOnStart()
@@ -65,16 +74,31 @@ namespace Merlin.Profiles.Gatherer
                 .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
                 .Permit(HarvestTrigger.StartTravelingToMob, HarvestState.TravelToMob)
                 .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
 
             // Mounting
             _harvestState.Configure(HarvestState.Mounting)
                 .OnEntry(() => OnMountingEnter())
-                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+                .Permit(HarvestTrigger.StartWalkingToMount, HarvestState.WalkToMount)
+                .Permit(HarvestTrigger.StartSummonMount, HarvestState.SummonMount);
+
+            _harvestState.Configure(HarvestState.WalkToMount)
+                .OnEntry(() => OnWalkToMountEnter())
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
+
+
+            _harvestState.Configure(HarvestState.SummonMount)
+                .OnEntry(() => OnSummoningMount())
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
 
             _harvestState.Configure(HarvestState.DismountingFromMobWalk)
                 .OnEntry(() => OnDismountEnter())
-                .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob);
+                .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
+               .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+
 
             _harvestState.Configure(HarvestState.DismountingFromResourceWalk)
                 .OnEntry(() => OnDismountEnter())
@@ -97,6 +121,7 @@ namespace Merlin.Profiles.Gatherer
 
             _harvestState.Configure(HarvestState.HarvestResource)
                 .OnEntry(() => OnHarvestResourceEnter())
+                .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             // Mobs
@@ -145,6 +170,8 @@ namespace Merlin.Profiles.Gatherer
                 case HarvestState.WalkToResource: DoWalkToResource(); break;
                 case HarvestState.HarvestResource: DoHarvestResource(); break;
                 case HarvestState.TravelToMob: DoTravelToMob(); break;
+                case HarvestState.SummonMount: DoSummoningMount(); break;
+                case HarvestState.WalkToMount: DoWalkToMount(); break;
                 case HarvestState.WalkToMob: DoWalkToMob(); break;
                 case HarvestState.AttackMob: DoAttackMob(); break;
                 case HarvestState.HarvestMob: DoHarvestMob(); break;
@@ -163,12 +190,22 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.DepletedResource);
                 return;
             }
+            MountObjectView mount = GetLocalMount();
 
-            float distanceToPlayer = (_currentTarget.transform.position - _localPlayerCharacterView.transform.position).magnitude;
+            float distanceTo = (_currentTarget.transform.position - _localPlayerCharacterView.transform.position).magnitude;
+            float interactTargetDistance = 0f;
+
+            if (mount)
+                distanceTo = (_currentTarget.transform.position - mount.transform.position).magnitude;
 
             if (_currentTarget is HarvestableObjectView obj)
             {
-                if (distanceToPlayer < InteractRange)
+                if (_localPlayerCharacterView.IsMounted)
+                    interactTargetDistance = InteractRangeMount;
+                else
+                    interactTargetDistance = InteractRangeResource;
+
+                if (distanceTo < interactTargetDistance)
                 {
                     _harvestState.Fire(HarvestTrigger.StartWalkingToResource);
                 }
@@ -182,30 +219,116 @@ namespace Merlin.Profiles.Gatherer
             }
             else if (_currentTarget is MobView)
             {
-                if (distanceToPlayer < InteractRange)
+                if (_localPlayerCharacterView.IsMounted)
+                    interactTargetDistance = InteractRangeMount;
+                else
+                    interactTargetDistance = InteractRangeMob;
+
+                if (distanceTo < interactTargetDistance)
                 {
                     _harvestState.Fire(HarvestTrigger.StartWalkingToMob);
                 }
                 else
                 {
                     if (!_localPlayerCharacterView.IsMounted)
+                    {
                         _harvestState.Fire(HarvestTrigger.StartMounting);
-                    else
+                    }
+                    else {
                         _harvestState.Fire(HarvestTrigger.StartTravelingToMob);
+                    }
                 }
             }
         }
 
         void DoEnter()
-        { }
+        {
+            Core.Log("[Harvesting] -- DoEnter");
+        }
 
         #region Mounting
         void OnMountingEnter()
         {
             Core.Log("[Harvesting] -- OnMountingEnter");
+            MountObjectView mount = GetLocalMount();
+            if (HasLocalMount())
+            {
+                _harvestState.Fire(HarvestTrigger.StartWalkingToMount);
+            } else
+            {
+                _harvestState.Fire(HarvestTrigger.StartSummonMount);
+            }
+        }
 
-            if (!_localPlayerCharacterView.IsMounted)
-                _localPlayerCharacterView.MountOrDismount();
+        void OnWalkToMountEnter()
+        {
+            Core.Log("[Harvesting] -- OnWalkToMountEnter");
+            MountObjectView mount = GetLocalMount();
+            if (mount != null)
+            {
+                if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), mount.transform.position, IsBlockedMounting, out List<Vector3> pathing))
+                {
+                    Core.Log("[Harvesting] - Path found, begin travel to mount.");
+                    Core.lineRenderer.positionCount = pathing.Count;
+                    Core.lineRenderer.SetPositions(pathing.ToArray());
+                    _mountPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, mount, pathing);
+                }
+                else
+                {
+                    Core.Log("[Harvesting] - Path to mount not found.");
+                    _state.Fire(Trigger.DepletedResource);
+                }
+            }
+        }
+
+        void DoWalkToMount()
+        {
+            Core.Log("[Harvesting] -- DoWalkToMount");
+
+            StuckHelper.PretendPlayerIsMoving();
+            if (_localPlayerCharacterView.IsMounted)
+            {
+                _harvestState.Fire(HarvestTrigger.StartHarvest);
+                return;
+            }
+
+            LocalPlayerCharacter localPlayer = _localPlayerCharacterView.LocalPlayerCharacter;
+            MountObjectView mount = GetLocalMount();
+            if (HandlePathing(ref _mountPathingRequest, () => mount.IsInUseRange(localPlayer), null, true))
+            {
+                _localPlayerCharacterView.Interact(mount);
+            }
+
+            if (_localPlayerCharacterView.GetMoveSpeed() == 0 && !_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsMounting())
+            {
+                _harvestState.Fire(HarvestTrigger.StartMounting);
+                return;
+            }
+        }
+
+        void OnSummoningMount()
+        {
+            Core.Log("[Harvesting] -- OnSummoningMount");
+
+            _localPlayerCharacterView.MountOrDismount();            
+        }
+
+        void DoSummoningMount()
+        {
+            Core.LogOnce("[Harvesting] -- DoSummoningMount");
+
+            StuckHelper.PretendPlayerIsMoving();
+            if (_localPlayerCharacterView.IsMounted)
+            {
+                _harvestState.Fire(HarvestTrigger.StartHarvest);
+                return;
+            }
+
+            if (_localPlayerCharacterView.GetMoveSpeed() == 0 && !_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsMounting())
+            {
+                _harvestState.Fire(HarvestTrigger.StartMounting);
+                return;
+            }
         }
 
         void DoMounting()
@@ -389,6 +512,12 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.DepletedResource);
                 return;
             }
+        
+            if (_localPlayerCharacterView.GetMoveSpeed() == 0 && !_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsHarvesting())
+            {
+                _harvestState.Fire(HarvestTrigger.StartWalkingToResource);
+                return;
+            }
         }
         #endregion Resources
 
@@ -420,6 +549,9 @@ namespace Merlin.Profiles.Gatherer
         void DoTravelToMob()
         {
             Core.LogOnce("[Harvesting] -- DoTravelToMob");
+
+
+            Core.Log("[Harvesting] -- DoTravelToMob");
 
             if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
             {

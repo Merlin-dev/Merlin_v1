@@ -1,4 +1,4 @@
-﻿using Albion_Direct;
+using Albion_Direct;
 using Stateless;
 using System;
 using System.Collections.Generic;
@@ -138,7 +138,7 @@ namespace Merlin.Profiles.Gatherer
                         _keeperSpots.Add(keeperPosition);
                 }
 
-                _mounts = _client.GetEntities<MountObjectView>(mount => mount.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter));
+                _mounts = _client.GetEntities<MountObjectView>(mount => mount);
 
                 if (_knockedDown != _localPlayerCharacterView.IsKnockedDown())
                 {

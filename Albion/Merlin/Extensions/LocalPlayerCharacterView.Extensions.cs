@@ -59,6 +59,8 @@ namespace Merlin
 
         public static void AttackSelectedObject(this LocalPlayerCharacterView instance) => instance.InputHandler.AttackCurrentTarget();
 
+        public static void StopAnyActionObject(this LocalPlayerCharacterView instance) => instance.InputHandler.StopAnyAction();
+
         public static bool TryFindPath(this LocalPlayerCharacterView instance, AStarPathfinder pathfinder, SimulationObjectView target,
                             StopFunction<Vector2> stopFunction, out List<Vector3> results)
         {

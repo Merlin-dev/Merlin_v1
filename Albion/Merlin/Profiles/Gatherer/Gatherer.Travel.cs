@@ -19,6 +19,12 @@ namespace Merlin.Profiles.Gatherer
 
         public void Travel()
         {
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+            {
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
+            }
+
             if (!HandleMounting(Vector3.zero))
                 return;
 

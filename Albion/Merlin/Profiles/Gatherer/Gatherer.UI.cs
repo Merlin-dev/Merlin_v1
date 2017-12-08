@@ -215,42 +215,39 @@ namespace Merlin.Profiles.Gatherer
 
                 if (GUILayout.Button(_labelEnableAll))
                 {
-                    for (int tierIdx = 0; tierIdx < data.Count; ++tierIdx)
+                    for (int tier = 0; tier < data.Count; ++tier)
                     {
-                        Tier tier = (Tier)(tierIdx + 1);
-                        for (int ench = 0; ench < data[tierIdx].Count; ++ench)
+                        for (int ench = 0; ench < data[tier].Count; ++ench)
                         {
-                            _gatherInformations.Enable((ResourceType)resource, tier, (EnchantmentLevel)ench,
-                                (Tier)tierIdx >= SelectedMinimumTier);
+                            _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench,
+                                (Tier)tier >= SelectedMinimumTier);
                         }
                     }
                 }
 
                 if (GUILayout.Button(_labelDisableAll))
                 {
-                    for (int tierIdx = 0; tierIdx < data.Count; ++tierIdx)
+                    for (int tier = 0; tier < data.Count; ++tier)
                     {
-                        Tier tier = (Tier)(tierIdx + 1);
-                        for (int ench = 0; ench < data[tierIdx].Count; ++ench)
+                        for (int ench = 0; ench < data[tier].Count; ++ench)
                         {
-                            _gatherInformations.Enable((ResourceType)resource, tier, (EnchantmentLevel)ench, false);
+                            _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench, false);
                         }
                     }
                 }
 
-                for (int tierIdx = 0; tierIdx < data.Count; ++tierIdx)
+                for (int tier = 0; tier < data.Count; ++tier)
                 {
-                    Tier tier = (Tier)(tierIdx + 1);
-                    for (int ench = 0; ench < data[tierIdx].Count; ++ench)
+                    for (int ench = 0; ench < data[tier].Count; ++ench)
                     {
-                        if ((Tier)tierIdx < SelectedMinimumTier)
+                        if ((Tier)tier < SelectedMinimumTier)
                         {
-                            _gatherInformations.Enable((ResourceType)resource, tier, (EnchantmentLevel)ench, false);
+                            _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench, false);
                         }
-                        bool enabled = _gatherInformations.IsEnabled((ResourceType)resource, tier, (EnchantmentLevel)ench);
-                        enabled = GUILayout.Toggle(enabled, _gatherInformations.GetGUIContent((ResourceType)resource, tier,
+                        bool enabled = _gatherInformations.IsEnabled((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench);
+                        enabled = GUILayout.Toggle(enabled, _gatherInformations.GetGUIContent((ResourceType)resource, (Tier)tier,
                             (EnchantmentLevel)ench));
-                        _gatherInformations.Enable((ResourceType)resource, tier, (EnchantmentLevel)ench, enabled);
+                        _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench, enabled);
                     }
                 }
 

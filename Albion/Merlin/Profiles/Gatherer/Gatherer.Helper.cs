@@ -97,7 +97,7 @@ namespace Merlin.Profiles.Gatherer
                     _data_gui[resource][tier] = ListExtensions.RepeatedDefault<GUIContent>(ench_size);
                     for (int ench = 0; ench < ench_size; ++ench)
                     {
-                        _data_gui[resource][tier][ench] = new GUIContent(ToString((ResourceType)resource, (Tier)(tier + 1), (EnchantmentLevel)ench));
+                        _data_gui[resource][tier][ench] = new GUIContent(ToString((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench));
                     }
                 }
             }
@@ -117,11 +117,11 @@ namespace Merlin.Profiles.Gatherer
         {
             if (r == ResourceType.Rock || t < Tier.IV)
             {
-                return _data_gui[(int)r][(int)t - 1][0];
+                return _data_gui[(int)r][(int)t][0];
             }
             else
             {
-                return _data_gui[(int)r][(int)t - 1][(int)e];
+                return _data_gui[(int)r][(int)t][(int)e];
             }
         }
 
@@ -129,11 +129,11 @@ namespace Merlin.Profiles.Gatherer
         {
             if (r == ResourceType.Rock || t < Tier.IV)
             {
-                _data[(int)r][(int)t - 1][0] = is_enabled;
+                _data[(int)r][(int)t][0] = is_enabled;
             }
             else
             {
-                _data[(int)r][(int)t - 1][(int)e] = is_enabled;
+                _data[(int)r][(int)t][(int)e] = is_enabled;
             }
         }
 
@@ -141,11 +141,11 @@ namespace Merlin.Profiles.Gatherer
         {
             if (r == ResourceType.Rock || t < Tier.IV)
             {
-                return _data[(int)r][((int)t) - 1][0];
+                return _data[(int)r][((int)t)][0];
             }
             else
             {
-                return _data[(int)r][((int)t) - 1][(int)e];
+                return _data[(int)r][((int)t)][(int)e];
             }
         }
 
@@ -170,7 +170,8 @@ namespace Merlin.Profiles.Gatherer
             for (int resource = 0; resource < _data.Count; ++resource) {
                 for (int tier = 0; tier < _data[resource].Count; ++tier) {
                     for (int ench = 0; ench < _data[resource][tier].Count; ++ench) {
-                        _data[resource][tier][ench] = bool.Parse(PlayerPrefs.GetString($"{prefs_identifier}{_data_gui[resource][tier][ench].text}", ((Tier)tier >= Tier.II).ToString()));
+                        _data[resource][tier][ench] = bool.Parse(PlayerPrefs.GetString($"{prefs_identifier}{_data_gui[resource][tier][ench].text}",
+                            ((Tier)tier >= Tier.II).ToString()));
                     }
                 }
             }

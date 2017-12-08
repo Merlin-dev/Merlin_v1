@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: no */
+    /* Internal type: o3 */
     public partial class TimeRegionDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private no _internal;
+        private o3 _internal;
         
         #region Properties
         
-        public no TimeRegionDescriptor_Internal => _internal;
+        public o3 TimeRegionDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public TimeRegionDescriptor(no instance)
+        public TimeRegionDescriptor(o3 instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator no(TimeRegionDescriptor instance)
+        public static implicit operator o3(TimeRegionDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TimeRegionDescriptor(no instance)
+        public static implicit operator TimeRegionDescriptor(o3 instance)
         {
             return new TimeRegionDescriptor(instance);
         }

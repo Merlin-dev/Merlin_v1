@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a3t */
+    /* Internal type: a5l */
     public partial class LootObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a3t _internal;
+        private a5l _internal;
         
         #region Properties
         
-        public a3t LootObject_Internal => _internal;
+        public a5l LootObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public LootObject(a3t instance) : base(instance)
+        public LootObject(a5l instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a3t(LootObject instance)
+        public static implicit operator a5l(LootObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LootObject(a3t instance)
+        public static implicit operator LootObject(a5l instance)
         {
             return new LootObject(instance);
         }

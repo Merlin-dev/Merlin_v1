@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ats */
+    /* Internal type: avb */
     public partial class FurnitureItemProxy : DurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ats _internal;
+        private avb _internal;
         
         #region Properties
         
-        public ats FurnitureItemProxy_Internal => _internal;
+        public avb FurnitureItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FurnitureItemProxy(ats instance) : base(instance)
+        public FurnitureItemProxy(avb instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ats(FurnitureItemProxy instance)
+        public static implicit operator avb(FurnitureItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FurnitureItemProxy(ats instance)
+        public static implicit operator FurnitureItemProxy(avb instance)
         {
             return new FurnitureItemProxy(instance);
         }

@@ -4,11 +4,11 @@ namespace Albion_Direct
 {
     public partial class ClusterDescriptor : IEquatable<ClusterDescriptor>
     {
-        public Biome GetBiome() => _internal.ao().Biome.ToWrapped();
+        public Biome GetBiome() => _internal.@as().Biome.ToWrapped();
 
         public override int GetHashCode()
         {
-            return _internal.ak().GetHashCode();
+            return _internal.ao().GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -18,7 +18,7 @@ namespace Albion_Direct
 
         public bool Equals(ClusterDescriptor obj)
         {
-            return obj != null && obj._internal.ak().Equals(_internal.ak());
+            return obj != null && obj._internal.ao().Equals(_internal.ao());
         }
     }
 }

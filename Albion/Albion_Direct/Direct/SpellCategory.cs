@@ -42,12 +42,12 @@ namespace Albion_Direct
     
     public static class SpellCategoryExtensions
     {
-        public static g7.SpellCategory ToInternal(this SpellCategory instance)
+        public static b7.SpellCategory ToInternal(this SpellCategory instance)
         {
-            return (g7.SpellCategory)instance;
+            return (b7.SpellCategory)instance;
         }
         
-        public static SpellCategory ToWrapped(this g7.SpellCategory instance)
+        public static SpellCategory ToWrapped(this b7.SpellCategory instance)
         {
             return (SpellCategory)instance;
         }

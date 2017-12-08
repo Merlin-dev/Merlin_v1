@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: afh */
+    /* Internal type: agt */
     public partial class GameDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afh _internal;
+        private agt _internal;
         
         #region Properties
         
-        public afh GameDataFile_Internal => _internal;
+        public agt GameDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public GameDataFile(afh instance) : base(instance)
+        public GameDataFile(agt instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator afh(GameDataFile instance)
+        public static implicit operator agt(GameDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GameDataFile(afh instance)
+        public static implicit operator GameDataFile(agt instance)
         {
             return new GameDataFile(instance);
         }

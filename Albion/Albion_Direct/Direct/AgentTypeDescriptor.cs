@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: cb */
+    /* Internal type: co */
     public partial class AgentTypeDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private cb _internal;
+        private co _internal;
         
         #region Properties
         
-        public cb AgentTypeDescriptor_Internal => _internal;
+        public co AgentTypeDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public AgentTypeDescriptor(cb instance)
+        public AgentTypeDescriptor(co instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator cb(AgentTypeDescriptor instance)
+        public static implicit operator co(AgentTypeDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator AgentTypeDescriptor(cb instance)
+        public static implicit operator AgentTypeDescriptor(co instance)
         {
             return new AgentTypeDescriptor(instance);
         }

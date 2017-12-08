@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ex */
+    /* Internal type: fa */
     public partial class MobCharactersDataFile : CharactersDataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ex _internal;
+        private fa _internal;
         
         #region Properties
         
-        public ex MobCharactersDataFile_Internal => _internal;
+        public fa MobCharactersDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public MobCharactersDataFile(ex instance) : base(instance)
+        public MobCharactersDataFile(fa instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ex(MobCharactersDataFile instance)
+        public static implicit operator fa(MobCharactersDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MobCharactersDataFile(ex instance)
+        public static implicit operator MobCharactersDataFile(fa instance)
         {
             return new MobCharactersDataFile(instance);
         }

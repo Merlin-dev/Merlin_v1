@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: g7.SpellAssessment */
+    /* Internal type: b6.SpellAssessment */
     public enum SpellAssessment
     {
         Negative = 0,
@@ -21,12 +21,12 @@ namespace Albion_Direct
     
     public static class SpellAssessmentExtensions
     {
-        public static g7.SpellAssessment ToInternal(this SpellAssessment instance)
+        public static b6.SpellAssessment ToInternal(this SpellAssessment instance)
         {
-            return (g7.SpellAssessment)instance;
+            return (b6.SpellAssessment)instance;
         }
         
-        public static SpellAssessment ToWrapped(this g7.SpellAssessment instance)
+        public static SpellAssessment ToWrapped(this b6.SpellAssessment instance)
         {
             return (SpellAssessment)instance;
         }

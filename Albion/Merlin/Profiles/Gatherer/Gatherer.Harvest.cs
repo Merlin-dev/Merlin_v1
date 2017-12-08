@@ -434,9 +434,10 @@ namespace Merlin.Profiles.Gatherer
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
 
             float centerDistance = (targetCenter - playerCenter).magnitude;
-            var weaponItem = _localPlayerCharacterView.LocalPlayerCharacter.s7().o();
+            var weaponItem = _localPlayerCharacterView.LocalPlayerCharacter.th().o();
+
             var isMeleeWeapon = weaponItem == null || weaponItem.bu() == Albion.Common.GameData.AttackType.Melee;
-            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jz() + mob.Mob.w8().ew();
+            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jz() + mob.Mob.xz().f9();
             var minimumAttackRange = isMeleeWeapon ? MeleeAttackRange : attackRange;
             var isInLoS = _localPlayerCharacterView.IsInLineOfSight(mob);
 

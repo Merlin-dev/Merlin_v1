@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: hn */
+    /* Internal type: h0 */
     public partial class GameData
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private hn _internal;
+        private h0 _internal;
         
         #region Properties
         
-        public hn GameData_Internal => _internal;
+        public h0 GameData_Internal => _internal;
         
         #endregion
         
@@ -37,20 +37,20 @@ namespace Albion_Direct
         
         #region Methods
         
-        public AgentsDataFile GetAgents() => _internal.a3();
-        public BuildingDataFile GetBuildings() => _internal.aq();
-        public GameDataFile GetGameData() => _internal.@as();
-        public ItemsDataFile GetItems() => _internal.ao();
-        public MobCharactersDataFile GetMobCharacters() => _internal.at();
-        public PlayerCharactersDataFile GetPlayerCharacters() => _internal.av();
-        public SpellsDataFile GetSpells() => _internal.ap();
-        public WorldDataFile GetWorld() => _internal.ay();
+        public AgentsDataFile GetAgents() => _internal.a5();
+        public BuildingDataFile GetBuildings() => _internal.@as();
+        public GameDataFile GetGameData() => _internal.@au();
+        public ItemsDataFile GetItems() => _internal.aq();
+        public MobCharactersDataFile GetMobCharacters() => _internal.av();
+        public PlayerCharactersDataFile GetPlayerCharacters() => _internal.ax();
+        public SpellsDataFile GetSpells() => _internal.ar();
+        public WorldDataFile GetWorld() => _internal.a0();
         
         #endregion
         
         #region Constructor
         
-        public GameData(hn instance)
+        public GameData(h0 instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator hn(GameData instance)
+        public static implicit operator h0(GameData instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GameData(hn instance)
+        public static implicit operator GameData(h0 instance)
         {
             return new GameData(instance);
         }

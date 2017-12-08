@@ -16,18 +16,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: g6 */
+    /* Internal type: b5 */
     public partial class SpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private g6 _internal;
+        private b5 _internal;
         
         #region Properties
         
-        public g6 SpellDescriptor_Internal => _internal;
+        public b5 SpellDescriptor_Internal => _internal;
         
         #endregion
         
@@ -38,34 +38,34 @@ namespace Albion_Direct
         
         #region Methods
         
-        public string GetIdent() => _internal.j0();
-        public string GetName() => _internal.j1();
+        public string GetIdent() => _internal.kx();
+        public string GetName() => _internal.ky();
         public string GetNameTag() => (string)_methodReflectionPool[0].Invoke(_internal,new object[]{});
         
         #endregion
         
         #region Constructor
         
-        public SpellDescriptor(g6 instance)
+        public SpellDescriptor(b5 instance)
         {
             _internal = instance;
         }
         
         static SpellDescriptor()
         {
-            _methodReflectionPool.Add(typeof(g6).GetMethod("id", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
+            _methodReflectionPool.Add(typeof(b5).GetMethod("i0", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator g6(SpellDescriptor instance)
+        public static implicit operator b5(SpellDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellDescriptor(g6 instance)
+        public static implicit operator SpellDescriptor(b5 instance)
         {
             return new SpellDescriptor(instance);
         }

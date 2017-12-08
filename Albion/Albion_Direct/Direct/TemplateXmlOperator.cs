@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: jh */
+    /* Internal type: jv */
     public partial class TemplateXmlOperator
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private jh _internal;
+        private jv _internal;
         
         #region Properties
         
-        public jh TemplateXmlOperator_Internal => _internal;
+        public jv TemplateXmlOperator_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public TemplateXmlOperator(jh instance)
+        public TemplateXmlOperator(jv instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator jh(TemplateXmlOperator instance)
+        public static implicit operator jv(TemplateXmlOperator instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TemplateXmlOperator(jh instance)
+        public static implicit operator TemplateXmlOperator(jv instance)
         {
             return new TemplateXmlOperator(instance);
         }

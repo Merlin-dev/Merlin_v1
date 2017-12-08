@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: i7.PvpRules */
+    /* Internal type: jl.PvpRules */
     public enum PvpRules
     {
         PvpDisabled = 0,
@@ -23,12 +23,12 @@ namespace Albion_Direct
     
     public static class PvpRulesExtensions
     {
-        public static i7.PvpRules ToInternal(this PvpRules instance)
+        public static jl.PvpRules ToInternal(this PvpRules instance)
         {
-            return (i7.PvpRules)instance;
+            return (jl.PvpRules)instance;
         }
         
-        public static PvpRules ToWrapped(this i7.PvpRules instance)
+        public static PvpRules ToWrapped(this jl.PvpRules instance)
         {
             return (PvpRules)instance;
         }

@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: alk */
+    /* Internal type: am2 */
     public enum GameState
     {
         Unknown = 0,
@@ -23,12 +23,12 @@ namespace Albion_Direct
     
     public static class GameStateExtensions
     {
-        public static alk ToInternal(this GameState instance)
+        public static am2 ToInternal(this GameState instance)
         {
-            return (alk)instance;
+            return (am2)instance;
         }
         
-        public static GameState ToWrapped(this alk instance)
+        public static GameState ToWrapped(this am2 instance)
         {
             return (GameState)instance;
         }

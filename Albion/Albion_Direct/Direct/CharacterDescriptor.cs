@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ez */
+    /* Internal type: fc */
     public partial class CharacterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ez _internal;
+        private fc _internal;
         
         #region Properties
         
-        public ez CharacterDescriptor_Internal => _internal;
+        public fc CharacterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public CharacterDescriptor(ez instance)
+        public CharacterDescriptor(fc instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ez(CharacterDescriptor instance)
+        public static implicit operator fc(CharacterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CharacterDescriptor(ez instance)
+        public static implicit operator CharacterDescriptor(fc instance)
         {
             return new CharacterDescriptor(instance);
         }

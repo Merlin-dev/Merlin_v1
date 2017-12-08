@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a7p */
+    /* Internal type: a9i */
     public partial class GuiEquipmentItemProxy : GuiDurableItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a7p _internal;
+        private a9i _internal;
         
         #region Properties
         
-        public a7p GuiEquipmentItemProxy_Internal => _internal;
+        public a9i GuiEquipmentItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public GuiEquipmentItemProxy(a7p instance) : base(instance)
+        public GuiEquipmentItemProxy(a9i instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a7p(GuiEquipmentItemProxy instance)
+        public static implicit operator a9i(GuiEquipmentItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GuiEquipmentItemProxy(a7p instance)
+        public static implicit operator GuiEquipmentItemProxy(a9i instance)
         {
             return new GuiEquipmentItemProxy(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: dn */
+    /* Internal type: d0 */
     public partial class CharactersDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private dn _internal;
+        private d0 _internal;
         
         #region Properties
         
-        public dn CharactersDataFile_Internal => _internal;
+        public d0 CharactersDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public CharactersDataFile(dn instance) : base(instance)
+        public CharactersDataFile(d0 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator dn(CharactersDataFile instance)
+        public static implicit operator d0(CharactersDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CharactersDataFile(dn instance)
+        public static implicit operator CharactersDataFile(d0 instance)
         {
             return new CharactersDataFile(instance);
         }

@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: g7.SpellTarget */
+    /* Internal type: b6.SpellTarget */
     public enum SpellTarget
     {
         None = 0,
@@ -37,12 +37,12 @@ namespace Albion_Direct
     
     public static class SpellTargetExtensions
     {
-        public static g7.SpellTarget ToInternal(this SpellTarget instance)
+        public static b6.SpellTarget ToInternal(this SpellTarget instance)
         {
-            return (g7.SpellTarget)instance;
+            return (b6.SpellTarget)instance;
         }
         
-        public static SpellTarget ToWrapped(this g7.SpellTarget instance)
+        public static SpellTarget ToWrapped(this b6.SpellTarget instance)
         {
             return (SpellTarget)instance;
         }

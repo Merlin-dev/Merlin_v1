@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: li */
+    /* Internal type: mc */
     public partial class OperationResponseDataContract
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private li _internal;
+        private mc _internal;
         
         #region Properties
         
-        public li OperationResponseDataContract_Internal => _internal;
+        public mc OperationResponseDataContract_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public OperationResponseDataContract(li instance)
+        public OperationResponseDataContract(mc instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator li(OperationResponseDataContract instance)
+        public static implicit operator mc(OperationResponseDataContract instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator OperationResponseDataContract(li instance)
+        public static implicit operator OperationResponseDataContract(mc instance)
         {
             return new OperationResponseDataContract(instance);
         }

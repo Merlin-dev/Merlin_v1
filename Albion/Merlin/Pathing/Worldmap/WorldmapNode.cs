@@ -44,7 +44,7 @@ namespace Merlin.Pathing.Worldmap
 
         public override Boolean Equals(WorldmapNode other)
         {
-            return Value.ClusterDescriptor_Internal.ak().Equals(other.Value.ClusterDescriptor_Internal.ak());
+            return Value.ClusterDescriptor_Internal.ao().Equals(other.Value.ClusterDescriptor_Internal.ao());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Merlin.Pathing.Worldmap
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Cluster = {0}, Score = {1}, Estimated score = {2}", Value.ClusterDescriptor_Internal.ak(), Score, EstimatedScore);
+            return string.Format("Cluster = {0}, Score = {1}, Estimated score = {2}", Value.ClusterDescriptor_Internal.ao(), Score, EstimatedScore);
         }
 
         #endregion Methods

@@ -50,8 +50,7 @@ namespace Merlin.Profiles.Gatherer
         public const double MeleeAttackRange = 2.5;
 
         const float InteractRangeMount = 2f;
-        const float InteractRangeResource = 12f;
-        const float InteractRangeMob = 20f;
+        const float InteractRange = 12f;
 
         static readonly TimeSpan _timeToUnstick = TimeSpan.FromSeconds(1.0);
         DateTime _unstickStartTime = DateTime.Now;
@@ -81,17 +80,20 @@ namespace Merlin.Profiles.Gatherer
             _harvestState.Configure(HarvestState.Mounting)
                 .OnEntry(() => OnMountingEnter())
                 .Permit(HarvestTrigger.StartWalkingToMount, HarvestState.WalkToMount)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartSummonMount, HarvestState.SummonMount);
 
             _harvestState.Configure(HarvestState.WalkToMount)
                 .OnEntry(() => OnWalkToMountEnter())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
 
 
             _harvestState.Configure(HarvestState.SummonMount)
                 .OnEntry(() => OnSummoningMount())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
 
             _harvestState.Configure(HarvestState.DismountingFromMobWalk)
@@ -122,6 +124,7 @@ namespace Merlin.Profiles.Gatherer
             _harvestState.Configure(HarvestState.HarvestResource)
                 .OnEntry(() => OnHarvestResourceEnter())
                 .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             // Mobs
@@ -141,6 +144,7 @@ namespace Merlin.Profiles.Gatherer
             _harvestState.Configure(HarvestState.AttackMob)
                 .OnEntry(() => OnAttackMobEnter())
                 .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
+                .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.HarvestMob)
@@ -203,7 +207,7 @@ namespace Merlin.Profiles.Gatherer
                 if (_localPlayerCharacterView.IsMounted)
                     interactTargetDistance = InteractRangeMount;
                 else
-                    interactTargetDistance = InteractRangeResource;
+                    interactTargetDistance = InteractRange;
 
                 if (distanceTo < interactTargetDistance)
                 {
@@ -219,10 +223,13 @@ namespace Merlin.Profiles.Gatherer
             }
             else if (_currentTarget is MobView)
             {
+                MobView mob = _currentTarget as MobView;
+                float attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jz() + mob.Mob.xz().f9();
+
                 if (_localPlayerCharacterView.IsMounted)
                     interactTargetDistance = InteractRangeMount;
                 else
-                    interactTargetDistance = InteractRangeMob;
+                    interactTargetDistance = InteractRange + attackRange;
 
                 if (distanceTo < interactTargetDistance)
                 {
@@ -309,8 +316,11 @@ namespace Merlin.Profiles.Gatherer
         void OnSummoningMount()
         {
             Core.Log("[Harvesting] -- OnSummoningMount");
-
-            _localPlayerCharacterView.MountOrDismount();            
+            if (!_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsMounting())
+            {
+                _localPlayerCharacterView.MountOrDismount();            
+                return;
+            }
         }
 
         void DoSummoningMount()

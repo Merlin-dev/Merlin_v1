@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: jw */
+    /* Internal type: ka */
     public partial class EventDataContract
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private jw _internal;
+        private ka _internal;
         
         #region Properties
         
-        public jw EventDataContract_Internal => _internal;
+        public ka EventDataContract_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public EventDataContract(jw instance)
+        public EventDataContract(ka instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator jw(EventDataContract instance)
+        public static implicit operator ka(EventDataContract instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator EventDataContract(jw instance)
+        public static implicit operator EventDataContract(ka instance)
         {
             return new EventDataContract(instance);
         }

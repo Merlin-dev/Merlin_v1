@@ -16,18 +16,18 @@ using System.Linq;
 
 namespace Albion_Direct
 {
-    /* Internal type: hv */
+    /* Internal type: h9 */
     public partial class HarvestableDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private hv _internal;
+        private h9 _internal;
         
         #region Properties
         
-        public hv HarvestableDescriptor_Internal => _internal;
+        public h9 HarvestableDescriptor_Internal => _internal;
         
         #endregion
         
@@ -44,7 +44,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public HarvestableDescriptor(hv instance)
+        public HarvestableDescriptor(h9 instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator hv(HarvestableDescriptor instance)
+        public static implicit operator h9(HarvestableDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator HarvestableDescriptor(hv instance)
+        public static implicit operator HarvestableDescriptor(h9 instance)
         {
             return new HarvestableDescriptor(instance);
         }

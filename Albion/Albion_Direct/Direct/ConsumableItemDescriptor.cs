@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: dp */
+    /* Internal type: d2 */
     public partial class ConsumableItemDescriptor : SimpleItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private dp _internal;
+        private d2 _internal;
         
         #region Properties
         
-        public dp ConsumableItemDescriptor_Internal => _internal;
+        public d2 ConsumableItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ConsumableItemDescriptor(dp instance) : base(instance)
+        public ConsumableItemDescriptor(d2 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator dp(ConsumableItemDescriptor instance)
+        public static implicit operator d2(ConsumableItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ConsumableItemDescriptor(dp instance)
+        public static implicit operator ConsumableItemDescriptor(d2 instance)
         {
             return new ConsumableItemDescriptor(instance);
         }

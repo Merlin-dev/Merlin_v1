@@ -16,18 +16,18 @@ using System.Linq;
 
 namespace Albion_Direct
 {
-    /* Internal type: al5 */
+    /* Internal type: ann */
     public partial class WorldDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private al5 _internal;
+        private ann _internal;
         
         #region Properties
         
-        public al5 WorldDataFile_Internal => _internal;
+        public ann WorldDataFile_Internal => _internal;
         
         #endregion
         
@@ -38,16 +38,16 @@ namespace Albion_Direct
         
         #region Methods
         
-        public ClusterDescriptor GetCluster(string A_0) => _internal.id((string)A_0);
-        public IEnumerable<ClusterDescriptor> GetClusters() => _internal.ie().Select(x =>(ClusterDescriptor)x);
-        public ClusterExitDescriptor GetExit(string A_0) => _internal.ie((string)A_0);
-        public TerritoryDescriptor GetTerritory(string A_0) => _internal.@if((string)A_0);
+        public ClusterDescriptor GetCluster(string A_0) => _internal.it((string)A_0);
+        public IEnumerable<ClusterDescriptor> GetClusters() => _internal.iu().Select(x =>(ClusterDescriptor)x);
+        public ClusterExitDescriptor GetExit(string A_0) => _internal.iu((string)A_0);
+        public TerritoryDescriptor GetTerritory(string A_0) => _internal.@iv((string)A_0);
         
         #endregion
         
         #region Constructor
         
-        public WorldDataFile(al5 instance) : base(instance)
+        public WorldDataFile(ann instance) : base(instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator al5(WorldDataFile instance)
+        public static implicit operator ann(WorldDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator WorldDataFile(al5 instance)
+        public static implicit operator WorldDataFile(ann instance)
         {
             return new WorldDataFile(instance);
         }

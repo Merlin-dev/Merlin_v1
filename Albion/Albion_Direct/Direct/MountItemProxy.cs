@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atp */
+    /* Internal type: au8 */
     public partial class MountItemProxy : EquipmentItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atp _internal;
+        private au8 _internal;
         
         #region Properties
         
-        public atp MountItemProxy_Internal => _internal;
+        public au8 MountItemProxy_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public MountItemProxy(atp instance) : base(instance)
+        public MountItemProxy(au8 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atp(MountItemProxy instance)
+        public static implicit operator au8(MountItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MountItemProxy(atp instance)
+        public static implicit operator MountItemProxy(au8 instance)
         {
             return new MountItemProxy(instance);
         }

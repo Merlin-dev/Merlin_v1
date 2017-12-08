@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: n */
+    /* Internal type: o */
     public partial class DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private n _internal;
+        private o _internal;
         
         #region Properties
         
-        public n DataFile_Internal => _internal;
+        public o DataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public DataFile(n instance)
+        public DataFile(o instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator n(DataFile instance)
+        public static implicit operator o(DataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator DataFile(n instance)
+        public static implicit operator DataFile(o instance)
         {
             return new DataFile(instance);
         }

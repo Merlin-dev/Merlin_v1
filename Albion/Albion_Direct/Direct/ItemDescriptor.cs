@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: bx */
+    /* Internal type: ca */
     public partial class ItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private bx _internal;
+        private ca _internal;
         
         #region Properties
         
-        public bx ItemDescriptor_Internal => _internal;
+        public ca ItemDescriptor_Internal => _internal;
         public string Description => _internal.ag;
         public string DescriptionTag
         {
@@ -56,27 +56,27 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ItemDescriptor(bx instance)
+        public ItemDescriptor(ca instance)
         {
             _internal = instance;
         }
         
         static ItemDescriptor()
         {
-            _propertyReflectionPool.Add(typeof(bx).GetProperty("an", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
-            _propertyReflectionPool.Add(typeof(bx).GetProperty("am", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
+            _propertyReflectionPool.Add(typeof(ca).GetProperty("an", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
+            _propertyReflectionPool.Add(typeof(ca).GetProperty("am", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator bx(ItemDescriptor instance)
+        public static implicit operator ca(ItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ItemDescriptor(bx instance)
+        public static implicit operator ItemDescriptor(ca instance)
         {
             return new ItemDescriptor(instance);
         }

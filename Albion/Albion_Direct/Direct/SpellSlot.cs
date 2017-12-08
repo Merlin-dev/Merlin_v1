@@ -17,18 +17,18 @@ using Albion.Common.Time;
 
 namespace Albion_Direct
 {
-    /* Internal type: ae8 */
+    /* Internal type: agk */
     public partial class SpellSlot
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ae8 _internal;
+        private agk _internal;
         
         #region Properties
         
-        public ae8 SpellSlot_Internal => _internal;
+        public agk SpellSlot_Internal => _internal;
         
         #endregion
         
@@ -39,15 +39,15 @@ namespace Albion_Direct
         
         #region Methods
         
-        public float GetCooldownPercent(GameTimeStamp A_0) => _internal.j((GameTimeStamp)A_0);
-        public GameTimeStamp GetCooldownTimeStamp() => _internal.l();
-        public CastSpellDescriptor GetSpellDescriptor() => _internal.h();
+        public float GetCooldownPercent(GameTimeStamp A_0) => _internal.n((GameTimeStamp)A_0);
+        public GameTimeStamp GetCooldownTimeStamp() => _internal.o();
+        public CastSpellDescriptor GetSpellDescriptor() => _internal.k();
         
         #endregion
         
         #region Constructor
         
-        public SpellSlot(ae8 instance)
+        public SpellSlot(agk instance)
         {
             _internal = instance;
         }
@@ -61,12 +61,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ae8(SpellSlot instance)
+        public static implicit operator agk(SpellSlot instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellSlot(ae8 instance)
+        public static implicit operator SpellSlot(agk instance)
         {
             return new SpellSlot(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a2g */
+    /* Internal type: a37 */
     public partial class FarmableObject : BuildingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a2g _internal;
+        private a37 _internal;
         
         #region Properties
         
-        public a2g FarmableObject_Internal => _internal;
+        public a37 FarmableObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FarmableObject(a2g instance) : base(instance)
+        public FarmableObject(a37 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a2g(FarmableObject instance)
+        public static implicit operator a37(FarmableObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FarmableObject(a2g instance)
+        public static implicit operator FarmableObject(a37 instance)
         {
             return new FarmableObject(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a3u */
+    /* Internal type: a5m */
     public partial class TerritoryObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a3u _internal;
+        private a5m _internal;
         
         #region Properties
         
-        public a3u TerritoryObject_Internal => _internal;
+        public a5m TerritoryObject_Internal => _internal;
         
         #endregion
         
@@ -37,13 +37,13 @@ namespace Albion_Direct
         
         #region Methods
         
-        public TerritoryDescriptor GetDescriptor() => _internal.s4();
+        public TerritoryDescriptor GetDescriptor() => _internal.tf();
         
         #endregion
         
         #region Constructor
         
-        public TerritoryObject(a3u instance) : base(instance)
+        public TerritoryObject(a5m instance) : base(instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a3u(TerritoryObject instance)
+        public static implicit operator a5m(TerritoryObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TerritoryObject(a3u instance)
+        public static implicit operator TerritoryObject(a5m instance)
         {
             return new TerritoryObject(instance);
         }

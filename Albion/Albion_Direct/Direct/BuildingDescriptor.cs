@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: bp */
+    /* Internal type: bx */
     public partial class BuildingDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private bp _internal;
+        private bx _internal;
         
         #region Properties
         
-        public bp BuildingDescriptor_Internal => _internal;
+        public bx BuildingDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public BuildingDescriptor(bp instance)
+        public BuildingDescriptor(bx instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator bp(BuildingDescriptor instance)
+        public static implicit operator bx(BuildingDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator BuildingDescriptor(bp instance)
+        public static implicit operator BuildingDescriptor(bx instance)
         {
             return new BuildingDescriptor(instance);
         }

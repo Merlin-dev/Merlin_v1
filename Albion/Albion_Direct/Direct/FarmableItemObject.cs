@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atz */
+    /* Internal type: avi */
     public partial class FarmableItemObject : SimpleItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atz _internal;
+        private avi _internal;
         
         #region Properties
         
-        public atz FarmableItemObject_Internal => _internal;
+        public avi FarmableItemObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FarmableItemObject(atz instance) : base(instance)
+        public FarmableItemObject(avi instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atz(FarmableItemObject instance)
+        public static implicit operator avi(FarmableItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FarmableItemObject(atz instance)
+        public static implicit operator FarmableItemObject(avi instance)
         {
             return new FarmableItemObject(instance);
         }

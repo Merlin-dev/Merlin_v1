@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a2y */
+    /* Internal type: a4r */
     public partial class ExitObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a2y _internal;
+        private a4r _internal;
         
         #region Properties
         
-        public a2y ExitObject_Internal => _internal;
+        public a4r ExitObject_Internal => _internal;
         
         #endregion
         
@@ -37,13 +37,13 @@ namespace Albion_Direct
         
         #region Methods
         
-        public ClusterExitDescriptor GetDescriptor() => _internal.sz();
+        public ClusterExitDescriptor GetDescriptor() => _internal.s9();
         
         #endregion
         
         #region Constructor
         
-        public ExitObject(a2y instance) : base(instance)
+        public ExitObject(a4r instance) : base(instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a2y(ExitObject instance)
+        public static implicit operator a4r(ExitObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ExitObject(a2y instance)
+        public static implicit operator ExitObject(a4r instance)
         {
             return new ExitObject(instance);
         }

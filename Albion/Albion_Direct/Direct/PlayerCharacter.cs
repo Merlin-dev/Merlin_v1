@@ -41,13 +41,13 @@ namespace Albion_Direct
         
         public string GetAllianceName() => _internal.jr();
         public string GetGuildName() => _internal.jl();
-        public bool GetIsHarvesting() => _internal.wj();
-        public bool GetIsMounted() => _internal.v9();
-        public bool GetIsMounting() => _internal.wk();
-        public MountItemDescriptor GetMount() => _internal.wa();
-        public ObservableRange<afr> GetMountHealth() => _internal.wb();
-        public PlayerCharacterDescriptor GetPlayerDescriptor() => _internal.v4();
-        public ObservableRange<afp> GetReputation() => _internal.wc();
+        public bool GetIsHarvesting() => _internal.wl();
+        public bool GetIsMounted() => _internal.wb();
+        public bool GetIsMounting() => _internal.wm();
+        public MountItemDescriptor GetMount() => _internal.wc();
+        public ObservableRange<afr> GetMountHealth() => _internal.wd();
+        public PlayerCharacterDescriptor GetPlayerDescriptor() => _internal.v6();
+        public ObservableRange<afp> GetReputation() => _internal.we();
         public Guid GetUid() => _internal.@as();
         
         #endregion

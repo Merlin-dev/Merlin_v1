@@ -17,7 +17,7 @@ public class Console : MonoBehaviour
     /// <summary>
     /// The hotkey to show and hide the console window.
     /// </summary>
-    public KeyCode toggleKey = KeyCode.BackQuote;
+    public KeyCode toggleKey = KeyCode.F8;
 
     private List<Log> logs = new List<Log>();
     private Vector2 scrollPosition;

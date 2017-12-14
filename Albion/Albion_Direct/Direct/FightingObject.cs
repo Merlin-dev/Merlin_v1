@@ -38,21 +38,21 @@ namespace Albion_Direct
         #region Methods
         
         public FightingAttributes GetAttributes() => _internal.at();
-        public ObservableRange<afr> GetEnergy() => _internal.xr();
-        public ObservableRange<afr> GetHealth() => _internal.xq();
-        public CharacterDescriptor GetCharacterDescriptor() => _internal.xz();
-        public bool GetIsAttacking() => _internal.zp();
-        public bool GetIsCasting() => _internal.zk();
+        public ObservableRange<afr> GetEnergy() => _internal.xt();
+        public ObservableRange<afr> GetHealth() => _internal.xs();
+        public CharacterDescriptor GetCharacterDescriptor() => _internal.x1();
+        public bool GetIsAttacking() => _internal.zr();
+        public bool GetIsCasting() => _internal.zm();
         public bool GetIsDead() => _internal.jg();
-        public bool GetIsChanneling() => _internal.zl();
-        public bool GetIsIdle() => _internal.zj();
+        public bool GetIsChanneling() => _internal.zn();
+        public bool GetIsIdle() => _internal.zl();
         public float GetLoad() => _internal.ji();
-        public float GetLoadPercentage() => _internal.x2();
-        public float GetLoadSpeedFactor() => _internal.x3();
-        public float GetMaxLoad() => _internal.x1();
+        public float GetLoadPercentage() => _internal.x4();
+        public float GetLoadSpeedFactor() => _internal.x5();
+        public float GetMaxLoad() => _internal.x3();
         public string GetName() => _internal.iu();
-        public long GetTargetId() => _internal.xw();
-        public a GetEventHandler<a>() where a: avx => (a)_internal.y9<a>();
+        public long GetTargetId() => _internal.xy();
+        public a GetEventHandler<a>() where a: avx => (a)_internal.zb<a>();
         
         #endregion
         

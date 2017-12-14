@@ -37,8 +37,8 @@ namespace Albion_Direct
         
         #region Methods
         
-        public float GetHalfMountRange() => _internal.eh();
-        public float GetRemountDistance() => _internal.em();
+        public float GetHalfMountRange() => _internal.ei();
+        public float GetRemountDistance() => _internal.en();
         
         #endregion
         

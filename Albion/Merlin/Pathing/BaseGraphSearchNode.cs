@@ -58,7 +58,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <returns>
         /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
         /// </returns>
-        public Boolean Equals(TNode other)
+        public virtual Boolean Equals(TNode other)
         {
             return Value.Equals(other.Value);
         }

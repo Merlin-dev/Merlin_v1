@@ -1,74 +1,105 @@
-﻿using Stateless;
+using Albion_Direct;
+using Stateless;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Merlin.Profiles.Gatherer
 {
-    public partial class Gatherer : Profile
+    public enum State
     {
-        #region Fields
+        Search,
+        Harvest,
+        Combat,
+        Bank,
+        Repair,
+        Travel,
+        SiegeCampTreasure,
+    }
 
-        bool _isRunning;
-        int _selectedTownClusterIndex;
-        int _selectedMininumTierIndex;
-        StateMachine<State, Trigger> _state;
-        Dictionary<SimulationObjectView, Blacklisted> _blacklist;
-        Dictionary<GatherInformation, bool> _gatherInformations;
+    public enum Trigger
+    {
+        Restart,
+        DiscoveredResource,
+        BankDone,
+        RepairDone,
+        DepletedResource,
+        Overweight,
+        Damaged,
+        EncounteredAttacker,
+        EliminatedAttacker,
+        StartTravelling,
+        TravellingDone,
+        StartSiegeCampTreasure,
+        OnSiegeCampTreasureDone,
+        Failure,
+    }
 
-        #endregion Fields
+    public sealed partial class Gatherer : Profile
+    {
+        DateTime _startDateTime = DateTime.Now;
 
-        #region Properties and Events
+        private bool _isRunning = false;
+
+        private StateMachine<State, Trigger> _state;
+        private Dictionary<SimulationObjectView, Blacklisted> _blacklist;
+        private Dictionary<Point2, GatherInformation> _gatheredSpots;
+        private List<Point2> _keeperSpots;
+        private List<MountObjectView> _mounts;
+        private bool _knockedDown;
 
         public override string Name => "Gatherer";
-
-        public string[] TownClusterNames { get { return Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray(); } }
-
-        public string[] TierNames { get { return Enum.GetNames(typeof(Tier)).ToArray(); } }
-
-        public string SelectedTownCluster { get { return TownClusterNames[_selectedTownClusterIndex]; } }
-
-        public Tier SelectedMinimumTier { get { return (Tier)Enum.Parse(typeof(Tier), TierNames[_selectedMininumTierIndex]); } }
-
-        #endregion Properties and Events
-
-        #region Methods
 
         protected override void OnStart()
         {
             _blacklist = new Dictionary<SimulationObjectView, Blacklisted>();
+            _gatheredSpots = new Dictionary<Point2, GatherInformation>();
+            _keeperSpots = new List<Point2>();
 
-            _gatherInformations = new Dictionary<GatherInformation, bool>();
-            foreach (var resourceType in Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>())
-                foreach (var tier in Enum.GetValues(typeof(Tier)).Cast<Tier>())
-                    foreach (var enchantment in Enum.GetValues(typeof(EnchantmentLevel)).Cast<EnchantmentLevel>())
-                    {
-                        if (tier < Tier.IV && enchantment != EnchantmentLevel.White)
-                            continue;
-
-                        _gatherInformations.Add(new GatherInformation(resourceType, tier, enchantment), tier >= Tier.II);
-                    }
+            LoadSettings();
 
             _state = new StateMachine<State, Trigger>(State.Search);
             _state.Configure(State.Search)
+                .Permit(Trigger.StartSiegeCampTreasure, State.SiegeCampTreasure)
+                .Permit(Trigger.StartTravelling, State.Travel)
                 .Permit(Trigger.EncounteredAttacker, State.Combat)
                 .Permit(Trigger.DiscoveredResource, State.Harvest)
-                .Permit(Trigger.Overweight, State.Bank);
+                .Permit(Trigger.Overweight, State.Bank)
+                .Permit(Trigger.Damaged, State.Repair);
 
             _state.Configure(State.Combat)
                 .Permit(Trigger.EliminatedAttacker, State.Search);
 
             _state.Configure(State.Harvest)
+                .OnEntry(() => _harvestState.Fire(HarvestTrigger.StartHarvest))
                 .Permit(Trigger.DepletedResource, State.Search)
                 .Permit(Trigger.EncounteredAttacker, State.Combat);
 
             _state.Configure(State.Bank)
                 .Permit(Trigger.Restart, State.Search)
                 .Permit(Trigger.BankDone, State.Search);
+
+            _state.Configure(State.Repair)
+                .Permit(Trigger.RepairDone, State.Search);
+
+            _state.Configure(State.Travel)
+                .Permit(Trigger.TravellingDone, State.Search);
+
+            _state.Configure(State.SiegeCampTreasure)
+                .Permit(Trigger.OnSiegeCampTreasureDone, State.Search);
+
+            foreach (State state in Enum.GetValues(typeof(State)))
+            {
+                if (state != State.Search)
+                    _state.Configure(state).Permit(Trigger.Failure, State.Search);
+            }
+
+            HarvestOnStart();
         }
 
         protected override void OnStop()
         {
+            SaveSettings();
+
             _state = null;
 
             _blacklist.Clear();
@@ -77,6 +108,10 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUpdate()
         {
+            //If we don't have a view, do not do anything!
+            if (_localPlayerCharacterView == null)
+                return;
+
             if (!_isRunning)
                 return;
 
@@ -96,32 +131,59 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
+                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead") || mob.MobType().ToLowerInvariant().Contains("bonecrusher"))))
+                {
+                    var keeperPosition = keeper.GetInternalPosition();
+                    if (!_keeperSpots.Contains(keeperPosition))
+                        _keeperSpots.Add(keeperPosition);
+                }
+
+                _mounts = _client.GetEntities<MountObjectView>(mount => mount);
+
+                if (_knockedDown != _localPlayerCharacterView.IsKnockedDown())
+                {
+                    _knockedDown = _localPlayerCharacterView.IsKnockedDown();
+                    if (_knockedDown)
+                    {
+                        Core.Log("[DEAD - Currently knocked down!]");
+                    }
+                }
+
                 switch (_state.State)
                 {
-                    case State.Search:
-                        Search();
-                        break;
-
-                    case State.Harvest:
-                        Harvest();
-                        break;
-
-                    case State.Combat:
-                        Fight();
-                        break;
-
-                    case State.Bank:
-                        Bank();
-                        break;
+                    case State.Search: Search(); break;
+                    case State.Harvest: HarvestUpdate(); break;
+                    case State.Combat: Fight(); break;
+                    case State.Bank: Bank(); break;
+                    case State.Repair: Repair(); break;
+                    case State.Travel: Travel(); break;
+                    case State.SiegeCampTreasure: SiegeCampTreasure(); break;
                 }
             }
             catch (Exception e)
             {
-                if (_showErrors)
-                    _localPlayerCharacterView.CreateTextEffect($"[Error: {e.Message}]");
-
                 Core.Log(e);
+
+                ResetCriticalVariables();
+                _state.Fire(Trigger.Failure);
             }
+        }
+
+        private void ResetCriticalVariables()
+        {
+            _worldPathingRequest = null;
+            _bankPathingRequest = null;
+            _repairPathingRequest = null;
+            _repairFindPathingRequest = null;
+            _harvestPathingRequest = null;
+            _currentTarget = null;
+            _failedFindAttempts = 0;
+            _changeGatheringPathRequest = null;
+            _siegeCampTreasureCoroutine = null;
+            _targetCluster = null;
+            _travelPathingRequest = null;
+            _movingToRepair = false;
+            _movingToBank = false;
         }
 
         private void Blacklist(SimulationObjectView target, TimeSpan duration)
@@ -133,13 +195,36 @@ namespace Merlin.Profiles.Gatherer
             };
         }
 
-        #endregion Methods
-
         private class Blacklisted
         {
             public SimulationObjectView Target { get; set; }
 
             public DateTime Timestamp { get; set; }
+        }
+
+        public struct GatherInformation
+        {
+            private ResourceType _resourceType;
+            private Tier _tier;
+            private EnchantmentLevel _enchantmentLevel;
+
+            public ResourceType ResourceType { get { return _resourceType; } }
+            public Tier Tier { get { return _tier; } }
+            public EnchantmentLevel EnchantmentLevel { get { return _enchantmentLevel; } }
+            public DateTime? HarvestDate { get; set; }
+
+            public GatherInformation(ResourceType resourceType, Tier tier, EnchantmentLevel enchantmentLevel)
+            {
+                _resourceType = resourceType;
+                _tier = tier;
+                _enchantmentLevel = enchantmentLevel;
+                HarvestDate = null;
+            }
+
+            public override string ToString()
+            {
+                return $"{ResourceType} {Tier}.{(int)EnchantmentLevel}";
+            }
         }
     }
 }

@@ -1,17 +1,16 @@
-﻿using Merlin.API;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using WorldMap;
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders;
+using Albion_Direct;
 
 namespace Merlin.Pathing.Worldmap
 {
-    public class WorldmapPathfinder : BasePathfinder<WorldmapNode, WorldmapMap, WorldmapCluster>
+    public class WorldmapPathfinder : BasePathfinder<WorldmapNode, WorldmapMap, ClusterDescriptor>
     {
         #region Fields
 
-        private World _world;
+        private ObjectManager _world;
 
         #endregion Fields
 
@@ -19,7 +18,7 @@ namespace Merlin.Pathing.Worldmap
 
         public WorldmapPathfinder()
         {
-            _world = World.Instance;
+            _world = ObjectManager.GetInstance();
         }
 
         #endregion Constructors and Cleanup
@@ -29,36 +28,34 @@ namespace Merlin.Pathing.Worldmap
         /// <summary>
         /// See <see cref="BaseGraphSearchPathfinder{TNode,TMap}.OnEnumerateNeighbors"/> for more details.
         /// </summary>
-        protected override IEnumerable<WorldmapCluster> OnEnumerateNeighbors(WorldmapNode currentNode, StopFunction<WorldmapCluster> stopFunction)
+        protected override IEnumerable<ClusterDescriptor> OnEnumerateNeighbors(WorldmapNode currentNode, StopFunction<ClusterDescriptor> stopFunction)
         {
-            List<WorldmapCluster> result = new List<WorldmapCluster>();
+            List<ClusterDescriptor> result = new List<ClusterDescriptor>();
 
-            var currentCluster = new Cluster(currentNode.Value.Info);
+            var currentCluster = (ClusterDescriptor)currentNode.Value;
             var currentClusterExits = currentCluster.GetExits();
 
             foreach (var exit in currentClusterExits)
             {
-                if (exit.Kind != akf.Kind.Cluster)
+                if (exit.GetKind() != ClusterExitKind.Cluster)
                     continue;
 
-                var exitCluster = _world.GetCluster(exit.Destination.Internal);
-
-                if (exitCluster != null)
-                    result.Add(exitCluster);
+                ClusterDescriptor cluster = exit.GetDestination();
+                if (cluster != null)
+                    result.Add(cluster);
             }
 
             return result;
         }
 
-        protected Int32 GetScore(WorldmapCluster start, WorldmapCluster end)
+        protected Int32 GetScore(ClusterDescriptor start, ClusterDescriptor end)
         {
-            var cluster = new Cluster(end.Info);
-            var pvpRules = cluster.PvPRules;
+            var cluster = (ClusterDescriptor)end;
 
-            switch (pvpRules)
+            switch (cluster.GetClusterType().GetPvpRules())
             {
-                case iz.PvpRules.PvpForced: return Int32.MaxValue;
-                case iz.PvpRules.PvpAllowed: return 1;
+                case PvpRules.PvpForced: return 255;
+                case PvpRules.PvpAllowed: return 1;
             }
 
             return 1;
@@ -67,7 +64,7 @@ namespace Merlin.Pathing.Worldmap
         /// <summary>
         /// See <see cref="BaseGraphSearchPathfinder{TNode,TMap}.OnPerformAlgorithm"/> for more details.
         /// </summary>
-        protected override void OnPerformAlgorithm(WorldmapNode currentNode, WorldmapNode neighborNode, WorldmapCluster neighborPosition, WorldmapCluster endPosition, StopFunction<WorldmapCluster> stopFunction)
+        protected override void OnPerformAlgorithm(WorldmapNode currentNode, WorldmapNode neighborNode, ClusterDescriptor neighborPosition, ClusterDescriptor endPosition, StopFunction<ClusterDescriptor> stopFunction)
         {
             Int32 neighborScore = currentNode.Score + GetScore(currentNode.Value, neighborPosition);
 

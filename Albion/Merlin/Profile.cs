@@ -1,4 +1,4 @@
-﻿using Merlin.API;
+﻿using Albion_Direct;
 using System;
 using UnityEngine;
 
@@ -8,19 +8,22 @@ namespace Merlin
     {
         #region Static
 
-        public static TimeSpan UpdateDelay = TimeSpan.FromSeconds(0.1d);
+        public static readonly TimeSpan DefaultUpdateDelay = TimeSpan.FromSeconds(0.1);
+        public static TimeSpan UpdateDelay = DefaultUpdateDelay;
 
         #endregion Static
 
         #region Fields
 
-        protected Client _client;
-        protected World _world;
-        protected Landscape _landscape;
+        protected GameManager _client;
+        protected ObjectManager _world;
+        protected LandscapeManager _landscape;
         protected LocalPlayerCharacterView _localPlayerCharacterView;
+        protected CollisionManager _collision;
 
         private DateTime _nextUpdate;
         private bool refresh;
+
         #endregion Fields
 
         #region Properties and Events
@@ -36,11 +39,14 @@ namespace Merlin
         /// </summary>
         private void OnEnable()
         {
-            _client = Client.Instance;
-            _world = World.Instance;
-            _landscape = Landscape.Instance;
-            _localPlayerCharacterView = _client.LocalPlayerCharacter;
+            _client = GameManager.GetInstance();
+            _world = ObjectManager.GetInstance();
+            _landscape = _client.GetLandscapeManager();
+            _collision = _world.GetCollisionManager();
+            _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
             _nextUpdate = DateTime.Now;
+
+            Camera.onPostRender += OnCameraPostRender;
         }
 
         private void Awake()
@@ -61,6 +67,8 @@ namespace Merlin
         /// </summary>
         private void OnDisable()
         {
+            Camera.onPostRender -= OnCameraPostRender;
+
             OnStop();
 
             _client = null;
@@ -71,14 +79,17 @@ namespace Merlin
         /// </summary>
         private void Update()
         {
-            if (_client.State == GameState.Playing)
+
+            HotKey();
+
+            if (_client.GetState() == GameState.Playing)
             {
                 if (refresh)
                 {
-                    _client = Client.Instance;
-                    _world = World.Instance;
-                    _landscape = Landscape.Instance;
-                    _localPlayerCharacterView = _client.LocalPlayerCharacter;
+                    _client = GameManager.GetInstance();
+                    _world = ObjectManager.GetInstance();
+                    _landscape = _client.GetLandscapeManager();
+                    _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
                     refresh = false;
                 }
                 if (DateTime.Now < _nextUpdate)
@@ -105,30 +116,25 @@ namespace Merlin
         /// <summary>
         /// Called when this instance is started.
         /// </summary>
-        protected virtual void OnStart()
-        {
-        }
+        protected abstract void OnStart();
 
         /// <summary>
         /// Called when this instance is stopped.
         /// </summary>
-        protected virtual void OnStop()
-        {
-        }
+        protected abstract void OnStop();
 
-        protected virtual void OnUpdate()
-        {
-        }
+        protected abstract void OnUpdate();
+
+        protected abstract void HotKey();
 
         protected virtual void OnUI()
         {
         }
 
-        #endregion Methods
-    }
+        protected virtual void OnCameraPostRender(Camera cam)
+        {
+        }
 
-    public class RestartInstruction : CustomYieldInstruction
-    {
-        public override bool keepWaiting => false;
+        #endregion Methods
     }
 }

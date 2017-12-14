@@ -1,0 +1,13 @@
+Copy following .Dll's from \ProgramFiles\AlbionOnline\game\Albion-Online_Data\Managed to this folder to compile.
+
+Albion.Common.dll
+Albion.PhotonClient.dll
+Assembly-CSharp.dll
+Assembly-UnityScript.dll
+GraphLogger.dll
+JsonFx.Json.dll
+Photon3Unity3D.dll
+Spline.dll
+UnityEngine.dll
+UnityEngine.UI.dll
+

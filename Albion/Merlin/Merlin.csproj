@@ -49,7 +49,7 @@
       <HintPath>..\Dependencies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
+      <HintPath>..\packages\Costura.Fody.1.6.2\lib\portable-net+sl+win+wpa+wp\Costura.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Photon3Unity3D">
@@ -61,7 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml">
-      <HintPath>..\..\..\..\Program Files (x86)\Albion Online\game\Albion-Online_Data\Managed\System.Xml.dll</HintPath>
+      <HintPath>..\Dependencies\System.Xml.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,75 +72,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Events\CastSpellEventHandler.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CastSpellEventHandler.tt</DependentUpon>
-    </Compile>
-    <Compile Include="API\Game\Client.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Client.tt</DependentUpon>
-    </Compile>
-    <Compile Include="API\Game\Clusters.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Clusters.tt</DependentUpon>
-    </Compile>
-    <Compile Include="API\Game\Collision.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Collision.tt</DependentUpon>
-    </Compile>
-    <Compile Include="API\Game\Landscape.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Landscape.tt</DependentUpon>
-    </Compile>
-    <Compile Include="API\Game\Spells.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Spells.tt</DependentUpon>
-    </Compile>
-    <Compile Include="API\Game\World.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>World.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Console.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="Extensions\Views\FightingObjectView.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FightingObjectView.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Views\HarvestableObjectView.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HarvestableObjectView.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Views\LocalPlayerCharacterView.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LocalPlayerCharacterView.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Views\MountObjectView.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MountObjectView.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Views\SimulationObjectView.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimulationObjectView.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Extensions\Collider.Extensions.cs" />
+    <Compile Include="Extensions\Enum.Extensions.cs" />
+    <Compile Include="Extensions\HarvestableObject.Extensions.cs" />
+    <Compile Include="Extensions\HarvestableObjectView.Extensions.cs" />
+    <Compile Include="Extensions\List.Extensions.cs" />
+    <Compile Include="Extensions\LocalInputHandler.Extensions.cs" />
+    <Compile Include="Extensions\LocalPlayerCharacterView.Extensions.cs" />
+    <Compile Include="Extensions\LootObjectView.Extensions.cs" />
+    <Compile Include="Extensions\MobView.Extensions.cs" />
+    <Compile Include="Extensions\SilverObjectView.Extensions.cs" />
+    <Compile Include="Extensions\SimulationObject.Extensions.cs" />
+    <Compile Include="Extensions\SimulationObjectView.Extensions.cs" />
+    <Compile Include="Extensions\Worldmap.Extensions.cs" />
     <Compile Include="Pathing\AStar\AStarMap.cs" />
     <Compile Include="Pathing\AStar\AStarNode.cs" />
     <Compile Include="Pathing\AStar\AStarPathfinder.cs" />
-    <Compile Include="Pathing\Cluster\ClusterPathfinder.cs" />
     <Compile Include="Pathing\BaseGraphSearchMap.cs" />
     <Compile Include="Pathing\BaseGraphSearchNode.cs" />
     <Compile Include="Pathing\BaseGraphSearchPathfinder.cs" />
     <Compile Include="Pathing\BasePathfinder.cs" />
+    <Compile Include="Pathing\ClusterPathingRequest.cs" />
+    <Compile Include="Pathing\Cluster\ClusterPathfinder.cs" />
     <Compile Include="Pathing\Dijkstra\BaseDijkstraMap.cs" />
     <Compile Include="Pathing\Dijkstra\DijkstraMap.cs" />
     <Compile Include="Pathing\Dijkstra\DijkstraNode.cs" />
@@ -154,96 +109,50 @@
     <Compile Include="Pathing\Helpers\PathDelegates.cs" />
     <Compile Include="Pathing\Helpers\PriorityQueue.cs" />
     <Compile Include="Pathing\IPathfinder.cs" />
+    <Compile Include="Pathing\PositionPathingRequest.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapMap.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapNode.cs" />
     <Compile Include="Pathing\Worldmap\WorldmapPathfinder.cs" />
+    <Compile Include="Pathing\WorldPathingRequest.cs" />
+    <Compile Include="Pathing\World\WorldPathfinder.cs" />
     <Compile Include="Profile.cs" />
-    <Compile Include="Profiles\Combat.cs" />
-    <Compile Include="Profiles\Gatherer\Blacklisted.cs" />
-    <Compile Include="Profiles\Gatherer\Gatherer.Bank.cs" />
+    <Compile Include="Profiles\ESP\ESP.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Helper.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Reparing.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Combat.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Harvest.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Search.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Settings.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.SiegeCampTreasure.cs" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Travel.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.UI.cs" />
-    <Compile Include="Profiles\Gatherer\GatherInformation.cs" />
-    <Compile Include="Profiles\ClusterPathingRequest.cs" />
-    <Compile Include="Profiles\Gatherer\State.cs" />
-    <Compile Include="Profiles\Gatherer\Trigger.cs" />
-    <Compile Include="Profiles\Helper\ResourceType.cs" />
-    <Compile Include="Profiles\Helper\Tier.cs" />
-    <Compile Include="Profiles\Helper\TownClusterName.cs" />
-    <Compile Include="Profiles\Helper\EnchantmentLevel.cs" />
-    <Compile Include="Profiles\WorldPathingRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="API\Global.ttinclude" />
     <None Include="packages.config" />
+    <Compile Include="Profiles\Gatherer\Gatherer.Banking.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="API\Events\CastSpellEventHandler.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CastSpellEventHandler.cs</LastGenOutput>
-    </Content>
-    <Content Include="API\Game\Client.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Client.cs</LastGenOutput>
-    </Content>
-    <Content Include="API\Game\Clusters.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Clusters.cs</LastGenOutput>
-    </Content>
-    <Content Include="API\Game\Collision.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Collision.cs</LastGenOutput>
-    </Content>
-    <Content Include="API\Game\Landscape.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Landscape.cs</LastGenOutput>
-    </Content>
-    <Content Include="API\Game\Spells.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Spells.cs</LastGenOutput>
-    </Content>
-    <Content Include="API\Game\World.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>World.cs</LastGenOutput>
-    </Content>
-    <Content Include="Extensions\Views\FightingObjectView.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FightingObjectView.cs</LastGenOutput>
-    </Content>
-    <Content Include="Extensions\Views\HarvestableObjectView.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HarvestableObjectView.cs</LastGenOutput>
-    </Content>
-    <Content Include="Extensions\Views\LocalPlayerCharacterView.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LocalPlayerCharacterView.cs</LastGenOutput>
-    </Content>
-    <Content Include="Extensions\Views\MountObjectView.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MountObjectView.cs</LastGenOutput>
-    </Content>
-    <Content Include="Extensions\Views\SimulationObjectView.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SimulationObjectView.cs</LastGenOutput>
-    </Content>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Albion_Direct\Albion_Direct.csproj">
+      <Project>{c288f801-7fa5-4c14-a90e-71b71615103c}</Project>
+      <Name>Albion_Direct</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets'))" />
   </Target>
-  <Import Project="..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
-  <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
+  <Import Project="..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets')" />
 </Project>

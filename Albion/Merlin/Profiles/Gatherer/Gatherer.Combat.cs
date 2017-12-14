@@ -1,114 +1,177 @@
-﻿using Merlin.API;
+﻿using Albion_Direct;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
-    public partial class Gatherer
+    public sealed partial class Gatherer
     {
-        #region Methods
-
-        public bool HandleAttackers()
+        private static List<Tuple<SpellTarget, SpellCategory, bool>> SpellPriorityList = new List<Tuple<SpellTarget, SpellCategory, bool>>
         {
-            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
-            {
-                _localPlayerCharacterView.CreateTextEffect("[Attacked]");
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Buff, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Damage, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.CrowdControl, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.CrowdControl, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.Damage, true),
+            //new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.Debuff, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.Damage, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.MovementBuff, true),
+        };
 
-                _state.Fire(Trigger.EncounteredAttacker);
-                return true;
-            }
-
-            return false;
-        }
+        private LocalPlayerCharacter _combatPlayer;
+        private FightingObjectView _combatTarget;
+        private IEnumerable<SpellSlot> _combatSpells;
+        private float _combatCooldown;
 
         public void Fight()
         {
-            var player = _localPlayerCharacterView;
+            StuckHelper.PretendPlayerIsMoving();
 
-            if (player.IsMounted)
+            if (_localPlayerCharacterView.IsMounted)
             {
-                player.MountOrDismount();
+                Core.Log("Player Mounted. Dismount now.");
+                _localPlayerCharacterView.MountOrDismount();
                 return;
             }
 
-            var spells = player.GetSpells().Ready()
-                                .Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE")
-                                .Ignore("AMBUSH");
-
-            var attackTarget = player.GetAttackTarget();
-
-            if (attackTarget != null)
+            if (_combatCooldown > 0 || _localPlayerCharacterView.bIsChanneling())
             {
-                var selfBuffSpells = spells.Target(gz.SpellTarget.Self).Category(gz.SpellCategory.Buff);
-                if (selfBuffSpells.Any() && !player.IsCastingSpell())
-                {
-                    player.CreateTextEffect("[Casting Buff Spell]");
-                    player.CastOnSelf(selfBuffSpells.FirstOrDefault().SpellSlot);
-                    return;
-                }
-
-                var selfDamageSpells = spells.Target(gz.SpellTarget.Self).Category(gz.SpellCategory.Damage);
-                if (selfDamageSpells.Any() && !player.IsCastingSpell())
-                {
-                    player.CreateTextEffect("[Casting Damage Spell]");
-                    player.CastOnSelf(selfDamageSpells.FirstOrDefault().SpellSlot);
-                    return;
-                }
-
-                var groundCCSpells = spells.Target(gz.SpellTarget.Ground).Category(gz.SpellCategory.CrowdControl);
-                if (groundCCSpells.Any())
-                {
-                    player.CreateTextEffect("[Casting Ground Spell]");
-                    player.CastAt(groundCCSpells.FirstOrDefault().SpellSlot, attackTarget.transform.position);
-                    return;
-                }
-
-                // TODO: If buffed, don't use channeled spells.
-
-                /*
-				var enemyDamageSpells = spells.Target(gs.SpellTarget.Enemy).Category(gs.SpellCategory.Damage);
-				if (enemyDamageSpells.Any() && !player.IsCastingSpell())
-				{
-					player.CreateTextEffect("[Casting Damage Spell]");
-					player.CastOn(enemyDamageSpells.FirstOrDefault().SpellSlot, player.GetAttackTarget());
-					return;
-				}
-				*/
-
-                /*
-				var selfDamageSpells = spells.Target(gs.SpellTarget.Self).Category(gs.SpellCategory.Damage);
-				if (selfDamageSpells.Any())
-				{
-				}
-
-				*/
-            }
-
-            if (player.IsUnderAttack(out FightingObjectView attacker))
-            {
-                player.SetSelectedObject(attacker);
-                player.AttackSelectedObject();
+                Core.LogOnce("Combat Cooldown > 0. Player is channeling: " + _localPlayerCharacterView.bIsChanneling());
+                _combatCooldown -= UnityEngine.Time.deltaTime;
                 return;
             }
 
-            if (player.IsCasting())
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+
+            if (_localPlayerCharacterView.IsCasting() || _combatPlayer.GetIsCasting())
+            {
+                Core.Log("You are casting. Wait for casting to finish");
+                return;
+            }
+
+            if (_combatTarget != null && _combatTarget.IsCasting())
+            {
+                // Chose a random point behind player.
+                Vector3 back = -_localPlayerCharacterView.transform.forward * 15f;
+                float randAngle = UnityEngine.Random.Range(-75f, 75f);
+                back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
+                Vector3 randPos = back + _localPlayerCharacterView.transform.position;
+
+                _localPlayerCharacterView.StopAnyActionObject();
+                _localPlayerCharacterView.RequestMove(randPos);
+                _combatCooldown = 0.3f;
+                return;
+            }
+
+            if (_combatCooldown > 0 || _localPlayerCharacterView.bIsChanneling())
+            {
+                Core.LogOnce("Combat Cooldown > 0. Player is channeling: " + _localPlayerCharacterView.bIsChanneling());
+                _combatCooldown -= UnityEngine.Time.deltaTime;
+                return;
+            }
+
+            if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
                 return;
 
-            if (player.GetHealth() < (player.GetMaxHealth() * 0.8f))
+            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker) && !(_combatTarget != null && _combatTarget.IsCasting()))
             {
-                var healSpell = spells.Target(gz.SpellTarget.Self).Category(gz.SpellCategory.Heal);
+                Core.LogOnce("You are under attack. Attack the attacker");
+                _localPlayerCharacterView.SetSelectedObject(attacker);
+                _localPlayerCharacterView.AttackSelectedObject();
+                return;
+            }
+
+            if (_combatPlayer.GetIsCasting())
+            {
+                Core.Log("You are casting. Wait for casting to finish");
+                return;
+            }
+
+            if (_combatPlayer.GetHealth().GetValue() < (_combatPlayer.GetHealth().GetMaximum() * 0.8f))
+            {
+                Core.LogOnce("Health below 80%");
+                var healSpell = _combatSpells.Target(SpellTarget.Self).Category(SpellCategory.Heal);
 
                 if (healSpell.Any())
-                    player.CastOnSelf(healSpell.FirstOrDefault().SpellSlot);
-
+                {
+                    Core.Log("Cast heal spell on self");
+                    _localPlayerCharacterView.CastOnSelf(healSpell.FirstOrDefault().Slot);
+                }
                 return;
             }
 
             _currentTarget = null;
             _harvestPathingRequest = null;
 
+            Core.Log("[Eliminated]");
             _state.Fire(Trigger.EliminatedAttacker);
         }
 
-        #endregion Methods
+        private bool TryToCastSpell(SpellTarget target, SpellCategory category, bool checkCastState)
+        {
+            try
+            {
+                if (checkCastState && _localPlayerCharacterView.IsCasting())
+                {
+                    Core.Log("You are casting. Wait for casting to finish");
+                    return false;
+                }
+
+                var spells = _combatSpells.Target(target).Category(category);
+                var spellToCast = spells.Any() ? spells.First() : null;
+                if (spellToCast == null)
+                {
+                    Core.LogOnce("Spell to Cast == Null. Exit spell cast");
+                    return false;
+                }
+
+                var spellName = "Unknown";
+                try
+                {
+                    spellName = spellToCast.GetSpellDescriptor().TryGetName();
+                    var spellSlot = spellToCast.Slot;
+                    switch (target)
+                    {
+                        case (SpellTarget.Self):
+                            Core.Log("Casting " + spellName + " on self.");
+                            _localPlayerCharacterView.CastOnSelf(spellSlot);
+                            break;
+
+                        case (SpellTarget.Enemy):
+                            Core.Log("Casting " + spellName + " on enemy.");
+                            _localPlayerCharacterView.CastOn(spellSlot, _combatTarget);
+                            break;
+
+                        case (SpellTarget.Ground):
+                            Core.Log("Casting " + spellName + " on ground.");
+                            _localPlayerCharacterView.CastAt(spellSlot, _combatTarget.GetPosition());
+                            break;
+
+                        default:
+                            Core.Log($"[SpellTarget {target} is not supported. Spell skipped]");
+                            return false;
+                    }
+                    _combatCooldown = 0.1f;
+                    return true;
+                    
+                }
+                catch (Exception e)
+                {
+                    Core.Log($"[Error while casting {spellName} ({target}/{category}/{checkCastState})]");
+                    Core.Log(e);
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Core.Log($"[Generic casting error ({target}/{category}/{checkCastState})]");
+                Core.Log(e);
+                return false;
+            }
+        }
     }
 }

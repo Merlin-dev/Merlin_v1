@@ -1,8 +1,7 @@
-﻿using Merlin.API;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-
 using UnityEngine;
+using Albion_Direct;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -10,94 +9,188 @@ namespace Merlin.Profiles.Gatherer
     {
         #region Fields
 
-        bool _showErrors;
-        bool _isUIshown;
-        float? _zoom;
-        bool? _globalFog;
+        public KeyCode runningKey = KeyCode.F12;
+        public KeyCode espKey = KeyCode.F11;
+        public KeyCode unloadKey = KeyCode.F10;
+        public KeyCode testkey = KeyCode.F9;
 
+        private static int SpaceBetweenSides = 40;
+        private static int SpaceBetweenItems = 4;
+
+        private bool _isUIshown;
+        private bool _showESP;
+
+        private string _lastSelectedGatherCluster = "";
+        private int _lastSelectedGatherClusterLength = 0;
         #endregion Fields
 
         #region Properties
 
-        static Dictionary<string, Texture2D> ColoredTextures { get; } = new Dictionary<string, Texture2D>();
+        private static Rect GatheringUiButtonRect { get; } = new Rect((Screen.width / 2) - 50, 0, 100, 20);
+
+        private static Rect GatheringBotButtonRect { get; } = new Rect((Screen.width / 2) + 50, 0, 100, 20);
+
+        private Rect GatheringWindowRect { get; set; } = new Rect((Screen.width / 2) - 506, 0, 0, 0);
+
+        private string[] TownClusterNames
+        { get { return Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray(); } }
+
+        private string[] TierNames
+        { get { return Enum.GetNames(typeof(Tier)).ToArray(); } }
+
+        private Tier SelectedMinimumTier
+        { get { return (Tier)Enum.Parse(typeof(Tier), TierNames[_selectedMininumTierIndex]); } }
 
         #endregion Properties
 
         #region Methods
 
-        void DrawGatheringUIButton()
+        private void DrawGatheringUIButton()
         {
-            var drawRect = new Rect((Screen.width / 2) - 20, 0, 100, 20);
-
-            if (GUI.Button(drawRect, "Gathering UI"))
+            if (GUI.Button(GatheringUiButtonRect, "Gathering UI"))
                 _isUIshown = true;
+
+            DrawRunButton(false);
         }
 
-        void DrawGatheringUI()
-        {
-            var position = new Vector2((Screen.width / 2) - 400, (Screen.height / 2) - 300);
-            var size = new Vector2(800, 600);
-            var drawRect = new Rect(position, size);
-            var rectTexture = GetColoredTexture("UI", (int)drawRect.width, (int)drawRect.height, Color.grey);
-
-            GUILayout.BeginArea(drawRect, rectTexture);
-
-            DrawGatheringUI_MainButtons();
-            DrawGatheringUI_DebugToggles();
-            DrawGatheringUI_SelectionGrids();
-            DrawGatheringUI_GatheringToggles();
-
-            GUILayout.EndArea();
-        }
-
-        void DrawGatheringUI_MainButtons()
+        private void DrawGatheringUIWindow(int windowID)
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Close Gathering UI"))
-                _isUIshown = false;
+            DrawGatheringUILeft();
+            GUILayout.Space(SpaceBetweenSides);
+            DrawGatheringUIRight();
+            GUILayout.EndHorizontal();
 
-            if (GUILayout.Button(_isRunning ? "Stop Gathering" : "Start Gathering"))
+            GUI.DragWindow();
+        }
+
+        private void DrawGatheringUILeft()
+        {
+            GUILayout.BeginVertical();
+            DrawGatheringUI_Buttons();
+            DrawGatheringUI_Toggles();
+            DragGatheringUI_Sliders();
+            DrawGatheringUI_SelectionGrids();
+            DrawGatheringUI_TextFields();
+            GUILayout.EndVertical();
+        }
+
+        private void DrawGatheringUI_Toggles()
+        {
+            _allowMobHunting = GUILayout.Toggle(_allowMobHunting, "Allow hunting of living mobs (experimental - can cause issues)");
+            _skipUnrestrictedPvPZones = GUILayout.Toggle(_skipUnrestrictedPvPZones, "Skip unrestricted PvP zones while gathering");
+            _skipKeeperPacks = GUILayout.Toggle(_skipKeeperPacks, "Skip keeper mobs while gathering");
+            _allowSiegeCampTreasure = GUILayout.Toggle(_allowSiegeCampTreasure, "Allow usage of siege camp treasures");
+            _skipRedAndBlackZones = GUILayout.Toggle(_skipRedAndBlackZones, "Skip red and black zones for traveling");
+            UpdateESP(GUILayout.Toggle(_showESP, "Show ESP"));
+        }
+
+        private void UpdateESP(bool newValue)
+        {
+            var oldValue = _showESP;
+            _showESP = newValue;
+
+            if (oldValue != _showESP)
             {
-                _isRunning = !_isRunning;
-                if (_isRunning)
-                {
-                    _localPlayerCharacterView.CreateTextEffect("[Restart]");
-                    _state.Fire(Trigger.Restart);
-                }
+                if (_showESP)
+                    gameObject.AddComponent<ESP.ESP>().StartESP(_gatherInformations);
+                else if (gameObject.GetComponent<ESP.ESP>() != null)
+                    Destroy(gameObject.GetComponent<ESP.ESP>());
+            }
+        }
 
-                if (!_zoom.HasValue)
-                    _zoom = Client.Zoom;
-                if (!_globalFog.HasValue)
-                    _globalFog = Client.GlobalFog;
-
-                Client.Zoom = _isRunning ? 130f : _zoom.Value;
-                Client.GlobalFog = _isRunning ? false : _globalFog.Value;
+        private void DragGatheringUI_Sliders()
+        {
+            if (_skipKeeperPacks)
+            {
+                GUILayout.Label($"Skip keeper range: {_keeperSkipRange}");
+                _keeperSkipRange = GUILayout.HorizontalSlider(_keeperSkipRange, 5, 50);
             }
 
-            if (GUILayout.Button("Unload Merlin"))
-                Core.Unload();
-            GUILayout.EndHorizontal();
+            GUILayout.Label($"Minimum health percentage for gathering: {_minimumHealthForGathering.ToString("P2")}");
+            _minimumHealthForGathering = GUILayout.HorizontalSlider(_minimumHealthForGathering, 0.01f, 1f);
+
+            GUILayout.Label($"Weight percentage needed for banking: {_percentageForBanking}");
+            _percentageForBanking = Mathf.Round(GUILayout.HorizontalSlider(_percentageForBanking, 1, 400));
+
+            if (_allowSiegeCampTreasure)
+            {
+                GUILayout.Label($"Weight percentage needed for siege camp treasure: {_percentageForSiegeCampTreasure}");
+                _percentageForSiegeCampTreasure = Mathf.Round(GUILayout.HorizontalSlider(_percentageForSiegeCampTreasure, 1, 400));
+            }
         }
 
-        void DrawGatheringUI_DebugToggles()
+        private void DrawGatheringUI_SelectionGrids()
         {
-            _showErrors = GUILayout.Toggle(_showErrors, "Show errors as messages");
-        }
+            GUILayout.Label("Selected city cluster for banking:");
+            _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, TownClusterNames, 4);
 
-        void DrawGatheringUI_SelectionGrids()
-        {
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Selected Town:");
-            _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, TownClusterNames, TownClusterNames.Length);
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Selected Minimum Gathering Tier:");
+            GUILayout.Label("Selected minimum resource tier of interest:");
             _selectedMininumTierIndex = GUILayout.SelectionGrid(_selectedMininumTierIndex, TierNames, TierNames.Length);
+        }
+
+        private void DrawGatheringUI_AutocompleteSelectedCluster()
+        {
+            if (_selectedGatherCluster.Length >= 3
+                && _lastSelectedGatherClusterLength <= _selectedGatherCluster.Length
+                && _selectedGatherCluster != _lastSelectedGatherCluster)
+            {
+                string[] clusterNames = GameGui.Instance.WorldMap.GetClusters().Values.Select(x => ((ClusterDescriptor)x.Info).GetName()).ToArray();
+                string autoComplete = Array.Find(clusterNames, x => (x.ToLower().StartsWith(_selectedGatherCluster.ToLower())));
+                if (!string.IsNullOrEmpty(autoComplete))
+                {
+                    _selectedGatherCluster = autoComplete;
+
+                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+                    if (editor != null)
+                    {
+                        editor.text = _selectedGatherCluster; // Internal text is only updated next frame.
+                        editor.SelectTextEnd();
+                    }
+                }
+            }
+        }
+
+        private void DrawGatheringUI_TextFields()
+        {
+            GUILayout.Label("Selected cluster for gathering:");
+            GUILayout.BeginHorizontal();
+
+            _lastSelectedGatherCluster = _selectedGatherCluster;
+            _lastSelectedGatherClusterLength = _selectedGatherCluster.Length;
+            _selectedGatherCluster = GUILayout.TextField(_selectedGatherCluster);
+            DrawGatheringUI_AutocompleteSelectedCluster();
+
+            if (GUILayout.Button("Use Current Cluster", GUILayout.Width(160)))
+            {
+                ClusterDescriptor currentClusterInfo = _world.GetCurrentCluster();
+                if (currentClusterInfo != null) {
+                    _selectedGatherCluster = _world.GetCurrentCluster().GetName();
+                }
+            }
             GUILayout.EndHorizontal();
         }
 
-        void DrawGatheringUI_GatheringToggles()
+        private void DrawGatheringUIRight()
+        {
+            GUILayout.BeginVertical();
+            GUILayout.Label("Resources to gather:");
+            DrawGatheringUI_GatheringToggles();
+            GUILayout.EndVertical();
+        }
+
+        private void DrawGatheringUI_Buttons()
+        {
+            if (GUILayout.Button("Close Gathering UI"))
+                _isUIshown = !_isUIshown;
+
+            DrawRunButton(true);
+
+            if (GUILayout.Button("Unload"))
+                Core.Unload();
+        }
+
+        private void DrawGatheringUI_GatheringToggles()
         {
             GUILayout.BeginHorizontal();
             var selectedMinimumTier = SelectedMinimumTier;
@@ -107,46 +200,107 @@ namespace Merlin.Profiles.Gatherer
                 var keys = groupedKeys[i].ToArray();
 
                 GUILayout.BeginVertical();
-                for (var j = 0; j < keys.Length; j++)
+                if (GUILayout.Button("Enable All"))
                 {
-                    var info = keys[j];
-                    if (info.Tier < selectedMinimumTier)
-                        _gatherInformations[info] = false;
-                    else
+                    for (var j = 0; j < keys.Length; j++)
                     {
-                        var format = string.Format("{0} {1}.{2}", info.ResourceType.ToString(), info.Tier.ToString(), (int)info.EnchantmentLevel);
-                        _gatherInformations[info] = GUILayout.Toggle(_gatherInformations[info], format);
+                        var info = keys[j];
+                        _gatherInformations[info] = info.Tier > selectedMinimumTier;
                     }
                 }
+                else if (GUILayout.Button("Disable All"))
+                {
+                    for (var j = 0; j < keys.Length; j++)
+                    {
+                        var info = keys[j];
+                        _gatherInformations[info] = false;
+                    }
+                }
+                else
+                {
+                    for (var j = 0; j < keys.Length; j++)
+                    {
+                        var info = keys[j];
+                        if (info.Tier < selectedMinimumTier)
+                            _gatherInformations[info] = false;
+                        else
+                            _gatherInformations[info] = GUILayout.Toggle(_gatherInformations[info], info.ToString());
+                    }
+                }
+
                 GUILayout.EndVertical();
+                GUILayout.Space(SpaceBetweenItems);
             }
             GUILayout.EndHorizontal();
+        }
+
+        private void DrawRunButton(bool layouted)
+        {
+            var text = _isRunning ? "Stop Gathering" : "Start Gathering";
+            if (layouted ? GUILayout.Button(text) : GUI.Button(GatheringBotButtonRect, text))
+            {
+                _isRunning = !_isRunning;
+                if (_isRunning)
+                {
+                    ResetCriticalVariables();
+                    if (_selectedGatherCluster == "Unknown" && _world.GetCurrentCluster() != null)
+                        _selectedGatherCluster = _world.GetCurrentCluster().GetName();
+                    _localPlayerCharacterView.CreateTextEffect("[Start]");
+                    if (_state.CanFire(Trigger.Failure))
+                        _state.Fire(Trigger.Failure);
+                }
+            }
         }
 
         protected override void OnUI()
         {
             if (_isUIshown)
-                DrawGatheringUI();
+                GatheringWindowRect = GUILayout.Window(0, GatheringWindowRect, DrawGatheringUIWindow, "Gathering UI");
             else
                 DrawGatheringUIButton();
         }
-
-        static Texture2D GetColoredTexture(string id, int width, int height, Color color)
+        
+        protected override void HotKey()
         {
-            if (ColoredTextures.ContainsKey(id))
-                return ColoredTextures[id];
+            if (Input.GetKeyDown(runningKey))
+            {
+                _isRunning = !_isRunning;
+                if (_isRunning)
+                {
+                    ResetCriticalVariables();
+                    if (_selectedGatherCluster == "Unknown" && _world.GetCurrentCluster() != null)
+                        _selectedGatherCluster = _world.GetCurrentCluster().GetName();
+                    _localPlayerCharacterView.CreateTextEffect("[Start]");
+                    if (_state.CanFire(Trigger.Failure))
+                        _state.Fire(Trigger.Failure);
+                }
+            }
+            else if(Input.GetKeyDown(testkey))
+            {
+                Vector3 playerCenter = _localPlayerCharacterView.transform.position;
+                Core.Log("X: " + playerCenter.x + " Y: " + playerCenter.y + " Z: " + playerCenter.z);
 
-            var pixels = new Color[width * height];
-            for (var i = 0; i < pixels.Length; i++)
-                pixels[i] = color;
+                ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
+                Core.Log("City: " + currentWorldCluster.GetName().ToLowerInvariant());
 
-            var result = new Texture2D(width, height);
-            result.SetPixels(pixels);
-            result.Apply();
+            }
+            else if (Input.GetKeyDown(unloadKey))
+            {
+                Core.Unload();
+            }
+            else if (Input.GetKeyDown(espKey))
+            {
+                var oldValue = _showESP;
+                _showESP = !_showESP;
 
-            ColoredTextures.Add(id, result);
-
-            return result;
+                if (oldValue != _showESP)
+                {
+                    if (_showESP)
+                        gameObject.AddComponent<ESP.ESP>().StartESP(_gatherInformations);
+                    else if (gameObject.GetComponent<ESP.ESP>() != null)
+                        Destroy(gameObject.GetComponent<ESP.ESP>());
+                }
+            }
         }
 
         #endregion Methods

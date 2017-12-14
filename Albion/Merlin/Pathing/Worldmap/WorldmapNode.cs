@@ -1,10 +1,10 @@
 ﻿using System;
-using WorldMap;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders;
+using Albion_Direct;
 
 namespace Merlin.Pathing.Worldmap
 {
-    public class WorldmapNode : BaseGraphSearchNode<WorldmapNode, WorldmapCluster>, IComparable<WorldmapNode>
+    public class WorldmapNode : BaseGraphSearchNode<WorldmapNode, ClusterDescriptor>, IComparable<WorldmapNode>
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace Merlin.Pathing.Worldmap
 
         #region Constructors and Cleanup
 
-        public WorldmapNode(WorldmapCluster cluster, WorldmapNode origin = null, Int32 score = 0, Int32 estimatedScore = 0) : base(cluster, origin)
+        public WorldmapNode(ClusterDescriptor cluster, WorldmapNode origin = null, Int32 score = 0, Int32 estimatedScore = 0) : base(cluster, origin)
         {
             Score = score;
             EstimatedScore = estimatedScore;
@@ -42,9 +42,9 @@ namespace Merlin.Pathing.Worldmap
             Origin = origin;
         }
 
-        public Boolean Equals(WorldmapCluster other)
+        public override Boolean Equals(WorldmapNode other)
         {
-            return Value.Info.ak().Equals(other.Info.ak());
+            return Value.ClusterDescriptor_Internal.ao().Equals(other.Value.ClusterDescriptor_Internal.ao());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Merlin.Pathing.Worldmap
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Cluster = {0}, Score = {1}, Estimated score = {2}", Value.Info.ak(), Score, EstimatedScore);
+            return string.Format("Cluster = {0}, Score = {1}, Estimated score = {2}", Value.ClusterDescriptor_Internal.ao(), Score, EstimatedScore);
         }
 
         #endregion Methods

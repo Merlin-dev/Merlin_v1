@@ -1,13 +1,11 @@
 ﻿using System;
-
-using WorldMap;
-
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders;
+using Albion_Direct;
 
 namespace Merlin.Pathing.Worldmap
 {
-    public class WorldmapMap : BaseGraphSearchMap<WorldmapNode, WorldmapCluster>
+    public class WorldmapMap : BaseGraphSearchMap<WorldmapNode, ClusterDescriptor>
     {
         #region Fields
 
@@ -32,7 +30,7 @@ namespace Merlin.Pathing.Worldmap
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnCreateFirstNode"/> for more details.
         /// </summary>
-        protected override WorldmapNode OnCreateFirstNode(WorldmapCluster startPosition, WorldmapCluster endPosition)
+        protected override WorldmapNode OnCreateFirstNode(ClusterDescriptor startPosition, ClusterDescriptor endPosition)
         {
             return new WorldmapNode(startPosition, null, 0, 0);
         }
@@ -40,7 +38,7 @@ namespace Merlin.Pathing.Worldmap
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnCreateNode"/> for more details.
         /// </summary>
-        protected override WorldmapNode OnCreateNode(WorldmapCluster position, WorldmapNode origin, params object[] arguments)
+        protected override WorldmapNode OnCreateNode(ClusterDescriptor position, WorldmapNode origin, params object[] arguments)
         {
             Int32 score = arguments != null && arguments.Length > 0 ? (Int32)arguments[0] : 0;
             Int32 estimatedScore = arguments != null && arguments.Length > 1 ? (Int32)arguments[1] : 0;

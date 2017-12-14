@@ -1,30 +1,51 @@
 ﻿using Merlin.Profiles.Gatherer;
 using System;
-using System.IO;
-using System.Reflection;
 using UnityEngine;
 
 namespace Merlin
 {
     public class Core
     {
-        private const string LogFile = "Logs.txt";
-
         public static GameObject _coreObject;
 
         private static Profile _activeProfile;
 
-        public static LineRenderer LineRenderer { get; set; }
+        public static LineRenderer lineRenderer;
+        private static string _lastLogOnceMessage = "";
 
         public static void Load()
         {
             _coreObject = new GameObject();
+            lineRenderer = _coreObject.AddComponent<LineRenderer>();
+
+            {
+                // Unity has a built-in shader that is useful for drawing
+                // simple colored things.
+                Shader shader = Shader.Find("Hidden/Internal-Colored");
+                Material lineMaterial = new Material(shader);
+                lineMaterial.hideFlags = HideFlags.HideAndDontSave;
+                // Turn backface culling off
+                lineMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+                lineMaterial.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+                // Turn off depth writes
+                lineMaterial.SetInt("_ZWrite", 0);
+                lineMaterial.color = Color.yellow;
+                lineRenderer.material = lineMaterial;
+            }
+
+            Console console = _coreObject.AddComponent<Console>();
+            console.enabled = true;
+            Albion_Direct.Logger.SetLogCallback(console.ManualLog);
+
             var gatherer = _coreObject.AddComponent<Gatherer>();
+            Activate(gatherer);
+
             UnityEngine.Object.DontDestroyOnLoad(_coreObject);
         }
 
         public static void Unload()
         {
+            Albion_Direct.Logger.RemoveLogCallback(_coreObject.GetComponent<Console>().ManualLog);
             if (_activeProfile != null)
                 _activeProfile.enabled = false;
 
@@ -37,24 +58,21 @@ namespace Merlin
 
         public static void Log(string message)
         {
-            using (var stream = new FileStream(LogFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-            using (var writer = new StreamWriter(stream))
-            {
-                writer.WriteLine($"[{DateTime.Now}] {message}");
-            }
+            Debug.Log($"[{DateTime.Now}] {message}");
         }
 
         public static void Log(Exception e)
         {
-            using (var stream = new FileStream(LogFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-            using (var writer = new StreamWriter(stream))
-            {
-                writer.WriteLine($"{DateTime.Now}: ===================================");
-                writer.WriteLine($"{DateTime.Now}: {e.Message}");
-                writer.WriteLine($"{DateTime.Now}: {e.StackTrace}");
-                writer.WriteLine();
-                writer.WriteLine();
-            }
+            Debug.LogException(e);
+        }
+
+        public static void LogOnce(string message)
+        {
+            if (message == _lastLogOnceMessage)
+                return;
+
+            Debug.Log($"[{DateTime.Now}] {message}");
+            _lastLogOnceMessage = message;
         }
 
         public static void Activate(Profile profile)
@@ -66,6 +84,14 @@ namespace Merlin
             _activeProfile.enabled = true;
         }
 
+        public static void Deactivate()
+        {
+            if (_activeProfile != null)
+                _activeProfile.enabled = false;
+
+            _activeProfile = null;
+        }
+
         public static void DeactivateAll()
         {
             var profiles = _coreObject.GetComponents<Profile>();
@@ -75,21 +101,15 @@ namespace Merlin
 
             _activeProfile = null;
         }
+    }
 
-        private class VersionView : MonoBehaviour
+    public class UnloadButton : MonoBehaviour
+    {
+        private void OnGUI()
         {
-            private Rect _displayRectangle;
-            private Version _version;
-
-            private void Start()
+            if (GUI.Button(new Rect(Screen.width / 2f - 50, 10, 100, 30), "Unload"))
             {
-                _displayRectangle = new Rect((Screen.width / 2) - 30, 10, 100, 20);
-                _version = Assembly.Load("Merlin").GetName().Version;
-            }
-
-            private void OnGUI()
-            {
-                GUI.Label(_displayRectangle, _version.ToString());
+                Core.Unload();
             }
         }
     }

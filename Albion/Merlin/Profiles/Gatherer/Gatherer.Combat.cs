@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -14,6 +15,7 @@ namespace Merlin.Profiles.Gatherer
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.CrowdControl, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.CrowdControl, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.Damage, true),
+            //new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.Debuff, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.Damage, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Enemy, SpellCategory.MovementBuff, true),
         };
@@ -25,6 +27,8 @@ namespace Merlin.Profiles.Gatherer
 
         public void Fight()
         {
+            StuckHelper.PretendPlayerIsMoving();
+
             if (_localPlayerCharacterView.IsMounted)
             {
                 Core.Log("Player Mounted. Dismount now.");
@@ -32,9 +36,9 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            if (_combatCooldown > 0)
+            if (_combatCooldown > 0 || _localPlayerCharacterView.bIsChanneling())
             {
-                Core.LogOnce("Combat Cooldown > 0.");
+                Core.LogOnce("Combat Cooldown > 0. Player is channeling: " + _localPlayerCharacterView.bIsChanneling());
                 _combatCooldown -= UnityEngine.Time.deltaTime;
                 return;
             }
@@ -49,10 +53,31 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
+            if (_combatTarget != null && _combatTarget.IsCasting())
+            {
+                // Chose a random point behind player.
+                Vector3 back = -_localPlayerCharacterView.transform.forward * 15f;
+                float randAngle = UnityEngine.Random.Range(-75f, 75f);
+                back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
+                Vector3 randPos = back + _localPlayerCharacterView.transform.position;
+
+                _localPlayerCharacterView.StopAnyActionObject();
+                _localPlayerCharacterView.RequestMove(randPos);
+                _combatCooldown = 0.3f;
+                return;
+            }
+
+            if (_combatCooldown > 0 || _localPlayerCharacterView.bIsChanneling())
+            {
+                Core.LogOnce("Combat Cooldown > 0. Player is channeling: " + _localPlayerCharacterView.bIsChanneling());
+                _combatCooldown -= UnityEngine.Time.deltaTime;
+                return;
+            }
+
             if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
                 return;
 
-            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
+            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker) && !(_combatTarget != null && _combatTarget.IsCasting()))
             {
                 Core.LogOnce("You are under attack. Attack the attacker");
                 _localPlayerCharacterView.SetSelectedObject(attacker);
@@ -90,7 +115,6 @@ namespace Merlin.Profiles.Gatherer
         {
             try
             {
-
                 if (checkCastState && _localPlayerCharacterView.IsCasting())
                 {
                     Core.Log("You are casting. Wait for casting to finish");
@@ -109,7 +133,6 @@ namespace Merlin.Profiles.Gatherer
                 try
                 {
                     spellName = spellToCast.GetSpellDescriptor().TryGetName();
-
                     var spellSlot = spellToCast.Slot;
                     switch (target)
                     {
@@ -132,7 +155,6 @@ namespace Merlin.Profiles.Gatherer
                             Core.Log($"[SpellTarget {target} is not supported. Spell skipped]");
                             return false;
                     }
-
                     _combatCooldown = 0.1f;
                     return true;
                     

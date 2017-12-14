@@ -1,10 +1,10 @@
 ﻿namespace Albion_Direct
 {
-    public partial class FightingObject
+    public static class FightingObjectExtensions
     {
-        public FightingObjectView GetAttackTarget()
+        public static FightingObjectView GetAttackTarget(this FightingObject obj)
         {
-            var attackTargetId = GetTargetId();
+            var attackTargetId = obj.GetTargetId();
 
             if (attackTargetId > 0)
             {
@@ -15,10 +15,10 @@
             return default(FightingObjectView);
         }
 
-        public bool IsReadyToCast(CharacterSpellSlot slot)
+        public static bool IsReadyToCast(this FightingObject obj, CharacterSpellSlot slot)
         {
             //NOTE: GetEventHandler Generic param. 0 is internal type of CastSpellEventHandler
-            CastSpellEventHandler eventHandler = GetEventHandler<aw5>();
+            CastSpellEventHandler eventHandler = obj.GetEventHandler<ayt>();
 
             if (eventHandler && eventHandler.IsReady((byte)slot))
                 return true;

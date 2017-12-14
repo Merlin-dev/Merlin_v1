@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: cv */
+    /* Internal type: c8 */
     public partial class JournalItemDescriptor : DurableItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private cv _internal;
+        private c8 _internal;
         
         #region Properties
         
-        public cv JournalItemDescriptor_Internal => _internal;
+        public c8 JournalItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public JournalItemDescriptor(cv instance) : base(instance)
+        public JournalItemDescriptor(c8 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator cv(JournalItemDescriptor instance)
+        public static implicit operator c8(JournalItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator JournalItemDescriptor(cv instance)
+        public static implicit operator JournalItemDescriptor(c8 instance)
         {
             return new JournalItemDescriptor(instance);
         }

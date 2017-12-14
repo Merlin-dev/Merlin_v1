@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: afi */
+    /* Internal type: agu */
     public partial class CollisionManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afi _internal;
+        private agu _internal;
         
         #region Properties
         
-        public afi CollisionManager_Internal => _internal;
+        public agu CollisionManager_Internal => _internal;
         
         #endregion
         
@@ -37,13 +37,13 @@ namespace Albion_Direct
         
         #region Methods
         
-        public byte GetCollision(Point2 A_0, float A_1) => _internal.f((ak2)A_0, (float)A_1);
+        public byte GetCollision(Point2 A_0, float A_1) => _internal.f((amk)A_0, (float)A_1);
         
         #endregion
         
         #region Constructor
         
-        public CollisionManager(afi instance)
+        public CollisionManager(agu instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator afi(CollisionManager instance)
+        public static implicit operator agu(CollisionManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CollisionManager(afi instance)
+        public static implicit operator CollisionManager(agu instance)
         {
             return new CollisionManager(instance);
         }

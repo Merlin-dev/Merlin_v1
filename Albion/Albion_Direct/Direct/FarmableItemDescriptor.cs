@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: dr */
+    /* Internal type: d4 */
     public partial class FarmableItemDescriptor : SimpleItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private dr _internal;
+        private d4 _internal;
         
         #region Properties
         
-        public dr FarmableItemDescriptor_Internal => _internal;
+        public d4 FarmableItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FarmableItemDescriptor(dr instance) : base(instance)
+        public FarmableItemDescriptor(d4 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator dr(FarmableItemDescriptor instance)
+        public static implicit operator d4(FarmableItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FarmableItemDescriptor(dr instance)
+        public static implicit operator FarmableItemDescriptor(d4 instance)
         {
             return new FarmableItemDescriptor(instance);
         }

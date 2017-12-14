@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: e6 */
+    /* Internal type: fj */
     public partial class MountItemDescriptor : EquipmentItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private e6 _internal;
+        private fj _internal;
         
         #region Properties
         
-        public e6 MountItemDescriptor_Internal => _internal;
+        public fj MountItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -37,14 +37,14 @@ namespace Albion_Direct
         
         #region Methods
         
-        public float GetHalfMountRange() => _internal.eg();
-        public float GetRemountDistance() => _internal.el();
+        public float GetHalfMountRange() => _internal.eh();
+        public float GetRemountDistance() => _internal.em();
         
         #endregion
         
         #region Constructor
         
-        public MountItemDescriptor(e6 instance) : base(instance)
+        public MountItemDescriptor(fj instance) : base(instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator e6(MountItemDescriptor instance)
+        public static implicit operator fj(MountItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MountItemDescriptor(e6 instance)
+        public static implicit operator MountItemDescriptor(fj instance)
         {
             return new MountItemDescriptor(instance);
         }

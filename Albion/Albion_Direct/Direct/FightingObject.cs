@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aud */
+    /* Internal type: avw */
     public partial class FightingObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aud _internal;
+        private avw _internal;
         
         #region Properties
         
-        public aud FightingObject_Internal => _internal;
+        public avw FightingObject_Internal => _internal;
         
         #endregion
         
@@ -38,27 +38,27 @@ namespace Albion_Direct
         #region Methods
         
         public FightingAttributes GetAttributes() => _internal.at();
-        public ObservableRange<aef> GetEnergy() => _internal.w1();
-        public ObservableRange<aef> GetHealth() => _internal.w0();
-        public CharacterDescriptor GetCharacterDescriptor() => _internal.w8();
-        public bool GetIsAttacking() => _internal.yw();
-        public bool GetIsCasting() => _internal.ys();
+        public ObservableRange<afr> GetEnergy() => _internal.xr();
+        public ObservableRange<afr> GetHealth() => _internal.xq();
+        public CharacterDescriptor GetCharacterDescriptor() => _internal.xz();
+        public bool GetIsAttacking() => _internal.zp();
+        public bool GetIsCasting() => _internal.zk();
         public bool GetIsDead() => _internal.jg();
-        public bool GetIsChanneling() => _internal.yt();
-        public bool GetIsIdle() => _internal.yr();
+        public bool GetIsChanneling() => _internal.zl();
+        public bool GetIsIdle() => _internal.zj();
         public float GetLoad() => _internal.ji();
-        public float GetLoadPercentage() => _internal.xb();
-        public float GetLoadSpeedFactor() => _internal.xc();
-        public float GetMaxLoad() => _internal.xa();
+        public float GetLoadPercentage() => _internal.x2();
+        public float GetLoadSpeedFactor() => _internal.x3();
+        public float GetMaxLoad() => _internal.x1();
         public string GetName() => _internal.iu();
-        public long GetTargetId() => _internal.w6();
-        public a GetEventHandler<a>() where a: aue => (a)_internal.yi<a>();
+        public long GetTargetId() => _internal.xw();
+        public a GetEventHandler<a>() where a: avx => (a)_internal.y9<a>();
         
         #endregion
         
         #region Constructor
         
-        public FightingObject(aud instance) : base(instance)
+        public FightingObject(avw instance) : base(instance)
         {
             _internal = instance;
         }
@@ -72,12 +72,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aud(FightingObject instance)
+        public static implicit operator avw(FightingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingObject(aud instance)
+        public static implicit operator FightingObject(avw instance)
         {
             return new FightingObject(instance);
         }

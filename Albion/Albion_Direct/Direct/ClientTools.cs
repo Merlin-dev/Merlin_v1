@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a8c */
+    /* Internal type: a95 */
     public partial class ClientTools
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a8c _internal;
+        private a95 _internal;
         
         #region Properties
         
-        public a8c ClientTools_Internal => _internal;
+        public a95 ClientTools_Internal => _internal;
         
         #endregion
         
@@ -37,14 +37,14 @@ namespace Albion_Direct
         
         #region Methods
         
-        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a8c.a((atm)A_0);
-        public static int SomeCalculationWithUnfloatyFloats(Number A_0, Number A_1) => a8c.b((oh)A_0, (oh)A_1);
+        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a95.a((au5)A_0);
+        public static int SomeCalculationWithUnfloatyFloats(Number A_0, Number A_1) => a95.b((pw)A_0, (pw)A_1);
         
         #endregion
         
         #region Constructor
         
-        public ClientTools(a8c instance)
+        public ClientTools(a95 instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a8c(ClientTools instance)
+        public static implicit operator a95(ClientTools instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClientTools(a8c instance)
+        public static implicit operator ClientTools(a95 instance)
         {
             return new ClientTools(instance);
         }

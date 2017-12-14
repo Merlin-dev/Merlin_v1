@@ -1,6 +1,6 @@
 ﻿using Albion_Direct;
-using Albion_Direct.Pathing;
-using Albion_Direct.Pathing.Worldmap;
+using Merlin.Pathing;
+using Merlin.Pathing.Worldmap;
 using System.Linq;
 using UnityEngine;
 
@@ -19,6 +19,12 @@ namespace Merlin.Profiles.Gatherer
 
         public void Travel()
         {
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+            {
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
+            }
+
             if (!HandleMounting(Vector3.zero))
                 return;
 

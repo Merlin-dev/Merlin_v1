@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: atl */
+    /* Internal type: au4 */
     public partial class ConsumableItemObject : SimpleItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private atl _internal;
+        private au4 _internal;
         
         #region Properties
         
-        public atl ConsumableItemObject_Internal => _internal;
+        public au4 ConsumableItemObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ConsumableItemObject(atl instance) : base(instance)
+        public ConsumableItemObject(au4 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator atl(ConsumableItemObject instance)
+        public static implicit operator au4(ConsumableItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ConsumableItemObject(atl instance)
+        public static implicit operator ConsumableItemObject(au4 instance)
         {
             return new ConsumableItemObject(instance);
         }

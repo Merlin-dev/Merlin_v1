@@ -1,8 +1,9 @@
 ﻿using Stateless;
 using System.Collections.Generic;
 using UnityEngine;
+using Albion_Direct;
 
-namespace Albion_Direct.Pathing
+namespace Merlin.Pathing
 {
     public class PositionPathingRequest
     {

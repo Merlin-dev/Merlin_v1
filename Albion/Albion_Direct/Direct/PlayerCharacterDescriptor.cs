@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: afg */
+    /* Internal type: ags */
     public partial class PlayerCharacterDescriptor : CharacterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private afg _internal;
+        private ags _internal;
         
         #region Properties
         
-        public afg PlayerCharacterDescriptor_Internal => _internal;
+        public ags PlayerCharacterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -37,15 +37,15 @@ namespace Albion_Direct
         
         #region Methods
         
-        public float GetHarvestRange() => _internal.dw();
-        public int GetInventorySize() => _internal.dv();
-        public float GetUseObjectRange() => _internal.dx();
+        public float GetHarvestRange() => _internal.d0();
+        public int GetInventorySize() => _internal.dz();
+        public float GetUseObjectRange() => _internal.d1();
         
         #endregion
         
         #region Constructor
         
-        public PlayerCharacterDescriptor(afg instance) : base(instance)
+        public PlayerCharacterDescriptor(ags instance) : base(instance)
         {
             _internal = instance;
         }
@@ -59,12 +59,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator afg(PlayerCharacterDescriptor instance)
+        public static implicit operator ags(PlayerCharacterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PlayerCharacterDescriptor(afg instance)
+        public static implicit operator PlayerCharacterDescriptor(ags instance)
         {
             return new PlayerCharacterDescriptor(instance);
         }

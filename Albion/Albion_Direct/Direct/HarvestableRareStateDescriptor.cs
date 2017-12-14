@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: hv.b.a */
+    /* Internal type: h9.b.a */
     public partial class HarvestableRareStateDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private hv.b.a _internal;
+        private h9.b.a _internal;
         
         #region Properties
         
-        public hv.b.a HarvestableRareStateDescriptor_Internal => _internal;
+        public h9.b.a HarvestableRareStateDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public HarvestableRareStateDescriptor(hv.b.a instance)
+        public HarvestableRareStateDescriptor(h9.b.a instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator hv.b.a(HarvestableRareStateDescriptor instance)
+        public static implicit operator h9.b.a(HarvestableRareStateDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator HarvestableRareStateDescriptor(hv.b.a instance)
+        public static implicit operator HarvestableRareStateDescriptor(h9.b.a instance)
         {
             return new HarvestableRareStateDescriptor(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: at4 */
+    /* Internal type: avn */
     public partial class FurnitureItemObject : DurableItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private at4 _internal;
+        private avn _internal;
         
         #region Properties
         
-        public at4 FurnitureItemObject_Internal => _internal;
+        public avn FurnitureItemObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FurnitureItemObject(at4 instance) : base(instance)
+        public FurnitureItemObject(avn instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator at4(FurnitureItemObject instance)
+        public static implicit operator avn(FurnitureItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FurnitureItemObject(at4 instance)
+        public static implicit operator FurnitureItemObject(avn instance)
         {
             return new FurnitureItemObject(instance);
         }

@@ -15,17 +15,17 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: afm */
+    /* Internal type: agy */
     public partial struct Rectangle
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private afm _internal;
+        private agy _internal;
         
         #region Properties
         
-        public afm Rectangle_Internal => _internal;
+        public agy Rectangle_Internal => _internal;
         
         #endregion
         
@@ -41,7 +41,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public Rectangle(afm instance)
+        public Rectangle(agy instance)
         {
             _internal = instance;
         }
@@ -55,12 +55,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator afm(Rectangle instance)
+        public static implicit operator agy(Rectangle instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Rectangle(afm instance)
+        public static implicit operator Rectangle(agy instance)
         {
             return new Rectangle(instance);
         }

@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: jo */
+    /* Internal type: j2 */
     public partial class ClusterXmlOperator
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private jo _internal;
+        private j2 _internal;
         
         #region Properties
         
-        public jo ClusterXmlOperator_Internal => _internal;
+        public j2 ClusterXmlOperator_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ClusterXmlOperator(jo instance)
+        public ClusterXmlOperator(j2 instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator jo(ClusterXmlOperator instance)
+        public static implicit operator j2(ClusterXmlOperator instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClusterXmlOperator(jo instance)
+        public static implicit operator ClusterXmlOperator(j2 instance)
         {
             return new ClusterXmlOperator(instance);
         }

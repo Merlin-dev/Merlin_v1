@@ -16,18 +16,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: oa */
+    /* Internal type: pp */
     public partial class TileDataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private oa _internal;
+        private pp _internal;
         
         #region Properties
         
-        public oa TileDataFile_Internal => _internal;
+        public pp TileDataFile_Internal => _internal;
         
         #endregion
         
@@ -38,8 +38,8 @@ namespace Albion_Direct
         
         #region Methods
         
-        public CompoundTileDescriptor GetCompoundtile(string A_0) => _internal.c((string)A_0);
-        public TileDescriptor GetTile(string A_0) => _internal.b((string)A_0);
+        public CompoundTileDescriptor GetCompoundtile(string A_0) => _internal.e((string)A_0);
+        public TileDescriptor GetTile(string A_0) => _internal.d((string)A_0);
         public CompoundTileDescriptor ReadCompoundTile(System.Xml.XmlReader A_0) => (CompoundTileDescriptor)_methodReflectionPool[0].Invoke(_internal,new object[]{(System.Xml.XmlReader)A_0});
         public TileDescriptor ReadTile(System.Xml.XmlReader A_0) => (TileDescriptor)_methodReflectionPool[1].Invoke(_internal,new object[]{(System.Xml.XmlReader)A_0});
         
@@ -47,27 +47,27 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public TileDataFile(oa instance)
+        public TileDataFile(pp instance)
         {
             _internal = instance;
         }
         
         static TileDataFile()
         {
-            _methodReflectionPool.Add(typeof(oa).GetMethod("b", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
-            _methodReflectionPool.Add(typeof(oa).GetMethod("d", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
+            _methodReflectionPool.Add(typeof(pp).GetMethod("d", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
+            _methodReflectionPool.Add(typeof(pp).GetMethod("f", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
         }
         
         #endregion
         
         #region Conversion
         
-        public static implicit operator oa(TileDataFile instance)
+        public static implicit operator pp(TileDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TileDataFile(oa instance)
+        public static implicit operator TileDataFile(pp instance)
         {
             return new TileDataFile(instance);
         }

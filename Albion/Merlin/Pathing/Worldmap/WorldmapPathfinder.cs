@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders;
+using Albion_Direct;
 
-namespace Albion_Direct.Pathing.Worldmap
+namespace Merlin.Pathing.Worldmap
 {
     public class WorldmapPathfinder : BasePathfinder<WorldmapNode, WorldmapMap, ClusterDescriptor>
     {

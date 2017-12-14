@@ -15,17 +15,17 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: afp */
+    /* Internal type: ag1 */
     public partial struct Point3
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private afp _internal;
+        private ag1 _internal;
         
         #region Properties
         
-        public afp Point3_Internal => _internal;
+        public ag1 Point3_Internal => _internal;
         
         #endregion
         
@@ -41,7 +41,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public Point3(afp instance)
+        public Point3(ag1 instance)
         {
             _internal = instance;
         }
@@ -55,12 +55,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator afp(Point3 instance)
+        public static implicit operator ag1(Point3 instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Point3(afp instance)
+        public static implicit operator Point3(ag1 instance)
         {
             return new Point3(instance);
         }

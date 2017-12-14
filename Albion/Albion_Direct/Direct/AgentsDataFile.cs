@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ca */
+    /* Internal type: cn */
     public partial class AgentsDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ca _internal;
+        private cn _internal;
         
         #region Properties
         
-        public ca AgentsDataFile_Internal => _internal;
+        public cn AgentsDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public AgentsDataFile(ca instance) : base(instance)
+        public AgentsDataFile(cn instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ca(AgentsDataFile instance)
+        public static implicit operator cn(AgentsDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator AgentsDataFile(ca instance)
+        public static implicit operator AgentsDataFile(cn instance)
         {
             return new AgentsDataFile(instance);
         }

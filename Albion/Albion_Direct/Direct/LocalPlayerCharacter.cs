@@ -18,18 +18,18 @@ using Albion.Common.Time;
 
 namespace Albion_Direct
 {
-    /* Internal type: ayu */
+    /* Internal type: a0i */
     public partial class LocalPlayerCharacter : PlayerCharacter
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ayu _internal;
+        private a0i _internal;
         
         #region Properties
         
-        public ayu LocalPlayerCharacter_Internal => _internal;
+        public a0i LocalPlayerCharacter_Internal => _internal;
         
         #endregion
         
@@ -40,18 +40,18 @@ namespace Albion_Direct
         
         #region Methods
         
-        public ObservableRange<aec> GetCraftingFocus() => _internal.s0();
-        public Point2 GetDestination() => _internal.uc();
-        public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.t8();
+        public ObservableRange<afo> GetCraftingFocus() => _internal.ta();
+        public Point2 GetDestination() => _internal.uo();
+        public GameTimeStamp GetGlobalCooldownTimeStamp() => _internal.uk();
         public float GetSpellSlotCooldownPercent(byte A_0) => _internal.hn((byte)A_0);
-        public SpellSlot[] GetSpellSlots() => _internal.t7().Select(x =>(SpellSlot)x).ToArray();
-        public float GetWeight() => _internal.u3();
+        public SpellSlot[] GetSpellSlots() => _internal.uj().Select(x =>(SpellSlot)x).ToArray();
+        public float GetWeight() => _internal.vf();
         
         #endregion
         
         #region Constructor
         
-        public LocalPlayerCharacter(ayu instance) : base(instance)
+        public LocalPlayerCharacter(a0i instance) : base(instance)
         {
             _internal = instance;
         }
@@ -65,12 +65,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ayu(LocalPlayerCharacter instance)
+        public static implicit operator a0i(LocalPlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LocalPlayerCharacter(ayu instance)
+        public static implicit operator LocalPlayerCharacter(a0i instance)
         {
             return new LocalPlayerCharacter(instance);
         }

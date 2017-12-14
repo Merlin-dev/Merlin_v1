@@ -1,6 +1,6 @@
 ﻿using Albion_Direct;
-using Albion_Direct.Pathing;
-using Albion_Direct.Pathing.Worldmap;
+using Merlin.Pathing;
+using Merlin.Pathing.Worldmap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +20,12 @@ namespace Merlin.Profiles.Gatherer
 
         public void Bank()
         {
+
+            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+            {
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
+            }
 
             _client = GameManager.GetInstance();
             if (_client.GetState() != GameState.Playing)

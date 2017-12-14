@@ -15,22 +15,22 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: g7 */
+    /* Internal type: b6 */
     public partial class ActiveSpellDescriptor : SpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private g7 _internal;
+        private b6 _internal;
         
         #region Properties
         
-        public g7 ActiveSpellDescriptor_Internal => _internal;
-        public SpellAssessment Assesment => _internal.d6.ToWrapped();
-        public SpellCategory Category => _internal.d5.ToWrapped();
-        public float EnergyCost => _internal.dw;
-        public SpellTarget Target => _internal.d2.ToWrapped();
+        public b6 ActiveSpellDescriptor_Internal => _internal;
+        public SpellAssessment Assesment => _internal.bf.ToWrapped();
+        public SpellCategory Category => _internal.be.ToWrapped();
+        public float EnergyCost => _internal.a6;
+        public SpellTarget Target => _internal.a4.ToWrapped();
         
         #endregion
         
@@ -46,7 +46,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ActiveSpellDescriptor(g7 instance) : base(instance)
+        public ActiveSpellDescriptor(b6 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -60,12 +60,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator g7(ActiveSpellDescriptor instance)
+        public static implicit operator b6(ActiveSpellDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ActiveSpellDescriptor(g7 instance)
+        public static implicit operator ActiveSpellDescriptor(b6 instance)
         {
             return new ActiveSpellDescriptor(instance);
         }

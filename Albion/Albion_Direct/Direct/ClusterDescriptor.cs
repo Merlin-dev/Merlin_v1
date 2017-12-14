@@ -17,18 +17,18 @@ using System.Linq;
 
 namespace Albion_Direct
 {
-    /* Internal type: alz */
+    /* Internal type: anh */
     public partial class ClusterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private alz _internal;
+        private anh _internal;
         
         #region Properties
         
-        public alz ClusterDescriptor_Internal => _internal;
+        public anh ClusterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -39,23 +39,23 @@ namespace Albion_Direct
         
         #region Methods
         
-        public AgentDescriptor GetAgent(Guid A_0) => _internal.ak((Guid)A_0);
-        public List<AgentDescriptor> GetAgents() => _internal.a6().Select(x =>(AgentDescriptor)x).ToList();
-        public Point2 GetCenter() => _internal.bk();
-        public ClusterTypeDescriptor GetClusterType() => _internal.aq();
-        public List<ClusterExitDescriptor> GetExits() => _internal.a1().Select(x =>(ClusterExitDescriptor)x).ToList();
-        public string GetIdent() => _internal.ak();
-        public Point2 GetOrigin() => _internal.aw();
-        public Point2 GetSize() => _internal.ax();
-        public List<TerritoryDescriptor> GetTerritories() => _internal.a4().Select(x =>(TerritoryDescriptor)x).ToList();
-        public TerritoryDescriptor GetTerritory(Guid A_0) => _internal.al((Guid)A_0);
-        public string GetName() => _internal.an();
+        public AgentDescriptor GetAgent(Guid A_0) => _internal.ao((Guid)A_0);
+        public List<AgentDescriptor> GetAgents() => _internal.ba().Select(x =>(AgentDescriptor)x).ToList();
+        public Point2 GetCenter() => _internal.bs();
+        public ClusterTypeDescriptor GetClusterType() => _internal.au();
+        public List<ClusterExitDescriptor> GetExits() => _internal.a5().Select(x =>(ClusterExitDescriptor)x).ToList();
+        public string GetIdent() => _internal.ao();
+        public Point2 GetOrigin() => _internal.a0();
+        public Point2 GetSize() => _internal.a1();
+        public List<TerritoryDescriptor> GetTerritories() => _internal.a8().Select(x =>(TerritoryDescriptor)x).ToList();
+        public TerritoryDescriptor GetTerritory(Guid A_0) => _internal.ap((Guid)A_0);
+        public string GetName() => _internal.ar();
         
         #endregion
         
         #region Constructor
         
-        public ClusterDescriptor(alz instance)
+        public ClusterDescriptor(anh instance)
         {
             _internal = instance;
         }
@@ -69,12 +69,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator alz(ClusterDescriptor instance)
+        public static implicit operator anh(ClusterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClusterDescriptor(alz instance)
+        public static implicit operator ClusterDescriptor(anh instance)
         {
             return new ClusterDescriptor(instance);
         }

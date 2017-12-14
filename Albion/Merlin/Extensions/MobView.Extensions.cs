@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Albion_Direct;
 
-namespace Albion_Direct
+namespace Merlin
 {
     public static class MobViewExtensions
     {
@@ -13,7 +14,7 @@ namespace Albion_Direct
 
         public static int GetTier(this MobView instance)
         {
-            return instance.Mob.s1().dc();
+            return instance.Mob.ta().dg();
         }
 
         public static ResourceType? GetResourceType(this MobView instance)
@@ -83,7 +84,7 @@ namespace Albion_Direct
 
         public static int GetRareState(this MobView instance)
         {
-            return instance.Mob.s4();
+            return instance.Mob.td();
         }
     }
 }

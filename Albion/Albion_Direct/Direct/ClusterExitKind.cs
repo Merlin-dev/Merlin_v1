@@ -12,7 +12,7 @@
 
 namespace Albion_Direct
 {
-    /* Internal type: al0.Kind */
+    /* Internal type: ani.Kind */
     public enum ClusterExitKind
     {
         Cluster = 0,
@@ -27,12 +27,12 @@ namespace Albion_Direct
     
     public static class ClusterExitKindExtensions
     {
-        public static al0.Kind ToInternal(this ClusterExitKind instance)
+        public static ani.Kind ToInternal(this ClusterExitKind instance)
         {
-            return (al0.Kind)instance;
+            return (ani.Kind)instance;
         }
         
-        public static ClusterExitKind ToWrapped(this al0.Kind instance)
+        public static ClusterExitKind ToWrapped(this ani.Kind instance)
         {
             return (ClusterExitKind)instance;
         }

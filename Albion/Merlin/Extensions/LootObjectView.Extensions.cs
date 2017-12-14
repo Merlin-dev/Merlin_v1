@@ -1,5 +1,6 @@
-﻿
-namespace Albion_Direct
+﻿using Albion_Direct;
+
+namespace Merlin
 {
     public static class LootObjectViewExtensions
     {

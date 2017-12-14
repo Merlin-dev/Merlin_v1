@@ -15,7 +15,7 @@ namespace Merlin.Profiles.Gatherer
             public DateTime stamp;
         }
 
-        static readonly TimeSpan _stuckTimeInSeconds = TimeSpan.FromSeconds(0.5);
+        static readonly TimeSpan _stuckTimeInSeconds = TimeSpan.FromSeconds(5);
         static List<SpeedValue> _previousSpeeds = new List<SpeedValue>();
 
         static bool IsPlayerStuck(float player_speed)

@@ -27,13 +27,9 @@ We have a [Trello board](https://trello.com/b/eGLVeGbL/merlin) where you can see
 ### Discord - Albion Online development
 
 Join us! :+1:
-
-```javascript
 https://discord.gg/Z4Qtjty
-```
 
 We have a [Discord Channel](https://discord.gg/Z4Qtjty) community to code tools for Albion Online.
-
 
 
 ### Development Requirements (Compile yourself):

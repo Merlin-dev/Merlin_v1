@@ -9,4 +9,3 @@ SET Target=Albion-Online.exe
 SET LoadingAssembly=%AssemblyPath%\%AssemblyName%.dll
 
 injector -dll %LoadingAssembly% -target %Target% -namespace %AssemblyNamespace% -class Core -method Load
-

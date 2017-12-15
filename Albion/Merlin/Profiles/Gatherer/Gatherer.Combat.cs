@@ -52,19 +52,32 @@ namespace Merlin.Profiles.Gatherer
                 Core.Log("You are casting. Wait for casting to finish");
                 return;
             }
-
-            if (_combatTarget != null && _combatTarget.IsCasting())
+            
+            if (_combatTarget != null && !_combatTarget.IsCasting())
             {
-                // Chose a random point behind player.
-                Vector3 back = -_localPlayerCharacterView.transform.forward * 15f;
-                float randAngle = UnityEngine.Random.Range(-75f, 75f);
-                back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
-                Vector3 randPos = back + _localPlayerCharacterView.transform.position;
+                //Ignore the Spell Interrupt to have it up if needed!
+                _combatSpells = _combatSpells.Ignore("INTERRUPT");
+            }
+            else
+            {
+                //if Interrupt Spell is useable use it to interrupt the cast and dont run like a pussy and die.
+                if (_combatTarget != null && _combatTarget.IsCasting() && _combatSpells.First().GetSpellDescriptor().TryGetName() == "INTERRUPT2")
+                {
+                    Core.Log("Interrupt ready. Use it!");
+                }
+                else if (_combatTarget != null && _combatTarget.IsCasting())
+                {
+                    Core.Log("Running away from Spell");
+                    // Choose a random point behind Player.
+                    Vector3 back = _localPlayerCharacterView.transform.forward * 15f;
+                    float randAngle = UnityEngine.Random.Range(-75f, 75f);
+                    back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
+                    Vector3 randPos = back + _localPlayerCharacterView.transform.position;
 
-                _localPlayerCharacterView.StopAnyActionObject();
-                _localPlayerCharacterView.RequestMove(randPos);
-                _combatCooldown = 0.3f;
-                return;
+                    _localPlayerCharacterView.StopAnyActionObject();
+                    _localPlayerCharacterView.RequestMove(randPos);
+                    _combatCooldown = 0.3f;
+                }
             }
 
             if (_combatCooldown > 0 || _localPlayerCharacterView.bIsChanneling())

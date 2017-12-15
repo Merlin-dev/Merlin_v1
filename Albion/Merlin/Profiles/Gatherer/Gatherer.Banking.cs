@@ -107,6 +107,7 @@ namespace Merlin.Profiles.Gatherer
                 {
                     Core.Log("Path Found to Town.");
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
+                    _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
                 }
             }
         }

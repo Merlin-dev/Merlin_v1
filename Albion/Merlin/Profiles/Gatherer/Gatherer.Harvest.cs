@@ -81,7 +81,8 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnMountingEnter())
                 .Permit(HarvestTrigger.StartWalkingToMount, HarvestState.WalkToMount)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartSummonMount, HarvestState.SummonMount);
+                .Permit(HarvestTrigger.StartSummonMount, HarvestState.SummonMount)
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.WalkToMount)
                 .OnEntry(() => OnWalkToMountEnter())
@@ -94,17 +95,19 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnSummoningMount())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting)
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.DismountingFromMobWalk)
                 .OnEntry(() => OnDismountEnter())
                 .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
-               .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
 
             _harvestState.Configure(HarvestState.DismountingFromResourceWalk)
                 .OnEntry(() => OnDismountEnter())
-                .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource);
+                .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
+                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             // Resources
             _harvestState.Configure(HarvestState.TravelToResource)
@@ -283,6 +286,7 @@ namespace Merlin.Profiles.Gatherer
                 else
                 {
                     Core.Log("[Harvesting] - Path to mount not found.");
+                    HandleMounting(Vector3.zero);
                     _state.Fire(Trigger.DepletedResource);
                 }
             }
@@ -424,7 +428,10 @@ namespace Merlin.Profiles.Gatherer
             else
             {
                 Core.Log("[Harvesting] - Path not found.");
-                _state.Fire(Trigger.DepletedResource);
+
+                //Stuck happens if there is no valid x y coord beneth yourself. too small area. run unstuck
+                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                return;
             }
 
             if (waitALittle)

@@ -298,7 +298,7 @@ namespace Merlin.Profiles.Gatherer
 
         void DoWalkToMount()
         {
-            Core.Log("[Harvesting] -- DoWalkToMount");
+            Core.LogOnce("[Harvesting] -- DoWalkToMount");
 
             StuckHelper.PretendPlayerIsMoving();
             if (_localPlayerCharacterView.IsMounted)
@@ -432,6 +432,7 @@ namespace Merlin.Profiles.Gatherer
                 if (UnityEngine.Random.value < 0.25f)
                 {
                     _travelStartTime = DateTime.Now + TimeSpan.FromSeconds(UnityEngine.Random.value * _maxTravelWaitTime);
+                    Core.Log("[Harvesting] - Waiting a little bit, " + (_travelStartTime - DateTime.Now).Seconds + "s.");
                 }
             }
         }
@@ -677,7 +678,7 @@ namespace Merlin.Profiles.Gatherer
 
         void DoUnstickYourself()
         {
-            Core.Log("[Harvesting] -- DoUnstickYourself");
+            Core.LogOnce("[Harvesting] -- DoUnstickYourself");
 
             if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
             {
@@ -686,9 +687,8 @@ namespace Merlin.Profiles.Gatherer
 
             if (_unstickStartTime + _timeToUnstick < DateTime.Now)
             {
-                _harvestState.Fire(HarvestTrigger.StartHarvest);
-                // Change resource, just in case ?
-                //_state.Fire(Trigger.DepletedResource);
+                // Change resource, just in case.
+                _state.Fire(Trigger.DepletedResource);
             }
         }
         #endregion Sticky

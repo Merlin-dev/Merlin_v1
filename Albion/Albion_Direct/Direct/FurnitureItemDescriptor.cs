@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: e7 */
+    /* Internal type: fk */
     public partial class FurnitureItemDescriptor : DurableItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private e7 _internal;
+        private fk _internal;
         
         #region Properties
         
-        public e7 FurnitureItemDescriptor_Internal => _internal;
+        public fk FurnitureItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FurnitureItemDescriptor(e7 instance) : base(instance)
+        public FurnitureItemDescriptor(fk instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator e7(FurnitureItemDescriptor instance)
+        public static implicit operator fk(FurnitureItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FurnitureItemDescriptor(e7 instance)
+        public static implicit operator FurnitureItemDescriptor(fk instance)
         {
             return new FurnitureItemDescriptor(instance);
         }

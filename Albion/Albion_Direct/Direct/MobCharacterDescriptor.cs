@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: e0 */
+    /* Internal type: fd */
     public partial class MobCharacterDescriptor : CharacterDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private e0 _internal;
+        private fd _internal;
         
         #region Properties
         
-        public e0 MobCharacterDescriptor_Internal => _internal;
+        public fd MobCharacterDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public MobCharacterDescriptor(e0 instance) : base(instance)
+        public MobCharacterDescriptor(fd instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator e0(MobCharacterDescriptor instance)
+        public static implicit operator fd(MobCharacterDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MobCharacterDescriptor(e0 instance)
+        public static implicit operator MobCharacterDescriptor(fd instance)
         {
             return new MobCharacterDescriptor(instance);
         }

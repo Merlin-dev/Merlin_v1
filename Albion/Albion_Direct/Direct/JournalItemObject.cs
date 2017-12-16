@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aty */
+    /* Internal type: avh */
     public partial class JournalItemObject : DurableItemObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aty _internal;
+        private avh _internal;
         
         #region Properties
         
-        public aty JournalItemObject_Internal => _internal;
+        public avh JournalItemObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public JournalItemObject(aty instance) : base(instance)
+        public JournalItemObject(avh instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aty(JournalItemObject instance)
+        public static implicit operator avh(JournalItemObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator JournalItemObject(aty instance)
+        public static implicit operator JournalItemObject(avh instance)
         {
             return new JournalItemObject(instance);
         }

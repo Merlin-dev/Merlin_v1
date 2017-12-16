@@ -28,12 +28,12 @@ namespace Albion_Direct
     
     public static class CollisionFlagsExtensions
     {
-        public static afk.a ToInternal(this CollisionFlags instance)
+        public static agw.a ToInternal(this CollisionFlags instance)
         {
-            return (afk.a)instance;
+            return (agw.a)instance;
         }
-        
-        public static CollisionFlags ToWrapped(this afk.a instance)
+
+        public static CollisionFlags ToWrapped(this agw.a instance)
         {
             return (CollisionFlags)instance;
         }

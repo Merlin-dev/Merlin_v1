@@ -37,7 +37,7 @@ namespace Albion_Direct
         
         #region Methods
         
-        public ActiveSpellDescriptor GetDescriptor() => _internal.sy();
+        public ActiveSpellDescriptor GetDescriptor() => _internal.s8();
         
         #endregion
         

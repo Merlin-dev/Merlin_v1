@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: ig */
+    /* Internal type: iu */
     public partial class SpellsDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private ig _internal;
+        private iu _internal;
         
         #region Properties
         
-        public ig SpellsDataFile_Internal => _internal;
+        public iu SpellsDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public SpellsDataFile(ig instance) : base(instance)
+        public SpellsDataFile(iu instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator ig(SpellsDataFile instance)
+        public static implicit operator iu(SpellsDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SpellsDataFile(ig instance)
+        public static implicit operator SpellsDataFile(iu instance)
         {
             return new SpellsDataFile(instance);
         }

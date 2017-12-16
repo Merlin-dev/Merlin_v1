@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: g9 */
+    /* Internal type: hm */
     public partial class ChannelSpellDescriptor : ActiveSpellDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private g9 _internal;
+        private hm _internal;
         
         #region Properties
         
-        public g9 ChannelSpellDescriptor_Internal => _internal;
+        public hm ChannelSpellDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ChannelSpellDescriptor(g9 instance) : base(instance)
+        public ChannelSpellDescriptor(hm instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator g9(ChannelSpellDescriptor instance)
+        public static implicit operator hm(ChannelSpellDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ChannelSpellDescriptor(g9 instance)
+        public static implicit operator ChannelSpellDescriptor(hm instance)
         {
             return new ChannelSpellDescriptor(instance);
         }

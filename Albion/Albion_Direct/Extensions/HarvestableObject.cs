@@ -18,7 +18,7 @@ namespace Albion_Direct
                 return false;
 
             //TODO: Implement converters
-            GuiDurableItemProxy toolProxy = ClientTools.GetStackProxy(tool).GuiItemProxy_Internal as a7o;
+            GuiDurableItemProxy toolProxy = ClientTools.GetStackProxy(tool).GuiItemProxy_Internal as a9h;
 
             int durability = toolProxy ? ClientTools.SomeCalculationWithUnfloatyFloats(tool.GetUnfloatyFloat(), toolProxy.GetUnfloatyFloat()) : -1;
 

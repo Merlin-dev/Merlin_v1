@@ -2,6 +2,7 @@
 using Stateless;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -132,6 +133,13 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
+                Core.Log("vai pegars os mob views");
+
+                var mobsViews = _client.GetEntities<MobView>(x => true).FirstOrDefault();
+                Core.Log("buscoiu");
+                if (mobsViews == null)
+                    Core.Log("ta vazi"); 
+
                 foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead") || mob.MobType().ToLowerInvariant().Contains("bonecrusher"))))
                 {
                     var keeperPosition = keeper.GetInternalPosition();

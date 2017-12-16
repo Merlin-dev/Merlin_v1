@@ -83,7 +83,7 @@ namespace Albion_Direct
 
         public static int GetRareState(this MobView instance)
         {
-            return instance.Mob.s4();
+            return instance.Mob.td();
         }
     }
 }

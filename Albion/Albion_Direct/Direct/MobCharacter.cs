@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: avb */
+    /* Internal type: awx */
     public partial class MobCharacter : FightingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private avb _internal;
+        private awx _internal;
         
         #region Properties
         
-        public avb MobCharacter_Internal => _internal;
+        public awx MobCharacter_Internal => _internal;
         
         #endregion
         
@@ -37,13 +37,13 @@ namespace Albion_Direct
         
         #region Methods
         
-        public MobCharacterDescriptor GetMobDescriptor() => _internal.s1();
+        public MobCharacterDescriptor GetMobDescriptor() => _internal.ta();
         
         #endregion
         
         #region Constructor
         
-        public MobCharacter(avb instance) : base(instance)
+        public MobCharacter(awx instance) : base(instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator avb(MobCharacter instance)
+        public static implicit operator awx(MobCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MobCharacter(avb instance)
+        public static implicit operator MobCharacter(awx instance)
         {
             return new MobCharacter(instance);
         }

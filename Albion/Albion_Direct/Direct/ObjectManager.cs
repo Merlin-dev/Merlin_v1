@@ -62,7 +62,7 @@ namespace Albion_Direct
         
         static ObjectManager()
         {
-            _methodReflectionPool.Add(typeof(aoh).GetMethod("ak", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
+            _methodReflectionPool.Add(typeof(aoh).GetMethod("am", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[] { }, null));
         }
         
         #endregion

@@ -277,10 +277,26 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUI()
         {
+            List<Rect> rekts = new List<Rect>();
             if (_isUIshown)
+            {
                 GatheringWindowRect = GUILayout.Window(0, GatheringWindowRect, DrawGatheringUIWindow, _labelGatheringUI);
+                rekts.Add(GatheringWindowRect);
+            }
             else
+            {
                 DrawGatheringUIButton();
+                rekts.Add(GatheringUiButtonRect);
+                rekts.Add(GatheringBotButtonRect);
+            }
+
+            Console con = GetComponent<Console>();
+            if (con != null && con.IsShown)
+            {
+                rekts.Add(con.WindowRect);
+            }
+
+            DisableOrEnableMouse(_localPlayerCharacterView, rekts.ToArray());
         }
         
         protected override void HotKey()
@@ -327,5 +343,29 @@ namespace Merlin.Profiles.Gatherer
         }
 
         #endregion Methods
+
+        static bool _firstMouseEnable = true;
+        static void DisableOrEnableMouse(LocalPlayerCharacterView player, params Rect[] rekts)
+        {
+            bool inside_rekts = false;
+            foreach (Rect rekt in rekts)
+            {
+                inside_rekts |= rekt.Contains(Event.current.mousePosition);
+
+            }
+
+            if (inside_rekts)
+            {
+                //Core.LogOnce("Disabled Input.");
+                _firstMouseEnable = true;
+                player.InputHandler.DisableInput = true;
+            }
+            else if (_firstMouseEnable) 
+            {
+                //Core.LogOnce("Enabled Input.");
+                _firstMouseEnable = false;
+                player.InputHandler.DisableInput = false;
+            }
+        }
     }
 }

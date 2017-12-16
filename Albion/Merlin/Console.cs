@@ -49,6 +49,9 @@ public class Console : MonoBehaviour
     private GUIContent limitLabel = new GUIContent("Limit messages", "Show just the last 200 messages.");
     private GUIContent _labelConsole = new GUIContent("Console");
 
+    public bool IsShown => show;
+    public Rect WindowRect => windowRect;
+
     private void OnEnable()
     {
         Application.logMessageReceived += HandleLog;

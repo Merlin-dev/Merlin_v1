@@ -98,6 +98,8 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnStop()
         {
+            _localPlayerCharacterView.InputHandler.DisableInput = false;
+
             SaveSettings();
 
             _state = null;

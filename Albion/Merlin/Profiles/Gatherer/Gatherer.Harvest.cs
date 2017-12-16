@@ -99,8 +99,7 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnSummoningMountEnter())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting)
-                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
 
             _harvestState.Configure(HarvestState.Dismounting)
                 .OnEntry(() => OnDismountEnter())

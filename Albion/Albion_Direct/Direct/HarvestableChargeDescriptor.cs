@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: hv.a */
+    /* Internal type: h9.a */
     public partial class HarvestableChargeDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private hv.a _internal;
+        private h9.a _internal;
         
         #region Properties
         
-        public hv.a HarvestableChargeDescriptor_Internal => _internal;
+        public h9.a HarvestableChargeDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public HarvestableChargeDescriptor(hv.a instance)
+        public HarvestableChargeDescriptor(h9.a instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator hv.a(HarvestableChargeDescriptor instance)
+        public static implicit operator h9.a(HarvestableChargeDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator HarvestableChargeDescriptor(hv.a instance)
+        public static implicit operator HarvestableChargeDescriptor(h9.a instance)
         {
             return new HarvestableChargeDescriptor(instance);
         }

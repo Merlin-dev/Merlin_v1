@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: nr */
+    /* Internal type: o6 */
     public partial class ClusterTypeDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private nr _internal;
+        private o6 _internal;
         
         #region Properties
         
-        public nr ClusterTypeDescriptor_Internal => _internal;
+        public o6 ClusterTypeDescriptor_Internal => _internal;
         
         #endregion
         
@@ -43,7 +43,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public ClusterTypeDescriptor(nr instance)
+        public ClusterTypeDescriptor(o6 instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator nr(ClusterTypeDescriptor instance)
+        public static implicit operator o6(ClusterTypeDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ClusterTypeDescriptor(nr instance)
+        public static implicit operator ClusterTypeDescriptor(o6 instance)
         {
             return new ClusterTypeDescriptor(instance);
         }

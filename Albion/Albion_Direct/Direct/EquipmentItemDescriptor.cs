@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: e5 */
+    /* Internal type: fi */
     public partial class EquipmentItemDescriptor : DurableItemDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private e5 _internal;
+        private fi _internal;
         
         #region Properties
         
-        public e5 EquipmentItemDescriptor_Internal => _internal;
+        public fi EquipmentItemDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public EquipmentItemDescriptor(e5 instance) : base(instance)
+        public EquipmentItemDescriptor(fi instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator e5(EquipmentItemDescriptor instance)
+        public static implicit operator fi(EquipmentItemDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator EquipmentItemDescriptor(e5 instance)
+        public static implicit operator EquipmentItemDescriptor(fi instance)
         {
             return new EquipmentItemDescriptor(instance);
         }

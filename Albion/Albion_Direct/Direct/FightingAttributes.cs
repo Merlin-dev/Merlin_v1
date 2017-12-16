@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: adx */
+    /* Internal type: ae9 */
     public partial class FightingAttributes
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private adx _internal;
+        private ae9 _internal;
         
         #region Properties
         
-        public adx FightingAttributes_Internal => _internal;
+        public ae9 FightingAttributes_Internal => _internal;
         
         #endregion
         
@@ -39,8 +39,8 @@ namespace Albion_Direct
         
         public float GetEnergyRegen() => _internal.bc();
         public float GetHealthRegen() => _internal.ba();
-        public float GetMaxCraftingFocus() => _internal.cs();
-        public float GetMaxCraftingRegeneration() => _internal.ct();
+        public float GetMaxCraftingFocus() => _internal.co();
+        public float GetMaxCraftingRegeneration() => _internal.cp();
         public float GetMaxEnergy() => _internal.bb();
         public float GetMaxHealth() => _internal.a9();
         public float GetMaxLoad() => _internal.be();
@@ -50,7 +50,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public FightingAttributes(adx instance)
+        public FightingAttributes(ae9 instance)
         {
             _internal = instance;
         }
@@ -64,12 +64,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator adx(FightingAttributes instance)
+        public static implicit operator ae9(FightingAttributes instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingAttributes(adx instance)
+        public static implicit operator FightingAttributes(ae9 instance)
         {
             return new FightingAttributes(instance);
         }

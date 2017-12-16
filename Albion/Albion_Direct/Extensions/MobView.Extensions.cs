@@ -13,7 +13,7 @@ namespace Albion_Direct
 
         public static int GetTier(this MobView instance)
         {
-            return instance.Mob.s1().dc();
+            return instance.Mob.ta().dg();
         }
 
         public static ResourceType? GetResourceType(this MobView instance)

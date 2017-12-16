@@ -37,12 +37,12 @@ namespace Albion_Direct
     
     public static class SpellTargetExtensions
     {
-        public static g7.SpellTarget ToInternal(this SpellTarget instance)
+        public static b7.SpellTarget ToInternal(this SpellTarget instance)
         {
-            return (g7.SpellTarget)instance;
+            return (b7.SpellTarget)instance;
         }
         
-        public static SpellTarget ToWrapped(this g7.SpellTarget instance)
+        public static SpellTarget ToWrapped(this b7.SpellTarget instance)
         {
             return (SpellTarget)instance;
         }

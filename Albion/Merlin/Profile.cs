@@ -6,13 +6,6 @@ namespace Merlin
 {
     public abstract class Profile : MonoBehaviour
     {
-        #region Static
-
-        public static readonly TimeSpan DefaultUpdateDelay = TimeSpan.FromSeconds(0.1);
-        public static TimeSpan UpdateDelay = DefaultUpdateDelay;
-
-        #endregion Static
-
         #region Fields
 
         protected GameManager _client;
@@ -22,7 +15,6 @@ namespace Merlin
         protected CollisionManager _collision;
 
         private DateTime _nextUpdate;
-        private bool refresh;
 
         #endregion Fields
 
@@ -45,8 +37,6 @@ namespace Merlin
             _collision = _world.GetCollisionManager();
             _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
             _nextUpdate = DateTime.Now;
-
-            Camera.onPostRender += OnCameraPostRender;
         }
 
         private void Awake()
@@ -67,8 +57,6 @@ namespace Merlin
         /// </summary>
         private void OnDisable()
         {
-            Camera.onPostRender -= OnCameraPostRender;
-
             OnStop();
 
             _client = null;
@@ -79,30 +67,13 @@ namespace Merlin
         /// </summary>
         private void Update()
         {
-
             HotKey();
 
-            if (_client.GetState() == GameState.Playing)
-            {
-                if (refresh)
-                {
-                    _client = GameManager.GetInstance();
-                    _world = ObjectManager.GetInstance();
-                    _landscape = _client.GetLandscapeManager();
-                    _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
-                    refresh = false;
-                }
-                if (DateTime.Now < _nextUpdate)
-                    return;
-
-                OnUpdate();
-
-                _nextUpdate = DateTime.Now + UpdateDelay;
-            }
-            else
-            {
-                refresh = true;
-            }
+            _client = GameManager.GetInstance();
+            _world = ObjectManager.GetInstance();
+            _landscape = _client.GetLandscapeManager();
+            _localPlayerCharacterView = _client.GetLocalPlayerCharacterView();
+            OnUpdate();
         }
 
         /// <summary>
@@ -130,11 +101,6 @@ namespace Merlin
         protected virtual void OnUI()
         {
         }
-
-        protected virtual void OnCameraPostRender(Camera cam)
-        {
-        }
-
         #endregion Methods
     }
 }

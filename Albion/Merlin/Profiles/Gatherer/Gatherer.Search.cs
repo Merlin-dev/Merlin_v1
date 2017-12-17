@@ -22,7 +22,7 @@ namespace Merlin.Profiles.Gatherer
                 return;
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
-            var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == TownClusterNames[_selectedTownClusterIndex];
+            var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _townClusterNames[_selectedTownClusterIndex];
 
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
@@ -117,8 +117,7 @@ namespace Merlin.Profiles.Gatherer
 
                     var validEntries = _gatheredSpots.Where(kvp =>
                     {
-                        var info = new GatherInformation(kvp.Value.ResourceType, kvp.Value.Tier, kvp.Value.EnchantmentLevel);
-                        return _gatherInformations[info];
+                        return _gatherInformations.IsEnabled(kvp.Value.ResourceType, kvp.Value.Tier, kvp.Value.EnchantmentLevel);
                     }).ToArray();
 
                     Core.Log($"[Found {validEntries.Length} valid fallback objects]");
@@ -236,20 +235,14 @@ namespace Merlin.Profiles.Gatherer
                     var resourceType = harvestableObject.GetResourceType().Value;
                     var tier = (Tier)harvestableObject.GetTier();
                     var enchantmentLevel = (EnchantmentLevel)harvestableObject.GetRareState();
-
-                    var info = new GatherInformation(resourceType, tier, enchantmentLevel);
-
-                    return _gatherInformations[info];
+                    return _gatherInformations.IsEnabled(resourceType, tier, enchantmentLevel);
                 }
                 else if (view is MobView mob)
                 {
                     var resourceType = mob.GetResourceType().Value;
                     var tier = (Tier)mob.GetTier();
                     var enchantmentLevel = (EnchantmentLevel)mob.GetRareState();
-
-                    var info = new GatherInformation(resourceType, tier, enchantmentLevel);
-
-                    return _gatherInformations[info];
+                    return _gatherInformations.IsEnabled(resourceType, tier, enchantmentLevel);
                 }
                 else
                     return false;

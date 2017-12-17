@@ -47,6 +47,138 @@ namespace Merlin.Profiles.Gatherer
         }
     }
 
+    public struct GatherInformation
+    {
+        private ResourceType _resourceType;
+        private Tier _tier;
+        private EnchantmentLevel _enchantmentLevel;
+
+        public ResourceType ResourceType { get { return _resourceType; } }
+        public Tier Tier { get { return _tier; } }
+        public EnchantmentLevel EnchantmentLevel { get { return _enchantmentLevel; } }
+        public DateTime? HarvestDate { get; set; }
+
+        public GatherInformation(ResourceType resourceType, Tier tier, EnchantmentLevel enchantmentLevel)
+        {
+            _resourceType = resourceType;
+            _tier = tier;
+            _enchantmentLevel = enchantmentLevel;
+            HarvestDate = null;
+        }
+
+        public override string ToString()
+        {
+            return $"{ResourceType} {Tier}.{(int)EnchantmentLevel}";
+        }
+    }
+
+    public sealed class GatherInformationContainer
+    {
+        readonly int _resource_size = Enum.GetNames(typeof(ResourceType)).Length;
+        readonly int _tier_size = Enum.GetNames(typeof(Tier)).Length;
+        readonly int _enchantment_lvl_size = Enum.GetNames(typeof(EnchantmentLevel)).Length;
+        List<List<List<bool>>> _data;
+        List<List<List<GUIContent>>> _data_gui;
+
+        public GatherInformationContainer()
+        {
+            _data = ListExtensions.RepeatedDefault<List<List<bool>>>(_resource_size);
+            _data_gui = ListExtensions.RepeatedDefault<List<List<GUIContent>>>(_resource_size);
+            for (int resource = 0; resource < _resource_size; ++resource) {
+                _data[resource] = ListExtensions.RepeatedDefault<List<bool>>(_tier_size);
+                _data_gui[resource] = ListExtensions.RepeatedDefault<List<GUIContent>>(_tier_size);
+                for (int tier = 0; tier < _tier_size; ++tier) {
+                    int ench_size = _enchantment_lvl_size;
+
+                    if ((Tier)tier < Tier.IV || (ResourceType)resource == ResourceType.Rock)
+                        ench_size = 1;
+
+                    _data[resource][tier] = ListExtensions.RepeatedDefault<bool>(ench_size);
+                    _data_gui[resource][tier] = ListExtensions.RepeatedDefault<GUIContent>(ench_size);
+                    for (int ench = 0; ench < ench_size; ++ench)
+                    {
+                        _data_gui[resource][tier][ench] = new GUIContent(ToString((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench));
+                    }
+                }
+            }
+        }
+
+        public int Size()
+        {
+            return _data.Count;
+        }
+
+        public List<List<bool>> GetResourceData(ResourceType r)
+        {
+            return _data[(int)r];
+        }
+
+        public GUIContent GetGUIContent(ResourceType r, Tier t, EnchantmentLevel e)
+        {
+            if (r == ResourceType.Rock || t < Tier.IV)
+            {
+                return _data_gui[(int)r][(int)t][0];
+            }
+            else
+            {
+                return _data_gui[(int)r][(int)t][(int)e];
+            }
+        }
+
+        public void Enable(ResourceType r, Tier t, EnchantmentLevel e, bool is_enabled)
+        {
+            if (r == ResourceType.Rock || t < Tier.IV)
+            {
+                _data[(int)r][(int)t][0] = is_enabled;
+            }
+            else
+            {
+                _data[(int)r][(int)t][(int)e] = is_enabled;
+            }
+        }
+
+        public bool IsEnabled(ResourceType r, Tier t, EnchantmentLevel e)
+        {
+            if (r == ResourceType.Rock || t < Tier.IV)
+            {
+                return _data[(int)r][((int)t)][0];
+            }
+            else
+            {
+                return _data[(int)r][((int)t)][(int)e];
+            }
+        }
+
+        public string ToString(ResourceType r, Tier t, EnchantmentLevel e)
+        {
+            return $"{r} {t}.{(int)e}";
+        }
+
+        public void SerializeToPlayerPrefs(string prefs_identifier)
+        {
+            for (int resource = 0; resource < _data.Count; ++resource) {
+                for (int tier = 0; tier < _data[resource].Count; ++tier) {
+                    for (int ench = 0; ench < _data[resource][tier].Count; ++ench) {
+                        PlayerPrefs.SetString($"{prefs_identifier}{_data_gui[resource][tier][ench].text}", _data[resource][tier][ench].ToString());
+                    }
+                }
+            }
+        }
+
+        public void DeserializeFromPlayerPrefs(string prefs_identifier)
+        {
+            for (int resource = 0; resource < _data.Count; ++resource) {
+                for (int tier = 0; tier < _data[resource].Count; ++tier) {
+                    for (int ench = 0; ench < _data[resource][tier].Count; ++ench) {
+                        _data[resource][tier][ench] = bool.Parse(PlayerPrefs.GetString($"{prefs_identifier}{_data_gui[resource][tier][ench].text}",
+                            ((Tier)tier >= Tier.II).ToString()));
+                    }
+                }
+            }
+        }
+
+    }
+
     public partial class Gatherer
     {
         public bool HandleAttackers()

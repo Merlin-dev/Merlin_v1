@@ -40,7 +40,7 @@ namespace Merlin.Profiles.Gatherer
 
             Vector3 playerCenter = _localPlayerCharacterView.transform.position;
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
-            ClusterDescriptor townCluster = worldmapInstance.GetCluster(TownClusterNames[_selectedTownClusterIndex]).Info;
+            ClusterDescriptor townCluster = worldmapInstance.GetCluster(_townClusterNames[_selectedTownClusterIndex]).Info;
 
             if (currentWorldCluster.GetName() == townCluster.GetName())
             {

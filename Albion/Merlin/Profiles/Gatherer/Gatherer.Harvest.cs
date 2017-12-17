@@ -15,6 +15,7 @@ namespace Merlin.Profiles.Gatherer
         {
             Enter,
             Mounting,
+            Dismounting,
             DismountingFromMobWalk,
             DismountingFromResourceWalk,
             SummonMount,
@@ -36,8 +37,11 @@ namespace Merlin.Profiles.Gatherer
             StartWalkingToMount,
             StartSummonMount,
             StartDismounting,
+            StartDismountingFromMobWalk,
+            StartDismountingFromResourceWalk,
             StartHarvestingResource,
             StartHarvestingMob,
+            StartWalking,
             StartWalkingToResource,
             StartWalkingToMob,
             StartAttackingMob,
@@ -92,22 +96,21 @@ namespace Merlin.Profiles.Gatherer
 
 
             _harvestState.Configure(HarvestState.SummonMount)
-                .OnEntry(() => OnSummoningMount())
+                .OnEntry(() => OnSummoningMountEnter())
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting)
-                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+                .Permit(HarvestTrigger.StartMounting, HarvestState.Mounting);
+
+            _harvestState.Configure(HarvestState.Dismounting)
+                .OnEntry(() => OnDismountEnter())
+                .PermitIf(HarvestTrigger.StartWalking, HarvestState.WalkToResource, () => _harvestState.IsInState(HarvestState.DismountingFromResourceWalk))
+                .PermitIf(HarvestTrigger.StartWalking, HarvestState.WalkToMob, () => _harvestState.IsInState(HarvestState.DismountingFromMobWalk));
 
             _harvestState.Configure(HarvestState.DismountingFromMobWalk)
-                .OnEntry(() => OnDismountEnter())
-                .Permit(HarvestTrigger.StartWalkingToMob, HarvestState.WalkToMob)
-                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
-
+                .SubstateOf(HarvestState.Dismounting);
 
             _harvestState.Configure(HarvestState.DismountingFromResourceWalk)
-                .OnEntry(() => OnDismountEnter())
-                .Permit(HarvestTrigger.StartWalkingToResource, HarvestState.WalkToResource)
-                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+                .SubstateOf(HarvestState.Dismounting);
 
             // Resources
             _harvestState.Configure(HarvestState.TravelToResource)
@@ -121,7 +124,7 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnWalkToResourceEnter())
                 .Permit(HarvestTrigger.StartHarvestingResource, HarvestState.HarvestResource)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartDismounting, HarvestState.DismountingFromResourceWalk)
+                .Permit(HarvestTrigger.StartDismountingFromResourceWalk, HarvestState.DismountingFromResourceWalk)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.HarvestResource)
@@ -141,7 +144,7 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnWalkToMobEnter())
                 .Permit(HarvestTrigger.StartAttackingMob, HarvestState.AttackMob)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartDismounting, HarvestState.DismountingFromMobWalk)
+                .Permit(HarvestTrigger.StartDismountingFromMobWalk, HarvestState.DismountingFromMobWalk)
                 .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
 
             _harvestState.Configure(HarvestState.AttackMob)
@@ -171,8 +174,9 @@ namespace Merlin.Profiles.Gatherer
             {
                 case HarvestState.Enter: DoEnter(); break;
                 case HarvestState.Mounting: DoMounting(); break;
-                case HarvestState.DismountingFromMobWalk: DoDismountFromMobWalk(); break;
-                case HarvestState.DismountingFromResourceWalk: DoDismountFromResourceWalk(); break;
+                case HarvestState.Dismounting: DoDismounting(); break;
+                case HarvestState.DismountingFromResourceWalk: DoDismounting(); break;
+                case HarvestState.DismountingFromMobWalk: DoDismounting(); break;
                 case HarvestState.TravelToResource: DoTravelToResource(); break;
                 case HarvestState.WalkToResource: DoWalkToResource(); break;
                 case HarvestState.HarvestResource: DoHarvestResource(); break;
@@ -294,7 +298,7 @@ namespace Merlin.Profiles.Gatherer
 
         void DoWalkToMount()
         {
-            Core.Log("[Harvesting] -- DoWalkToMount");
+            Core.LogOnce("[Harvesting] -- DoWalkToMount");
 
             StuckHelper.PretendPlayerIsMoving();
             if (_localPlayerCharacterView.IsMounted)
@@ -317,9 +321,9 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        void OnSummoningMount()
+        void OnSummoningMountEnter()
         {
-            Core.Log("[Harvesting] -- OnSummoningMount");
+            Core.Log("[Harvesting] -- OnSummoningMountEnter");
             if (!_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsMounting())
             {
                 _localPlayerCharacterView.MountOrDismount();            
@@ -373,26 +377,14 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
         }
 
-        void DoDismountFromMobWalk()
+        void DoDismounting()
         {
-            Core.LogOnce("[Harvesting] -- DoDismountFromMobWalk");
+            Core.LogOnce("[Harvesting] -- DoDismounting");
 
             StuckHelper.PretendPlayerIsMoving();
             if (!_localPlayerCharacterView.IsMounted)
             {
-                _harvestState.Fire(HarvestTrigger.StartWalkingToMob);
-                return;
-            }
-        }
-
-        void DoDismountFromResourceWalk()
-        {
-            Core.LogOnce("[Harvesting] -- DoDismountFromResourceWalk");
-
-            StuckHelper.PretendPlayerIsMoving();
-            if (!_localPlayerCharacterView.IsMounted)
-            {
-                _harvestState.Fire(HarvestTrigger.StartWalkingToResource);
+                _harvestState.Fire(HarvestTrigger.StartWalking);
                 return;
             }
         }
@@ -440,6 +432,7 @@ namespace Merlin.Profiles.Gatherer
                 if (UnityEngine.Random.value < 0.25f)
                 {
                     _travelStartTime = DateTime.Now + TimeSpan.FromSeconds(UnityEngine.Random.value * _maxTravelWaitTime);
+                    Core.Log("[Harvesting] - Waiting a little bit, " + (_travelStartTime - DateTime.Now).Seconds + "s.");
                 }
             }
         }
@@ -471,7 +464,7 @@ namespace Merlin.Profiles.Gatherer
             HarvestableObjectView resource = _currentTarget as HarvestableObjectView;
             if (_localPlayerCharacterView.IsMounted)
             {
-                _harvestState.Fire(HarvestTrigger.StartDismounting);
+                _harvestState.Fire(HarvestTrigger.StartDismountingFromResourceWalk);
                 return;
             }
 
@@ -601,7 +594,7 @@ namespace Merlin.Profiles.Gatherer
             MobView mob = _currentTarget as MobView;
             if (_localPlayerCharacterView.IsMounted)
             {
-                _harvestState.Fire(HarvestTrigger.StartDismounting);
+                _harvestState.Fire(HarvestTrigger.StartDismountingFromMobWalk);
                 return;
             }
 
@@ -685,7 +678,7 @@ namespace Merlin.Profiles.Gatherer
 
         void DoUnstickYourself()
         {
-            Core.Log("[Harvesting] -- DoUnstickYourself");
+            Core.LogOnce("[Harvesting] -- DoUnstickYourself");
 
             if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
             {
@@ -694,9 +687,8 @@ namespace Merlin.Profiles.Gatherer
 
             if (_unstickStartTime + _timeToUnstick < DateTime.Now)
             {
-                _harvestState.Fire(HarvestTrigger.StartHarvest);
-                // Change resource, just in case ?
-                //_state.Fire(Trigger.DepletedResource);
+                // Change resource, just in case.
+                _state.Fire(Trigger.DepletedResource);
             }
         }
         #endregion Sticky

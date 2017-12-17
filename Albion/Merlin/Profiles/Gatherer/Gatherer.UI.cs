@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Albion_Direct;
@@ -14,38 +15,51 @@ namespace Merlin.Profiles.Gatherer
         public KeyCode unloadKey = KeyCode.F10;
         public KeyCode testkey = KeyCode.F9;
 
-        private static int SpaceBetweenSides = 40;
-        private static int SpaceBetweenItems = 4;
+        static int SpaceBetweenSides = 40;
+        static int SpaceBetweenItems = 4;
 
-        private bool _isUIshown;
-        private bool _showESP;
+        bool _isUIshown;
+        bool _showESP;
 
-        private string _lastSelectedGatherCluster = "";
-        private int _lastSelectedGatherClusterLength = 0;
+        string _lastSelectedGatherCluster = "";
+        int _lastSelectedGatherClusterLength = 0;
+
+        static readonly string[] _townClusterNames = Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray();
+        static readonly string[] _tierNames = Enum.GetNames(typeof(Tier)).ToArray();
+
         #endregion Fields
+
+        #region GUIFields
+
+        static readonly GUIContent _labelSelectedCity = new GUIContent("Selected city cluster for banking:");
+        static readonly GUIContent _labelSelectedMinimumTier = new GUIContent("Selected minimum resource tier of interest:");
+        static readonly GUIContent _labelSelectGatheringCluster = new GUIContent("Selected cluster for gathering:");
+        static readonly GUIContent _labelUseCurrentCluster = new GUIContent("Use Current Cluster");
+        static readonly GUIContent _labelResourcesToGather = new GUIContent("Resources to gather:");
+        static readonly GUIContent _labelCloseUI = new GUIContent("Close Gathering UI");
+        static readonly GUIContent _labelUnload = new GUIContent("Unload");
+        static readonly GUIContent _labelEnableAll = new GUIContent("Enable All");
+        static readonly GUIContent _labelDisableAll = new GUIContent("Disable All");
+        static readonly GUIContent _labelGatheringUI = new GUIContent("Gathering UI");
+
+        static readonly GUIContent[] _labelsTownClusterNames = _townClusterNames.Select(x => new GUIContent(x)).ToArray();
+        static readonly GUIContent[] _labelsTierNames = _tierNames.Select(x => new GUIContent(x)).ToArray();
+
+        #endregion GUIFields
 
         #region Properties
 
-        private static Rect GatheringUiButtonRect { get; } = new Rect((Screen.width / 2) - 50, 0, 100, 20);
+        static Rect GatheringUiButtonRect { get; } = new Rect((Screen.width / 2) - 50, 0, 100, 20);
+        static Rect GatheringBotButtonRect { get; } = new Rect((Screen.width / 2) + 50, 0, 100, 20);
+        Rect GatheringWindowRect { get; set; } = new Rect((Screen.width / 2) - 506, 0, 0, 0);
 
-        private static Rect GatheringBotButtonRect { get; } = new Rect((Screen.width / 2) + 50, 0, 100, 20);
-
-        private Rect GatheringWindowRect { get; set; } = new Rect((Screen.width / 2) - 506, 0, 0, 0);
-
-        private string[] TownClusterNames
-        { get { return Enum.GetNames(typeof(TownClusterName)).Select(n => n.Replace("_", " ")).ToArray(); } }
-
-        private string[] TierNames
-        { get { return Enum.GetNames(typeof(Tier)).ToArray(); } }
-
-        private Tier SelectedMinimumTier
-        { get { return (Tier)Enum.Parse(typeof(Tier), TierNames[_selectedMininumTierIndex]); } }
+        Tier SelectedMinimumTier { get { return (Tier)_selectedMininumTierIndex; } }
 
         #endregion Properties
 
         #region Methods
 
-        private void DrawGatheringUIButton()
+        void DrawGatheringUIButton()
         {
             if (GUI.Button(GatheringUiButtonRect, "Gathering UI"))
                 _isUIshown = true;
@@ -53,7 +67,7 @@ namespace Merlin.Profiles.Gatherer
             DrawRunButton(false);
         }
 
-        private void DrawGatheringUIWindow(int windowID)
+        void DrawGatheringUIWindow(int windowID)
         {
             GUILayout.BeginHorizontal();
             DrawGatheringUILeft();
@@ -64,7 +78,7 @@ namespace Merlin.Profiles.Gatherer
             GUI.DragWindow();
         }
 
-        private void DrawGatheringUILeft()
+        void DrawGatheringUILeft()
         {
             GUILayout.BeginVertical();
             DrawGatheringUI_Buttons();
@@ -75,7 +89,7 @@ namespace Merlin.Profiles.Gatherer
             GUILayout.EndVertical();
         }
 
-        private void DrawGatheringUI_Toggles()
+        void DrawGatheringUI_Toggles()
         {
             _allowMobHunting = GUILayout.Toggle(_allowMobHunting, "Allow hunting of living mobs (experimental - can cause issues)");
             _skipUnrestrictedPvPZones = GUILayout.Toggle(_skipUnrestrictedPvPZones, "Skip unrestricted PvP zones while gathering");
@@ -85,7 +99,7 @@ namespace Merlin.Profiles.Gatherer
             UpdateESP(GUILayout.Toggle(_showESP, "Show ESP"));
         }
 
-        private void UpdateESP(bool newValue)
+        void UpdateESP(bool newValue)
         {
             var oldValue = _showESP;
             _showESP = newValue;
@@ -99,7 +113,7 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        private void DragGatheringUI_Sliders()
+        void DragGatheringUI_Sliders()
         {
             if (_skipKeeperPacks)
             {
@@ -120,16 +134,16 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        private void DrawGatheringUI_SelectionGrids()
+        void DrawGatheringUI_SelectionGrids()
         {
-            GUILayout.Label("Selected city cluster for banking:");
-            _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, TownClusterNames, 4);
+            GUILayout.Label(_labelSelectedCity);
+            _selectedTownClusterIndex = GUILayout.SelectionGrid(_selectedTownClusterIndex, _labelsTownClusterNames, 4);
 
-            GUILayout.Label("Selected minimum resource tier of interest:");
-            _selectedMininumTierIndex = GUILayout.SelectionGrid(_selectedMininumTierIndex, TierNames, TierNames.Length);
+            GUILayout.Label(_labelSelectedMinimumTier);
+            _selectedMininumTierIndex = GUILayout.SelectionGrid(_selectedMininumTierIndex, _labelsTierNames, _labelsTierNames.Length);
         }
 
-        private void DrawGatheringUI_AutocompleteSelectedCluster()
+        void DrawGatheringUI_AutocompleteSelectedCluster()
         {
             if (_selectedGatherCluster.Length >= 3
                 && _lastSelectedGatherClusterLength <= _selectedGatherCluster.Length
@@ -151,9 +165,9 @@ namespace Merlin.Profiles.Gatherer
             }
         }
 
-        private void DrawGatheringUI_TextFields()
+        void DrawGatheringUI_TextFields()
         {
-            GUILayout.Label("Selected cluster for gathering:");
+            GUILayout.Label(_labelSelectGatheringCluster);
             GUILayout.BeginHorizontal();
 
             _lastSelectedGatherCluster = _selectedGatherCluster;
@@ -161,7 +175,7 @@ namespace Merlin.Profiles.Gatherer
             _selectedGatherCluster = GUILayout.TextField(_selectedGatherCluster);
             DrawGatheringUI_AutocompleteSelectedCluster();
 
-            if (GUILayout.Button("Use Current Cluster", GUILayout.Width(160)))
+            if (GUILayout.Button(_labelUseCurrentCluster, GUILayout.Width(160)))
             {
                 ClusterDescriptor currentClusterInfo = _world.GetCurrentCluster();
                 if (currentClusterInfo != null) {
@@ -171,60 +185,69 @@ namespace Merlin.Profiles.Gatherer
             GUILayout.EndHorizontal();
         }
 
-        private void DrawGatheringUIRight()
+        void DrawGatheringUIRight()
         {
             GUILayout.BeginVertical();
-            GUILayout.Label("Resources to gather:");
+            GUILayout.Label(_labelResourcesToGather);
             DrawGatheringUI_GatheringToggles();
             GUILayout.EndVertical();
         }
 
-        private void DrawGatheringUI_Buttons()
+        void DrawGatheringUI_Buttons()
         {
-            if (GUILayout.Button("Close Gathering UI"))
+            if (GUILayout.Button(_labelCloseUI))
                 _isUIshown = !_isUIshown;
 
             DrawRunButton(true);
 
-            if (GUILayout.Button("Unload"))
+            if (GUILayout.Button(_labelUnload))
                 Core.Unload();
         }
 
-        private void DrawGatheringUI_GatheringToggles()
+        void DrawGatheringUI_GatheringToggles()
         {
             GUILayout.BeginHorizontal();
-            var selectedMinimumTier = SelectedMinimumTier;
-            var groupedKeys = _gatherInformations.Keys.GroupBy(i => i.ResourceType).ToArray();
-            for (var i = 0; i < groupedKeys.Count(); i++)
-            {
-                var keys = groupedKeys[i].ToArray();
 
+            for (int resource = 0; resource < _gatherInformations.Size(); ++resource)
+            {
+                List<List<bool>> data = _gatherInformations.GetResourceData((ResourceType)resource);
                 GUILayout.BeginVertical();
-                if (GUILayout.Button("Enable All"))
+
+                if (GUILayout.Button(_labelEnableAll))
                 {
-                    for (var j = 0; j < keys.Length; j++)
+                    for (int tier = 0; tier < data.Count; ++tier)
                     {
-                        var info = keys[j];
-                        _gatherInformations[info] = info.Tier > selectedMinimumTier;
+                        for (int ench = 0; ench < data[tier].Count; ++ench)
+                        {
+                            _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench,
+                                (Tier)tier >= SelectedMinimumTier);
+                        }
                     }
                 }
-                else if (GUILayout.Button("Disable All"))
+
+                if (GUILayout.Button(_labelDisableAll))
                 {
-                    for (var j = 0; j < keys.Length; j++)
+                    for (int tier = 0; tier < data.Count; ++tier)
                     {
-                        var info = keys[j];
-                        _gatherInformations[info] = false;
+                        for (int ench = 0; ench < data[tier].Count; ++ench)
+                        {
+                            _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench, false);
+                        }
                     }
                 }
-                else
+
+                for (int tier = 0; tier < data.Count; ++tier)
                 {
-                    for (var j = 0; j < keys.Length; j++)
+                    for (int ench = 0; ench < data[tier].Count; ++ench)
                     {
-                        var info = keys[j];
-                        if (info.Tier < selectedMinimumTier)
-                            _gatherInformations[info] = false;
-                        else
-                            _gatherInformations[info] = GUILayout.Toggle(_gatherInformations[info], info.ToString());
+                        if ((Tier)tier < SelectedMinimumTier)
+                        {
+                            _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench, false);
+                        }
+                        bool enabled = _gatherInformations.IsEnabled((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench);
+                        enabled = GUILayout.Toggle(enabled, _gatherInformations.GetGUIContent((ResourceType)resource, (Tier)tier,
+                            (EnchantmentLevel)ench));
+                        _gatherInformations.Enable((ResourceType)resource, (Tier)tier, (EnchantmentLevel)ench, enabled);
                     }
                 }
 
@@ -234,7 +257,7 @@ namespace Merlin.Profiles.Gatherer
             GUILayout.EndHorizontal();
         }
 
-        private void DrawRunButton(bool layouted)
+        void DrawRunButton(bool layouted)
         {
             var text = _isRunning ? "Stop Gathering" : "Start Gathering";
             if (layouted ? GUILayout.Button(text) : GUI.Button(GatheringBotButtonRect, text))
@@ -254,10 +277,26 @@ namespace Merlin.Profiles.Gatherer
 
         protected override void OnUI()
         {
+            List<Rect> rekts = new List<Rect>();
             if (_isUIshown)
-                GatheringWindowRect = GUILayout.Window(0, GatheringWindowRect, DrawGatheringUIWindow, "Gathering UI");
+            {
+                GatheringWindowRect = GUILayout.Window(0, GatheringWindowRect, DrawGatheringUIWindow, _labelGatheringUI);
+                rekts.Add(GatheringWindowRect);
+            }
             else
+            {
                 DrawGatheringUIButton();
+                rekts.Add(GatheringUiButtonRect);
+                rekts.Add(GatheringBotButtonRect);
+            }
+
+            Console con = GetComponent<Console>();
+            if (con != null && con.IsShown)
+            {
+                rekts.Add(con.WindowRect);
+            }
+
+            DisableOrEnableMouse(_localPlayerCharacterView, rekts.ToArray());
         }
         
         protected override void HotKey()
@@ -304,5 +343,29 @@ namespace Merlin.Profiles.Gatherer
         }
 
         #endregion Methods
+
+        static bool _firstMouseEnable = true;
+        static void DisableOrEnableMouse(LocalPlayerCharacterView player, params Rect[] rekts)
+        {
+            bool inside_rekts = false;
+            foreach (Rect rekt in rekts)
+            {
+                inside_rekts |= rekt.Contains(Event.current.mousePosition);
+
+            }
+
+            if (inside_rekts)
+            {
+                //Core.LogOnce("Disabled Input.");
+                _firstMouseEnable = true;
+                player.InputHandler.DisableInput = true;
+            }
+            else if (_firstMouseEnable) 
+            {
+                //Core.LogOnce("Enabled Input.");
+                _firstMouseEnable = false;
+                player.InputHandler.DisableInput = false;
+            }
+        }
     }
 }

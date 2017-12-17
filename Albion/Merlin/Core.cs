@@ -41,6 +41,7 @@ namespace Merlin
             Activate(gatherer);
 
             UnityEngine.Object.DontDestroyOnLoad(_coreObject);
+            _coreObject.transform.SetAsFirstSibling();
         }
 
         public static void Unload()
@@ -73,6 +74,20 @@ namespace Merlin
 
             Debug.Log($"[{DateTime.Now}] {message}");
             _lastLogOnceMessage = message;
+        }
+
+        public static void LogObjectHierarchy(GameObject go, string indent = "")
+        {
+            Component[] comps =  go.GetComponents<Component>();
+            foreach (Component c in comps)
+            {
+                Log(indent + c.GetType().ToString());
+            }
+
+            for (int i = 0; i < go.transform.childCount; ++i)
+            {
+                LogObjectHierarchy(go.transform.GetChild(i).gameObject, indent + $"├──");
+            }
         }
 
         public static void Activate(Profile profile)

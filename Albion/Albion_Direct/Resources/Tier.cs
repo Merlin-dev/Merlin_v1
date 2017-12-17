@@ -3,13 +3,13 @@ namespace Albion_Direct
 {
     public enum Tier
     {
-        I = 1,
-        II = 2,
-        III = 3,
-        IV = 4,
-        V = 5,
-        VI = 6,
-        VII = 7,
-        VIII = 8
+        I       = 0,
+        II      = 1,
+        III     = 2,
+        IV      = 3,
+        V       = 4,
+        VI      = 5,
+        VII     = 6,
+        VIII    = 7
     }
 }

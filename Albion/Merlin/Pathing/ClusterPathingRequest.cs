@@ -27,7 +27,7 @@ namespace Merlin.Pathing
         Vector3[] previousLocations = new Vector3[noMovementFrames];
         private bool isMoving;
         private const float _moveSpeed = 3f;
-        private const float _turnSpeed = 90f;
+        private const float _turnSpeed = 15f;
         private float _arrivalDistance = 1.5f;
         private const float _pathNodeLeeway = 1.7f;
 
@@ -82,6 +82,7 @@ namespace Merlin.Pathing
             {
                 case State.Pause:
                     {
+                        Core.LogOnce("[ClusterPathingRequest] -- Pause");
                         if (DateTime.Now > _pauseTimer)
                         {
                             _state.Fire(Trigger.ReachedTarget);
@@ -116,6 +117,7 @@ namespace Merlin.Pathing
                     }
                 case State.Start:
                     {
+                        Core.LogOnce("[ClusterPathingRequest] -- Start");
                         if (_path.Count > 0)
                             _state.Fire(Trigger.ApproachTarget);
                         else
@@ -126,6 +128,7 @@ namespace Merlin.Pathing
 
                 case State.Running:
                     {
+                        Core.LogOnce("[ClusterPathingRequest] -- Running");
                         //Early exit if one of them is null.
                         if (_player == null || _target == null)
                         {
@@ -213,9 +216,11 @@ namespace Merlin.Pathing
         {
             Vector3 movement_direction = target_pos - player_transform.position;
             movement_direction.Normalize();
-            float angle = Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(player_transform.forward, movement_direction)));
-            angle /= 180f;
-            Vector3 move_amount = Vector3.Lerp(player_transform.forward, movement_direction, Time.deltaTime * _turnSpeed * angle);
+            Quaternion rot = Quaternion.FromToRotation(player_transform.forward, movement_direction);
+            rot.ToAngleAxis(out float angle, out Vector3 test);
+            Core.Log($"angle : {angle}");
+            Vector3 move_amount = rot * player_transform.forward;
+            move_amount.Normalize();
             move_amount *= _moveSpeed;
             return player_transform.position + move_amount;
         }

@@ -54,8 +54,8 @@ namespace Albion_Direct
         
         static TileDataFile()
         {
-            _methodReflectionPool.Add(typeof(pp).GetMethod("b", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
             _methodReflectionPool.Add(typeof(pp).GetMethod("d", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
+            _methodReflectionPool.Add(typeof(pp).GetMethod("f", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(System.Xml.XmlReader)}, null));
         }
         
         #endregion

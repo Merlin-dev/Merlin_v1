@@ -53,7 +53,7 @@ namespace Albion_Direct
         
         static SpellDescriptor()
         {
-            _methodReflectionPool.Add(typeof(b5).GetMethod("id", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
+            _methodReflectionPool.Add(typeof(b5).GetMethod("i0", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{}, null));
         }
         
         #endregion

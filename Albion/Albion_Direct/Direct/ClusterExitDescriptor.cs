@@ -56,8 +56,8 @@ namespace Albion_Direct
         
         static ClusterExitDescriptor()
         {
-            _methodReflectionPool.Add(typeof(ani).GetMethod("l", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alv)}, null));
-            _methodReflectionPool.Add(typeof(ani).GetMethod("m", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[]{typeof(alv)}, null));
+            _methodReflectionPool.Add(typeof(ani).GetMethod("m", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[] { typeof(and) }, null));
+            _methodReflectionPool.Add(typeof(ani).GetMethod("n", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance, null, new Type[] { typeof(and) }, null));
         }
         
         #endregion

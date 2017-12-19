@@ -213,5 +213,10 @@ namespace Merlin.Profiles.Gatherer
 
             return true;
         }
+        //Bufffood eating handler.
+        public bool HandleBuffing()
+        {
+            return false;
+        }
     }
 }

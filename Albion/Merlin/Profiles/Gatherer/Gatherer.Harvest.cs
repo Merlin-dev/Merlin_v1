@@ -63,6 +63,8 @@ namespace Merlin.Profiles.Gatherer
 
         StateMachine<HarvestState, HarvestTrigger> _harvestState;
 
+        private int failcount = 0;
+
         void HarvestOnStart()
         {
             _harvestState = new StateMachine<HarvestState, HarvestTrigger>(HarvestState.Enter);
@@ -81,8 +83,7 @@ namespace Merlin.Profiles.Gatherer
                 .OnEntry(() => OnMountingEnter())
                 .Permit(HarvestTrigger.StartWalkingToMount, HarvestState.WalkToMount)
                 .Permit(HarvestTrigger.StartUnstickingYourself, HarvestState.UnstickYourself)
-                .Permit(HarvestTrigger.StartSummonMount, HarvestState.SummonMount)
-                .Permit(HarvestTrigger.StartHarvest, HarvestState.Enter);
+                .Permit(HarvestTrigger.StartSummonMount, HarvestState.SummonMount);
 
             _harvestState.Configure(HarvestState.WalkToMount)
                 .OnEntry(() => OnWalkToMountEnter())
@@ -295,8 +296,23 @@ namespace Merlin.Profiles.Gatherer
         void DoWalkToMount()
         {
             Core.Log("[Harvesting] -- DoWalkToMount");
-
-            StuckHelper.PretendPlayerIsMoving();
+            //failcount added WORKAROUND because of stuckhelper doesnot work here!!! 
+            failcount++;
+            if(failcount < 50)
+            {
+                StuckHelper.PretendPlayerIsMoving();
+            }
+            else
+            {
+                if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
+                {
+                    _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
+                    failcount = 0;
+                    return;
+                }
+                
+            }
+            
             if (_localPlayerCharacterView.IsMounted)
             {
                 _harvestState.Fire(HarvestTrigger.StartHarvest);
@@ -312,6 +328,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_localPlayerCharacterView.GetMoveSpeed() == 0 && !_localPlayerCharacterView.GetLocalPlayerCharacter().GetIsMounting())
             {
+                failcount = 0;
                 _harvestState.Fire(HarvestTrigger.StartMounting);
                 return;
             }

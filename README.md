@@ -1,6 +1,6 @@
 # Merlin - Albion Online BOT
 
-## Merlin is currently working with Albion AO 1.0.351.105727
+## Merlin is currently working with Albion AO 1.10.351.108460
 
 [How to download and install merlin](https://github.com/klukule/merlin/wiki/%5BMerlin%5D-How-to-Download-&-Install)
 

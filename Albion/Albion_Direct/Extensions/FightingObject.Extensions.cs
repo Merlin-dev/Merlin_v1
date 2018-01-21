@@ -18,7 +18,7 @@
         public static bool IsReadyToCast(this FightingObject obj, CharacterSpellSlot slot)
         {
             //NOTE: GetEventHandler Generic param. 0 is internal type of CastSpellEventHandler
-            CastSpellEventHandler eventHandler = obj.GetEventHandler<ayt>();
+            CastSpellEventHandler eventHandler = obj.GetEventHandler<ayy>();
 
             if (eventHandler && eventHandler.IsReady((byte)slot))
                 return true;

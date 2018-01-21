@@ -14,7 +14,7 @@ namespace Merlin
 
         public static int GetTier(this MobView instance)
         {
-            return instance.Mob.ta().dg();
+            return instance.Mob.ta().dh();
         }
 
         public static ResourceType? GetResourceType(this MobView instance)

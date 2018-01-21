@@ -21,7 +21,7 @@ namespace Merlin
 
             // Obfuscated type may need to be updated after patches to fix ground casting.
             _startCastInternalPosition = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
-                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(amk) }, null);
+                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(ak1) }, null);
         }
 
         public static void Interact(this LocalInputHandler instance, WorldObjectView target, string collider = null) => _doActionStaticObjectInteraction.Invoke(instance, new object[] { target, collider ?? string.Empty });

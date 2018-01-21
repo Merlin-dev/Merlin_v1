@@ -227,7 +227,7 @@ namespace Merlin.Profiles.Gatherer
             else if (_currentTarget is MobView)
             {
                 MobView mob = _currentTarget as MobView;
-                float attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jz() + mob.Mob.x1().f9();
+                float attackRange = _localPlayerCharacterView.LocalPlayerCharacter.t2() + mob.Mob.x1().f9();
 
                 if (_localPlayerCharacterView.IsMounted)
                     interactTargetDistance = InteractRangeMount;
@@ -585,8 +585,8 @@ namespace Merlin.Profiles.Gatherer
             float centerDistance = (targetCenter - playerCenter).magnitude;
             var weaponItem = _localPlayerCharacterView.LocalPlayerCharacter.th().o();
 
-            var isMeleeWeapon = weaponItem == null || weaponItem.bu() == Albion.Common.GameData.AttackType.Melee;
-            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.jz() + mob.Mob.x1().f9();
+            var isMeleeWeapon = weaponItem == null || weaponItem.bw() == Albion.Common.GameData.AttackType.Melee;
+            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.t2() + mob.Mob.x1().f9();
             var minimumAttackRange = isMeleeWeapon ? MeleeAttackRange : attackRange;
             var isInLoS = _localPlayerCharacterView.IsInLineOfSight(mob);
 

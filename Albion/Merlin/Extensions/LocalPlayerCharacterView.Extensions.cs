@@ -39,10 +39,10 @@ namespace Merlin
 
         public static bool IsInLineOfSight(this LocalPlayerCharacterView instance, FightingObjectView target)
         {
-            var targetPos = target.FightingObject.h1();
+            var targetPos = target.FightingObject.h3();
             var sightChecker = instance.PlayerCharacter.zb<ayw>();
 
-            return !ObjectManager.GetInstance().ObjectManager_Internal.y().f(sightChecker.n().h1(), targetPos, out var outPoint, 2);
+            return !ObjectManager.GetInstance().ObjectManager_Internal.y().f(sightChecker.n().h3(), targetPos, out var outPoint, 2);
         }
 
         public static bool RequestMove(this LocalPlayerCharacterView view, Vector3 position) => view.RequestMove(position.c());

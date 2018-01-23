@@ -169,7 +169,7 @@ namespace Merlin.Pathing
                             }
 
                             // Lerp to make it more human.
-                            _player.RequestMove(GetLerpedMovement(_player.transform, currentNode));
+                            _player.RequestMove(currentNode);
                         }
                     } break;
             }

@@ -37,7 +37,7 @@ namespace Albion_Direct
         
         #region Methods
         
-        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a95.a((au5)A_0);
+        public static GuiItemProxy GetStackProxy(ItemProxy A_0) => a95.a((ava)A_0);
         public static int SomeCalculationWithUnfloatyFloats(Number A_0, Number A_1) => a95.b((pw)A_0, (pw)A_1);
         
         #endregion

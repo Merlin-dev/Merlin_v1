@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: aft */
+    /* Internal type: afw */
     public partial class BuildingDataFile : DataFile
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private aft _internal;
+        private afw _internal;
         
         #region Properties
         
-        public aft BuildingDataFile_Internal => _internal;
+        public afw BuildingDataFile_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public BuildingDataFile(aft instance) : base(instance)
+        public BuildingDataFile(afw instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator aft(BuildingDataFile instance)
+        public static implicit operator afw(BuildingDataFile instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator BuildingDataFile(aft instance)
+        public static implicit operator BuildingDataFile(afw instance)
         {
             return new BuildingDataFile(instance);
         }

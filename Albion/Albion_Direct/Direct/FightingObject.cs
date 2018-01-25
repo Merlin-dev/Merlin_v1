@@ -15,50 +15,50 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: avw */
+    /* Internal type: av1 */
     public partial class FightingObject : MovingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private avw _internal;
+        private av1 _internal;
         
         #region Properties
         
-        public avw FightingObject_Internal => _internal;
-        
+        public av1 FightingObject_Internal => _internal;
+
         #endregion
-        
+
         #region Fields
-        
-        
+
+
         #endregion
-        
+
         #region Methods
-        
+
         public FightingAttributes GetAttributes() => _internal.at();
-        public ObservableRange<afr> GetEnergy() => _internal.xt();
-        public ObservableRange<afr> GetHealth() => _internal.xs();
+        public ObservableRange<afu> GetEnergy() => _internal.xt();
+        public ObservableRange<afu> GetHealth() => _internal.xs();
         public CharacterDescriptor GetCharacterDescriptor() => _internal.x1();
         public bool GetIsAttacking() => _internal.zr();
         public bool GetIsCasting() => _internal.zm();
-        public bool GetIsDead() => _internal.jg();
+        public bool GetIsDead() => _internal.ji();
         public bool GetIsChanneling() => _internal.zn();
         public bool GetIsIdle() => _internal.zl();
-        public float GetLoad() => _internal.ji();
+        public float GetLoad() => _internal.jk();
         public float GetLoadPercentage() => _internal.x4();
         public float GetLoadSpeedFactor() => _internal.x5();
         public float GetMaxLoad() => _internal.x3();
-        public string GetName() => _internal.iu();
+        public string GetName() => _internal.iw();
         public long GetTargetId() => _internal.xy();
-        public a GetEventHandler<a>() where a: avx => (a)_internal.zb<a>();
-        
+        public a GetEventHandler<a>() where a : av2 => (a)_internal.zb<a>();
+
         #endregion
-        
+
         #region Constructor
-        
-        public FightingObject(avw instance) : base(instance)
+
+        public FightingObject(av1 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -72,12 +72,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator avw(FightingObject instance)
+        public static implicit operator av1(FightingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator FightingObject(avw instance)
+        public static implicit operator FightingObject(av1 instance)
         {
             return new FightingObject(instance);
         }

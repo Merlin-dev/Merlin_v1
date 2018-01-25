@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: agw */
+    /* Internal type: agz */
     public partial class TileDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private agw _internal;
+        private agz _internal;
         
         #region Properties
         
-        public agw TileDescriptor_Internal => _internal;
+        public agz TileDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public TileDescriptor(agw instance)
+        public TileDescriptor(agz instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator agw(TileDescriptor instance)
+        public static implicit operator agz(TileDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator TileDescriptor(agw instance)
+        public static implicit operator TileDescriptor(agz instance)
         {
             return new TileDescriptor(instance);
         }

@@ -15,42 +15,40 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: pw */
+    /* Internal type: p0 */
     public partial struct Number
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private pw _internal;
+        private p0 _internal;
         
         #region Properties
         
-        public pw Number_Internal => _internal;
-        
+        public p0 Number_Internal => _internal;
+
         #endregion
-        
+
         #region Fields
-        
-        
+
+
         #endregion
-        
+
         #region Methods
-        
-        public static Number FromDouble(System.Double A_0) => pw.e((System.Double)A_0);
-        public static Number FromInt64(long A_0) => pw.f((long)A_0);
-        public static Number FromRaw(long A_0) => pw.e((long)A_0);
+
+        public static Number FromDouble(System.Double A_0) => p0.e((System.Double)A_0);
+        public static Number FromInt64(long A_0) => p0.f((long)A_0);
+        public static Number FromRaw(long A_0) => p0.e((long)A_0);
         public long GetFractionalPart() => _internal.i();
         public System.Double GetFractions() => _internal.j();
         public long GetIntegerPart() => _internal.h();
         public System.Double ToDouble() => _internal.k();
-        //public static bool TryParse(string A_0, out Number A_1) => og.f((string)A_0, out A_1);
-        //public static bool TryParseRaw(string A_0, out Number A_1) => og.e((string)A_0, out A_1);
-        
+
         #endregion
-        
+
         #region Constructor
-        
-        public Number(pw instance)
+
+        public Number(p0 instance)
         {
             _internal = instance;
         }
@@ -64,12 +62,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator pw(Number instance)
+        public static implicit operator p0(Number instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Number(pw instance)
+        public static implicit operator Number(p0 instance)
         {
             return new Number(instance);
         }

@@ -19,7 +19,7 @@ namespace Albion_Direct
             return _internal.th().eh().dw().Union(_internal.tj().eh().dw()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is au7 equipableItem ? IsTheItemDamaged(equipableItem) : false;
+                return i is avc equipableItem ? IsTheItemDamaged(equipableItem) : false;
             });
         }
 
@@ -28,30 +28,30 @@ namespace Albion_Direct
             return _internal.th().eh().dw().Union(_internal.tj().eh().dw()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is au7 equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
+                return i is avc equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
             });
         }
 
-        public bool IsTheItemDamaged(au7 item)
+        public bool IsTheItemDamaged(avc item)
         {
-            return item.b6() <= 95;
+            return item.b8() <= 95;
         }
 
-        public bool IsTheItemQualityPoor(au7 item)
+        public bool IsTheItemQualityPoor(avc item)
         {
-            return item.b6() <= 10;
+            return item.b8() <= 10;
         }
 
-        public bool IsMountBroken(au7 item)
+        public bool IsMountBroken(avc item)
         {
-            return item.b6() <= 0;
+            return item.b8() <= 0;
         }
         public bool IsMountBroken()
         {
             return _internal.th().eh().dw().Union(_internal.tj().eh().dw()).Any(i =>
             {
                 //MountItemProxy
-                return i is au7 mountableitem ? IsMountBroken(mountableitem) : false;
+                return i is avc mountableitem ? IsMountBroken(mountableitem) : false;
             });
         }
     }

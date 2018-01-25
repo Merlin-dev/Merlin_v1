@@ -15,36 +15,36 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: avt */
+    /* Internal type: avy */
     public partial class WorldObject : SimulationObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private avt _internal;
+        private avy _internal;
         
         #region Properties
         
-        public avt WorldObject_Internal => _internal;
-        
+        public avy WorldObject_Internal => _internal;
+
         #endregion
-        
+
         #region Fields
-        
-        
+
+
         #endregion
-        
+
         #region Methods
-        
-        public Point2 GetPosition() => _internal.h1();
-        public float GetRotation() => _internal.h3();
-        
+
+        public Point2 GetPosition() => _internal.h3();
+        public float GetRotation() => _internal.h5();
+
         #endregion
-        
+
         #region Constructor
-        
-        public WorldObject(avt instance) : base(instance)
+
+        public WorldObject(avy instance) : base(instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator avt(WorldObject instance)
+        public static implicit operator avy(WorldObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator WorldObject(avt instance)
+        public static implicit operator WorldObject(avy instance)
         {
             return new WorldObject(instance);
         }

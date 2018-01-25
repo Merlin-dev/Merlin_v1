@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a3m */
+    /* Internal type: a3r */
     public partial class StaticObject : WorldObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a3m _internal;
+        private a3r _internal;
         
         #region Properties
         
-        public a3m StaticObject_Internal => _internal;
+        public a3r StaticObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public StaticObject(a3m instance) : base(instance)
+        public StaticObject(a3r instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a3m(StaticObject instance)
+        public static implicit operator a3r(StaticObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator StaticObject(a3m instance)
+        public static implicit operator StaticObject(a3r instance)
         {
             return new StaticObject(instance);
         }

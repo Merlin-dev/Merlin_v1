@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a3p */
+    /* Internal type: a3u */
     public partial class ActionBuildingObject : BuildingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
 
-        private a3p _internal;
+        private a3u _internal;
 
         #region Properties
 
-        public a3p ActionBuildingObject_Internal => _internal;
+        public a3u ActionBuildingObject_Internal => _internal;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace Albion_Direct
 
         #region Constructor
 
-        public ActionBuildingObject(a3p instance) : base(instance)
+        public ActionBuildingObject(a3u instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
 
         #region Conversion
 
-        public static implicit operator a3p(ActionBuildingObject instance)
+        public static implicit operator a3u(ActionBuildingObject instance)
         {
             return instance._internal;
         }
 
-        public static implicit operator ActionBuildingObject(a3p instance)
+        public static implicit operator ActionBuildingObject(a3u instance)
         {
             return new ActionBuildingObject(instance);
         }

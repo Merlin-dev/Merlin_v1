@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a3n */
+    /* Internal type: a3s */
     public partial class BuildingObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a3n _internal;
+        private a3s _internal;
         
         #region Properties
         
-        public a3n BuildingObject_Internal => _internal;
+        public a3s BuildingObject_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public BuildingObject(a3n instance) : base(instance)
+        public BuildingObject(a3s instance) : base(instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a3n(BuildingObject instance)
+        public static implicit operator a3s(BuildingObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator BuildingObject(a3n instance)
+        public static implicit operator BuildingObject(a3s instance)
         {
             return new BuildingObject(instance);
         }

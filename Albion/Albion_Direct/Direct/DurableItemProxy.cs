@@ -15,35 +15,35 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: au6 */
+    /* Internal type: avb */
     public partial class DurableItemProxy : ItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private au6 _internal;
+        private avb _internal;
         
         #region Properties
         
-        public au6 DurableItemProxy_Internal => _internal;
-        
+        public avb DurableItemProxy_Internal => _internal;
+
         #endregion
-        
+
         #region Fields
-        
-        
+
+
         #endregion
-        
+
         #region Methods
-        
-        public Number GetUnfloatyFloat() => _internal.b3();
-        
+
+        public Number GetUnfloatyFloat() => _internal.b5();
+
         #endregion
-        
+
         #region Constructor
-        
-        public DurableItemProxy(au6 instance) : base(instance)
+
+        public DurableItemProxy(avb instance) : base(instance)
         {
             _internal = instance;
         }
@@ -57,12 +57,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator au6(DurableItemProxy instance)
+        public static implicit operator avb(DurableItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator DurableItemProxy(au6 instance)
+        public static implicit operator DurableItemProxy(avb instance)
         {
             return new DurableItemProxy(instance);
         }

@@ -27,12 +27,12 @@ namespace Albion_Direct
     
     public static class ClusterExitKindExtensions
     {
-        public static ani.Kind ToInternal(this ClusterExitKind instance)
+        public static anl.Kind ToInternal(this ClusterExitKind instance)
         {
-            return (ani.Kind)instance;
+            return (anl.Kind)instance;
         }
         
-        public static ClusterExitKind ToWrapped(this ani.Kind instance)
+        public static ClusterExitKind ToWrapped(this anl.Kind instance)
         {
             return (ClusterExitKind)instance;
         }

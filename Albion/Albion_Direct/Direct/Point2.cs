@@ -15,17 +15,17 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: amk */
+    /* Internal type: amn */
     public partial struct Point2
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         
-        private amk _internal;
+        private amn _internal;
         
         #region Properties
         
-        public amk Point2_Internal => _internal;
+        public amn Point2_Internal => _internal;
         
         #endregion
         
@@ -44,7 +44,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public Point2(amk instance)
+        public Point2(amn instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator amk(Point2 instance)
+        public static implicit operator amn(Point2 instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator Point2(amk instance)
+        public static implicit operator Point2(amn instance)
         {
             return new Point2(instance);
         }

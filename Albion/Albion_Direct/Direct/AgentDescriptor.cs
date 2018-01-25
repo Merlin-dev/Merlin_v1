@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: am8 */
+    /* Internal type: anb */
     public partial class AgentDescriptor
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private am8 _internal;
+        private anb _internal;
         
         #region Properties
         
-        public am8 AgentDescriptor_Internal => _internal;
+        public anb AgentDescriptor_Internal => _internal;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public AgentDescriptor(am8 instance)
+        public AgentDescriptor(anb instance)
         {
             _internal = instance;
         }
@@ -56,12 +56,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator am8(AgentDescriptor instance)
+        public static implicit operator anb(AgentDescriptor instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator AgentDescriptor(am8 instance)
+        public static implicit operator AgentDescriptor(anb instance)
         {
             return new AgentDescriptor(instance);
         }

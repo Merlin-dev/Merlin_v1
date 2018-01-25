@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a42 */
+    /* Internal type: a47 */
     public partial class MountObject : StaticObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a42 _internal;
+        private a47 _internal;
         
         #region Properties
         
-        public a42 MountObject_Internal => _internal;
+        public a47 MountObject_Internal => _internal;
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace Albion_Direct
 
         #region Constructor
 
-        public MountObject(a42 instance) : base(instance)
+        public MountObject(a47 instance) : base(instance)
         {
             _internal = instance;
         }
@@ -59,12 +59,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a42(MountObject instance)
+        public static implicit operator a47(MountObject instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator MountObject(a42 instance)
+        public static implicit operator MountObject(a47 instance)
         {
             return new MountObject(instance);
         }

@@ -17,44 +17,44 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: a0h */
+    /* Internal type: a0m */
     public partial class PlayerCharacter : FightingObject
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a0h _internal;
+        private a0m _internal;
         
         #region Properties
         
-        public a0h PlayerCharacter_Internal => _internal;
-        
+        public a0m PlayerCharacter_Internal => _internal;
+
         #endregion
-        
+
         #region Fields
-        
-        
+
+
         #endregion
-        
+
         #region Methods
-        
-        public string GetAllianceName() => _internal.jr();
-        public string GetGuildName() => _internal.jl();
+
+        public string GetAllianceName() => _internal.jt();
+        public string GetGuildName() => _internal.jn();
         public bool GetIsHarvesting() => _internal.wl();
         public bool GetIsMounted() => _internal.wb();
         public bool GetIsMounting() => _internal.wm();
         public MountItemDescriptor GetMount() => _internal.wc();
-        public ObservableRange<afr> GetMountHealth() => _internal.wd();
+        public ObservableRange<afu> GetMountHealth() => _internal.wd();
         public PlayerCharacterDescriptor GetPlayerDescriptor() => _internal.v6();
-        public ObservableRange<afp> GetReputation() => _internal.we();
+        public ObservableRange<afs> GetReputation() => _internal.we();
         public Guid GetUid() => _internal.@as();
-        
+
         #endregion
-        
+
         #region Constructor
-        
-        public PlayerCharacter(a0h instance) : base(instance)
+
+        public PlayerCharacter(a0m instance) : base(instance)
         {
             _internal = instance;
         }
@@ -68,12 +68,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a0h(PlayerCharacter instance)
+        public static implicit operator a0m(PlayerCharacter instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator PlayerCharacter(a0h instance)
+        public static implicit operator PlayerCharacter(a0m instance)
         {
             return new PlayerCharacter(instance);
         }

@@ -48,7 +48,7 @@ namespace Albion_Direct
         public int GetRareState() => _internal.tk();
         public ItemDescriptor GetResourceDescriptor() => _internal.tq();
         public HarvestableTierDescriptor GetTierDescriptor() => _internal.tb();
-        public EquipmentItemProxy GetTool(LocalPlayerCharacter A_0, bool A_1) => _internal.az((a0i)A_0, (bool)A_1);
+        public EquipmentItemProxy GetTool(LocalPlayerCharacter A_0, bool A_1) => _internal.az((a0n)A_0, (bool)A_1);
         public long GetYield() => _internal.td();
         public bool IsHarvestable() => _internal.to();
         

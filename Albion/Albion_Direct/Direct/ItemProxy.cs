@@ -15,18 +15,18 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: au5 */
+    /* Internal type: ava */
     public partial class ItemProxy
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private au5 _internal;
+        private ava _internal;
         
         #region Properties
         
-        public au5 ItemProxy_Internal => _internal;
+        public ava ItemProxy_Internal => _internal;
         
         #endregion
         
@@ -37,14 +37,14 @@ namespace Albion_Direct
         
         #region Methods
         
-        public static ItemProxy Create(ItemObject A_0) => au5.o((au2)A_0);
+        public static ItemProxy Create(ItemObject A_0) => ava.o((au7)A_0);
         public ItemDescriptor GetItemDescriptor() => _internal.p();
         
         #endregion
         
         #region Constructor
         
-        public ItemProxy(au5 instance)
+        public ItemProxy(ava instance)
         {
             _internal = instance;
         }
@@ -58,12 +58,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator au5(ItemProxy instance)
+        public static implicit operator ava(ItemProxy instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator ItemProxy(au5 instance)
+        public static implicit operator ItemProxy(ava instance)
         {
             return new ItemProxy(instance);
         }

@@ -15,40 +15,40 @@ using System.Reflection;
 
 namespace Albion_Direct
 {
-    /* Internal type: bb3 */
+    /* Internal type: bb8 */
     public partial class GameManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private bb3 _internal;
+        private bb8 _internal;
         
         #region Properties
         
-        public bb3 GameManager_Internal => _internal;
-        
+        public bb8 GameManager_Internal => _internal;
+
         #endregion
-        
+
         #region Fields
-        
-        
+
+
         #endregion
-        
+
         #region Methods
-        
-        public static GameManager GetInstance() => bb3.s();
+
+        public static GameManager GetInstance() => bb8.t();
         public LandscapeManager GetLandscapeManager() => _internal.aa();
         public LocalPlayerCharacterView GetLocalPlayerCharacterView() => _internal.w();
         public GameState GetState() => _internal.x().ToWrapped();
-        public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((au1)A_0);
+        public SimulationObjectView GetView(SimulationObject A_0) => _internal.a((au6)A_0);
         public SimulationObjectView GetView(long A_0) => _internal.a((long)A_0);
-        
+
         #endregion
-        
+
         #region Constructor
-        
-        public GameManager(bb3 instance)
+
+        public GameManager(bb8 instance)
         {
             _internal = instance;
         }
@@ -62,12 +62,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator bb3(GameManager instance)
+        public static implicit operator bb8(GameManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator GameManager(bb3 instance)
+        public static implicit operator GameManager(bb8 instance)
         {
             return new GameManager(instance);
         }

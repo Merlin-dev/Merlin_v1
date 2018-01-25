@@ -17,18 +17,18 @@ using UnityEngine;
 
 namespace Albion_Direct
 {
-    /* Internal type: bb0 */
+    /* Internal type: bb5 */
     public partial class LandscapeManager
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private bb0 _internal;
+        private bb5 _internal;
         
         #region Properties
         
-        public bb0 LandscapeManager_Internal => _internal;
+        public bb5 LandscapeManager_Internal => _internal;
 
         #endregion
 
@@ -39,13 +39,13 @@ namespace Albion_Direct
 
         #region Methods
 
-        public float GetTerrainHeight(Point2 A_0, out RaycastHit A_1) => _internal.d((amk)A_0, out A_1);
+        public float GetTerrainHeight(Point2 A_0, out RaycastHit A_1) => _internal.d((amn)A_0, out A_1);
 
         #endregion
 
         #region Constructor
 
-        public LandscapeManager(bb0 instance)
+        public LandscapeManager(bb5 instance)
         {
             _internal = instance;
         }
@@ -59,12 +59,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator bb0(LandscapeManager instance)
+        public static implicit operator bb5(LandscapeManager instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator LandscapeManager(bb0 instance)
+        public static implicit operator LandscapeManager(bb5 instance)
         {
             return new LandscapeManager(instance);
         }

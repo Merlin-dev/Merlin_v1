@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -124,7 +125,7 @@ namespace Merlin.Profiles.Gatherer
                             break;
 
                         case (SpellTarget.Ground):
-                            Core.Log("Casting " + spellName + " on ground.");
+                            Core.Log("Casting " + spellName + " on ground.");                            
                             _localPlayerCharacterView.CastAt(spellSlot, _combatTarget.GetPosition());
                             break;
 

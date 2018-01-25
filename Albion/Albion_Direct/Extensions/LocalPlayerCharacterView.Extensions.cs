@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
@@ -52,7 +53,10 @@ namespace Albion_Direct
 
         public static void CastOn(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, FightingObjectView target) => instance.InputHandler.CastOn(slot, target);
 
-        public static void CastAt(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, Vector3 target) => instance.InputHandler.CastAt(slot, target);
+        public static void CastAt(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, Vector3 target)
+        {            
+            instance.InputHandler.CastAt(slot, target);
+        }
 
         public static void SetSelectedObject(this LocalPlayerCharacterView instance, SimulationObjectView target) => instance.InputHandler.SetSelectedObject(target);
 

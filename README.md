@@ -44,8 +44,8 @@ We have a [Discord Channel](https://discord.gg/Z4Qtjty) community to code tools 
  * DLLs from Albion Online (we do not provide them)
  
 ### Contributors
-[Lukáš Jech](https://github.com/klukule/)
-[Fabrício Rissetto](https://github.com/fabriciorissetto/)
+ * [Lukáš Jech](https://github.com/klukule/)
+ * [Fabrício Rissetto](https://github.com/fabriciorissetto/)
 
 Other contributors will be added later
  

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Albion_Direct;
 
-namespace Merlin
+namespace Albion_Direct
 {
     public static class SimulationObjectViewExtensions
     {

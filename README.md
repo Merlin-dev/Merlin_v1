@@ -43,9 +43,10 @@ We have a [Discord Channel](https://discord.gg/Z4Qtjty) community to code tools 
  * Windows 7, 8, 8.1 or 10
  * DLLs from Albion Online (we do not provide them)
  
-### Runtime Requirements (GUI)
- 
- * .NET Framework 3.5
- * Windows 7, 8, 8.1 or 10
+### Contributors
+[Lukáš Jech](https://github.com/klukule/)
+[Fabrício Rissetto](https://github.com/fabriciorissetto/)
+
+Other contributors will be added later
  
 This project is licensed under [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/legalcode) license

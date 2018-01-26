@@ -1,8 +1,7 @@
 ﻿using System;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders;
-using Albion_Direct;
 
-namespace Merlin.Pathing.Worldmap
+namespace Albion_Direct.Pathing.Worldmap
 {
     public class WorldmapNode : BaseGraphSearchNode<WorldmapNode, ClusterDescriptor>, IComparable<WorldmapNode>
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Merlin
+namespace Albion_Direct
 {
     public static class ColliderExtensions
     {

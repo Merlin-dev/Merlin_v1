@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Merlin
+namespace Albion_Direct
 {
     public static class EnumExtensions
     {

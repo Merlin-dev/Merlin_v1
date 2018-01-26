@@ -2,9 +2,8 @@ using Stateless;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Albion_Direct;
 
-namespace Merlin.Pathing
+namespace Albion_Direct.Pathing
 {
     public class ClusterPathingRequest
     {
@@ -20,52 +19,39 @@ namespace Merlin.Pathing
 
         private StateMachine<State, Trigger> _state;
         DateTime _pauseTimer;
-
         //Moving fields
         private float noMovementThreshold = .0001f;
-        private const int noMovementFrames = 30;
+        private const int noMovementFrames = 2;
         Vector3[] previousLocations = new Vector3[noMovementFrames];
         private bool isMoving;
-        private const float _moveSpeed = 3f;
-        private const float _turnSpeed = 90f;
-        private float _arrivalDistance = 1.5f;
-        private const float _pathNodeLeeway = 1.7f;
-
         #endregion Fields
 
         #region Properties and Events
 
         public bool IsRunning => _state.State != State.Finish;
-        public float FinishedDistance => _arrivalDistance;
 
         #endregion Properties and Events
 
         #region Constructors and Cleanup
 
-        public ClusterPathingRequest(LocalPlayerCharacterView player, SimulationObjectView target, List<Vector3> path,
-            float ArrivalDistance = 1.5f, bool useCollider = true)
+        public ClusterPathingRequest(LocalPlayerCharacterView player, SimulationObjectView target, List<Vector3> path, bool useCollider = true)
         {
             _player = player;
             _target = target;
-            _useCollider = useCollider;
+
             _path = path;
-
             _completedpath = new List<Vector3>();
+
+            _useCollider = useCollider;
             DateTime _pauseTimer = DateTime.Now;
-
-            _arrivalDistance = ArrivalDistance + _pathNodeLeeway;
-            if (useCollider)
-                _arrivalDistance += _player.GetColliderExtents() + _target.GetColliderExtents();
-            Core.Log("Arrival distance : " + _arrivalDistance.ToString());
-
             _state = new StateMachine<State, Trigger>(State.Start);
 
             _state.Configure(State.Start)
-                .Permit(Trigger.ApproachTarget, State.Running);
+                      .Permit(Trigger.ApproachTarget, State.Running);
 
             _state.Configure(State.Running)
                 .Permit(Trigger.ReachedTarget, State.Finish)
-                .Permit(Trigger.Stuck, State.Pause);
+            .Permit(Trigger.Stuck, State.Pause);
 
             _state.Configure(State.Pause)
                 .Permit(Trigger.ReachedTarget, State.Finish)
@@ -80,6 +66,7 @@ namespace Merlin.Pathing
         {
             switch (_state.State)
             {
+
                 case State.Pause:
                     {
                         if (DateTime.Now > _pauseTimer)
@@ -87,11 +74,11 @@ namespace Merlin.Pathing
                             _state.Fire(Trigger.ReachedTarget);
                         }
                         
+
                         if (_completedpath.Count < 2)
                         {
                             //Core.Log("moving to random Location");
-                            Vector2 randDirection = UnityEngine.Random.insideUnitCircle * 100f;
-                            Vector3 randomSpot = new Vector3(randDirection.x, 0, randDirection.y) + _player.transform.position;
+                            Vector3 randomSpot = new Vector3(UnityEngine.Random.Range(-100f, 100f), 0, UnityEngine.Random.Range(-100f, 100f)) + _player.transform.position;
                             _completedpath.Add(randomSpot);
                             break;
                         }
@@ -109,7 +96,7 @@ namespace Merlin.Pathing
                         }
                         else
                         {
-                            _player.RequestMove(GetLerpedMovement(_player.transform, previousNode));
+                            _player.RequestMove(previousNode);
                         }
 
                         break;
@@ -133,45 +120,46 @@ namespace Merlin.Pathing
                             break;
                         }
                         isMovingUpdate();
+                        //Core.Log($"Cluster Pathing Request. Player at {_player.transform.position}. Player is move {IsMoving}");
 
                         if (!IsMoving)
                         {
                             _state.Fire(Trigger.Stuck);
                             _pauseTimer = DateTime.Now + TimeSpan.FromSeconds(0.5);
+                            //Core.Log("Stuck Cluster Pathing Request");
                             break;
                         }
+                        var currentNode = _path[0];
+                        var minimumDistance = 3f;
 
-                        if (GetPlayerDistanceFromTarget(_player, _target, _useCollider) <= _arrivalDistance)
+                        if (_path.Count < 2 && _useCollider)
                         {
-                            // We have arrived safely at our destination. Pat on back.
-                            _path.Clear();
-                            _state.Fire(Trigger.ReachedTarget);
-                            break;
+                            minimumDistance = _target.GetColliderExtents() + _player.GetColliderExtents();
+
+                            var directionToPlayer = (_player.transform.position - _target.transform.position).normalized;
+                            var bufferDistance = directionToPlayer * minimumDistance;
+
+                            currentNode = _target.transform.position + bufferDistance;
+                        }
+
+                        var distanceToNode = (_player.transform.position - currentNode).sqrMagnitude;
+
+                        if (distanceToNode < minimumDistance)
+                        {
+                            _completedpath.Add(_path[0]);
+                            _path.RemoveAt(0);
                         }
                         else
                         {
-                            var currentNode = _path[0];
-                            var distanceToNode = (_player.transform.position - currentNode).magnitude;
-                            if (distanceToNode < _pathNodeLeeway)
-                            {
-                                _completedpath.Add(_path[0]);
-                                _path.RemoveAt(0);
-
-                                if (_path.Count > 0)
-                                {
-                                    currentNode = _path[0];
-                                }
-                                else
-                                {
-                                    Core.Log("[ClusterPathingRequest] WARNING : No more path nodes, but we haven't arrived at destination yet.");
-                                    break;
-                                }
-                            }
-
-                            // Lerp to make it more human.
-                            _player.RequestMove(GetLerpedMovement(_player.transform, currentNode));
+                            _player.RequestMove(currentNode);
                         }
-                    } break;
+
+                        if (_path.Count > 0)
+                            break;
+
+                        _state.Fire(Trigger.ReachedTarget);
+                        break;
+                    }
             }
         }
 
@@ -207,28 +195,6 @@ namespace Merlin.Pathing
                     
                 }
             }
-        }
-
-        private static Vector3 GetLerpedMovement(Transform player_transform, Vector3 target_pos)
-        {
-            Vector3 movement_direction = target_pos - player_transform.position;
-            movement_direction.Normalize();
-            float angle = Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(player_transform.forward, movement_direction)));
-            angle /= 180f;
-            Vector3 move_amount = Vector3.Lerp(player_transform.forward, movement_direction, Time.deltaTime * _turnSpeed * angle);
-            move_amount *= _moveSpeed;
-            return player_transform.position + move_amount;
-        }
-
-        public static float GetPlayerDistanceFromTarget(LocalPlayerCharacterView player, SimulationObjectView target, bool useColliders = true)
-        {
-            float ret = (target.transform.position - player.transform.position).magnitude;
-            if (useColliders)
-            {
-                ret += target.GetColliderExtents();
-                ret += player.GetColliderExtents();
-            }
-            return ret;
         }
         #endregion Methods
 

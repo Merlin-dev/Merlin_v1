@@ -1,11 +1,11 @@
-﻿using Albion_Direct;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
 using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
-namespace Merlin
+namespace Albion_Direct
 {
     public static class LocalPlayerCharacterViewExtensions
     {
@@ -53,18 +53,29 @@ namespace Merlin
 
         public static void CastOn(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, FightingObjectView target) => instance.InputHandler.CastOn(slot, target);
 
-        public static void CastAt(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, Vector3 target) => instance.InputHandler.CastAt(slot, target);
+        public static void CastAt(this LocalPlayerCharacterView instance, CharacterSpellSlot slot, Vector3 target)
+        {            
+            instance.InputHandler.CastAt(slot, target);
+        }
 
         public static void SetSelectedObject(this LocalPlayerCharacterView instance, SimulationObjectView target) => instance.InputHandler.SetSelectedObject(target);
 
         public static void AttackSelectedObject(this LocalPlayerCharacterView instance) => instance.InputHandler.AttackCurrentTarget();
 
-        public static void StopAnyActionObject(this LocalPlayerCharacterView instance) => instance.InputHandler.StopAnyAction();
-
         public static bool TryFindPath(this LocalPlayerCharacterView instance, AStarPathfinder pathfinder, SimulationObjectView target,
                             StopFunction<Vector2> stopFunction, out List<Vector3> results)
         {
-            return instance.TryFindPath(pathfinder, target.transform.position, stopFunction, out results);
+            results = new List<Vector3>();
+
+            if (instance.TryFindPath(pathfinder, target.transform.position, stopFunction, out results))
+            {
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static bool TryFindPath(this LocalPlayerCharacterView instance, AStarPathfinder pathfinder, Vector3 target,
@@ -83,12 +94,14 @@ namespace Merlin
             if (pathfinder.TryFindPath(startLocation, endLocation, stopFunction, out path, out pivotPoints, true))
             {
                 foreach (var point in path)
-                {
                     results.Add(new Vector3(point.x, landscape.GetTerrainHeight(point.b(), out RaycastHit hit) + 0.5f, point.y));
-                }
-                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

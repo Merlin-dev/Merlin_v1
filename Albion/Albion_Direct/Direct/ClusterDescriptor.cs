@@ -53,7 +53,7 @@ namespace Albion_Direct
         public Point2 GetSize() => _internal.a1();
         public List<TerritoryDescriptor> GetTerritories() => _internal.a8().Select(x =>(TerritoryDescriptor)x).ToList();
         public TerritoryDescriptor GetTerritory(Guid A_0) => _internal.ap((Guid)A_0);
-        public string GetName() => _internal.ao();
+        public string GetName() => _internal.ar();
         
         #endregion
         

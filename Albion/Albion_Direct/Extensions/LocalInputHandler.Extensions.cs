@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using UnityEngine;
-using Albion_Direct;
 
-namespace Merlin
+namespace Albion_Direct
 {
     public static class LocalInputHandlerExtensions
     {
@@ -19,9 +18,8 @@ namespace Merlin
             _startCastInternalTarget = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
                                             Type.DefaultBinder, new Type[] { typeof(byte), typeof(FightingObjectView) }, null);
 
-            // Obfuscated type may need to be updated after patches to fix ground casting.
             _startCastInternalPosition = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
-                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(ak1) }, null);
+                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(amn) }, null);
         }
 
         public static void Interact(this LocalInputHandler instance, WorldObjectView target, string collider = null) => _doActionStaticObjectInteraction.Invoke(instance, new object[] { target, collider ?? string.Empty });

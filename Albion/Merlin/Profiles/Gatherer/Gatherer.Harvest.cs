@@ -10,6 +10,7 @@ namespace Merlin.Profiles.Gatherer
     public sealed partial class Gatherer
     {
         public const double MELEE_ATTACK_RANGE = 2.5;
+        public const double RANGED_ATTACK_RANGE = 12;
 
         private ClusterPathingRequest _harvestPathingRequest;
 
@@ -287,9 +288,9 @@ namespace Merlin.Profiles.Gatherer
 
             var weaponItem = _localPlayerCharacterView.LocalPlayerCharacter.th().o();
             var isMeleeWeapon = weaponItem == null || weaponItem.bw() == Albion.Common.GameData.AttackType.Melee;
-            var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.t2() + mob.Mob.x1().f9();
+            //var attackRange = _localPlayerCharacterView.LocalPlayerCharacter.t2() + mob.Mob.x1().f9();
 
-            var minimumAttackRange = isMeleeWeapon ? MELEE_ATTACK_RANGE : attackRange;
+            var minimumAttackRange = isMeleeWeapon ? MELEE_ATTACK_RANGE : RANGED_ATTACK_RANGE;
             var isInLoS = _localPlayerCharacterView.IsInLineOfSight(mob);
 
             if (HandlePathing(ref _harvestPathingRequest, () => centerDistance <= minimumAttackRange && isInLoS))

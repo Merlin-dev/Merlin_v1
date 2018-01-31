@@ -1,6 +1,6 @@
 ﻿using Albion_Direct;
-using Merlin.Pathing;
-using Merlin.Pathing.Worldmap;
+using Albion_Direct.Pathing;
+using Albion_Direct.Pathing.Worldmap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,7 +74,7 @@ namespace Merlin.Profiles.Gatherer
                         _nextRepairAction = new DateTime();
                         _movingToRepair = false;
 
-                        _localPlayerCharacterView.RequestMove(GetDefaultBankPosition(currentWorldCluster.GetName().ToLowerInvariant()));
+                        _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentWorldCluster.GetName().ToLowerInvariant()));
 
                         Core.Log("[Repair Done]");
                         _state.Fire(Trigger.RepairDone);
@@ -127,7 +127,7 @@ namespace Merlin.Profiles.Gatherer
                 if (_localPlayerCharacterView.IsIdle())
                 {
                     Core.Log("Player is Idle. Moving to Default bank location");
-                    _localPlayerCharacterView.RequestMove(GetDefaultBankPosition(currentCluster.GetName().ToLowerInvariant()));
+                    _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
                 }
                 return false;
             }
@@ -147,7 +147,7 @@ namespace Merlin.Profiles.Gatherer
 
                             var repairCollider = repairer.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
                             var repairColliderPosition = new Vector2(repairCollider.transform.position.x, repairCollider.transform.position.z);
-                            var exitPositionPoint = GetDefaultBankPosition(currentCluster.GetName().ToLowerInvariant());
+                            var exitPositionPoint = GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant());
                             var exitPosition = new Vector2(exitPositionPoint.x, exitPositionPoint.y);
                             var clampedPosition = Vector2.MoveTowards(repairColliderPosition, exitPosition, 10);
                             var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);

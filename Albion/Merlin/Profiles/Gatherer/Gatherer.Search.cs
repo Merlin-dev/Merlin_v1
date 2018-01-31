@@ -1,5 +1,5 @@
 ﻿using Albion_Direct;
-using Merlin.Pathing;
+using Albion_Direct.Pathing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
-                Core.Log("Start Siege Camp Treasure Routine");
+                Core.Log("Start Seige Camp Treasure Routine");
                 _state.Fire(Trigger.StartSiegeCampTreasure);
                 return;
             }
@@ -135,7 +135,7 @@ namespace Merlin.Profiles.Gatherer
                     }
                     else
                         Core.Log($"No path to {spot3d} found. Removing it from fallback objects.");
-                    
+
                     _gatheredSpots.Remove(spotToUse.Key);
                     _failedFindAttempts = 0;
                 }

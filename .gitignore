@@ -288,6 +288,5 @@ __pycache__/
 *.xsd.cs
 
 # Albion online's Dependencies
-/Albion/Dependencies/*
-!/Albion/Dependencies/How_To.txt
+/Albion/Dependencies/*.dll
 /Albion/DependenciesOld/

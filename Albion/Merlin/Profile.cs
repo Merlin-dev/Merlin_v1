@@ -8,8 +8,7 @@ namespace Merlin
     {
         #region Static
 
-        public static readonly TimeSpan DefaultUpdateDelay = TimeSpan.FromSeconds(0.1);
-        public static TimeSpan UpdateDelay = DefaultUpdateDelay;
+        public static TimeSpan UpdateDelay = TimeSpan.FromSeconds(0.1d);
 
         #endregion Static
 

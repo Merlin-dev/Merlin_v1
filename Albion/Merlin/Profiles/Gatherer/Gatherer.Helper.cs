@@ -1,52 +1,11 @@
 ﻿using Albion_Direct;
-using Merlin.Pathing;
+using Albion_Direct.Pathing;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Merlin.Profiles.Gatherer
 {
-    public static class StuckHelper
-    {
-        struct SpeedValue
-        {
-            public float speed;
-            public DateTime stamp;
-        }
-
-        static readonly TimeSpan _stuckTimeInSeconds = TimeSpan.FromSeconds(5);
-        static List<SpeedValue> _previousSpeeds = new List<SpeedValue>();
-
-        static bool IsPlayerStuck(float player_speed)
-        {
-            if (_previousSpeeds.Count == 0 || _previousSpeeds.Back().stamp != DateTime.Now)
-            {
-                _previousSpeeds.Add(new SpeedValue { speed = player_speed, stamp = DateTime.Now });
-            }
-
-            DateTime lastValidTime = DateTime.Now.Subtract(_stuckTimeInSeconds);
-            _previousSpeeds.RemoveAll(x => x.stamp < lastValidTime);
-
-            for (int i = 0; i < _previousSpeeds.Count; ++i)
-            {
-                if (_previousSpeeds[i].speed != 0f)
-                    return false;
-            }
-            return true;
-        }
-
-        public static bool IsPlayerStuck(LocalPlayerCharacterView player)
-        {
-            return IsPlayerStuck(player.GetMoveSpeed());
-        }
-
-        public static void PretendPlayerIsMoving()
-        {
-            IsPlayerStuck(1f);
-        }
-    }
-
     public partial class Gatherer
     {
         public bool HandleAttackers()
@@ -127,56 +86,6 @@ namespace Merlin.Profiles.Gatherer
             }
 
             return false;
-        }
-
-        public bool IsBlockedMounting(Vector2 location)
-        {
-            var vector = new Vector3(location.x, 0, location.y);
-            if (_skipUnrestrictedPvPZones && _landscape.IsInAnyUnrestrictedPvpZone(vector))
-                return true;
-
-            MountObjectView mount = GetLocalMount();
-
-            if (mount != null)
-            {
-                var resourcePosition = new Vector2(mount.transform.position.x,
-                                                    mount.transform.position.z);
-                var resourceDistance = (resourcePosition - location).magnitude;
-
-                if (resourceDistance < (mount.GetColliderExtents() + _localPlayerCharacterView.GetColliderExtents()))
-                    return false;
-            }
-
-            var playerLocation = new Vector2(_localPlayerCharacterView.transform.position.x,
-                                                _localPlayerCharacterView.transform.position.z);
-            var playerDistance = (playerLocation - location).magnitude;
-
-            if (playerDistance < 2f)
-                return false;
-
-            byte cf = _collision.GetCollision(location.b(), 2.0f);
-            return ((cf & 0x01) != 0) || ((cf & 0x02) != 0) || ((cf & 0xFF) != 0);
-        }
-
-        public bool HasLocalMount()
-        {
-            MountObjectView mount = GetLocalMount();
-            return mount != null;
-        }
-
-        public MountObjectView GetLocalMount()
-        {
-            MountObjectView mount = null;
-            foreach (var _mount in _mounts)
-            {
-                var IsLocalPlayers = _mount.MountObject.s9();
-                if (IsLocalPlayers)
-                {
-                    mount = _mount;
-                    break;
-                }
-            }
-            return mount;
         }
 
         public bool HandleMounting(Vector3 target)

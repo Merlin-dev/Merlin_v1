@@ -1,6 +1,6 @@
 ﻿using Albion_Direct;
-using Merlin.Pathing;
-using Merlin.Pathing.Worldmap;
+using Albion_Direct.Pathing;
+using Albion_Direct.Pathing.Worldmap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +20,6 @@ namespace Merlin.Profiles.Gatherer
 
         public void Bank()
         {
-
-            if (StuckHelper.IsPlayerStuck(_localPlayerCharacterView))
-            {
-                _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
-                return;
-            }
 
             _client = GameManager.GetInstance();
             if (_client.GetState() != GameState.Playing)
@@ -107,50 +101,29 @@ namespace Merlin.Profiles.Gatherer
                 {
                     Core.Log("Path Found to Town.");
                     _worldPathingRequest = new WorldPathingRequest(currentWorldCluster, townCluster, path, _skipUnrestrictedPvPZones);
-                    _harvestState.Fire(HarvestTrigger.StartUnstickingYourself);
                 }
             }
         }
 
-        private Vector3 GetDefaultBankPosition(string cityName)
+        private Vector3 GetDefaultBankVector(string cityName)
         {
             ClusterDescriptor currentWorldCluster = _world.GetCurrentCluster();
-            Vector3 bankPosition = Vector3.zero;
+            Vector3 bankVector = Vector3.zero;
 
             if (cityName.Equals("bridgewatch"))
-                bankPosition = new Vector3(-2.5f, -4.25f, -20f);
+                bankVector = new Vector3((float)-2.5, (float)-4.25, -20);
             else if (cityName.Equals("caerleon"))
-                bankPosition = new Vector3(15.8f, 0.5f, -26.5f);
+                bankVector = new Vector3((float)15.8, (float)0.5, (float)-26.5);
             else if (cityName.Equals("fort sterling"))
-                bankPosition = new Vector3(-7.5f, 2.7f, 1.75f);
+                bankVector = new Vector3((float)-7.5, (float)2.7, (float)1.75);
             else if (cityName.Equals("lymhurst"))
-                bankPosition = new Vector3(-20f, 2.5f, -8.25f);
+                bankVector = new Vector3(-20, (float)2.5, (float)-8.25);
             else if (cityName.Equals("martlock"))
-                bankPosition = new Vector3(-3.8f, 0.5f, -14.25f);
+                bankVector = new Vector3((float)-3.8, (float)0.5, (float)-14.25);
             else if (cityName.Equals("thetford"))
-                bankPosition = new Vector3(-10f, 14f, -5f);
-            else if (cityName.Equals("forest cross"))
-                bankPosition = new Vector3(108f, 0f, 120f);
-            else if (cityName.Equals("forest outpost"))
-                bankPosition = new Vector3(108f, 0f, 120f);
-            else if (cityName.Equals("highland cross"))
-                bankPosition = new Vector3(120, -0.3f, 122f);
-            else if (cityName.Equals("highland outpost"))
-                bankPosition = new Vector3(120, -0.3f, 122f);
-            else if (cityName.Equals("mountain cross"))
-                bankPosition = new Vector3(110f, 0f, 108f);
-            else if (cityName.Equals("mountain outpost"))
-                bankPosition = new Vector3(110f, 0f, 108f);
-            else if (cityName.Equals("steppe cross"))
-                bankPosition = new Vector3(120, -0.3f, 122f);
-            else if (cityName.Equals("steppe outpost"))
-                bankPosition = new Vector3(120, -0.3f, 122f);
-            else if (cityName.Equals("swamp cross"))
-                bankPosition = new Vector3(122f, -0.3f, 110f);
-            else if (cityName.Equals("swamp outpost"))
-                bankPosition = new Vector3(122f, -0.3f, 110f);
+                bankVector = new Vector3(-10, 14, -5);
 
-            return bankPosition;
+            return bankVector;
         }
 
         private bool moveObjectsToBank()
@@ -194,7 +167,7 @@ namespace Merlin.Profiles.Gatherer
                 if (_localPlayerCharacterView.IsIdle())
                 {
                     Core.Log("Player is Idle. Moving to Default bank location");
-                    _localPlayerCharacterView.RequestMove(GetDefaultBankPosition(currentCluster.GetName().ToLowerInvariant()));
+                    _localPlayerCharacterView.RequestMove(GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant()));
                 }
                 return false;
             }
@@ -214,7 +187,7 @@ namespace Merlin.Profiles.Gatherer
 
                             var bankCollider = resource.GetComponentsInChildren<Collider>().First(c => c.name.ToLowerInvariant().Contains("clickable"));
                             var bankColliderPosition = new Vector2(bankCollider.transform.position.x, bankCollider.transform.position.z);
-                            var exitPositionPoint = GetDefaultBankPosition(currentCluster.GetName().ToLowerInvariant());
+                            var exitPositionPoint = GetDefaultBankVector(currentCluster.GetName().ToLowerInvariant());
                             var exitPosition = new Vector2(exitPositionPoint.x, exitPositionPoint.y);
                             var clampedPosition = Vector2.MoveTowards(bankColliderPosition, exitPosition, 10);
                             var targetPosition = new Vector3(clampedPosition.x, 0, clampedPosition.y);

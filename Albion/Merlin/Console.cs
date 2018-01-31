@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,7 +16,7 @@ public class Console : MonoBehaviour
     /// <summary>
     /// The hotkey to show and hide the console window.
     /// </summary>
-    public KeyCode toggleKey = KeyCode.F8;
+    public KeyCode toggleKey = KeyCode.BackQuote;
 
     private List<Log> logs = new List<Log>();
     private Vector2 scrollPosition;
@@ -146,10 +145,5 @@ public class Console : MonoBehaviour
             stackTrace = stackTrace,
             type = type,
         });
-    }
-
-    public void ManualLog(string message)
-    {
-        HandleLog($"[{DateTime.Now}] {message}", "", LogType.Log);
     }
 }

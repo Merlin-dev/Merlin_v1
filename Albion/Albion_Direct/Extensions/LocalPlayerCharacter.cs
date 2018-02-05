@@ -16,7 +16,7 @@ namespace Albion_Direct
 
         public bool HasAnyDamagedItem()
         {
-            return _internal.th().eh().dw().Union(_internal.tj().eh().dw()).Any(i =>
+            return _internal.tg().eh().dw().Union(_internal.ti().eh().dw()).Any(i =>
             {
                 //EquipmentItemProxy
                 return i is avc equipableItem ? IsTheItemDamaged(equipableItem) : false;
@@ -25,7 +25,7 @@ namespace Albion_Direct
 
         public bool HasAnyBrokenItem()
         {
-            return _internal.th().eh().dw().Union(_internal.tj().eh().dw()).Any(i =>
+            return _internal.tg().eh().dw().Union(_internal.ti().eh().dw()).Any(i =>
             {
                 //EquipmentItemProxy
                 return i is avc equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
@@ -48,7 +48,7 @@ namespace Albion_Direct
         }
         public bool IsMountBroken()
         {
-            return _internal.th().eh().dw().Union(_internal.tj().eh().dw()).Any(i =>
+            return _internal.tg().eh().dw().Union(_internal.ti().eh().dw()).Any(i =>
             {
                 //MountItemProxy
                 return i is avc mountableitem ? IsMountBroken(mountableitem) : false;

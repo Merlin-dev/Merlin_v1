@@ -7,7 +7,7 @@ namespace Albion_Direct
 {
     public partial class LandscapeManager
     {
-        public List<ag4> GetUnrestrictedPvpZones => _internal.f().e;
+        public List<ag4> GetUnrestrictedPvpZones => _internal.g().e;
 
         public bool IsInAnyUnrestrictedPvpZone(Vector3 location) => IsInAnyUnrestrictedPvpZone(GetUnrestrictedPvpZones, location);
 

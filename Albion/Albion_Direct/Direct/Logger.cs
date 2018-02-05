@@ -9,7 +9,7 @@
         public static void SetLogCallback(CoreLogDelegate del)
         {
             OnLog += del;
-            OnLog("Albion_Direct logger set.");
+            OnLog("namespace Albion_Direct logger set.");
         }
 
         public static void RemoveLogCallback(CoreLogDelegate del)

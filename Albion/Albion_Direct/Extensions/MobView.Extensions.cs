@@ -13,7 +13,7 @@ namespace Albion_Direct
 
         public static int GetTier(this MobView instance)
         {
-            return instance.Mob.ta().dh();
+            return instance.Mob.s9().dh();
         }
 
         public static ResourceType? GetResourceType(this MobView instance)
@@ -83,7 +83,7 @@ namespace Albion_Direct
 
         public static int GetRareState(this MobView instance)
         {
-            return instance.Mob.td();
+            return instance.Mob.tc();
         }
     }
 }

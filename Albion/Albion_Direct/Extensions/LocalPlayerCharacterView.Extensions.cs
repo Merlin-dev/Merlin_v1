@@ -40,7 +40,7 @@ namespace Albion_Direct
         public static bool IsInLineOfSight(this LocalPlayerCharacterView instance, FightingObjectView target)
         {
             var targetPos = target.FightingObject.h3();
-            var sightChecker = instance.PlayerCharacter.zb<ayw>();
+            var sightChecker = instance.PlayerCharacter.y9<ayw>();
 
             return !ObjectManager.GetInstance().ObjectManager_Internal.y().f(sightChecker.n().h3(), targetPos, out var outPoint, 2);
         }

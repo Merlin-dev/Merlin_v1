@@ -17,6 +17,8 @@ namespace Albion_Direct
         public static IEnumerable<SpellSlot> Ignore(this IEnumerable<SpellSlot> spells, string name)
             => spells.Where(spell => !spell.GetSpellDescriptor().TryGetName().Contains(name));
 
+        public static IEnumerable<SpellSlot> Is(this IEnumerable<SpellSlot> spells, string name) => spells.Where(spell => spell.GetSpellDescriptor().TryGetName().Contains(name));
+
         public static IEnumerable<SpellSlot> Ready(this IEnumerable<SpellSlot> spells, LocalPlayerCharacterView player)
             => spells.Where(spell => player.GetFightingObject().IsReadyToCast(spell.Slot));
     }

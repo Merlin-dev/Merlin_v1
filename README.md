@@ -1,6 +1,6 @@
 # Merlin - Albion Online BOT
 
-## Merlin is currently working with Albion AO 1.10.351.108460
+## Merlin is currently working with Albion AO 1.10.351.109781
 
 [Download and compile merlin guide](https://github.com/Merlin-dev/Merlin_v1/wiki/%5BGUIDE%5D-Download-and-compile-Merlin)
 
@@ -46,6 +46,8 @@ We have a [Discord Channel](https://discord.gg/Z4Qtjty) community to code tools 
 ### Contributors
  * [Lukáš Jech](https://github.com/klukule/)
  * [Fabrício Rissetto](https://github.com/fabriciorissetto/)
+ * [0xB0000000](https://github.com/0xB0000000/)
+ * [TheCat](https://github.com/AlbionBot/)
 
 Other contributors will be added later
  

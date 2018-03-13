@@ -130,7 +130,7 @@ namespace Merlin.Profiles.Gatherer
         {
             //Get inventory
             var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
-            var vaultStorage = GameGui.Instance.BankBuildingVaultGui.BankVault.InventoryStorage;
+            var vaultStorage = GameGui.Instance.MultiVaultGui.AdditionalViewVault.InventoryStorage;
 
             var ToDeposit = new List<UIItemSlot>();
 

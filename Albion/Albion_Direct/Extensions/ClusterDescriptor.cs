@@ -20,5 +20,8 @@ namespace Albion_Direct
         {
             return obj != null && obj._internal.ao().Equals(_internal.ao());
         }
+
+        public string GetName() => _internal.ar();
+
     }
 }

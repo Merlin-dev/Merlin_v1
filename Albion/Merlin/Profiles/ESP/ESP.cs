@@ -379,7 +379,7 @@ namespace Merlin.Profiles.ESP
                     var pos = Camera.main.WorldToScreenPoint(player.transform.position);
                     pos.y = Screen.height - (pos.y + 1f);
                         
-                    if (player.PlayerCharacter.jl() != localPlayer.PlayerCharacter.jl())
+                    if (player.PlayerCharacter.j3() != localPlayer.PlayerCharacter.j3())
                     {
                         Rendering.DrawLine(player.gameObject, player.transform.position, localPlayer.transform.position, Color.red);
                         Rendering.DrawBox(pos, new Vector2(100, 100), 2f, Color.red, true);

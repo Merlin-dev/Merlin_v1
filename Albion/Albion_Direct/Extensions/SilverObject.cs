@@ -2,6 +2,6 @@
 {
     public partial class SilverObject
     {
-        public bool CanLoot() => SilverObject_Internal.tb();
+        public bool CanLoot() => SilverObject_Internal.tk();
     }
 }

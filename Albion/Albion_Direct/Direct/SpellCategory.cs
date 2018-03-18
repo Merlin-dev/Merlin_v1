@@ -37,7 +37,9 @@ namespace Albion_Direct
         ForcedMovement = 19,
         HellBuff = 20,
         Buff_Damageshield = 21,
-        PortalBuff = 22
+        PortalBuff = 22,
+        Fishingbait_Buffs = 23,
+        Fishingbait_Charges = 24
     }
     
     public static class SpellCategoryExtensions

@@ -43,7 +43,7 @@ namespace Albion_Direct
         
         #region Methods
         
-        public bool IsReady(byte A_0) => _internal.f((byte)A_0);
+        public bool IsReady(byte A_0) => _internal.g((byte)A_0);
         
         #endregion
         

@@ -16,42 +16,42 @@ namespace Albion_Direct
 
         public bool HasAnyDamagedItem()
         {
-            return _internal.tp().et().d4().Union(_internal.tr().et().d4()).Any(i =>
+            return _internal.to().et().d4().Union(_internal.tq().et().d4()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is aw5 equipableItem ? IsTheItemDamaged(equipableItem) : false;
+                return i is axg equipableItem ? IsTheItemDamaged(equipableItem) : false;
             });
         }
 
         public bool HasAnyBrokenItem()
         {
-            return _internal.tp().et().d4().Union(_internal.tr().et().d4()).Any(i =>
+            return _internal.to().et().d4().Union(_internal.tq().et().d4()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is aw5 equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
+                return i is axg equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
             });
         }
 
-        public bool IsTheItemDamaged(aw5 item)
+        public bool IsTheItemDamaged(axg item)
         {
             return item.b8() <= 95;
         }
 
-        public bool IsTheItemQualityPoor(aw5 item)
+        public bool IsTheItemQualityPoor(axg item)
         {
             return item.b8() <= 10;
         }
 
-        public bool IsMountBroken(aw5 item)
+        public bool IsMountBroken(axg item)
         {
             return item.b8() <= 0;
         }
         public bool IsMountBroken()
         {
-            return _internal.tp().et().d4().Union(_internal.tr().et().d4()).Any(i =>
+            return _internal.to().et().d4().Union(_internal.tq().et().d4()).Any(i =>
             {
                 //MountItemProxy
-                return i is aw5 mountableitem ? IsMountBroken(mountableitem) : false;
+                return i is axg mountableitem ? IsMountBroken(mountableitem) : false;
             });
         }
     }

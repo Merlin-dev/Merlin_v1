@@ -1,8 +1,11 @@
 ﻿using Albion_Direct;
+using Albion_Direct.Pathing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
+using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -23,7 +26,19 @@ namespace Merlin.Profiles.Gatherer
         private FightingObjectView _combatTarget;
         private IEnumerable<SpellSlot> _combatSpells;
         private float _combatCooldown;
+        public static Vector3 fleePosition = new Vector3(0, 0, 0);
+        public static bool fleePositionUpToDate = false;
 
+        public void GenerateFleePosition()
+        {
+            Core.Log($"Generating Flee Position");
+            Vector3 back = _localPlayerCharacterView.transform.forward * 10f;
+            float randAngle = UnityEngine.Random.Range(-75f, 75f);
+            back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
+            fleePosition = back + _localPlayerCharacterView.transform.position;
+            fleePositionUpToDate = true;
+            return;
+        }
         public void Fight()
         {
             if (_localPlayerCharacterView.IsMounted)
@@ -32,24 +47,37 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
+            if (_combatTarget != null && !_combatTarget.IsDead() && (_combatTarget.IsCasting() || _combatTarget.bIsChanneling()))
+            {
+                Core.Log($"Running away from Spell");
+                Core.Log($"Target: " + _combatTarget.name + " Dead: " + _combatTarget.IsDead() + " Casting: " + _combatTarget.IsCasting() + " Channel: " + _combatTarget.bIsChanneling());
+                if (!fleePositionUpToDate)
+                    GenerateFleePosition();
+                Core.Log($"Flee Position Distance: " + Vector3.Distance(_localPlayerCharacterView.transform.position, fleePosition));
+                if (Vector3.Distance(_localPlayerCharacterView.transform.position, fleePosition) > 0.5f)
+                    _localPlayerCharacterView.RequestMove(fleePosition);
+                return;
+            }
+            else
+                fleePositionUpToDate = false;
+                
             if (_combatCooldown > 0)
             {
                 Core.Log("Combat Cooldown > 0.");
                 _combatCooldown -= UnityEngine.Time.deltaTime;
                 return;
-            }
-
-            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
-            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
-            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+            }            
 
             if (_localPlayerCharacterView.IsCasting() || _combatPlayer.GetIsCasting())
             {
                 Core.Log("You are casting. Wait for casting to finish");
                 return;
             }
-
+            
             if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
                 return;
 

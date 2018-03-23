@@ -307,6 +307,11 @@ namespace Merlin.Profiles.ESP
         {
             var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);
 
+            if (fleePositionUpToDate)
+            {
+                Rendering.DrawLine(localPlayer.gameObject, localPlayer.transform.position, fleePosition, Color.cyan);
+            }
+
             foreach (var view in resources)
             {
                 if (view == null || view.transform == null)

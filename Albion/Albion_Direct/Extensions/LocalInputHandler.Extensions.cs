@@ -15,14 +15,15 @@ namespace Albion_Direct
             var inputHandlerType = typeof(LocalInputHandler);
 
             _doActionStaticObjectInteraction = inputHandlerType.GetMethod("DoActionStaticObjectInteraction", BindingFlags.NonPublic | BindingFlags.Instance);
+
             _startCastInternalTarget = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
                                             Type.DefaultBinder, new Type[] { typeof(byte), typeof(FightingObjectView) }, null);
 
             _startCastInternalPosition = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
-                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(an7) }, null);
+                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(aoi) }, null);
         }
 
-        public static void Interact(this LocalInputHandler instance, WorldObjectView target, string collider = null) => _doActionStaticObjectInteraction.Invoke(instance, new object[] { target, collider ?? string.Empty });
+        public static void Interact(this LocalInputHandler instance, WorldObjectView target, string collider = null) => _doActionStaticObjectInteraction.Invoke(instance, new object[] { target, target.transform.position, collider ?? string.Empty });
 
         public static void SetSelectedObject(this LocalInputHandler instance, SimulationObjectView view)
         {

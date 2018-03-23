@@ -1,6 +1,6 @@
 # Merlin - Albion Online BOT
 
-## Merlin is currently working with Albion AO 1.10.357.113485
+## Merlin is currently working with Albion AO 1.11.357.114130
 
 [Download and compile merlin guide](https://github.com/Merlin-dev/Merlin_v1/wiki/%5BGUIDE%5D-Download-and-compile-Merlin)
 

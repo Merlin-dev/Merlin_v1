@@ -10,12 +10,12 @@
 
     public static class UiPvpTypesExtensions
     {
-        public static j3.UiPvpTypes ToInternal(this UiPvpTypes instance)
+        public static ka.UiPvpTypes ToInternal(this UiPvpTypes instance)
         {
-            return (j3.UiPvpTypes)instance;
+            return (ka.UiPvpTypes)instance;
         }
 
-        public static UiPvpTypes ToWrapped(this j3.UiPvpTypes instance)
+        public static UiPvpTypes ToWrapped(this ka.UiPvpTypes instance)
         {
             return (UiPvpTypes)instance;
         }

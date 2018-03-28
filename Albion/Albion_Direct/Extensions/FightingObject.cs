@@ -18,7 +18,7 @@
         public bool IsReadyToCast(CharacterSpellSlot slot)
         {
             //NOTE: GetEventHandler Generic param. 0 is internal type of CastSpellEventHandler
-            CastSpellEventHandler eventHandler = GetEventHandler<a04>();
+            CastSpellEventHandler eventHandler = GetEventHandler<a1e>();
 
             if (eventHandler && eventHandler.IsReady((byte)slot))
                 return true;

@@ -4,7 +4,7 @@
     {
         public static float Distance(Point2 a, Point2 b)
         {
-            return aoi.c(a, b).c();
+            return aos.c(a, b).c();
         }
 
         public float GetX()

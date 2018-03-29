@@ -18,6 +18,14 @@ namespace Merlin.Profiles.Gatherer
 
         private void Search()
         {
+            /*
+            // Get Current Spells
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+            foreach (var x in _combatSpells)
+            {
+                Core.Log(x.GetSpellDescriptor().TryGetName() + " " + x.GetSpellDescriptor().TryGetCategory() + " " + x.GetSpellDescriptor().TryGetTarget() + " " + x.Slot);
+            }*/
             if (HandleAttackers())
                 return;
 
@@ -162,7 +170,7 @@ namespace Merlin.Profiles.Gatherer
                     return false;
                 }
 
-                var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed;
+                var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed && Vector3.Distance(loot.transform.position, _localPlayerCharacterView.transform.position) < 50;
 
                 if (needsInteraction)
                 {

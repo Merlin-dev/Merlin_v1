@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Albion_Direct
 {
-    /* Internal type: a04 */
+    /* Internal type: a1e */
     public partial class CastSpellEventHandler
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private a04 _internal;
+        private a1e _internal;
         
         #region Properties
         
-        public a04 CastSpellEventHandler_Internal => _internal;
+        public a1e CastSpellEventHandler_Internal => _internal;
         
         #endregion
         
@@ -49,7 +49,7 @@ namespace Albion_Direct
         
         #region Constructor
         
-        public CastSpellEventHandler(a04 instance)
+        public CastSpellEventHandler(a1e instance)
         {
             _internal = instance;
         }
@@ -63,12 +63,12 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator a04(CastSpellEventHandler instance)
+        public static implicit operator a1e(CastSpellEventHandler instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator CastSpellEventHandler(a04 instance)
+        public static implicit operator CastSpellEventHandler(a1e instance)
         {
             return new CastSpellEventHandler(instance);
         }

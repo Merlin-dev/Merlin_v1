@@ -70,10 +70,6 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
             _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH").Ignore("SUMMONER_CD_REDUCTION");
-            foreach (var x in _combatSpells)
-            {
-                Core.Log(x.GetSpellDescriptor().TryGetName() + " " + x.GetSpellDescriptor().TryGetCategory() + " " + x.GetSpellDescriptor().TryGetTarget() + " " + x.Slot);
-            }
 
             if (_combatTarget != null && !_combatTarget.IsDead() && !_combatTarget.IsCasting())
             {
@@ -126,7 +122,7 @@ namespace Merlin.Profiles.Gatherer
                 SpellAvoidPathRequest = null;
             }
             */
-#endregion
+            #endregion
             
             if (_combatCooldown > 0)
             {

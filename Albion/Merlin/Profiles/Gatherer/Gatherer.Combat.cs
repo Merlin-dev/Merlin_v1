@@ -13,7 +13,7 @@ namespace Merlin.Profiles.Gatherer
     {
         private static List<Tuple<SpellTarget, SpellCategory, bool>> SpellPriorityList = new List<Tuple<SpellTarget, SpellCategory, bool>>
         {
-            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Buff, true),
+            //new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Buff, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Damage, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.CrowdControl, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.CrowdControl, true),
@@ -187,14 +187,22 @@ namespace Merlin.Profiles.Gatherer
                 if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT"))
                 {
                     _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand2, _combatTarget);
+                    return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE"))
                 {
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.OffHandOrMainHand3);
+                    return true;
+                }
+                else if (_combatTarget != null && _combatTarget.IsCasting() && _combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD"))
+                {
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
+                    return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM"))
                 {
                     _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand1, _combatTarget);
+                    return true;
                 }
 
                 var spells = _combatSpells.Target(target).Category(category);

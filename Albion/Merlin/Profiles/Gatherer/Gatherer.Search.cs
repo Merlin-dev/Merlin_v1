@@ -152,7 +152,7 @@ namespace Merlin.Profiles.Gatherer
 
         public bool Loot()
         {
-            var silver = _client.GetEntities<SilverObjectView>(x => Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
+            var silver = _client.GetEntities<SilverObjectView>(x => x.CanLoot(_localPlayerCharacterView) && Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
             if (silver != null)
             {
                 Core.Log($"[Silver {silver.name}]");

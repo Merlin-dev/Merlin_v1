@@ -48,24 +48,26 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
+            
             _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
             // GetAttackTarget() is broken.
             _combatTarget = _localPlayerCharacterView.GetAttackTarget();
+            
             if (_combatTarget == null)
             {
-                Core.Log($"CombatTarget is null, try Method 2");
+                //Core.Log($"CombatTarget is null, try Method 2");
                 _combatTarget = FindObjectsOfType<FightingObjectView>().Where(x => !x.IsDead() && x.Id == _localPlayerCharacterView.GetTargetId()).FirstOrDefault();
             }
             if (_combatTarget == null)
             {
-                Core.Log($"CombatTarget is null, try Method 3");
+                //Core.Log($"CombatTarget is null, try Method 3");
                 _combatTarget = FindObjectsOfType<FightingObjectView>().Where(x => !x.IsDead() && x.GetTargetId() == _localPlayerCharacterView.Id ).FirstOrDefault();
             }
             if (_combatTarget != null)
                 Core.Log($"Target: " + _combatTarget.name + " Dead: " + _combatTarget.IsDead() + " Casting: " + _combatTarget.IsCasting() + " Channel: " + _combatTarget.bIsChanneling() + "Time: " + _combatTarget.GetCastEndTime());
-            else
+            if (!_combatTarget || (_combatTarget && _combatTarget.IsDead()))
             {
-                Core.Log($"LoL Target is null, return.");
+                Core.Log("No longer under Attack");
                 _state.Fire(Trigger.EliminatedAttacker);
                 return;
             }

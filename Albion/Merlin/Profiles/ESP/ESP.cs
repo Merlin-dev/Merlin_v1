@@ -16,6 +16,20 @@ namespace Merlin.Profiles.ESP
             private static GUIStyle guistyle_0 = new GUIStyle(GUI.skin.label);
             private static Texture2D texture2D_0 = new Texture2D(1, 1);
 
+            public static void DrawSphere (GameObject target, float radius)
+            {
+                if (target.transform.Find("VisAggroRadius") == null)
+                {
+                    GameObject sphere = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), target.transform, false);
+                    sphere.name = "VisAggroRadius";
+                    Destroy(sphere.GetComponent<Collider>());
+                    Renderer renderer = sphere.GetComponent<Renderer>();
+                    renderer.material.shader = Shader.Find("Particles/Additive");
+                    renderer.material.SetColor("_TintColor", new Color(165, 0, 0, 10));
+                    sphere.transform.localScale = (new Vector3(radius, radius, radius));
+                }
+            }
+
             public static void DrawLine(GameObject target, Vector3 from, Vector3 to, Color color)
             {
                 try
@@ -216,11 +230,38 @@ namespace Merlin.Profiles.ESP
             this.gatherInformations = gatherInformations;
 
             StartCoroutine(GetViews());
+            StartCoroutine(AggroRadius());
         }
 
         private void OnDisable()
         {
             StopAllCoroutines();
+        }
+
+        private IEnumerator AggroRadius()
+        {
+            while (true)
+            {
+                try
+                {
+                    if (_client.GetState() == GameState.Playing)
+                    {
+                        foreach (var mob in FindObjectsOfType<MobView>())
+                        {
+                            float aggroRadius = 0;
+                            if (mob != null && mob.gameObject != null && mob.GetTier() >= 3)
+                            {
+                                Rendering.DrawSphere(mob.gameObject, aggroRadius != 0 ? aggroRadius : 8);
+                            }
+                        }
+                    }                    
+                }
+                catch (Exception e)
+                {
+                    Core.Log("ESP AggroRadius Error: " + e);
+                }
+                yield return new WaitForSeconds(5);
+            }
         }
 
         private IEnumerator GetViews()

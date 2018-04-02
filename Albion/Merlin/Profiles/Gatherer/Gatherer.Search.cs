@@ -31,6 +31,16 @@ namespace Merlin.Profiles.Gatherer
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
             var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == TownClusterNames[_selectedTownClusterIndex];
+            var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
+
+            Core.Log("HP: " + player.GetHealth().GetValue() + " " + player.GetHealth().GetMaximum() / 100 + " % " + "min. " + _minimumHealthForGathering * 100);
+            if (player.GetHealth().GetValue() < (player.GetHealth().GetMaximum() * _minimumHealthForGathering))
+            {
+                _state.Fire(Trigger.EncounteredAttacker);
+                return;
+            }
+                
+                
 
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {

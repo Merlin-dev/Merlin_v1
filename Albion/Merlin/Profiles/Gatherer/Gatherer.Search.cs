@@ -224,7 +224,7 @@ namespace Merlin.Profiles.Gatherer
         public bool IdentifiedTarget(out SimulationObjectView target)
         {
             var views = new List<SimulationObjectView>();
-
+            
             if (_allowMobHunting)
             {
                 var hostiles = _client.GetEntities<MobView>(ValidateMob);

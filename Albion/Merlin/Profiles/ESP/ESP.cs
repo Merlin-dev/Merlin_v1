@@ -30,6 +30,22 @@ namespace Merlin.Profiles.ESP
                 }
             }
 
+            public static void DrawProjectorCircle(GameObject target, float radius)
+            {
+                // This needs Testing we may have to add it as Child gameobject to be able to Rotate the Projector incase its facing the wrong way.
+                Projector projector = target.GetComponent<Projector>();
+                if (projector == null)
+                {
+                    projector = target.AddComponent<Projector>();
+                    projector.orthographic = true;
+                    projector.orthographicSize = radius;
+                    //Need a Proper Circle Material, Import embeded or try use std. Blob-Shadow Unity ?
+                    //Might aswell find something useful in Albion.
+                    //projector.material = Resources.Load("Resources/")
+
+                }
+            }
+
             public static void DrawLine(GameObject target, Vector3 from, Vector3 to, Color color)
             {
                 try

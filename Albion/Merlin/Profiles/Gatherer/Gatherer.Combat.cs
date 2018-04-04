@@ -71,12 +71,13 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.EliminatedAttacker);
                 return;
             }
-            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH").Ignore("SUMMONER_CD_REDUCTION");
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH").Ignore("SPRINT_CD_REDUCTION");
 
             if (_combatTarget != null && !_combatTarget.IsDead() && !_combatTarget.IsCasting())
             {
                 _combatSpells = _combatSpells.Ignore("INTERRUPT");
                 _combatSpells = _combatSpells.Ignore("SHRIEKMACE");
+                _combatSpells = _combatSpells.Ignore("FLAMESHIELD");
             }
             #region Flee
             /*
@@ -186,22 +187,32 @@ namespace Merlin.Profiles.Gatherer
                     Core.Log("You are casting. Wait for casting to finish");
                     return false;
                 }
-                if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT"))
+                if (_combatSpells.Count() == 1 && _combatSpells.FirstOrDefault(x => x.GetSpellDescriptor().TryGetName() == "SPRINT_CD_REDUCTION")) // Everything on CD but CD Reduce Boots.
+                {
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
+                    return true;
+                }
+                else if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && _combatTarget.IsCasting()) // We have to Interrupt but CD
+                {
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
+                    return true;
+                }
+                if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT")) // Interrupt Casting Mob
                 {
                     _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand2, _combatTarget);
                     return true;
                 }
-                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE"))
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE")) // Silence Casting Mob
                 {
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.OffHandOrMainHand3);
                     return true;
                 }
-                else if (_combatTarget != null && _combatTarget.IsCasting() && _combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD"))
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD")) // Protect from Cast, No Interrupt ready.
                 {
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
                     return true;
                 }
-                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM"))
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM")) // Baboom
                 {
                     _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand1, _combatTarget);
                     return true;

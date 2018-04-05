@@ -71,7 +71,7 @@ namespace Merlin.Profiles.Gatherer
                 _state.Fire(Trigger.EliminatedAttacker);
                 return;
             }
-            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH").Ignore("SPRINT_CD_REDUCTION");
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
             if (_combatTarget != null && !_combatTarget.IsDead() && !_combatTarget.IsCasting())
             {
@@ -181,44 +181,45 @@ namespace Merlin.Profiles.Gatherer
         {
             try
             {
-
+                
                 if (checkCastState && _localPlayerCharacterView.IsCasting())
                 {
                     Core.Log("You are casting. Wait for casting to finish");
                     return false;
                 }
-                if (_combatSpells.Count() == 1 && _combatSpells.FirstOrDefault(x => x.GetSpellDescriptor().TryGetName() == "SPRINT_CD_REDUCTION")) // Everything on CD but CD Reduce Boots.
+                if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && !_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE") && _combatTarget.IsCasting()) // We have to Interrupt but CD
                 {
+                    Core.Log("Using CD Reduce Boots.");
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
                     return true;
                 }
-                else if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && !_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE") && _combatTarget.IsCasting()) // We have to Interrupt but CD
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT")) // Interrupt Casting Mob
                 {
-                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
-                    return true;
-                }
-                if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT")) // Interrupt Casting Mob
-                {
+                    Core.Log("Using Interrupt");
                     _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand2, _combatTarget);
                     return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE")) // Silence Casting Mob
                 {
+                    Core.Log("Using Silence");
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.OffHandOrMainHand3);
                     return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD")) // Protect from Cast, No Interrupt ready.
                 {
+                    Core.Log("Using Flameshield");
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
                     return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRINKINGSMASH")) // Baboom
                 {
-                    _localPlayerCharacterView.CastOn(CharacterSpellSlot.OffHandOrMainHand3, _combatTarget);
+                    Core.Log("Using Shrinking Smash");
+                    _localPlayerCharacterView.CastAt(CharacterSpellSlot.OffHandOrMainHand3, _combatTarget.GetPosition());
                     return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM")) // Baboom
                 {
+                    Core.Log("Using Slam");
                     _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand1, _combatTarget);
                     return true;
                 }
@@ -227,7 +228,7 @@ namespace Merlin.Profiles.Gatherer
                 var spellToCast = spells.Any() ? spells.First() : null;
                 if (spellToCast == null)
                 {
-                    Core.Log("Spell to Cast == Null. Exit spell cast");
+                    //Core.Log("Spell to Cast == Null. Exit spell cast");
                     return false;
                 }
 

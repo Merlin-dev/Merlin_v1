@@ -130,8 +130,7 @@ namespace Merlin.Profiles.Gatherer
         {
             //Get inventory
             var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
-            var vaultStorage = GameGui.Instance.MultiVaultGui.AdditionalViewVault.InventoryStorage;
-
+            var vaultStorage = GameGui.Instance.MultiVaultGui.MainViewVault.InventoryStorage;
             var ToDeposit = new List<UIItemSlot>();
 
             //Get all items we need that are visible. Need to find a way to get all items in player inventory.
@@ -150,6 +149,7 @@ namespace Merlin.Profiles.Gatherer
                 }
             
             _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
+            
             foreach (var item in ToDeposit)
             {
                 GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);

@@ -13,7 +13,7 @@ namespace Merlin.Profiles.Gatherer
     {
         private static List<Tuple<SpellTarget, SpellCategory, bool>> SpellPriorityList = new List<Tuple<SpellTarget, SpellCategory, bool>>
         {
-            //new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Buff, true),
+            new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Buff, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.Damage, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Ground, SpellCategory.CrowdControl, true),
             new Tuple<SpellTarget, SpellCategory, bool>(SpellTarget.Self, SpellCategory.CrowdControl, true),
@@ -145,7 +145,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
-                Core.Log("You are under attack. Attack the attacker");
+                //Core.Log("You are under attack. Attack the attacker");
                 _localPlayerCharacterView.SetSelectedObject(attacker);
                 _localPlayerCharacterView.AttackSelectedObject();
                 return;
@@ -192,7 +192,7 @@ namespace Merlin.Profiles.Gatherer
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
                     return true;
                 }
-                else if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && _combatTarget.IsCasting()) // We have to Interrupt but CD
+                else if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && !_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE") && _combatTarget.IsCasting()) // We have to Interrupt but CD
                 {
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
                     return true;
@@ -210,6 +210,11 @@ namespace Merlin.Profiles.Gatherer
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD")) // Protect from Cast, No Interrupt ready.
                 {
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRINKINGSMASH")) // Baboom
+                {
+                    _localPlayerCharacterView.CastOn(CharacterSpellSlot.OffHandOrMainHand3, _combatTarget);
                     return true;
                 }
                 else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM")) // Baboom

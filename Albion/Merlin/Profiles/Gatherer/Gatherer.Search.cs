@@ -170,15 +170,9 @@ namespace Merlin.Profiles.Gatherer
                 return true;
             }
 
-            var loot = _client.GetEntities<LootObjectView>(x => x.CanLoot() && Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
+            var loot = _client.GetEntities<LootObjectView>(x => Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
             if (loot != null)
             {
-                if (ContainKeepers(loot.transform.position))
-                {
-                    Core.Log($"[Loot in range of Keepers.Add to Blacklist]");
-                    Blacklist(loot, TimeSpan.FromMinutes(2));
-                    return false;
-                }
 
                 var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed && Vector3.Distance(loot.transform.position, _localPlayerCharacterView.transform.position) < 50;
 

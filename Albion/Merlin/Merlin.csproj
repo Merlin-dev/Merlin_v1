@@ -72,6 +72,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AOKore\API\Account.cs" />
+    <Compile Include="AOKore\API\Bank.cs" />
+    <Compile Include="AOKore\API\Npc.cs" />
+    <Compile Include="AOKore\API\Vector3.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Profile.cs" />

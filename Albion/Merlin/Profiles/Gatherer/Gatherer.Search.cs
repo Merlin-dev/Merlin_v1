@@ -173,7 +173,7 @@ namespace Merlin.Profiles.Gatherer
             var loot = _client.GetEntities<LootObjectView>(x => Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
             if (loot != null)
             {
-
+                
                 var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed && Vector3.Distance(loot.transform.position, _localPlayerCharacterView.transform.position) < 50;
 
                 if (needsInteraction)

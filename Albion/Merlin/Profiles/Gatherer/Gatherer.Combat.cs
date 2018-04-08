@@ -29,7 +29,7 @@ namespace Merlin.Profiles.Gatherer
         public static Vector3 fleePosition = new Vector3(0, 0, 0);
         public static bool fleePositionUpToDate = false;
         float flee;
-
+        
         public void GenerateFleePosition()
         {
             Core.Log($"Generating Flee Position");

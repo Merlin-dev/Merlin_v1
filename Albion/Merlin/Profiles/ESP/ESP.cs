@@ -264,10 +264,10 @@ namespace Merlin.Profiles.ESP
                     {
                         foreach (var mob in FindObjectsOfType<MobView>())
                         {
-                            float aggroRadius = 0;
+                            float aggroRadius = 0; // Need variable to get actual Aggro Range.
                             if (mob != null && mob.gameObject != null && mob.GetTier() >= 3)
                             {
-                                Rendering.DrawSphere(mob.gameObject, aggroRadius != 0 ? aggroRadius : 8);
+                                Rendering.DrawSphere(mob.gameObject, aggroRadius != 0 ? aggroRadius : 10);
                             }
                         }
                     }                    
@@ -357,9 +357,51 @@ namespace Merlin.Profiles.ESP
 
                 if (players != null)
                     DrawPlayerESPs();
+                DrawFishingESP();
             }
         }
+        private void DrawFishingESP()
+        {
+            if (localPlayer != null)
+                Rendering.DrawString(new Vector2(50, 140), "LocalPlayer", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 140), "LocalPlayer", Color.red);
+            if (Fishing.fishingManager != null)
+                Rendering.DrawString(new Vector2(50, 150), "FishingManager", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 150), "FishingManager", Color.red);
+            Rendering.DrawString(new Vector2(50, 160), "Progress: " + Fishing.progress.ToString("F2"), Color.red);
+            Rendering.DrawString(new Vector2(50, 170), "Tention: " + Fishing.linetention.ToString("F2"), Color.red);
+            Rendering.DrawString(new Vector2(50, 180), "Reeling: " + Fishing.Reeling.ToString(), Color.red);
 
+            if (Fishing.IsFishing)
+                Rendering.DrawString(new Vector2(50, 190), "isFishing", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 190), "isFishing", Color.red);
+
+            if (Fishing.IsMinigameRunning)
+                Rendering.DrawString(new Vector2(50, 200), "MiniGameRunning", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 200), "MiniGameRunning", Color.red);
+
+            if (Fishing.IsValid)
+                Rendering.DrawString(new Vector2(50, 210), "valid", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 210), "valid", Color.red);
+
+            if (Fishing.HaveBite)
+                Rendering.DrawString(new Vector2(50, 220), "Bite", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 220), "Bite", Color.red);
+
+
+            foreach (var x in _client.GetEntities<FishingZoneObjectView>(x => x != null))
+            {
+                Rendering.DrawLine(x.gameObject, x.transform.position, localPlayer.transform.position, Color.yellow);
+            }
+
+
+        }
         private void DrawResourceESPs()
         {
             var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);

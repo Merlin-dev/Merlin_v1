@@ -304,8 +304,8 @@ namespace Merlin.Profiles.ESP
                     Core.Log("ESP Finding players Error: " + e);
                 }
 
-                yield return new WaitForSeconds(1f);
-
+                yield return new WaitForSeconds(0.8f);
+                /*
                 try
                 {
                     var harvestables = FindObjectsOfType<HarvestableObjectView>().Where(view =>
@@ -341,8 +341,9 @@ namespace Merlin.Profiles.ESP
                 {
                     Core.Log("ESP Finding Harvestable Views Error: " + e);
                 }
+                */
 
-                yield return new WaitForSeconds(1f);
+                //yield return new WaitForSeconds(1f);
             }
         }
 
@@ -405,11 +406,11 @@ namespace Merlin.Profiles.ESP
         private void DrawResourceESPs()
         {
             var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);
-
+            /*
             if (fleePositionUpToDate)
             {
                 Rendering.DrawLine(localPlayer.gameObject, localPlayer.transform.position, fleePosition, Color.cyan);
-            }
+            }*/
 
             foreach (var view in resources)
             {

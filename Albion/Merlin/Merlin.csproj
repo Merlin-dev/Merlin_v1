@@ -63,6 +63,9 @@
     <Reference Include="System.Xml">
       <HintPath>..\Dependencies\System.Xml.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\Dependencies\UnityEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\UnityEngine.dll</HintPath>
@@ -75,6 +78,7 @@
     <Compile Include="Console.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Profile.cs" />
+    <Compile Include="Profiles\CombatRoutine.cs" />
     <Compile Include="Profiles\ESP\ESP.cs" />
     <Compile Include="Profiles\Fishing.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Helper.cs" />

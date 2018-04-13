@@ -2,6 +2,7 @@
 using Albion_Direct.Pathing;
 using Albion_Direct.Pathing.Worldmap;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -125,36 +126,68 @@ namespace Merlin.Profiles.Gatherer
 
             return bankVector;
         }
+        private bool transferRunning = false;
+        private IEnumerator TransferItemsToBank()
+        {
+            transferRunning = true;
+            //Get inventory
+            var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
+            // Get Bank
+            var vaults = FindObjectsOfType<VaultView>().Where(x => x.isActiveAndEnabled && x.InventoryStorage != null && x.InventoryStorage.ItemContainerProxy != null);
+            UIItemStorage vaultStorage = vaults.FirstOrDefault().InventoryStorage;
+            if (vaultStorage == null)
+            {
+                Core.Log("Bank not Found, open Gui first");
+                yield break;
+            }
 
+            var ToDeposit = GetItemsForBanking(playerStorage);
+
+            foreach (var item in ToDeposit)
+            {
+                GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.4f,0.8f));
+            }
+            transferRunning = false;
+        }
         private bool moveObjectsToBank()
         {
             //Get inventory
             var playerStorage = GameGui.Instance.CharacterInfoGui.InventoryItemStorage;
-            var vaultStorage = GameGui.Instance.MultiVaultGui.AdditionalViewVault.InventoryStorage;
+            var ToDeposit = GetItemsForBanking(playerStorage);
+            
+            _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
 
-            var ToDeposit = new List<UIItemSlot>();
-
-            //Get all items we need that are visible. Need to find a way to get all items in player inventory.
+            if (_isDepositing && !transferRunning)
+                StartCoroutine(TransferItemsToBank());
+            
+            return _isDepositing;
+        }
+        private List<UIItemSlot> GetItemsForBanking(UIItemStorage storage)
+        {
+            List<UIItemSlot> toReturn = new List<UIItemSlot>();
             var resourceTypes = Enum.GetNames(typeof(ResourceType)).Select(r => r.ToLowerInvariant()).ToArray();
-            foreach (var slot in playerStorage.ItemsSlotsRegistered)
+            foreach (var slot in storage.ItemsSlotsRegistered)
+            {
                 if (slot != null && slot.ObservedItemView != null)
                 {
                     var slotItemName = slot.ObservedItemView.name.ToLowerInvariant();
+                    Core.Log(slotItemName);
                     //All items not including journals
                     if (!slotItemName.Contains("journalitem"))
+                    {
                         if (resourceTypes.Any(r => slotItemName.Contains(r)))
-                            ToDeposit.Add(slot);
+                            toReturn.Add(slot);
+                        if (!slotItemName.Contains("tool"))
+                            toReturn.Add(slot);
+                    }
+                        
                     //adding full journals to deposit list
                     if (slotItemName.Contains("journalitem") && slotItemName.Contains("full"))
-                        ToDeposit.Add(slot);
+                        toReturn.Add(slot);
                 }
-            
-            _isDepositing = ToDeposit != null && ToDeposit.Count > 0;
-            foreach (var item in ToDeposit)
-            {
-                GameGui.Instance.MoveItemToItemContainer(item, vaultStorage.ItemContainerProxy);
             }
-            return _isDepositing;
+            return toReturn;
         }
 
         private bool moveToTownBank(ClusterDescriptor currentCluster)

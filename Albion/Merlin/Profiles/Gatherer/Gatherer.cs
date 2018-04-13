@@ -133,12 +133,15 @@ namespace Merlin.Profiles.Gatherer
 
             try
             {
-                foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead") || mob.MobType().ToLowerInvariant().Contains("bonecrusher"))))
+                if (_skipKeeperPacks)
                 {
-                    var keeperPosition = keeper.GetInternalPosition();
-                    if (!_keeperSpots.Contains(keeperPosition))
-                        _keeperSpots.Add(keeperPosition);
-                }
+                    foreach (var keeper in _client.GetEntities<MobView>(mob => !mob.IsDead() && (mob.MobType().ToLowerInvariant().Contains("keeper") || mob.MobType().ToLowerInvariant().Contains("undead") || mob.MobType().ToLowerInvariant().Contains("bonecrusher"))))
+                    {
+                        var keeperPosition = keeper.GetInternalPosition();
+                        if (!_keeperSpots.Contains(keeperPosition))
+                            _keeperSpots.Add(keeperPosition);
+                    }
+                }                
 
                 _mounts = _client.GetEntities<MountObjectView>(mount => mount.IsInUseRange(_localPlayerCharacterView.LocalPlayerCharacter));
 
@@ -156,9 +159,10 @@ namespace Merlin.Profiles.Gatherer
                     case State.Search: Search(); break;
                     case State.Harvest: Harvest(); break;
                     case State.Combat: Fight(); break;
+                    case State.Travel: Travel(); break;                                                         
                     case State.Bank: Bank(); break;
                     case State.Repair: Repair(); break;
-                    case State.Travel: Travel(); break;
+                    
                     case State.SiegeCampTreasure: SiegeCampTreasure(); break;
                 }
             }

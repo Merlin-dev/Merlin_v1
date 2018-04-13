@@ -1,8 +1,11 @@
 ﻿using Albion_Direct;
+using Albion_Direct.Pathing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
+using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -23,7 +26,20 @@ namespace Merlin.Profiles.Gatherer
         private FightingObjectView _combatTarget;
         private IEnumerable<SpellSlot> _combatSpells;
         private float _combatCooldown;
-
+        public static Vector3 fleePosition = new Vector3(0, 0, 0);
+        public static bool fleePositionUpToDate = false;
+        float flee;
+        
+        public void GenerateFleePosition()
+        {
+            Core.Log($"Generating Flee Position");
+            Vector3 back = _localPlayerCharacterView.transform.forward * 10;
+            float randAngle = UnityEngine.Random.Range(-75f, 75f);
+            back = Quaternion.AngleAxis(randAngle, Vector3.up) * back;
+            fleePosition = back + _localPlayerCharacterView.transform.position;
+            fleePositionUpToDate = true;
+        }
+        PositionPathingRequest SpellAvoidPathRequest;
         public void Fight()
         {
             if (_localPlayerCharacterView.IsMounted)
@@ -32,30 +48,104 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
+            
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            // GetAttackTarget() is broken.
+            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
+            
+            if (_combatTarget == null)
+            {
+                //Core.Log($"CombatTarget is null, try Method 2");
+                _combatTarget = FindObjectsOfType<FightingObjectView>().Where(x => !x.IsDead() && x.Id == _localPlayerCharacterView.GetTargetId()).FirstOrDefault();
+            }
+            if (_combatTarget == null)
+            {
+                //Core.Log($"CombatTarget is null, try Method 3");
+                _combatTarget = FindObjectsOfType<FightingObjectView>().Where(x => !x.IsDead() && x.GetTargetId() == _localPlayerCharacterView.Id ).FirstOrDefault();
+            }
+            if (_combatTarget != null)
+                Core.Log($"Target: " + _combatTarget.name + " Dead: " + _combatTarget.IsDead() + " Casting: " + _combatTarget.IsCasting() + " Channel: " + _combatTarget.bIsChanneling() + "Time: " + _combatTarget.GetCastEndTime());
+            if (!_combatTarget || (_combatTarget && _combatTarget.IsDead()))
+            {
+                Core.Log("No longer under Attack");
+                _state.Fire(Trigger.EliminatedAttacker);
+                return;
+            }
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
+            if (_combatTarget != null && !_combatTarget.IsDead() && !_combatTarget.IsCasting())
+            {
+                _combatSpells = _combatSpells.Ignore("INTERRUPT");
+                _combatSpells = _combatSpells.Ignore("SHRIEKMACE");
+                _combatSpells = _combatSpells.Ignore("FLAMESHIELD");
+            }
+            #region Flee
+            /*
+            if (_combatTarget != null && !_combatTarget.IsDead() && _combatTarget.IsCasting())
+            {
+                Core.Log($"Running away from Spell");
+                flee = Mathf.MoveTowards(flee, 0, Time.deltaTime);
+                if (!fleePositionUpToDate)
+                    GenerateFleePosition();
+                Core.Log($"Flee Position Distance: " + Vector3.Distance(_localPlayerCharacterView.transform.position, fleePosition));
+                if (Vector3.Distance(_localPlayerCharacterView.transform.position, fleePosition) > 0.5f)
+                {
+                    // Turns out we need an Cancel for all Actions here first.
+                    //_combatPlayer.StopAnyActionObject();
+                    _localPlayerCharacterView.RequestMove(fleePosition);
+                    //_client.GetLocalPlayerCharacterView().RequestMove(fleePosition);
+
+                    /*
+                    Core.Log("Running...");
+                    // Using Pathfiner to find Path and Travel there might be better, Code below causes Freez, need to be fixed.
+
+                    if (HandlePathing(ref SpellAvoidPathRequest))
+                        return;                 
+                    Core.Log("Trying to find Path...");
+                    if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), fleePosition, IsBlockedGathering, out List<Vector3> pathing))
+                    {
+                        Core.Log("Path found, begin travel to resource");
+                        Core.lineRenderer.positionCount = pathing.Count;
+                        Core.lineRenderer.SetPositions(pathing.ToArray());
+                        SpellAvoidPathRequest = new PositionPathingRequest(_localPlayerCharacterView, fleePosition, pathing);
+                    }
+                    else
+                    {
+                        Core.Log("Path not found");
+                        fleePositionUpToDate = false;
+                    }
+                }                    
+                return;
+                
+            }
+            else
+            {
+                Core.Log("not Running");
+                fleePositionUpToDate = false;
+                SpellAvoidPathRequest = null;
+            }
+            */
+            #endregion
+            
             if (_combatCooldown > 0)
             {
                 Core.Log("Combat Cooldown > 0.");
-                _combatCooldown -= UnityEngine.Time.deltaTime;
+                _combatCooldown -= Time.deltaTime;
                 return;
-            }
-
-            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
-            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
-            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+            }            
 
             if (_localPlayerCharacterView.IsCasting() || _combatPlayer.GetIsCasting())
             {
                 Core.Log("You are casting. Wait for casting to finish");
                 return;
             }
-
+            
             if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
                 return;
 
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
             {
-                Core.Log("You are under attack. Attack the attacker");
+                //Core.Log("You are under attack. Attack the attacker");
                 _localPlayerCharacterView.SetSelectedObject(attacker);
                 _localPlayerCharacterView.AttackSelectedObject();
                 return;
@@ -91,18 +181,54 @@ namespace Merlin.Profiles.Gatherer
         {
             try
             {
-
+                
                 if (checkCastState && _localPlayerCharacterView.IsCasting())
                 {
                     Core.Log("You are casting. Wait for casting to finish");
                     return false;
+                }
+                if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && !_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE") && _combatTarget.IsCasting()) // We have to Interrupt but CD
+                {
+                    Core.Log("Using CD Reduce Boots.");
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT")) // Interrupt Casting Mob
+                {
+                    Core.Log("Using Interrupt");
+                    _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand2, _combatTarget);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE")) // Silence Casting Mob
+                {
+                    Core.Log("Using Silence");
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.OffHandOrMainHand3);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD")) // Protect from Cast, No Interrupt ready.
+                {
+                    Core.Log("Using Flameshield");
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRINKINGSMASH")) // Baboom
+                {
+                    Core.Log("Using Shrinking Smash");
+                    _localPlayerCharacterView.CastAt(CharacterSpellSlot.OffHandOrMainHand3, _combatTarget.GetPosition());
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM")) // Baboom
+                {
+                    Core.Log("Using Slam");
+                    _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand1, _combatTarget);
+                    return true;
                 }
 
                 var spells = _combatSpells.Target(target).Category(category);
                 var spellToCast = spells.Any() ? spells.First() : null;
                 if (spellToCast == null)
                 {
-                    Core.Log("Spell to Cast == Null. Exit spell cast");
+                    //Core.Log("Spell to Cast == Null. Exit spell cast");
                     return false;
                 }
 

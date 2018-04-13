@@ -92,8 +92,7 @@ namespace Merlin.Profiles.Gatherer
         {
             if (!_localPlayerCharacterView.IsMounted)
             {
-
-                LocalPlayerCharacter localPlayer = _localPlayerCharacterView.LocalPlayerCharacter;
+                LocalPlayerCharacter localPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
                 if (localPlayer.GetIsMounting())
                     return false;
 

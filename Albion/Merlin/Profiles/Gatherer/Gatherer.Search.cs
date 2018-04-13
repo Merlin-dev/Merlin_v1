@@ -18,11 +18,29 @@ namespace Merlin.Profiles.Gatherer
 
         private void Search()
         {
+            /*
+            // Get Current Spells
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
+            foreach (var x in _combatSpells)
+            {
+                Core.Log(x.GetSpellDescriptor().TryGetName() + " " + x.GetSpellDescriptor().TryGetCategory() + " " + x.GetSpellDescriptor().TryGetTarget() + " " + x.Slot);
+            }*/
             if (HandleAttackers())
                 return;
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
             var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == TownClusterNames[_selectedTownClusterIndex];
+            var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
+
+            Core.Log("HP: " + player.GetHealth().GetValue() + " " + player.GetHealth().GetMaximum() / 100 + " % " + "min. " + _minimumHealthForGathering * 100);
+            if (player.GetHealth().GetValue() < (player.GetHealth().GetMaximum() * _minimumHealthForGathering))
+            {
+                _state.Fire(Trigger.EncounteredAttacker);
+                return;
+            }
+                
+                
 
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
@@ -144,25 +162,19 @@ namespace Merlin.Profiles.Gatherer
 
         public bool Loot()
         {
-            //var silver = _client.GetEntities<SilverObjectView>(s => !s.IsLootProtected()).FirstOrDefault();
-            //if (silver != null)
-            //{
-            //    Core.Log($"[Silver {silver.name}]");
-            //    _localPlayerCharacterView.Interact(silver);
-            //    return true;
-            //}
+            var silver = _client.GetEntities<SilverObjectView>(x => x.CanLoot(_localPlayerCharacterView) && Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
+            if (silver != null)
+            {
+                Core.Log($"[Silver {silver.name}]");
+                _localPlayerCharacterView.Interact(silver);
+                return true;
+            }
 
-            var loot = _client.GetEntities<LootObjectView>(l => l.CanLoot()).FirstOrDefault();
+            var loot = _client.GetEntities<LootObjectView>(x => Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
             if (loot != null)
             {
-                if (ContainKeepers(loot.transform.position))
-                {
-                    Core.Log($"[Loot in range of Keepers.Add to Blacklist]");
-                    Blacklist(loot, TimeSpan.FromMinutes(2));
-                    return false;
-                }
-
-                var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed;
+                
+                var needsInteraction = !GameGui.Instance.LootGui.gameObject.activeSelf && loot.CanBeUsed && Vector3.Distance(loot.transform.position, _localPlayerCharacterView.transform.position) < 50;
 
                 if (needsInteraction)
                 {
@@ -206,7 +218,7 @@ namespace Merlin.Profiles.Gatherer
         public bool IdentifiedTarget(out SimulationObjectView target)
         {
             var views = new List<SimulationObjectView>();
-
+            
             if (_allowMobHunting)
             {
                 var hostiles = _client.GetEntities<MobView>(ValidateMob);

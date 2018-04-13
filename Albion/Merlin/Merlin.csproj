@@ -63,9 +63,6 @@
     <Reference Include="System.Xml">
       <HintPath>..\Dependencies\System.Xml.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>..\Dependencies\UnityEditor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\UnityEngine.dll</HintPath>

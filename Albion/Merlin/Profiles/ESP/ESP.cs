@@ -16,6 +16,36 @@ namespace Merlin.Profiles.ESP
             private static GUIStyle guistyle_0 = new GUIStyle(GUI.skin.label);
             private static Texture2D texture2D_0 = new Texture2D(1, 1);
 
+            public static void DrawSphere (GameObject target, float radius)
+            {
+                if (target.transform.Find("VisAggroRadius") == null)
+                {
+                    GameObject sphere = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), target.transform, false);
+                    sphere.name = "VisAggroRadius";
+                    Destroy(sphere.GetComponent<Collider>());
+                    Renderer renderer = sphere.GetComponent<Renderer>();
+                    renderer.material.shader = Shader.Find("Particles/Additive");
+                    renderer.material.SetColor("_TintColor", new Color(165, 0, 0, 10));
+                    sphere.transform.localScale = (new Vector3(radius, radius, radius));
+                }
+            }
+
+            public static void DrawProjectorCircle(GameObject target, float radius)
+            {
+                // This needs Testing we may have to add it as Child gameobject to be able to Rotate the Projector incase its facing the wrong way.
+                Projector projector = target.GetComponent<Projector>();
+                if (projector == null)
+                {
+                    projector = target.AddComponent<Projector>();
+                    projector.orthographic = true;
+                    projector.orthographicSize = radius;
+                    //Need a Proper Circle Material, Import embeded or try use std. Blob-Shadow Unity ?
+                    //Might aswell find something useful in Albion.
+                    //projector.material = Resources.Load("Resources/")
+
+                }
+            }
+
             public static void DrawLine(GameObject target, Vector3 from, Vector3 to, Color color)
             {
                 try
@@ -216,11 +246,38 @@ namespace Merlin.Profiles.ESP
             this.gatherInformations = gatherInformations;
 
             StartCoroutine(GetViews());
+            StartCoroutine(AggroRadius());
         }
 
         private void OnDisable()
         {
             StopAllCoroutines();
+        }
+
+        private IEnumerator AggroRadius()
+        {
+            while (true)
+            {
+                try
+                {
+                    if (_client.GetState() == GameState.Playing)
+                    {
+                        foreach (var mob in FindObjectsOfType<MobView>())
+                        {
+                            float aggroRadius = 0; // Need variable to get actual Aggro Range.
+                            if (mob != null && mob.gameObject != null && mob.GetTier() >= 3)
+                            {
+                                Rendering.DrawSphere(mob.gameObject, aggroRadius != 0 ? aggroRadius : 10);
+                            }
+                        }
+                    }                    
+                }
+                catch (Exception e)
+                {
+                    Core.Log("ESP AggroRadius Error: " + e);
+                }
+                yield return new WaitForSeconds(5);
+            }
         }
 
         private IEnumerator GetViews()
@@ -247,8 +304,8 @@ namespace Merlin.Profiles.ESP
                     Core.Log("ESP Finding players Error: " + e);
                 }
 
-                yield return new WaitForSeconds(1f);
-
+                yield return new WaitForSeconds(0.8f);
+                /*
                 try
                 {
                     var harvestables = FindObjectsOfType<HarvestableObjectView>().Where(view =>
@@ -284,8 +341,9 @@ namespace Merlin.Profiles.ESP
                 {
                     Core.Log("ESP Finding Harvestable Views Error: " + e);
                 }
+                */
 
-                yield return new WaitForSeconds(1f);
+                //yield return new WaitForSeconds(1f);
             }
         }
 
@@ -300,12 +358,59 @@ namespace Merlin.Profiles.ESP
 
                 if (players != null)
                     DrawPlayerESPs();
+                DrawFishingESP();
             }
         }
+        private void DrawFishingESP()
+        {
+            if (localPlayer != null)
+                Rendering.DrawString(new Vector2(50, 140), "LocalPlayer", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 140), "LocalPlayer", Color.red);
+            if (Fishing.fishingManager != null)
+                Rendering.DrawString(new Vector2(50, 150), "FishingManager", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 150), "FishingManager", Color.red);
+            Rendering.DrawString(new Vector2(50, 160), "Progress: " + Fishing.progress.ToString("F2"), Color.red);
+            Rendering.DrawString(new Vector2(50, 170), "Tention: " + Fishing.linetention.ToString("F2"), Color.red);
+            Rendering.DrawString(new Vector2(50, 180), "Reeling: " + Fishing.Reeling.ToString(), Color.red);
 
+            if (Fishing.IsFishing)
+                Rendering.DrawString(new Vector2(50, 190), "isFishing", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 190), "isFishing", Color.red);
+
+            if (Fishing.IsMinigameRunning)
+                Rendering.DrawString(new Vector2(50, 200), "MiniGameRunning", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 200), "MiniGameRunning", Color.red);
+
+            if (Fishing.IsValid)
+                Rendering.DrawString(new Vector2(50, 210), "valid", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 210), "valid", Color.red);
+
+            if (Fishing.HaveBite)
+                Rendering.DrawString(new Vector2(50, 220), "Bite", Color.green);
+            else
+                Rendering.DrawString(new Vector2(50, 220), "Bite", Color.red);
+
+
+            foreach (var x in _client.GetEntities<FishingZoneObjectView>(x => x != null))
+            {
+                Rendering.DrawLine(x.gameObject, x.transform.position, localPlayer.transform.position, Color.yellow);
+            }
+
+
+        }
         private void DrawResourceESPs()
         {
             var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);
+            /*
+            if (fleePositionUpToDate)
+            {
+                Rendering.DrawLine(localPlayer.gameObject, localPlayer.transform.position, fleePosition, Color.cyan);
+            }*/
 
             foreach (var view in resources)
             {

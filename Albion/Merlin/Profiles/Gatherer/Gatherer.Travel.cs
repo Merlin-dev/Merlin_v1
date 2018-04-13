@@ -21,7 +21,6 @@ namespace Merlin.Profiles.Gatherer
         {
             if (!HandleMounting(Vector3.zero))
                 return;
-
             if (HandlePathing(ref _travelPathingRequest))
                 return;
 

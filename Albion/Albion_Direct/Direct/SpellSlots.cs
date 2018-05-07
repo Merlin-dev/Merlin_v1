@@ -21,18 +21,18 @@ using Albion.Common.Time;
 
 namespace Albion_Direct
 {
-    /* Internal type: axq */
-    public partial class SimulationObject
+    /* Internal type: a3c */
+    public partial class SpellSlots
     {
         private static List<MethodInfo> _methodReflectionPool = new List<MethodInfo>();
         private static List<PropertyInfo> _propertyReflectionPool = new List<PropertyInfo>();
         private static List<FieldInfo> _fieldReflectionPool = new List<FieldInfo>();
         
-        private axq _internal;
+        private a3c _internal;
         
         #region Properties
         
-        public axq SimulationObject_Internal => _internal;
+        public a3c SpellSlots_Internal => _internal;
         
         #endregion
         
@@ -43,18 +43,19 @@ namespace Albion_Direct
         
         #region Methods
         
-        public long GetId() => _internal.a0();
+        public LocalPlayerCharacter GetLocalPlayerCharacter() => _internal.d();
+        public SpellSlot[] GetSlots() => _internal.c().Select(x =>(SpellSlot)x).ToArray();
         
         #endregion
         
         #region Constructor
         
-        public SimulationObject(axq instance)
+        public SpellSlots(a3c instance)
         {
             _internal = instance;
         }
         
-        static SimulationObject()
+        static SpellSlots()
         {
             
         }
@@ -63,17 +64,17 @@ namespace Albion_Direct
         
         #region Conversion
         
-        public static implicit operator axq(SimulationObject instance)
+        public static implicit operator a3c(SpellSlots instance)
         {
             return instance._internal;
         }
         
-        public static implicit operator SimulationObject(axq instance)
+        public static implicit operator SpellSlots(a3c instance)
         {
-            return new SimulationObject(instance);
+            return new SpellSlots(instance);
         }
         
-        public static implicit operator bool(SimulationObject instance)
+        public static implicit operator bool(SpellSlots instance)
         {
             return instance._internal != null;
         }

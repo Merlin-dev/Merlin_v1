@@ -39,10 +39,10 @@ namespace Albion_Direct
 
         public static bool IsInLineOfSight(this LocalPlayerCharacterView instance, FightingObjectView target)
         {
-            var targetPos = target.FightingObject.il();
-            var sightChecker = instance.PlayerCharacter.zo<ayg>();
+            var targetPos = target.FightingObject.im();
+            var sightChecker = instance.PlayerCharacter.zr<aym>();
 
-            return !ObjectManager.GetInstance().ObjectManager_Internal.y().f(sightChecker.p().il(), targetPos, out var outPoint, 2);
+            return !ObjectManager.GetInstance().ObjectManager_Internal.y().f(sightChecker.p().im(), targetPos, out var outPoint, 2);
         }
 
         public static bool RequestMove(this LocalPlayerCharacterView view, Vector3 position) => view.RequestMove(position.c());

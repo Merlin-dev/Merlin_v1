@@ -158,6 +158,7 @@
     <Compile Include="Direct\PlayerCharactersDataFile.cs" />
     <Compile Include="Direct\Point2.cs" />
     <Compile Include="Direct\Point3.cs" />
+    <Compile Include="Direct\SpellSlots.cs" />
     <Compile Include="Extensions\Biome.cs" />
     <Compile Include="Extensions\CastSpellDescriptor.cs" />
     <Compile Include="Extensions\ClusterDescriptor.cs" />

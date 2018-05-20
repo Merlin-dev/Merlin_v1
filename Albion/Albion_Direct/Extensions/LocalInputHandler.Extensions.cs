@@ -20,7 +20,7 @@ namespace Albion_Direct
                                             Type.DefaultBinder, new Type[] { typeof(byte), typeof(FightingObjectView) }, null);
 
             _startCastInternalPosition = inputHandlerType.GetMethod("StartCastInternal", BindingFlags.NonPublic | BindingFlags.Instance,
-                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(aoy) }, null);
+                                            Type.DefaultBinder, new Type[] { typeof(byte), typeof(ao6) }, null);
         }
 
         public static void Interact(this LocalInputHandler instance, WorldObjectView target, string collider = null) => _doActionStaticObjectInteraction.Invoke(instance, new object[] { target, target.transform.position, collider ?? string.Empty });

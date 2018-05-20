@@ -19,7 +19,7 @@ namespace Albion_Direct
             return _internal.ts().ev().d6().Union(_internal.tu().ev().d6()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is axw equipableItem ? IsTheItemDamaged(equipableItem) : false;
+                return i is ax5 equipableItem ? IsTheItemDamaged(equipableItem) : false;
             });
         }
 
@@ -28,21 +28,21 @@ namespace Albion_Direct
             return _internal.ts().ev().d6().Union(_internal.tu().ev().d6()).Any(i =>
             {
                 //EquipmentItemProxy
-                return i is axw equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
+                return i is ax5 equipableItem ? IsTheItemQualityPoor(equipableItem) : false;
             });
         }
 
-        public bool IsTheItemDamaged(axw item)
+        public bool IsTheItemDamaged(ax5 item)
         {
             return item.b8() <= 95;
         }
 
-        public bool IsTheItemQualityPoor(axw item)
+        public bool IsTheItemQualityPoor(ax5 item)
         {
             return item.b8() <= 10;
         }
 
-        public bool IsMountBroken(axw item)
+        public bool IsMountBroken(ax5 item)
         {
             return item.b8() <= 0;
         }
@@ -51,7 +51,7 @@ namespace Albion_Direct
             return _internal.ts().ev().d6().Union(_internal.tu().ev().d6()).Any(i =>
             {
                 //MountItemProxy
-                return i is axw mountableitem ? IsMountBroken(mountableitem) : false;
+                return i is ax5 mountableitem ? IsMountBroken(mountableitem) : false;
             });
         }
     }

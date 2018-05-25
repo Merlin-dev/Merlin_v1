@@ -51,9 +51,12 @@ namespace Merlin
             _coreObject = null;
         }
 
+        public static string lastLog;
         public static void Log(string message)
         {
-            Debug.Log($"[{DateTime.Now}] {message}");
+            if (message != lastLog)
+                Debug.Log($"[{DateTime.Now}] {message}");
+            lastLog = message;
         }
 
         public static void Log(Exception e)

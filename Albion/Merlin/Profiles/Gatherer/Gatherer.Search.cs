@@ -40,7 +40,7 @@ namespace Merlin.Profiles.Gatherer
             
             if (_localPlayerCharacterView.GetLocalPlayerCharacter().HasAnyBrokenItem())
             {
-                Core.Log("Damaged - Items fell below 10% durability. Head to Repair in home town");
+                Core.Log("Damaged - Items fell below 60% durability. Head to Repair in home town");
                 _state.Fire(Trigger.Damaged);
                 return;
             }
@@ -144,15 +144,18 @@ namespace Merlin.Profiles.Gatherer
 
         public bool Loot()
         {
-            //var silver = _client.GetEntities<SilverObjectView>(s => !s.IsLootProtected()).FirstOrDefault();
-            //if (silver != null)
-            //{
-            //    Core.Log($"[Silver {silver.name}]");
-            //    _localPlayerCharacterView.Interact(silver);
-            //    return true;
-            //}
+            var silver = _client.GetEntities<SilverObjectView>(x => Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
+            if (silver != null)
+            { 
 
-            var loot = _client.GetEntities<LootObjectView>(l => l.CanLoot()).FirstOrDefault();
+                Core.Log($"[Silver {silver.name}]");
+                _localPlayerCharacterView.Interact(silver);
+                return true;
+
+            }
+
+            var loot = _client.GetEntities<LootObjectView>(x => x.CanLoot() && Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
+
             if (loot != null)
             {
                 if (ContainKeepers(loot.transform.position))

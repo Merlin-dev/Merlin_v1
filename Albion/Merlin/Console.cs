@@ -21,7 +21,7 @@ public class Console : MonoBehaviour
     private List<Log> logs = new List<Log>();
     private Vector2 scrollPosition;
     private bool show;
-    private bool collapse;
+    private bool collapse = true;
     private bool scroll = true;
     private bool limit = true;
 

@@ -44,6 +44,12 @@ namespace Merlin.Profiles.Gatherer
             _combatTarget = _localPlayerCharacterView.GetAttackTarget();
             _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
 
+            if (_combatPlayer.GetIsChanneling())
+            {
+                Core.Log("You are channeling a spell. Wait for Channeling to finish!");
+                return;
+            }
+
             if (_localPlayerCharacterView.IsCasting() || _combatPlayer.GetIsCasting())
             {
                 Core.Log("You are casting. Wait for casting to finish");

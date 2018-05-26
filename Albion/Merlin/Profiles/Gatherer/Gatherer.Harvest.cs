@@ -12,6 +12,8 @@ namespace Merlin.Profiles.Gatherer
         public const double MELEE_ATTACK_RANGE = 2.5;
         public const double RANGED_ATTACK_RANGE = 12;
 
+        private Boolean showMsg = true;
+
         private ClusterPathingRequest _harvestPathingRequest;
 
         public bool ValidateHarvestable(HarvestableObjectView resource)
@@ -182,7 +184,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (!ValidateTarget(_currentTarget))
             {
-                Core.Log("Resource DepletedSearch for new one.");
+                Core.Log("Resource Depleted - Search for new one.");
                 _state.Fire(Trigger.DepletedResource);
                 return;
             }
@@ -224,6 +226,7 @@ namespace Merlin.Profiles.Gatherer
                 if (_localPlayerCharacterView.TryFindPath(new ClusterPathfinder(), targetCenter, IsBlockedGathering, out List<Vector3> pathing))
                 {
                     Core.Log("Path found, begin travel to resource");
+                    showMsg = true;
                     Core.lineRenderer.positionCount = pathing.Count;
                     Core.lineRenderer.SetPositions(pathing.ToArray());
                     _harvestPathingRequest = new ClusterPathingRequest(_localPlayerCharacterView, _currentTarget, pathing);
@@ -238,7 +241,11 @@ namespace Merlin.Profiles.Gatherer
 
             if (_localPlayerCharacterView.IsHarvesting())
             {
-                Core.Log("Currently harvesting.Wait until done.");
+                if (showMsg)
+                {
+                    Core.Log("Currently harvesting.Wait until done.");
+                    showMsg = false;
+                }
                 return;
             }
 

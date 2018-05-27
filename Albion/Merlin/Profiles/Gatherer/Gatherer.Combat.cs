@@ -32,7 +32,7 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
-
+            
             if (_combatCooldown > 0)
             {
                 Core.Log("Combat Cooldown > 0.");

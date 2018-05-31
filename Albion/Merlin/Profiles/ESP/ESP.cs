@@ -305,7 +305,7 @@ namespace Merlin.Profiles.ESP
 
         private void DrawResourceESPs()
         {
-            var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);
+            var myPos = Camera.main.WorldToScreenPoint(localPlayer.transform.position);           
 
             foreach (var view in resources)
             {

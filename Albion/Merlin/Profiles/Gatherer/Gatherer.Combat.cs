@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Albion_Direct.Pathing;
+using UnityEngine;
+using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
 
 namespace Merlin.Profiles.Gatherer
 {
@@ -23,6 +26,7 @@ namespace Merlin.Profiles.Gatherer
         private FightingObjectView _combatTarget;
         private IEnumerable<SpellSlot> _combatSpells;
         private float _combatCooldown;
+       
 
         public void Fight()
         {
@@ -32,6 +36,10 @@ namespace Merlin.Profiles.Gatherer
                 _localPlayerCharacterView.MountOrDismount();
                 return;
             }
+            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
+            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
+
+            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
             
             if (_combatCooldown > 0)
             {
@@ -40,10 +48,7 @@ namespace Merlin.Profiles.Gatherer
                 return;
             }
 
-            _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
-            _combatTarget = _localPlayerCharacterView.GetAttackTarget();
-            _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
-
+        
             if (_localPlayerCharacterView.IsCasting() || _combatPlayer.GetIsCasting())
             {
                 Core.Log("You are casting. Wait for casting to finish");

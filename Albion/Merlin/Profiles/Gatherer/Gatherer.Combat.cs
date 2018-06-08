@@ -140,6 +140,43 @@ namespace Merlin.Profiles.Gatherer
                     return false;
                 }
 
+                if (!_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT") && !_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE") && _combatTarget.IsCasting()) // We have to Interrupt but CD
+                {
+                    Core.Log("Using CD Reduce Boots.");
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Shoes);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "INTERRUPT")) // Interrupt Casting Mob
+                {
+                    Core.Log("Using Interrupt");
+                    _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand2, _combatTarget);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRIEKMACE")) // Silence Casting Mob
+                {
+                    Core.Log("Using Silence");
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.OffHandOrMainHand3);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD")) // Protect from Cast, No Interrupt ready.
+                {
+                    Core.Log("Using Flameshield");
+                    _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "SHRINKINGSMASH")) // Baboom
+                {
+                    Core.Log("Using Shrinking Smash");
+                    _localPlayerCharacterView.CastAt(CharacterSpellSlot.OffHandOrMainHand3, _combatTarget.GetPosition());
+                    return true;
+                }
+                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "DEFENSIVESLAM")) // Baboom
+                {
+                    Core.Log("Using Slam");
+                    _localPlayerCharacterView.CastOn(CharacterSpellSlot.MainHand1, _combatTarget);
+                    return true;
+                }
+
                 var spells = _combatSpells.Target(target).Category(category);
                 var spellToCast = spells.Any() ? spells.First() : null;
                 if (spellToCast == null)

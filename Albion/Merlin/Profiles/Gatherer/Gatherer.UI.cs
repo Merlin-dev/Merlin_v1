@@ -80,6 +80,7 @@ namespace Merlin.Profiles.Gatherer
             _skipKeeperPacks = GUILayout.Toggle(_skipKeeperPacks, "Skip keeper mobs while gathering");
             _allowSiegeCampTreasure = GUILayout.Toggle(_allowSiegeCampTreasure, "Allow usage of siege camp treasures");
             _skipRedAndBlackZones = GUILayout.Toggle(_skipRedAndBlackZones, "Skip red and black zones for traveling");
+            _allowDismountAttack = GUILayout.Toggle(_allowDismountAttack, "Dismount to attack monster if attacked");
             UpdateESP(GUILayout.Toggle(_showESP, "Show ESP"));
         }
 

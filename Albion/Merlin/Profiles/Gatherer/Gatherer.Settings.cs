@@ -22,10 +22,13 @@ namespace Merlin.Profiles.Gatherer
         private int _selectedTownClusterIndex;
         private int _selectedMininumTierIndex;
         private Dictionary<GatherInformation, bool> _gatherInformations;
+        private bool _allowDismountAttack;
 
         private void LoadSettings()
         {
             _allowMobHunting = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowMobHunting)}", bool.FalseString));
+            _allowDismountAttack = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowDismountAttack)}", bool.FalseString));
+            _agroRange = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_agroRange)}", bool.FalseString));
             _skipUnrestrictedPvPZones = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", bool.TrueString));
             _skipKeeperPacks = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipKeeperPacks)}", bool.TrueString));
             _allowSiegeCampTreasure = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowSiegeCampTreasure)}", bool.TrueString));
@@ -54,6 +57,7 @@ namespace Merlin.Profiles.Gatherer
         private void SaveSettings()
         {
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_allowMobHunting)}", _allowMobHunting.ToString());
+            PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_allowDismountAttack)}", _allowDismountAttack.ToString());
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", _skipUnrestrictedPvPZones.ToString());
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_skipKeeperPacks)}", _skipKeeperPacks.ToString());
             PlayerPrefs.SetString($"{_prefsIdentifier}{nameof(_allowSiegeCampTreasure)}", _allowSiegeCampTreasure.ToString());

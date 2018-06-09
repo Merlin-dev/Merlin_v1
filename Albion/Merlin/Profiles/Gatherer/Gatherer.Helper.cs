@@ -8,14 +8,29 @@ namespace Merlin.Profiles.Gatherer
 {
     public partial class Gatherer
     {
+
         public bool HandleAttackers()
         {
             if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
-            {
-                Core.Log("[Under Attack]");
-                _state.Fire(Trigger.EncounteredAttacker);
-                return true;
-            }
+            {                
+                if (_allowDismountAttack && _localPlayerCharacterView.IsMounted)
+                {
+                    Core.Log("[Under Attack] - Dismounting");
+                    _state.Fire(Trigger.EncounteredAttacker);
+                    return true;
+                }
+                if (!_allowDismountAttack && !_localPlayerCharacterView.IsMounted)
+                {
+                    Core.Log("[Under Attack] - Alread dismonted");
+                    _state.Fire(Trigger.EncounteredAttacker);
+                    return true;
+                }
+                if (!_allowDismountAttack && _localPlayerCharacterView.IsMounted)
+                {
+                    Core.Log("[Under Attack] - Ignoring");
+                    return false;
+                }
+            }            
             return false;
         }
 

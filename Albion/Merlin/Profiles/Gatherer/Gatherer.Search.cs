@@ -23,6 +23,15 @@ namespace Merlin.Profiles.Gatherer
 
             var isCurrentCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == _selectedGatherCluster;
             var isHomeCluster = ObjectManager.GetInstance().GetCurrentCluster().GetName() == TownClusterNames[_selectedTownClusterIndex];
+            var player = _localPlayerCharacterView.GetLocalPlayerCharacter();
+
+            Core.Log("HP: " + player.GetHealth().GetValue() + " " + player.GetHealth().GetMaximum() / 100 + " % " + "min. " + _minimumHealthForGathering * 100);
+            if (player.GetHealth().GetValue() < (player.GetHealth().GetMaximum() * _minimumHealthForGathering))
+            {
+                _state.Fire(Trigger.EncounteredAttacker);
+                return;
+            }
+
 
             if (isCurrentCluster && _allowSiegeCampTreasure && CanUseSiegeCampTreasure && (_localPlayerCharacterView.GetLoadPercent() > _percentageForSiegeCampTreasure))
             {
@@ -144,15 +153,16 @@ namespace Merlin.Profiles.Gatherer
 
         public bool Loot()
         {
-            //var silver = _client.GetEntities<SilverObjectView>(s => !s.IsLootProtected()).FirstOrDefault();
-            //if (silver != null)
-            //{
-            //    Core.Log($"[Silver {silver.name}]");
-            //    _localPlayerCharacterView.Interact(silver);
-            //    return true;
-            //}
+            var silver = _client.GetEntities<SilverObjectView>(x => Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
+            if (silver != null)
+            {
+                Core.Log($"[Silver {silver.name}]");
+                _localPlayerCharacterView.Interact(silver);
+                return true;
+            }
+            
+            var loot = _client.GetEntities<LootObjectView>(x => x.CanLoot() && Vector3.Distance(_localPlayerCharacterView.transform.position, x.transform.position) < 8).FirstOrDefault();
 
-            var loot = _client.GetEntities<LootObjectView>(l => l.CanLoot()).FirstOrDefault();
             if (loot != null)
             {
                 if (ContainKeepers(loot.transform.position))
@@ -289,6 +299,7 @@ namespace Merlin.Profiles.Gatherer
 
             if (target != null)
                 Core.Log($"Resource spotted: {target.name}");
+            Core.Log($"Resource spotted: {target}");
 
             return target != default(SimulationObjectView);
         }

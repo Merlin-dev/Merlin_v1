@@ -75,7 +75,9 @@
     <Compile Include="Console.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Profile.cs" />
+    <Compile Include="Profiles\CombatRoutine.cs" />
     <Compile Include="Profiles\ESP\ESP.cs" />
+    <Compile Include="Profiles\Fishing.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Helper.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Reparing.cs" />
     <Compile Include="Profiles\Gatherer\Gatherer.Combat.cs" />

@@ -55,6 +55,8 @@ namespace Merlin
         private void Start()
         {
             OnStart();
+            if (gameObject.GetComponent<Merlin.Profiles.Fishing>() == null) // Starting Automated Fishing Class
+                gameObject.AddComponent<Merlin.Profiles.Fishing>();
         }
 
         private void Stop()

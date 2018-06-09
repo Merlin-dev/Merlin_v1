@@ -28,6 +28,7 @@ namespace Merlin.Profiles.Gatherer
         {
             _allowMobHunting = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowMobHunting)}", bool.FalseString));
             _allowDismountAttack = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowDismountAttack)}", bool.FalseString));
+            _agroRange = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_agroRange)}", bool.FalseString));
             _skipUnrestrictedPvPZones = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipUnrestrictedPvPZones)}", bool.TrueString));
             _skipKeeperPacks = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_skipKeeperPacks)}", bool.TrueString));
             _allowSiegeCampTreasure = bool.Parse(PlayerPrefs.GetString($"{_prefsIdentifier}{nameof(_allowSiegeCampTreasure)}", bool.TrueString));

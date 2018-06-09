@@ -40,27 +40,6 @@ namespace Merlin.Profiles.Gatherer
             return;
         }
 
-        public bool FleeMove()
-        {
-            if (_combatTarget != null && !_combatTarget.IsDead() && (_combatTarget.IsCasting() || _combatTarget.bIsChanneling()))
-            {
-                Core.Log($"Running away from Spell");
-                Core.Log($"Target: " + _combatTarget.name + " Dead: " + _combatTarget.IsDead() + " Casting: " + _combatTarget.IsCasting() + " Channel: " + _combatTarget.bIsChanneling());
-                if (!fleePositionUpToDate)
-                    GenerateFleePosition();
-                Core.Log($"Flee Position Distance: " + Vector3.Distance(_localPlayerCharacterView.transform.position, fleePosition));
-                if (Vector3.Distance(_localPlayerCharacterView.transform.position, fleePosition) > 0.5f)
-                    _localPlayerCharacterView.RequestMove(fleePosition);
-                return true;
-            }
-            else
-            {
-                fleePositionUpToDate = false;
-                return false;
-            }
-               
-        }
-
         public void Fight()
         {
             if (_localPlayerCharacterView.IsMounted)
@@ -72,11 +51,6 @@ namespace Merlin.Profiles.Gatherer
             _combatPlayer = _localPlayerCharacterView.GetLocalPlayerCharacter();
             _combatTarget = _localPlayerCharacterView.GetAttackTarget();
             _combatSpells = _combatPlayer.GetSpellSlotsIndexed().Ready(_localPlayerCharacterView).Ignore("ESCAPE_DUNGEON").Ignore("PLAYER_COUPDEGRACE").Ignore("AMBUSH");
-
-            if (FleeMove())
-            {
-                return;
-            }
 
             if (_combatCooldown > 0)
             {
@@ -95,12 +69,12 @@ namespace Merlin.Profiles.Gatherer
             if (_combatTarget != null && !_combatTarget.IsDead() && SpellPriorityList.Any(s => TryToCastSpell(s.Item1, s.Item2, s.Item3)))
                 return;
 
-            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker))
+            if (_localPlayerCharacterView.IsUnderAttack(out FightingObjectView attacker) )
             {
-                Core.Log("You are under attack. Attack the attacker");
-                _localPlayerCharacterView.SetSelectedObject(attacker);
-                _localPlayerCharacterView.AttackSelectedObject();
-                return;
+                    Core.Log("You are under attack. Attack the attacker");
+                    _localPlayerCharacterView.SetSelectedObject(attacker);
+                    _localPlayerCharacterView.AttackSelectedObject();
+                    return;
             }
 
             if (_combatPlayer.GetIsCasting())
@@ -158,9 +132,8 @@ namespace Merlin.Profiles.Gatherer
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.OffHandOrMainHand3);
                     return true;
                 }
-                else if (_combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD")) // Protect from Cast, No Interrupt ready.
+                else if (_combatTarget != null && _combatTarget.IsCasting() && _combatSpells.Any(x => x.GetSpellDescriptor().TryGetName() == "FLAMESHIELD"))
                 {
-                    Core.Log("Using Flameshield");
                     _localPlayerCharacterView.CastOnSelf(CharacterSpellSlot.Armor);
                     return true;
                 }
